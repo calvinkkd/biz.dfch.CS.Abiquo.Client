@@ -13,7 +13,7 @@
         <description>biz.dfch.CS.Abiquo.Client
 ========================
 
-C#/.NET client for Abiquo.
+C#/.NET client for [Abiquo](http://www.abiquo.com/).
 
 d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 
@@ -24,7 +24,7 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>C#/.NET client for Abiquo</summary>
-        <releaseNotes>20160701
+        <releaseNotes>20160808
 * Initial release
 </releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
