@@ -30,7 +30,8 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>
         <dependencies>
-			
+			<dependency id="Newtonsoft.Json" version="6.0.8" />
+			<dependency id="log4net" version="2.0.5" />
         </dependencies>
     </metadata>
 	<files>
