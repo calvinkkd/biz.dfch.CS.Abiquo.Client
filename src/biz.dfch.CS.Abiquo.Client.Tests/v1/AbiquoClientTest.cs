@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace biz.dfch.CS.Abiquo.Client.Tests
+namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
     [TestClass]
-    public class SampleClassTest
+    public class AbiquoClientTest
     {
-        [TestMethod]
-        public void SampleTestMethod()
-        {
-        }
+
     }
 }

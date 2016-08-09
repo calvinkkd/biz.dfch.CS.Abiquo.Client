@@ -134,12 +134,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SampleClass.cs" />
+    <Compile Include="AbiquoClientFactory.cs" />
+    <Compile Include="BaseAbiquoClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="v1\AbiquoClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
