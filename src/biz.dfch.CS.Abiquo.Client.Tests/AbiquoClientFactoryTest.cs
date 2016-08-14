@@ -31,7 +31,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         [TestMethod]
         public void GetByVersionReturnsCorrespondingAbiquoClient()
         {
-            var abiquoClient = AbiquoClientFactory.GetByVersion("v2");
+            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             Assert.IsNotNull(abiquoClient);
             Assert.AreEqual(typeof(AbiquoClient).FullName, abiquoClient.GetType().FullName);
         }
