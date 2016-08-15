@@ -96,6 +96,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
         }
 
+        [TestMethod]
+        public void LogoutDoesNothingIfNotLoggedIn()
+        {
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+        }
+
+        [TestMethod]
+        public void LogoutResetsAuthenticationInformationApiBaseUrlAndSetsLoggedInToFalse()
+        {
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+        }
+
         #region Integration Tests
 
         #endregion Integration Tests
