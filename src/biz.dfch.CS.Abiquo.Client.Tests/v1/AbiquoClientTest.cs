@@ -95,5 +95,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Assert
         }
+
+        #region Integration Tests
+
+        #endregion Integration Tests
     }
 }

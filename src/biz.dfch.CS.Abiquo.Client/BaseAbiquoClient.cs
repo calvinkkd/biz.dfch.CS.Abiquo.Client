@@ -30,6 +30,8 @@ namespace biz.dfch.CS.Abiquo.Client
     {
         public bool IsLoggedIn { get; protected set; }
 
+        public string AbiquoApiBaseUrl { get; set; }
+
         public IAuthenticationInformation AuthenticationInformation { get; set; }
 
         public abstract LoginResult Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation);

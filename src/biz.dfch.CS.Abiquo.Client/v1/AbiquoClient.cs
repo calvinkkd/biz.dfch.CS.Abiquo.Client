@@ -21,22 +21,41 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+﻿using biz.dfch.CS.Web.Utilities.Rest;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
-        public override LoginResult Login(string abiquoApiBaseUrl, Authentication.IAuthenticationInformation authenticationInformation)
+        public override LoginResult Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
             Trace.WriteLine(string.Format("START Login (AbiquoApiBaseUrl = '{0}') ...", abiquoApiBaseUrl));
 
-            this.Logout();
+            Logout();
+
+            this.AuthenticationInformation = authenticationInformation;
+            this.AbiquoApiBaseUrl = abiquoApiBaseUrl;
+
+            DoMakeRequest(Constants.LOGIN_URL_SUFFIX);
 
             IsLoggedIn = true;
 
             Trace.WriteLine("END Login SUCCEEDED");
 
             return LoginResult.Success;
+        }
+
+        private void DoMakeRequest(string urlSuffix)
+        {
+            var apiBaseUri = new Uri(this.AbiquoApiBaseUrl);
+            var requestUri = new Uri(apiBaseUri, urlSuffix);
+
+            var restCallExecutor = new RestCallExecutor();
+            // DFTODO - set wait time millis, etc
+            // DFTODO - implement retry
+            // DFTODO - honour result
+            restCallExecutor.Invoke(HttpMethod.Get, requestUri.ToString(), AuthenticationInformation.GetAuthorizationHeaders(), null);
         }
     }
 }
