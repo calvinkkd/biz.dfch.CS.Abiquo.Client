@@ -25,9 +25,12 @@ namespace biz.dfch.CS.Abiquo.Client
 {
     public enum LoginResultEnum
     {
-        Success,
-        NotAuthorized,
-        NotReachable,
+        Success
+        ,
+        NotAuthorized
+        ,
+        NotReachable
+        ,
         Error
     }
 }
