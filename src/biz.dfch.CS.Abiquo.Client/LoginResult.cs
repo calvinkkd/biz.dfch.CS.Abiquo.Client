@@ -23,11 +23,11 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
-    public enum ELoginResult
+    public enum LoginResult
     {
         Success,
         NotAuthorized,
         NotReachable,
-        Error,
+        Error
     }
 }
