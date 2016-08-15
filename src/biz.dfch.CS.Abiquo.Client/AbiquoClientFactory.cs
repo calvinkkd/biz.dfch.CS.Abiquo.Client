@@ -28,7 +28,7 @@ namespace biz.dfch.CS.Abiquo.Client
     {
         public static BaseAbiquoClient GetByVersion(string version)
         {
-            Contract.Assert(!string.IsNullOrWhiteSpace(version));
+            Contract.Requires(!string.IsNullOrWhiteSpace(version));
 
             switch (version)
             {
@@ -42,7 +42,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public static BaseAbiquoClient GetByCommitHash(string gitCommitHash)
         {
-            Contract.Assert(!string.IsNullOrWhiteSpace(gitCommitHash));
+            Contract.Requires(!string.IsNullOrWhiteSpace(gitCommitHash));
 
             var version = LookupAbiquoClientVersion(gitCommitHash);
 

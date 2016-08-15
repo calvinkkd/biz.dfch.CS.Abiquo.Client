@@ -14,9 +14,7 @@
  * limitations under the License.
  */
  
-﻿using biz.dfch.CS.Abiquo.Client.Authentication;
-using biz.dfch.CS.Utilities.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -25,25 +23,8 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
-    [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
-    public abstract class BaseAbiquoClient
+    public abstract class Constants
     {
-        public bool IsLoggedIn { get; protected set; }
-
-        public IAuthenticationInformation AuthenticationInformation { get; set; }
-
-        public abstract LoginResult Login(string abiquoBaseUrl, IAuthenticationInformation authenticationInformation);
-
-        /// <summary>
-        /// Resets all connection information
-        /// </summary>
-        public void Logout()
-        {
-            this.IsLoggedIn = false;
-
-            this.AuthenticationInformation = null;
-
-            Trace.WriteLine("Logout (Clear/Reset authentication information)");
-        }
+        public const string AUTHORIZATION_HEADER_KEY = "Authorization";
     }
 }

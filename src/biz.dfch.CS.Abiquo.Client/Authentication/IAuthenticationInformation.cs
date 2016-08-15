@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,30 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using biz.dfch.CS.Utilities.Logging;
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.v1
+namespace biz.dfch.CS.Abiquo.Client.Authentication
 {
-    public class AbiquoClient : BaseAbiquoClient
+    public interface IAuthenticationInformation
     {
-        public override LoginResult Login(string abiquoBaseUrl, Authentication.IAuthenticationInformation authenticationInformation)
-        {
-            Trace.WriteLine("START Login ...");
+        IDictionary<string, object> GetAuthorizationHeaders(); 
 
-
-
-            IsLoggedIn = true;
-
-            Trace.WriteLine("END Login SUCCEEDED");
-
-            return LoginResult.Success;
-        }
+        string GetTenantId();
     }
 }

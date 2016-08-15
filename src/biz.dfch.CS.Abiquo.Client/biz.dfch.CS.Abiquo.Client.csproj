@@ -142,7 +142,11 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="AbiquoClientFactory.cs" />
+    <Compile Include="Authentication\BasicAuthenticationInformation.cs" />
+    <Compile Include="Authentication\IAuthenticationInformation.cs" />
     <Compile Include="BaseAbiquoClient.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ContractClassForBaseAbiquoClient.cs" />
     <Compile Include="LoginResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
