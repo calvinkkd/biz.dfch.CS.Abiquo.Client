@@ -28,7 +28,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
-        public override LoginResult Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
+        public override LoginResultEnum Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
             Trace.WriteLine(string.Format("START Login (AbiquoApiBaseUrl = '{0}') ...", abiquoApiBaseUrl));
 
@@ -43,7 +43,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             Trace.WriteLine("END Login SUCCEEDED");
 
-            return LoginResult.Success;
+            return LoginResultEnum.Success;
         }
 
         private void DoMakeRequest(string urlSuffix)

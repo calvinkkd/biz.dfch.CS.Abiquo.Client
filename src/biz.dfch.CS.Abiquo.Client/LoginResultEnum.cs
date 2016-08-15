@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
-    public enum LoginResult
+    public enum LoginResultEnum
     {
         Success,
         NotAuthorized,
