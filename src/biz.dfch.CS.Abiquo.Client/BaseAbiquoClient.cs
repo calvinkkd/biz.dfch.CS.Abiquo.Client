@@ -15,6 +15,7 @@
  */
  
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Utilities.General;
 using biz.dfch.CS.Utilities.Logging;
 using System;
 using System.Collections.Generic;
@@ -30,22 +31,24 @@ namespace biz.dfch.CS.Abiquo.Client
     {
         public bool IsLoggedIn { get; protected set; }
 
-        public string AbiquoApiBaseUrl { get; set; }
+        public string AbiquoApiBaseUrl { get; protected set; }
 
-        public IAuthenticationInformation AuthenticationInformation { get; set; }
+        public IAuthenticationInformation AuthenticationInformation { get; protected set; }
 
         public abstract LoginResultEnum Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation);
 
-        /// <summary>
-        /// Resets all connection information
-        /// </summary>
         public void Logout()
         {
-            this.IsLoggedIn = false;
+            if (IsLoggedIn)
+            {
+                Trace.WriteLine(string.Format("START {0}", Method.fn()));
 
-            this.AuthenticationInformation = null;
+                this.IsLoggedIn = false;
+                this.AbiquoApiBaseUrl = null;
+                this.AuthenticationInformation = null;
 
-            Trace.WriteLine("Logout (Clear/Reset authentication information)");
+                Trace.WriteLine(string.Format("END {0}", Method.fn()));
+            }
         }
     }
 }
