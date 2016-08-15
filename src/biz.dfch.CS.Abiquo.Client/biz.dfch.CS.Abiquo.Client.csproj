@@ -185,7 +185,7 @@
     <Compile Include="BaseAbiquoClient.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContractClassForBaseAbiquoClient.cs" />
-    <Compile Include="LoginResult.cs" />
+    <Compile Include="LoginResultEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
   </ItemGroup>
