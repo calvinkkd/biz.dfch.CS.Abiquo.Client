@@ -51,7 +51,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
         private static string LookupAbiquoClientVersion(string gitCommitHash)
         {
-            // DFTODO - Lookup abiquo client version based on gitCommitHash value in mapping file/table (xml or something else)
+            // DFTODO - lookup abiquo client version based on gitCommitHash value in mapping file/table (xml or something else)
             return "v1";
         }
     }
