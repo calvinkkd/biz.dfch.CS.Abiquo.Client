@@ -37,7 +37,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         [ExpectContractFailure]
         public void CreateBasicAuthenticationInformationWithNullUsernameThrowsContractException()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             new BasicAuthenticationInformation(null, PASSWORD, TENANT_ID);
 
             // Assert
@@ -47,7 +49,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         [ExpectContractFailure]
         public void CreateBasicAuthenticationInformationWithEmptyUsernameThrowsContractException()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             new BasicAuthenticationInformation(" ", PASSWORD, TENANT_ID);
 
             // Assert
@@ -57,7 +61,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         [ExpectContractFailure]
         public void CreateBasicAuthenticationInformationWithNullPasswordThrowsContractException()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             new BasicAuthenticationInformation(USERNAME, null, TENANT_ID);
 
             // Assert
@@ -67,7 +73,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         [ExpectContractFailure]
         public void CreateBasicAuthenticationInformationWithEmptyPasswordThrowsContractException()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             new BasicAuthenticationInformation(USERNAME, " ", TENANT_ID);
 
             // Assert
@@ -77,7 +85,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         [ExpectContractFailure]
         public void CreateBasicAuthenticationInformationWithNullTenantIdThrowsContractException()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             new BasicAuthenticationInformation(USERNAME, PASSWORD, null);
 
             // Assert
@@ -87,7 +97,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         [ExpectContractFailure]
         public void CreateBasicAuthenticationInformationWithEmptyTenantIdThrowsContractException()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             new BasicAuthenticationInformation(USERNAME, PASSWORD, " ");
 
             // Assert
