@@ -38,32 +38,48 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         [ExpectContractFailure]
         public void LoginWithNullAuthenticationInformationThrowsContractException()
         {
+            // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
+
+            // Act
             abiquoClient.Login(ABIQUO_BASE_URL, null);
+
+            // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void LoginWithNullAbiquoBaseUrlThrowsContractException()
-        {
-            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
-            abiquoClient.Login(null, basicAuthInfo);
-        }
-
-        [TestMethod]
-        [ExpectContractFailure]
-        public void LoginWithEmptyAbiquoBaseUrlThrowsContractException()
-        {
-            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
-            abiquoClient.Login(" ", basicAuthInfo);
-        }
-
-        [TestMethod]
-        public void LoginWithValidAuthenticationInformationSucceeds()
+        public void LoginWithNullAbiquoApiBaseUrlThrowsContractException()
         {
             // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+
+            // Act
+            abiquoClient.Login(null, basicAuthInfo);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void LoginWithEmptyAbiquoApiBaseUrlThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+
+            // Act
+            abiquoClient.Login(" ", basicAuthInfo);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void LoginWithValidAuthenticationInformationReturnsSuccess()
+        {
+            // Arrange
+
 
             // Act
 

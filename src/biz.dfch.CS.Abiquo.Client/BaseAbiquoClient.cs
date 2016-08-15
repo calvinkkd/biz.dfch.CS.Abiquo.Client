@@ -32,7 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public IAuthenticationInformation AuthenticationInformation { get; set; }
 
-        public abstract LoginResult Login(string abiquoBaseUrl, IAuthenticationInformation authenticationInformation);
+        public abstract LoginResult Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation);
 
         /// <summary>
         /// Resets all connection information

@@ -24,7 +24,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
 {
     public interface IAuthenticationInformation
     {
-        IDictionary<string, object> GetAuthorizationHeaders(); 
+        IDictionary<string, string> GetAuthorizationHeaders(); 
 
         string GetTenantId();
     }

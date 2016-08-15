@@ -27,9 +27,9 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
-        public override LoginResult Login(string abiquoBaseUrl, IAuthenticationInformation authenticationInformation)
+        public override LoginResult Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
-            Contract.Requires(!string.IsNullOrEmpty(abiquoBaseUrl));
+            Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUrl));
             Contract.Requires(null != authenticationInformation);
 
             return default(LoginResult);

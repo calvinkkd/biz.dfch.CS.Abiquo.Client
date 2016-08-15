@@ -26,11 +26,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
-        public override LoginResult Login(string abiquoBaseUrl, Authentication.IAuthenticationInformation authenticationInformation)
+        public override LoginResult Login(string abiquoApiBaseUrl, Authentication.IAuthenticationInformation authenticationInformation)
         {
-            Trace.WriteLine("START Login ...");
+            Trace.WriteLine(string.Format("START Login (AbiquoApiBaseUrl = '{0}') ...", abiquoApiBaseUrl));
 
-
+            this.Logout();
 
             IsLoggedIn = true;
 

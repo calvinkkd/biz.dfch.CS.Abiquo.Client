@@ -42,9 +42,9 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             this._tenantId = tenantId;
         }
 
-        public IDictionary<string, object> GetAuthorizationHeaders()
+        public IDictionary<string, string> GetAuthorizationHeaders()
         {
-            var headers = new Dictionary<string, object>
+            var headers = new Dictionary<string, string>
             {
                 {Constants.AUTHORIZATION_HEADER_KEY, CreateBasicAuthorizationHeaderValue()}
             };

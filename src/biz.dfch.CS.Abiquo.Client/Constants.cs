@@ -26,5 +26,7 @@ namespace biz.dfch.CS.Abiquo.Client
     public abstract class Constants
     {
         public const string AUTHORIZATION_HEADER_KEY = "Authorization";
+
+        public const string LOGIN_URL_SUFFIX = "/login";
     }
 }
