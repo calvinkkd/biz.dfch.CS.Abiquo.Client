@@ -48,15 +48,19 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         private void DoMakeRequest(string urlSuffix)
         {
-            var apiBaseUri = new Uri(this.AbiquoApiBaseUrl);
-            var requestUri = new Uri(apiBaseUri, urlSuffix);
-
+            var requestUri = CreateRequestUri(urlSuffix);
+            
             var restCallExecutor = new RestCallExecutor();
 
             // DFTODO - set wait time millis, etc
             // DFTODO - implement retry
             // DFTODO - honour result
             restCallExecutor.Invoke(HttpMethod.Get, requestUri.ToString(), AuthenticationInformation.GetAuthorizationHeaders(), null);
+        }
+
+        private string CreateRequestUri(string urlSuffix)
+        {
+            return string.Format("{0}/{1}", this.AbiquoApiBaseUrl.TrimEnd('/'), urlSuffix.TrimStart('/'));
         }
     }
 }
