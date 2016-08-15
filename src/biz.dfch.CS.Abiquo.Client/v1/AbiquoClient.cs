@@ -30,7 +30,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
     {
         public override LoginResultEnum Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
-            Trace.WriteLine(string.Format("START Login (AbiquoApiBaseUrl = '{0}') ...", abiquoApiBaseUrl));
+            Trace.WriteLine(string.Format("START Login (AbiquoApiBaseUrl = '{0}'; TenantId = '{1}'; ) ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));
 
             Logout();
 
