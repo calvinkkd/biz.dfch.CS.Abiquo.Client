@@ -52,6 +52,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var requestUri = new Uri(apiBaseUri, urlSuffix);
 
             var restCallExecutor = new RestCallExecutor();
+
             // DFTODO - set wait time millis, etc
             // DFTODO - implement retry
             // DFTODO - honour result
