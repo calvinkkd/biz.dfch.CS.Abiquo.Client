@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.v1;
+using biz.dfch.CS.Utilities.Logging;
 
 namespace biz.dfch.CS.Abiquo.Client.Factory
 {
@@ -30,14 +31,23 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(version));
 
+            Debug.WriteLine(string.Format("START Get AbiquoClient instance of version '{0}' ...", version));
+
+            AbiquoClient abiquoClient = null;
+
             switch (version)
             {
                 case "v1":
-                    return new AbiquoClient();
+                    abiquoClient = new AbiquoClient();
                     break;
                 default:
+                    Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' FAILED", version));
                     return null;
             }
+
+            Debug.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' SUCCEEDED", version));
+
+            return abiquoClient;
         }
 
         public static BaseAbiquoClient GetByCommitHash(string gitCommitHash)
