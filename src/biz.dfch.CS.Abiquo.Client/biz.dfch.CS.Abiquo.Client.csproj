@@ -179,7 +179,7 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="AbiquoClientFactory.cs" />
+    <Compile Include="Factory\AbiquoClientFactory.cs" />
     <Compile Include="Authentication\BasicAuthenticationInformation.cs" />
     <Compile Include="Authentication\IAuthenticationInformation.cs" />
     <Compile Include="BaseAbiquoClient.cs" />
@@ -194,6 +194,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Communication\" />
     <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using biz.dfch.CS.Web.Utilities.Rest;
+using biz.dfch.CS.Abiquo.Client.Factory;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {

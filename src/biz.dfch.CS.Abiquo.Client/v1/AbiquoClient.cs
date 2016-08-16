@@ -22,7 +22,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
-﻿using biz.dfch.CS.Web.Utilities.Rest;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -44,23 +43,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Trace.WriteLine("END Login SUCCEEDED");
 
             return LoginResultEnum.Success;
-        }
-
-        private void ExecuteRestRequest(string urlSuffix)
-        {
-            var requestUri = CreateRequestUri(urlSuffix);
-            
-            var restCallExecutor = new RestCallExecutor();
-
-            // DFTODO - set wait time millis, etc
-            // DFTODO - implement retry
-            // DFTODO - honour result
-            var executionResult = restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
-        }
-
-        private string CreateRequestUri(string urlSuffix)
-        {
-            return string.Format("{0}/{1}", this.AbiquoApiBaseUrl.TrimEnd('/'), urlSuffix.TrimStart('/'));
         }
     }
 }

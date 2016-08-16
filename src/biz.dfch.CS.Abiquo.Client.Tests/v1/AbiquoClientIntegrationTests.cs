@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Abiquo.Client.Factory;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {

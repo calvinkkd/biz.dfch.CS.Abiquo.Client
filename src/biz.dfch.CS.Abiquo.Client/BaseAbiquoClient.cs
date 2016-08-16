@@ -17,6 +17,7 @@
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.Utilities.General;
 using biz.dfch.CS.Utilities.Logging;
+using biz.dfch.CS.Web.Utilities.Rest;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -49,6 +50,23 @@ namespace biz.dfch.CS.Abiquo.Client
 
                 Trace.WriteLine(string.Format("END {0}", Method.fn()));
             }
+        }
+
+        internal void ExecuteRestRequest(string urlSuffix)
+        {
+            var requestUri = CreateRequestUri(urlSuffix);
+
+            var restCallExecutor = new RestCallExecutor();
+
+            // DFTODO - set wait time millis, etc
+            // DFTODO - implement retry
+            // DFTODO - honour result
+            var executionResult = restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
+        }
+
+        private string CreateRequestUri(string urlSuffix)
+        {
+            return string.Format("{0}/{1}", this.AbiquoApiBaseUrl.TrimEnd('/'), urlSuffix.TrimStart('/'));
         }
     }
 }
