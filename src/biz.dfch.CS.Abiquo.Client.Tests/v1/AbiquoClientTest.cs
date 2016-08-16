@@ -88,12 +88,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
-            Mock.Arrange(() => new RestCallExecutor(true))
-                .Returns(restCallExecutor)
-                .OccursOnce();
-
             Mock.Arrange(() => restCallExecutor
                 .Invoke(HttpMethod.Get, expectedRequestUri, basicAuthInfo.GetAuthorizationHeaders(), null))
+                    .IgnoreInstance()
                     .OccursOnce();
 
             // Act
@@ -127,12 +124,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
-            Mock.Arrange(() => new RestCallExecutor(true))
-                .Returns(restCallExecutor)
-                .OccursOnce();
-
             Mock.Arrange(() => restCallExecutor
                 .Invoke(HttpMethod.Get, expectedRequestUri, basicAuthInfo.GetAuthorizationHeaders(), null))
+                    .IgnoreInstance()
                     .OccursOnce();
 
             // Act
