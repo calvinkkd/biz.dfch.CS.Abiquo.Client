@@ -54,6 +54,8 @@ namespace biz.dfch.CS.Abiquo.Client
 
         internal void ExecuteRestRequest(string urlSuffix)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
+
             var requestUri = CreateRequestUri(urlSuffix);
 
             var restCallExecutor = new RestCallExecutor();
@@ -66,6 +68,8 @@ namespace biz.dfch.CS.Abiquo.Client
 
         private string CreateRequestUri(string urlSuffix)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
+
             return string.Format("{0}/{1}", this.AbiquoApiBaseUrl.TrimEnd('/'), urlSuffix.TrimStart('/'));
         }
     }
