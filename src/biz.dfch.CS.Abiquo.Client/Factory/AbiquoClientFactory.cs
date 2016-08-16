@@ -21,28 +21,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.v1;
+using biz.dfch.CS.Utilities.Logging;
 
-namespace biz.dfch.CS.Abiquo.Client
+namespace biz.dfch.CS.Abiquo.Client.Factory
 {
     public class AbiquoClientFactory
     {
         public static BaseAbiquoClient GetByVersion(string version)
         {
-            Contract.Assert(!string.IsNullOrWhiteSpace(version));
+            Contract.Requires(!string.IsNullOrWhiteSpace(version));
+
+            Debug.WriteLine(string.Format("START Get AbiquoClient instance of version '{0}' ...", version));
+
+            AbiquoClient abiquoClient = null;
 
             switch (version)
             {
                 case "v1":
-                    return new AbiquoClient();
+                    abiquoClient = new AbiquoClient();
                     break;
                 default:
+                    Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' FAILED", version));
                     return null;
             }
+
+            Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' SUCCEEDED", version));
+
+            return abiquoClient;
         }
 
         public static BaseAbiquoClient GetByCommitHash(string gitCommitHash)
         {
-            Contract.Assert(!string.IsNullOrWhiteSpace(gitCommitHash));
+            Contract.Requires(!string.IsNullOrWhiteSpace(gitCommitHash));
 
             var version = LookupAbiquoClientVersion(gitCommitHash);
 
@@ -51,7 +61,8 @@ namespace biz.dfch.CS.Abiquo.Client
 
         private static string LookupAbiquoClientVersion(string gitCommitHash)
         {
-            // DFTODO - Lookup abiquo client version based on gitCommitHash value in mapping file/table (xml or something else)
+            Contract.Requires(!string.IsNullOrWhiteSpace(gitCommitHash));
+            // DFTODO - lookup abiquo client version based on gitCommitHash value in mapping file/table (xml or something else)
             return "v1";
         }
     }

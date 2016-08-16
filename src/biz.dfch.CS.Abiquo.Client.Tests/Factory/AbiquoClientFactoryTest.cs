@@ -21,32 +21,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.v1;
+﻿using biz.dfch.CS.Utilities.Testing;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using biz.dfch.CS.Abiquo.Client.Factory;
 
-namespace biz.dfch.CS.Abiquo.Client.Tests
+namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
 {
     [TestClass]
     public class AbiquoClientFactoryTest
     {
         [TestMethod]
-        public void GetByVersionReturnsCorrespondingAbiquoClient()
+        [ExpectContractFailure]
+        public void GetByVersionWithNullVersionThrowsContractException()
         {
+            // Arrange/Act
+            var abiquoClient = AbiquoClientFactory.GetByVersion(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void GetByVersionWithValidVersionReturnsCorrespondingAbiquoClient()
+        {
+            // Arrange/Act
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
+            
+            // Assert
             Assert.IsNotNull(abiquoClient);
             Assert.AreEqual(typeof(AbiquoClient).FullName, abiquoClient.GetType().FullName);
         }
 
         [TestMethod]
-        public void GetByVersionReturnsNull()
+        public void GetByVersionWithInvalidVersionReturnsNull()
         {
+            // Arrange/Act
             var abiquoClient = AbiquoClientFactory.GetByVersion("vx");
+
+            // Assert
             Assert.IsNull(abiquoClient);
         }
 
         [TestMethod]
         public void GetByCommitHashReturnsCorrespondingAbiquoClient()
         {
+            // Arrange/Act
             var abiquoClient = AbiquoClientFactory.GetByCommitHash("hash");
+            
+            // Assert
             Assert.IsNotNull(abiquoClient);
             Assert.AreEqual(typeof(AbiquoClient).FullName, abiquoClient.GetType().FullName);
         }

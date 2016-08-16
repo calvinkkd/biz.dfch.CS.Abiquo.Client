@@ -23,11 +23,16 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
-    public enum ELoginResult
+    public class UrlHelper
     {
-        Success,
-        NotAuthorized,
-        NotReachable,
-        Error,
+        public static string ConcatUrl(string baseUrl, string urlSuffix)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(baseUrl));
+            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
+
+            var resultingUrl = string.Format("{0}/{1}", baseUrl.TrimEnd('/'), urlSuffix.TrimStart('/'));
+
+            return resultingUrl;
+        }
     }
 }

@@ -14,17 +14,44 @@
  * limitations under the License.
  */
  
-﻿using System;
+﻿using biz.dfch.CS.Utilities.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
+﻿using System.Net.Http;
+﻿using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+﻿using biz.dfch.CS.Abiquo.Client.Communication;
+﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
-        
+        public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
+        {
+            Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUrl: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));
+
+            Logout();
+            this.AuthenticationInformation = authenticationInformation;
+            this.AbiquoApiBaseUrl = abiquoApiBaseUrl;
+
+            try
+            {
+                ExecuteRequest(HttpMethod.Get, AbiquoUrlSuffix.LOGIN, null);
+
+                this.IsLoggedIn = true;
+                Trace.WriteLine("END Login SUCCEEDED");
+                return true;
+            }
+            catch (HttpRequestException ex)
+            {
+                Logout();
+                Trace.WriteLine(string.Format("END Login FAILED ('{0}')", ex.Message));
+                return false;
+            }
+        }
     }
 }
