@@ -23,8 +23,9 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using biz.dfch.CS.Utilities.Testing;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using biz.dfch.CS.Abiquo.Client.Factory;
 
-namespace biz.dfch.CS.Abiquo.Client.Tests
+namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
 {
     [TestClass]
     public class AbiquoClientFactoryTest

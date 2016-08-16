@@ -22,7 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.v1;
 
-namespace biz.dfch.CS.Abiquo.Client
+namespace biz.dfch.CS.Abiquo.Client.Factory
 {
     public class AbiquoClientFactory
     {

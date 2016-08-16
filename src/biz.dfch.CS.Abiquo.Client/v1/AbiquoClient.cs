@@ -37,7 +37,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             this.AuthenticationInformation = authenticationInformation;
             this.AbiquoApiBaseUrl = abiquoApiBaseUrl;
 
-            DoMakeRequest(Constants.LOGIN_URL_SUFFIX);
+            ExecuteRestRequest(Constants.LOGIN_URL_SUFFIX);
 
             IsLoggedIn = true;
 
@@ -46,7 +46,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return LoginResultEnum.Success;
         }
 
-        private void DoMakeRequest(string urlSuffix)
+        private void ExecuteRestRequest(string urlSuffix)
         {
             var requestUri = CreateRequestUri(urlSuffix);
             
@@ -55,7 +55,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             // DFTODO - set wait time millis, etc
             // DFTODO - implement retry
             // DFTODO - honour result
-            restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
+            var executionResult = restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
         }
 
         private string CreateRequestUri(string urlSuffix)
