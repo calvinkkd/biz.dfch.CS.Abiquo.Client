@@ -56,14 +56,14 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
 
-            var requestUri = CreateRequestUri(urlSuffix);
-
+            // DFTODO - implement logging
             var restCallExecutor = new RestCallExecutor();
 
+            var requestUri = CreateRequestUri(urlSuffix);
             // DFTODO - set wait time millis, etc
             // DFTODO - implement retry
             // DFTODO - honour result
-            var executionResult = restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
+            restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
         }
 
         private string CreateRequestUri(string urlSuffix)

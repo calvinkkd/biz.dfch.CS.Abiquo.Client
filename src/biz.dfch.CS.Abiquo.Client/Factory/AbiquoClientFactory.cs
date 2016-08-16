@@ -61,6 +61,7 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
 
         private static string LookupAbiquoClientVersion(string gitCommitHash)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(gitCommitHash));
             // DFTODO - lookup abiquo client version based on gitCommitHash value in mapping file/table (xml or something else)
             return "v1";
         }
