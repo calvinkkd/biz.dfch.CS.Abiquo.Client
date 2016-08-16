@@ -55,7 +55,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             // DFTODO - set wait time millis, etc
             // DFTODO - implement retry
             // DFTODO - honour result
-            restCallExecutor.Invoke(HttpMethod.Get, requestUri.ToString(), AuthenticationInformation.GetAuthorizationHeaders(), null);
+            restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
         }
 
         private string CreateRequestUri(string urlSuffix)
