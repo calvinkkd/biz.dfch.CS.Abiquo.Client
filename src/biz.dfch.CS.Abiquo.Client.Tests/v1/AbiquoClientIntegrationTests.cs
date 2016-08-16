@@ -38,9 +38,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var basicAuthInfo = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
 
             // Act
-            abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
+            var loginResult = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
 
             // Assert
+            Assert.AreEqual(LoginResultEnum.Success, loginResult);
         }
 
         [TestMethod]
@@ -52,9 +53,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var basicAuthInfo = new BasicAuthenticationInformation("invalid-username", "invalid-password", IntegrationTestEnvironment.TenantId);
 
             // Act
-            abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
+            var loginResult = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
 
             // Assert
+            Assert.AreEqual(LoginResultEnum.NotAuthorized, loginResult);
         }
     }
 }
