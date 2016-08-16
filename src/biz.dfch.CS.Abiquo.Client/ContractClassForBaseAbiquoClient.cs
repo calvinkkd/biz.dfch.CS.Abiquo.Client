@@ -31,8 +31,8 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUrl));
             Contract.Requires(null != authenticationInformation);
-            Contract.Ensures(IsLoggedIn && !string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
-            Contract.Ensures(IsLoggedIn && null != this.AuthenticationInformation);
+            Contract.Ensures(Contract.Result<bool>() == !string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
+            Contract.Ensures(Contract.Result<bool>() == (null != this.AuthenticationInformation));
 
             return default(bool);
         }
