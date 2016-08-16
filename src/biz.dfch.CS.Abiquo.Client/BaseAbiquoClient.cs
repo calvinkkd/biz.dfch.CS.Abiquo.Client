@@ -56,7 +56,6 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
 
-            // DFTODO - implement logging
             var restCallExecutor = new RestCallExecutor();
 
             var requestUri = CreateRequestUri(urlSuffix);
