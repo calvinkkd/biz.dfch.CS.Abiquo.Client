@@ -31,8 +31,8 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUrl));
             Contract.Requires(null != authenticationInformation);
-
-            // DFTODO - ensure that AuthenticationInformation and AbiquoApiBaseUrl properties are set
+            Contract.Ensures(!string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
+            Contract.Ensures(null != this.AuthenticationInformation);
 
             return default(LoginResultEnum);
         }
