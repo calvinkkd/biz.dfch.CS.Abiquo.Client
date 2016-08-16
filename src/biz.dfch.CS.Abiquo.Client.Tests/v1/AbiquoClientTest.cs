@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+﻿using biz.dfch.CS.Abiquo.Client.Communication;
 ﻿using biz.dfch.CS.Utilities.Testing;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
@@ -82,7 +83,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LoginWithValidAuthenticationInformationReturnsSuccess()
         {
             // Arrange
-            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), Constants.LOGIN_URL_SUFFIX);
+            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
@@ -121,7 +122,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LogoutResetsAuthenticationInformationApiBaseUrlAndSetsLoggedInToFalse()
         {
             // Arrange
-            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), Constants.LOGIN_URL_SUFFIX);
+            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 

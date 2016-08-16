@@ -52,7 +52,7 @@ namespace biz.dfch.CS.Abiquo.Client
             }
         }
 
-        internal void ExecuteRestRequest(string urlSuffix)
+        internal void ExecuteRequest(string urlSuffix)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
 

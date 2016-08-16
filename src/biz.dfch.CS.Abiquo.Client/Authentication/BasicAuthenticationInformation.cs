@@ -18,7 +18,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
+﻿using System.Net.Http;
+﻿using System.Net.Http.Headers;
+﻿using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.Authentication
@@ -28,8 +30,6 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
         private readonly string Username;
         private readonly string Password;
         private readonly string TenantId;
-
-        public const string BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Basic {0}";
 
         public BasicAuthenticationInformation(string username, string password, string tenantId)
         {
@@ -58,7 +58,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             var base64EncodedAuthorizationHeaderValue = Convert.ToBase64String(plainTextBytes);
 
-            return string.Format(BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
+            return string.Format(Constants.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
         }
 
         public string GetTenantId()

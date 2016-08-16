@@ -21,12 +21,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client
+namespace biz.dfch.CS.Abiquo.Client.v1
 {
-    public abstract class Constants
+    public abstract class AbiquoAcceptHeaders
     {
-        public const string AUTHORIZATION_HEADER_KEY = "Authorization";
-
-        public const string LOGIN_URL_SUFFIX = "/login";
+        public const string VND_ABIQUO_ENTERPRISES = "application/vnd.abiquo.enterprises+json; version=3.8";
     }
 }

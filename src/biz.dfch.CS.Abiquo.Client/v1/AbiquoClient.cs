@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+﻿using biz.dfch.CS.Abiquo.Client.Communication;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -36,7 +37,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             this.AuthenticationInformation = authenticationInformation;
             this.AbiquoApiBaseUrl = abiquoApiBaseUrl;
 
-            ExecuteRestRequest(Constants.LOGIN_URL_SUFFIX);
+            ExecuteRequest(AbiquoUrlSuffix.LOGIN);
 
             IsLoggedIn = true;
 
