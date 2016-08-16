@@ -83,13 +83,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LoginWithValidAuthenticationInformationReturnsSuccess()
         {
             // Arrange
-            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
+            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor
-                .Invoke(HttpMethod.Get, expectedRequestUri, basicAuthInfo.GetAuthorizationHeaders(), null))
+                .Invoke(HttpMethod.Get, expectedRequestUrl, basicAuthInfo.GetAuthorizationHeaders(), null))
                     .IgnoreInstance()
                     .OccursOnce();
 
@@ -119,13 +119,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LogoutResetsAuthenticationInformationApiBaseUrlAndSetsLoggedInToFalse()
         {
             // Arrange
-            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
+            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor
-                .Invoke(HttpMethod.Get, expectedRequestUri, basicAuthInfo.GetAuthorizationHeaders(), null))
+                .Invoke(HttpMethod.Get, expectedRequestUrl, basicAuthInfo.GetAuthorizationHeaders(), null))
                     .IgnoreInstance()
                     .OccursOnce();
 

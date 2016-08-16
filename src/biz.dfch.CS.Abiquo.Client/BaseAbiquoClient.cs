@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
 {
     [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
@@ -42,7 +43,7 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             if (IsLoggedIn)
             {
-                Trace.WriteLine(string.Format("START {0}", Method.fn()));
+                Debug.WriteLine(string.Format("START {0}", Method.fn()));
 
                 this.IsLoggedIn = false;
                 this.AbiquoApiBaseUrl = null;
@@ -52,24 +53,19 @@ namespace biz.dfch.CS.Abiquo.Client
             }
         }
 
-        internal void ExecuteRequest(string urlSuffix)
+        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, string body)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
+
+            var requestUrl = UrlHelper.ConcatUrl(this.AbiquoApiBaseUrl, urlSuffix);
+            Debug.WriteLine(string.Format("START Executing request '{0} {1}' ...", httpMethod, requestUrl));
 
             var restCallExecutor = new RestCallExecutor();
+            
+            var result = restCallExecutor.Invoke(HttpMethod.Get, requestUrl, AuthenticationInformation.GetAuthorizationHeaders(), body);
 
-            var requestUri = CreateRequestUri(urlSuffix);
-            // DFTODO - set wait time millis, etc
-            // DFTODO - implement retry
-            // DFTODO - honour result
-            restCallExecutor.Invoke(HttpMethod.Get, requestUri, AuthenticationInformation.GetAuthorizationHeaders(), null);
-        }
-
-        private string CreateRequestUri(string urlSuffix)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
-
-            return string.Format("{0}/{1}", this.AbiquoApiBaseUrl.TrimEnd('/'), urlSuffix.TrimStart('/'));
+            Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUrl));
+            return result;
         }
     }
 }

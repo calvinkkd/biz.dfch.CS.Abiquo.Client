@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
+﻿using biz.dfch.CS.Web.Utilities.Rest;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -30,14 +31,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
     {
         public override LoginResultEnum Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
-            Trace.WriteLine(string.Format("START Login (AbiquoApiBaseUrl = '{0}'; TenantId = '{1}'; ) ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));
+            Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUrl: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));
 
             Logout();
 
             this.AuthenticationInformation = authenticationInformation;
             this.AbiquoApiBaseUrl = abiquoApiBaseUrl;
 
-            ExecuteRequest(AbiquoUrlSuffix.LOGIN);
+            ExecuteRequest(HttpMethod.Get, AbiquoUrlSuffix.LOGIN, null);
 
             IsLoggedIn = true;
 
