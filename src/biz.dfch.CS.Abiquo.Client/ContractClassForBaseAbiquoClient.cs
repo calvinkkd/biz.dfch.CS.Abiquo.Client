@@ -27,14 +27,14 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
-        public override LoginResultEnum Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
+        public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUrl));
             Contract.Requires(null != authenticationInformation);
-            Contract.Ensures(!string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
-            Contract.Ensures(null != this.AuthenticationInformation);
+            Contract.Ensures(IsLoggedIn && !string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
+            Contract.Ensures(IsLoggedIn && null != this.AuthenticationInformation);
 
-            return default(LoginResultEnum);
+            return default(bool);
         }
     }
 }

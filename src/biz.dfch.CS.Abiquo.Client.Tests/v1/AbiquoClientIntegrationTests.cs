@@ -31,32 +31,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
     {
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void LoginWithValidAuthenticationInformationSucceeds()
+        public void LoginWithValidAuthenticationInformationReturnsTrue()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             var basicAuthInfo = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
 
             // Act
-            var loginResult = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
 
             // Assert
-            Assert.AreEqual(LoginResultEnum.Success, loginResult);
+            Assert.IsTrue(loginSucceeded);
         }
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void LoginWithInValidAuthenticationInformationResultsInNotAuthorized()
+        public void LoginWithInValidAuthenticationInformationReturnsFalse()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             var basicAuthInfo = new BasicAuthenticationInformation("invalid-username", "invalid-password", IntegrationTestEnvironment.TenantId);
 
             // Act
-            var loginResult = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
 
             // Assert
-            Assert.AreEqual(LoginResultEnum.NotAuthorized, loginResult);
+            Assert.IsFalse(loginSucceeded);
         }
     }
 }

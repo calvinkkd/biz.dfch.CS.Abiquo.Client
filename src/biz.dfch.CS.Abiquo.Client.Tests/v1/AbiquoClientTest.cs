@@ -18,7 +18,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
+﻿using System.Net.Http;
+﻿using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
@@ -27,6 +28,7 @@ using System.Threading.Tasks;
 using Telerik.JustMock;
 using biz.dfch.CS.Web.Utilities.Rest;
 using biz.dfch.CS.Abiquo.Client.Factory;
+﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
@@ -80,7 +82,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void LoginWithValidAuthenticationInformationReturnsSuccess()
+        public void LoginWithValidAuthenticationInformationReturnsTrue()
         {
             // Arrange
             var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
@@ -94,25 +96,36 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                     .OccursOnce();
 
             // Act
-            var loginResult = abiquoClient.Login(ABIQUO_API_BASE_URL, basicAuthInfo);
+            var loginSucceeded = abiquoClient.Login(ABIQUO_API_BASE_URL, basicAuthInfo);
             
             // Assert
-            Assert.AreEqual(LoginResultEnum.Success, loginResult);
+            Assert.IsTrue(loginSucceeded);
 
             Mock.Assert(restCallExecutor);
         }
 
         [TestMethod]
-        public void LoginWithInvalidAuthenticationInformationReturnsNotAuthorized()
+        public void LoginWithInvalidAuthenticationInformationReturnsFalse()
         {
             // Arrange
+            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
+            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor
+                .Invoke(HttpMethod.Get, expectedRequestUrl, basicAuthInfo.GetAuthorizationHeaders(), null))
+                    .IgnoreInstance()
+                    .Throws<HttpRequestException>()
+                    .OccursOnce();
 
             // Act
-
+            var loginSucceeded = abiquoClient.Login(ABIQUO_API_BASE_URL, basicAuthInfo);
 
             // Assert
+            Assert.IsFalse(loginSucceeded);
 
+            Mock.Assert(restCallExecutor);
         }
 
         [TestMethod]
@@ -130,9 +143,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                     .OccursOnce();
 
             // Act
-            var loginResult = abiquoClient.Login(ABIQUO_API_BASE_URL, basicAuthInfo);
+            var loginSucceeded = abiquoClient.Login(ABIQUO_API_BASE_URL, basicAuthInfo);
 
-            Assert.AreEqual(LoginResultEnum.Success, loginResult);
+            Assert.IsTrue(loginSucceeded);
             Assert.AreEqual(true, abiquoClient.IsLoggedIn);
             Assert.AreEqual(basicAuthInfo, abiquoClient.AuthenticationInformation);
             Assert.AreEqual(ABIQUO_API_BASE_URL, abiquoClient.AbiquoApiBaseUrl);
