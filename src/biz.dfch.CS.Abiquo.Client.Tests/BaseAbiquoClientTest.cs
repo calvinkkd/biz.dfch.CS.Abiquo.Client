@@ -82,18 +82,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
-        [TestMethod]
-        [ExpectContractFailure]
-        public void ExecuteRequestWithHttpPostAndInValidUrlSuffixThrowsContractException()
-        {
-            // Arrange
-            var abiquoClient = new DummyAbiquoClient();
-
-            // Act
-            abiquoClient.ExecuteRequest(HttpMethod.Post, AbiquoUrlSuffix.LOGIN);
-
-            // Assert
-        }
 
 
         private class DummyAbiquoClient : BaseAbiquoClient
