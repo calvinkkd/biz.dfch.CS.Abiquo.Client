@@ -189,7 +189,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UrlHelper.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
-    <Compile Include="v1\AbiquoAcceptHeaders.cs" />
+    <Compile Include="v1\AbiquoMediaDataTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
