@@ -29,7 +29,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
     [TestClass]
     public class UrlHelperTest
     {
-        private const string ABIQUO_API_BASE_URL = "http://abiquo/api/";
+        private const string ABIQUO_API_BASE_URL = "https://abiquo/api/";
 
         [TestMethod]
         [ExpectContractFailure]

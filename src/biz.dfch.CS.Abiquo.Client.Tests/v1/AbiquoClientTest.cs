@@ -36,7 +36,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
     [TestClass]
     public class AbiquoClientTest
     {
-        private const string ABIQUO_API_BASE_URL = "http://abiquo/api/";
+        private const string ABIQUO_API_BASE_URL = "https://abiquo/api/";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
         private const string TENANT_ID = "1";
