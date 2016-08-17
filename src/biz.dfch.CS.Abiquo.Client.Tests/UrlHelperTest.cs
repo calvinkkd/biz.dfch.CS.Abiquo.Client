@@ -83,7 +83,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ConcatUrlReturnsValidUrl()
         {
             // Arrange
-            var expectedResult = "http://example.com/api"
+            var expectedResult = "http://example.com/api";
 
             // Act
 
