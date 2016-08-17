@@ -32,7 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
     public abstract class BaseAbiquoClient
     {
-        public string Version { get; protected set; }
+        public string AbiquoApiVersion { get; protected set; }
 
         public bool IsLoggedIn { get; protected set; }
 
@@ -44,7 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(!string.IsNullOrWhiteSpace(Version));
+            Contract.Invariant(!string.IsNullOrWhiteSpace(AbiquoApiVersion));
         }
 
 
@@ -60,6 +60,8 @@ namespace biz.dfch.CS.Abiquo.Client
 
             Trace.WriteLine(string.Format("END {0}", Method.fn()));
         }
+
+        #region ExecuteRequest
 
         internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix)
         {
@@ -101,6 +103,8 @@ namespace biz.dfch.CS.Abiquo.Client
             Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUrl));
             return result;
         }
+
+        #endregion ExecuteRequest
 
         #region Invoke
 

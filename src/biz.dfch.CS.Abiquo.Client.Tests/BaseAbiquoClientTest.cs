@@ -88,7 +88,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         {
             public DummyAbiquoClient()
             {
-                Version = "Arbitrary-Version";
+                AbiquoApiVersion = "Arbitrary-Version";
             }
 
             public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)

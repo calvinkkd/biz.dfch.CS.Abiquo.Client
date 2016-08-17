@@ -45,7 +45,7 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
                     return null;
             }
 
-            Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' [AbiquoVersion: '{1}'] SUCCEEDED", version, abiquoClient.Version));
+            Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' [AbiquoVersion: '{1}'] SUCCEEDED", version, abiquoClient.AbiquoApiVersion));
 
             return abiquoClient;
         }
