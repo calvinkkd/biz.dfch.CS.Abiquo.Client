@@ -30,7 +30,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
-        public const string ABIQUO_VERSION = "3.8";
+        internal AbiquoClient()
+        {
+            Version = "3.8";
+        }
 
         public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
@@ -42,7 +45,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             try
             {
-                ExecuteRequest(HttpMethod.Get, AbiquoUrlSuffix.LOGIN, null);
+                ExecuteRequest(HttpMethod.Get, AbiquoUrlSuffix.LOGIN);
 
                 this.IsLoggedIn = true;
                 Trace.WriteLine("END Login SUCCEEDED");

@@ -68,7 +68,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
         }
 
         [TestMethod]
-        public void GetByCommitHashReturnsCorrespondingAbiquoClient()
+        [ExpectedException(typeof(NotImplementedException))]
+        public void GetByCommitHashThrowsNotImplementedException()
         {
             // Arrange
             
@@ -76,8 +77,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
             var abiquoClient = AbiquoClientFactory.GetByCommitHash("hash");
             
             // Assert
-            Assert.IsNotNull(abiquoClient);
-            Assert.AreEqual(typeof(AbiquoClient).FullName, abiquoClient.GetType().FullName);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
                     return null;
             }
 
-            Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' SUCCEEDED", version));
+            Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' [AbiquoVersion: '{1}'] SUCCEEDED", version, abiquoClient.Version));
 
             return abiquoClient;
         }
@@ -62,8 +62,8 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
         private static string LookupAbiquoClientVersion(string gitCommitHash)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(gitCommitHash));
-            // DFTODO - lookup abiquo client version based on gitCommitHash value in mapping file/table (xml or something else)
-            return "v1";
+
+            throw new NotImplementedException();
         }
     }
 }
