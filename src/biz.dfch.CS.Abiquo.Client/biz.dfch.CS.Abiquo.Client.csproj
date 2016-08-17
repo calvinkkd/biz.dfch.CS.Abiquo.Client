@@ -186,6 +186,7 @@
     <Compile Include="Authentication\IAuthenticationInformation.cs" />
     <Compile Include="BaseAbiquoClient.cs" />
     <Compile Include="ContractClassForBaseAbiquoClient.cs" />
+    <Compile Include="v1\Model\AbiquoBaseDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UrlHelper.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
@@ -195,9 +196,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
