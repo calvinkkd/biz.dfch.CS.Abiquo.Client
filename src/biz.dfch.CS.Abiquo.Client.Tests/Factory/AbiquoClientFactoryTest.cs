@@ -34,7 +34,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
         [ExpectContractFailure]
         public void GetByVersionWithNullVersionThrowsContractException()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             var abiquoClient = AbiquoClientFactory.GetByVersion(null);
 
             // Assert
@@ -43,7 +45,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
         [TestMethod]
         public void GetByVersionWithValidVersionReturnsCorrespondingAbiquoClient()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
             
             // Assert
@@ -54,7 +58,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
         [TestMethod]
         public void GetByVersionWithInvalidVersionReturnsNull()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             var abiquoClient = AbiquoClientFactory.GetByVersion("vx");
 
             // Assert
@@ -64,7 +70,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
         [TestMethod]
         public void GetByCommitHashReturnsCorrespondingAbiquoClient()
         {
-            // Arrange/Act
+            // Arrange
+            
+            // Act
             var abiquoClient = AbiquoClientFactory.GetByCommitHash("hash");
             
             // Assert

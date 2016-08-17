@@ -35,37 +35,63 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         [ExpectContractFailure]
         public void ConcatUrlWithInvalidBaseUrlThrowsContractException()
         {
+            // Arrange
+
+            // Act
             UrlHelper.ConcatUrl(null, AbiquoUrlSuffix.LOGIN);
+
+            // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
         public void ConcatUrlWithEmptyBaseUrlThrowsContractException()
         {
+            // Arrange
+
+            // Act
             UrlHelper.ConcatUrl(" ", AbiquoUrlSuffix.LOGIN);
+
+            // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
         public void ConcatUrlWithNullUrlSuffixThrowsContractException()
         {
+            // Arrange
+
+            // Act
             UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, null);
+
+            // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
         public void ConcatUrlWithEmptyUrlSuffixThrowsContractException()
         {
+            // Arrange
+
+            // Act
             UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, null);
+            
+            // Assert
         }
 
         [TestMethod]
         public void ConcatUrlReturnsValidUrl()
         {
-            Assert.AreEqual("http://example.com/api", UrlHelper.ConcatUrl("http://example.com/", "/api"));
-            Assert.AreEqual("http://example.com/api", UrlHelper.ConcatUrl("http://example.com/", "api"));
-            Assert.AreEqual("http://example.com/api", UrlHelper.ConcatUrl("http://example.com", "/api"));
-            Assert.AreEqual("http://example.com/api", UrlHelper.ConcatUrl("http://example.com", "api"));
+            // Arrange
+            var expectedResult = "http://example.com/api"
+
+            // Act
+
+            // Assert
+            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com/", "/api"));
+            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com/", "api"));
+            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com", "/api"));
+            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com", "api"));
         }
     }
 }
