@@ -48,7 +48,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithHttpPutAndValidUrlSuffixThrowsContractException()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
 
             // Act
             abiquoClient.ExecuteRequest(HttpMethod.Put, AbiquoUrlSuffix.LOGIN);
@@ -61,7 +61,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithInvalidUrlSuffixThrowsContractException()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
 
             // Act
             abiquoClient.ExecuteRequest(HttpMethod.Get, " ");
@@ -74,7 +74,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithHttpPostAndValidUrlSuffixThrowsContractException()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
 
             // Act
             abiquoClient.ExecuteRequest(HttpMethod.Post, AbiquoUrlSuffix.LOGIN);
@@ -87,7 +87,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithHttpPostAndInValidUrlSuffixThrowsContractException()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
 
             // Act
             abiquoClient.ExecuteRequest(HttpMethod.Post, AbiquoUrlSuffix.LOGIN);
@@ -96,15 +96,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
 
-        private class ValidAbiquoClient : BaseAbiquoClient
+        private class DummyAbiquoClient : BaseAbiquoClient
         {
-            public ValidAbiquoClient()
+            public DummyAbiquoClient()
             {
                 Version = "Arbitrary-Version";
             }
 
             public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
             {
+                IsLoggedIn = true;
+                AbiquoApiBaseUrl = "https://arbitrary/base/url";
+
                 return true;
             }
         }
