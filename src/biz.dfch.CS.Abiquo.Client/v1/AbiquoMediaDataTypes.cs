@@ -120,7 +120,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public static string VND_ABIQUO_STORAGEPOOLWITHTIER = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.storagepoolwithtier", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_STORAGEPOOLSWITHTIER = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.storagepoolswithtier", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_STORAGEPOOLWITHDEVICE = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.storagepoolwithdevice", AbiquoClient.ABIQUO_API_VERSION);
-        public static string VND_ABIQUO_STORAGEPOOLWITHDEVICE = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.storagepoolwithdevice", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_STORAGEPOOLSWITHDEVICE = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.storagepoolswithdevice", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_SYSTEMPROPERTY = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.systemproperty", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_SYSTEMPROPERTIES = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.systemproperties", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_TASK = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.task", AbiquoClient.ABIQUO_API_VERSION);
@@ -153,7 +153,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public static string VND_ABIQUO_VIRTUALMACHINEWITHNODE = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachinewithnode", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALMACHINESWITHNODE = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachineswithnode", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALMACHINEWITHNODEEXTENDED = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachinewithnodeextended", AbiquoClient.ABIQUO_API_VERSION);
-        public static string VND_ABIQUO_VIRTUALMACHINEWITHNODEEXTENDED = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachinewithnodeextended", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_VIRTUALMACHINESWITHNODEEXTENDED = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachineswithnodeextended", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALMACHINETEMPLATE = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachinetemplate", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALMACHINETEMPLATES = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachinetemplates", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALMACHINESTATE = string.Format(VERSION_TEMPLATE, "application/vnd.abiquo.virtualmachinestate", AbiquoClient.ABIQUO_API_VERSION);
