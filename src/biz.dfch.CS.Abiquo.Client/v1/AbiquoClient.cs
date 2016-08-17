@@ -30,6 +30,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
+        public const string ABIQUO_VERSION = "3.8";
+
         public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
         {
             Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUrl: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));

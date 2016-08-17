@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Telerik.JustMock;
 using biz.dfch.CS.Web.Utilities.Rest;
 using biz.dfch.CS.Abiquo.Client.Factory;
+﻿using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
@@ -39,6 +40,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
         private const string TENANT_ID = "1";
+
+        [TestMethod]
+        public void AbiquoVersionConstantMatchesVersion3_8()
+        {
+            // Arrange
+            var abiquoVersion = "3.8";
+
+            // Act
+
+            // Assert
+            Assert.AreEqual(abiquoVersion, AbiquoClient.ABIQUO_VERSION);
+        }
 
         [TestMethod]
         [ExpectContractFailure]
