@@ -25,14 +25,34 @@ namespace biz.dfch.CS.Abiquo.Client
 {
     public class UrlHelper
     {
+        public const char CHARACTER_TO_TRIM_ON = '/';
+        public const string FILTER_SEPARATOR = "&";
+
         public static string ConcatUrl(string baseUrl, string urlSuffix)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(baseUrl));
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
 
-            var resultingUrl = string.Format("{0}/{1}", baseUrl.TrimEnd('/'), urlSuffix.TrimStart('/'));
+            var resultingUrl = string.Format("{0}/{1}", baseUrl.TrimEnd(CHARACTER_TO_TRIM_ON), urlSuffix.TrimStart(CHARACTER_TO_TRIM_ON).TrimEnd(CHARACTER_TO_TRIM_ON));
 
             return resultingUrl;
+        }
+
+        public static string CreateFilterString(IDictionary<string, object> filter)
+        {
+            Contract.Requires(null != filter);
+            Contract.Requires(filter.Count > 0);
+
+            var filterString = string.Empty;
+            var separator = string.Empty;
+
+            foreach (var parameter in filter)
+            {
+                filterString += string.Format("{0}{1}={2}", separator, parameter.Key, parameter.Value);
+                separator = FILTER_SEPARATOR;
+            }
+
+            return filterString;
         }
     }
 }
