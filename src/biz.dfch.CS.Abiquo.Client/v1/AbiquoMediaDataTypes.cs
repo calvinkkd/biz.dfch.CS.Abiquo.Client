@@ -23,8 +23,10 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
-    public abstract class AbiquoAcceptHeaders
+    public abstract class AbiquoMediaDataTypes
     {
-        public const string VND_ABIQUO_ENTERPRISES = "application/vnd.abiquo.enterprises+json; version=3.8";
+        private const string VERSION_TEMPLATE = "{0}+json; version {2}";
+
+        
     }
 }
