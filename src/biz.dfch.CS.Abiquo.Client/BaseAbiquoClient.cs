@@ -24,6 +24,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
@@ -68,19 +69,19 @@ namespace biz.dfch.CS.Abiquo.Client
             return ExecuteRequest(httpMethod, urlSuffix, null, null);
         }
 
-        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, string body)
+        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, object body)
         {
             return ExecuteRequest(httpMethod, urlSuffix, null, body);
         }
 
-        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, IDictionary<string, string> headers, string body)
+        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, IDictionary<string, string> headers, object body)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
             Contract.Requires(!string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
             Contract.Requires(null != this.AuthenticationInformation);
 
             var requestUrl = UrlHelper.ConcatUrl(this.AbiquoApiBaseUrl, urlSuffix);
-            Debug.WriteLine(string.Format("START Executing request '{0} {1}' ...", httpMethod, requestUrl));
+            Debug.WriteLine(string.Format("START Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUrl, headers, body));
 
             var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
             if (null != headers)
@@ -88,11 +89,62 @@ namespace biz.dfch.CS.Abiquo.Client
                 headers.ToList().ForEach(header => requestHeaders[header.Key] = header.Value);
             }
 
+            String requestBody = null;
+            if (null != body)
+            {
+                requestBody = JsonConvert.SerializeObject(body);
+            }
+
             var restCallExecutor = new RestCallExecutor();
-            var result = restCallExecutor.Invoke(HttpMethod.Get, requestUrl, requestHeaders, body);
+            var result = restCallExecutor.Invoke(HttpMethod.Get, requestUrl, requestHeaders, requestBody);
 
             Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUrl));
             return result;
         }
+
+        #region Invoke
+
+        public string Invoke(string urlSuffix)
+        {
+            return Invoke(HttpMethod.Get, urlSuffix, null, null, null);
+        }
+
+        public string Invoke(string urlSuffix, IDictionary<string, object> filter)
+        {
+            return Invoke(HttpMethod.Get, urlSuffix, filter, null, null);
+        }
+
+        public string Invoke(HttpMethod method, string urlSuffix)
+        {
+            return Invoke(method, urlSuffix, null, null, null);
+        }
+
+        public string Invoke(HttpMethod method, string urlSuffix, object body)
+        {
+            return Invoke(method, urlSuffix, null, null, body);
+        }
+
+        private string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, object body)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
+            Contract.Requires(Uri.IsWellFormedUriString(urlSuffix, UriKind.Relative), "Invalid relative url");
+            Contract.Requires(this.IsLoggedIn, "Not logged in, call method login first");
+
+            Debug.WriteLine(string.Format("START calling invoke method({0}, {1}, {2} - {3} - {4}) ...", httpMethod, urlSuffix, filter, headers, body));
+
+            if (null != filter)
+            {
+                var filterString = UrlHelper.CreateFilterString(filter);
+                urlSuffix = string.Format("{0}?{1}", urlSuffix, filterString);
+            }
+
+            var response = ExecuteRequest(httpMethod, urlSuffix, headers, body);
+
+            Trace.WriteLine(string.Format("END calling invoke method({0}, {1} - {2} - {3}) SUCCEEDED", httpMethod, urlSuffix, headers, body));
+
+            return response;
+        }
+
+        #endregion Invoke
     }
 }
