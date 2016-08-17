@@ -42,15 +42,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         private const string TENANT_ID = "1";
 
         [TestMethod]
-        public void AbiquoVersionConstantMatchesVersion3_8()
+        public void AbiquoClientVersionMatchesVersion3_8()
         {
             // Arrange
             var abiquoVersion = "3.8";
 
             // Act
+            var abiquoClient = new AbiquoClient();
 
             // Assert
-            Assert.AreEqual(abiquoVersion, AbiquoClient.ABIQUO_VERSION);
+            Assert.AreEqual(abiquoVersion, abiquoClient.Version);
         }
 
         [TestMethod]
