@@ -128,7 +128,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(method, urlSuffix, null, null, body);
         }
 
-        private string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, object body)
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, object body)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
             Contract.Requires(Uri.IsWellFormedUriString(urlSuffix, UriKind.Relative), "Invalid relative url");
