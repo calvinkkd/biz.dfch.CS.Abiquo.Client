@@ -18,7 +18,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
+﻿using System.Runtime.CompilerServices;
+﻿using System.Text;
 using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.Authentication;
@@ -26,6 +27,8 @@ using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Web.Utilities.Rest;
+﻿using Newtonsoft.Json;
+﻿using Newtonsoft.Json.Linq;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
@@ -34,7 +37,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
     {
         private const string ABIQUO_CLIENT_VERSION = "v1";
 
-        private IAuthenticationInformation basicAuthenticationInformation = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
+        private readonly IAuthenticationInformation basicAuthenticationInformation = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
@@ -63,6 +66,96 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Assert
             Assert.IsFalse(loginSucceeded);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void InvokeGetUsersReturnsAbiquoUsersWithRoles()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthenticationInformation);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLESDTO }
+            };
+
+            // Act
+            var requestUrlSuffix = string.Format(AbiquoUrlSuffix.USERS_BY_ENTERPRISE_ID_TEMPLATE, IntegrationTestEnvironment.TenantId);
+            var result = abiquoClient.Invoke(HttpMethod.Get, requestUrlSuffix, null, headers, null);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void InvokeGetEnterprisesReturnsAbiquoEnterprises()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthenticationInformation);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            // Act
+            var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUrlSuffix.ENTERPRISES, null, headers, null);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void InvokePostEnterprisesCreatesNewAbiquoEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthenticationInformation);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var enterpriseName = Guid.NewGuid().ToString();
+            var bodyTemplate = @"
+            {
+                ""cpuCountHardLimit"": 2, 
+                ""diskHardLimitInMb"": 2, 
+                ""isReservationRestricted"": false, 
+                ""twoFactorAuthenticationMandatory"": false, 
+                ""ramSoftLimitInMb"": 1, 
+                ""links"": [], 
+                ""workflow"": false, 
+                ""vlansHard"": 0, 
+                ""publicIpsHard"": 0, 
+                ""publicIpsSoft"": 0, 
+                ""ramHardLimitInMb"": 2, 
+                ""vlansSoft"": 0, 
+                ""cpuCountSoftLimit"": 1, 
+                ""diskSoftLimitInMb"": 1, 
+                ""name"": ""{0}""
+            }";
+            var body = string.Format(bodyTemplate, enterpriseName);
+
+            // Act
+            var result = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffix.ENTERPRISES, null, headers, body);
+
+            var resultingEnterprise = JsonConvert.DeserializeObject<dynamic>(result);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+
+            var requestUrlSuffix = string.Format(AbiquoUrlSuffix.ENTERPRISE_BY_ID_TEMPLATE, resultingEnterprise.id.ToString());
+            result = abiquoClient.Invoke(HttpMethod.Delete, requestUrlSuffix, null, headers, null);
         }
     }
 }

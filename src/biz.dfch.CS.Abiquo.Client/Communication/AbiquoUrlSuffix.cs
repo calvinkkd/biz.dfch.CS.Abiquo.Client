@@ -26,6 +26,8 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
     public abstract class AbiquoUrlSuffix
     {
         public const string LOGIN = "/login";
-        public const string USERS_TEMPLATE = "/admin/enterprises/{0}/users";
+        public const string USERS_BY_ENTERPRISE_ID_TEMPLATE = "/admin/enterprises/{0}/users";
+        public const string ENTERPRISES = "/admin/enterprises";
+        public const string ENTERPRISE_BY_ID_TEMPLATE = "/admin/enterprises/{0}";
     }
 }
