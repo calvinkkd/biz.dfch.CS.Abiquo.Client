@@ -25,12 +25,23 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Utilities.Testing;
 ﻿using biz.dfch.CS.Web.Utilities.Rest;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Telerik.JustMock;
+using biz.dfch.CS.Abiquo.Client.v1;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests
 {
     [TestClass]
     public class BaseAbiquoClientTest
     {
+        private const string ABIQUO_API_BASE_URL = "https://abiquo/api/";
+        private const string URL_SUFFIX = "/enterprises";
+        private const string USERNAME = "ArbitraryUsername";
+        private const string PASSWORD = "ArbitraryPassword";
+        private const string TENANT_ID = "1";
+
+        private readonly IAuthenticationInformation authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+        private static readonly string BEARER_TOKEN = "Bearer TESTTOKEN";
+
         [TestMethod]
         [ExpectContractFailure]
         public void InvalidBaseAbqiuoClientThatDoesNotSetVersionPropertyThrowsContractExceptionOnInstantiation()
@@ -48,7 +59,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithHttpPutAndValidUrlSuffixThrowsContractException()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
 
             // Act
             abiquoClient.ExecuteRequest(HttpMethod.Put, AbiquoUrlSuffix.LOGIN);
@@ -61,7 +72,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithInvalidUrlSuffixThrowsContractException()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
 
             // Act
             abiquoClient.ExecuteRequest(HttpMethod.Get, " ");
@@ -70,47 +81,160 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectContractFailure]
-        public void ExecuteRequestWithHttpPostAndValidUrlSuffixThrowsContractException()
+        public void ExecuteRequestWithoutAdditionalHeadersAndBodyCallsRestCallExecutor()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
+
+            var expectedRequestUrl = UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, URL_SUFFIX);
+            
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUrl, authenticationInformation.GetAuthorizationHeaders(), null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
 
             // Act
-            abiquoClient.ExecuteRequest(HttpMethod.Post, AbiquoUrlSuffix.LOGIN);
+            var result = abiquoClient.ExecuteRequest(HttpMethod.Get, URL_SUFFIX, null, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        public void ExecuteRequestWithAdditionalHeadersMergesHeadersAndCallsRestCallExecutorWithMergedHeaders()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
+
+            var expectedRequestUrl = UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, URL_SUFFIX);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                ,
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUrl, headers, null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
+
+            // Act
+            var result = abiquoClient.ExecuteRequest(HttpMethod.Get, URL_SUFFIX, headers, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void InvokeWithEmptyUrlSuffixThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
+
+            // Act
+            abiquoClient.Invoke(HttpMethod.Get, " ", null, null, null);
 
             // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ExecuteRequestWithHttpPostAndInValidUrlSuffixThrowsContractException()
+        public void InvokeWithInvalidUrlSuffixThrowsContractException()
         {
             // Arrange
-            var abiquoClient = new ValidAbiquoClient();
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
 
             // Act
-            abiquoClient.ExecuteRequest(HttpMethod.Post, AbiquoUrlSuffix.LOGIN);
+            abiquoClient.Invoke(HttpMethod.Get, "http://example.com", null, null, null);
 
             // Assert
         }
 
-
-        private class ValidAbiquoClient : BaseAbiquoClient
+        [TestMethod]
+        [ExpectContractFailure]
+        public void InvokeIfNotLoggedInThrowsContractException()
         {
-            public ValidAbiquoClient()
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, null, null, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void InvokeWithFilterCallsRestCallExecutorWithRequestUrlContainingFilterExpression()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
+
+            var filter = new Dictionary<string, object>()
             {
-                Version = "Arbitrary-Version";
+                {"currentPage", 1},
+                {"limit", "25"}
+            };
+
+            var expectedRequestUrl = string.Format("{0}?{1}", UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, URL_SUFFIX), "currentPage=1&limit=25");
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                ,
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUrl, headers, null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
+
+            // Act
+            var result = abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, filter, headers, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        private class DummyAbiquoClient : BaseAbiquoClient
+        {
+            public DummyAbiquoClient()
+            {
+                AbiquoApiVersion = "Arbitrary-Version";
             }
 
             public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
             {
+                AbiquoApiBaseUrl = abiquoApiBaseUrl;
+                AuthenticationInformation = authenticationInformation;
+
+                IsLoggedIn = true;
+
                 return true;
             }
         }
 
         private class InvalidAbiquoClient : BaseAbiquoClient
         {
+            // AbiquoApiVersion intentionally not set in constructor for testing purposes
+
             public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
             {
                 return true;

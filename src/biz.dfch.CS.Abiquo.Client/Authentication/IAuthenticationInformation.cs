@@ -24,8 +24,16 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
 {
     public interface IAuthenticationInformation
     {
+        /// <summary>
+        /// The authentication headers for authentication against Abiquo
+        /// </summary>
+        /// <returns></returns>
         IDictionary<string, string> GetAuthorizationHeaders(); 
 
+        /// <summary>
+        /// The Abiquo enterprise Id
+        /// </summary>
+        /// <returns></returns>
         string GetTenantId();
     }
 }

@@ -30,9 +30,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
+        public const string ABIQUO_API_VERSION = "3.8";
+
         internal AbiquoClient()
         {
-            Version = "3.8";
+            AbiquoApiVersion = ABIQUO_API_VERSION;
         }
 
         public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)

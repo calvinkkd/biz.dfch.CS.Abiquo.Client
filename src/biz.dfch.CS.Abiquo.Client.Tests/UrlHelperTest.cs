@@ -74,7 +74,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, null);
+            UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, " ");
             
             // Assert
         }
@@ -83,15 +83,64 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ConcatUrlReturnsValidUrl()
         {
             // Arrange
-            var expectedResult = "http://example.com/api";
+            var expectedUrl = "http://example.com/api/login";
 
             // Act
 
             // Assert
-            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com/", "/api"));
-            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com/", "api"));
-            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com", "/api"));
-            Assert.AreEqual(expectedResult, UrlHelper.ConcatUrl("http://example.com", "api"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "/login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "login/"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "/login/"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "/login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "login/"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "/login/"));
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateFilterStringWithNullDictionaryThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UrlHelper.CreateFilterString(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateFilterStringWithEmptyDictionaryThrowsContractException()
+        {
+            // Arrange
+            var emptyFilter = new Dictionary<string, object>();
+
+            // Act
+            UrlHelper.CreateFilterString(emptyFilter);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void CreateFilterStringWithReturnsFilterAsString()
+        {
+            // Arrange
+            var expectedFilterString = "maxSize=5&currentPage=1&limit=25";
+
+            var filter = new Dictionary<string, object>()
+            {
+                {"maxSize", 5},
+                {"currentPage", 1},
+                {"limit", "25"}
+            };
+
+            // Act
+            var filterString = UrlHelper.CreateFilterString(filter);
+
+            // Assert
+            Assert.AreEqual(expectedFilterString, filterString);
         }
     }
 }
