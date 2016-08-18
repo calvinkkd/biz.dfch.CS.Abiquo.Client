@@ -121,7 +121,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var headers = new Dictionary<string, string>()
             {
-                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE }
+                ,
+                { Constants.CONTENT_TYPE_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE }
             };
 
             var enterpriseName = Guid.NewGuid().ToString();
