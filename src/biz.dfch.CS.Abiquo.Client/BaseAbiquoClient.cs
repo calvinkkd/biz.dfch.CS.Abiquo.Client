@@ -32,6 +32,10 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
     public abstract class BaseAbiquoClient
     {
+        /// <summary>
+        /// The Abiquo Api version the client is implemented for.
+        /// Has to be set in the constructor of the derived class
+        /// </summary>
         public string AbiquoApiVersion { get; protected set; }
 
         public bool IsLoggedIn { get; protected set; }
