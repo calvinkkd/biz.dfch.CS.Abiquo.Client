@@ -65,7 +65,6 @@ namespace biz.dfch.CS.Abiquo.Client
 
         internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix)
         {
-            Contract.Requires(httpMethod != HttpMethod.Post);
             Contract.Requires(httpMethod != HttpMethod.Put);
 
             return ExecuteRequest(httpMethod, urlSuffix, null, null);
@@ -118,14 +117,16 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(HttpMethod.Get, urlSuffix, filter, null, null);
         }
 
-        public string Invoke(HttpMethod method, string urlSuffix)
+        public string Invoke(HttpMethod httpMethod, string urlSuffix)
         {
-            return Invoke(method, urlSuffix, null, null, null);
+            Contract.Requires(httpMethod != HttpMethod.Put);
+
+            return Invoke(httpMethod, urlSuffix, null, null, null);
         }
 
-        public string Invoke(HttpMethod method, string urlSuffix, object body)
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, object body)
         {
-            return Invoke(method, urlSuffix, null, null, body);
+            return Invoke(httpMethod, urlSuffix, null, null, body);
         }
 
         public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, object body)

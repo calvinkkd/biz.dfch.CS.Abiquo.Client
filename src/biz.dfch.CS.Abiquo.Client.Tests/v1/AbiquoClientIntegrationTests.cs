@@ -22,23 +22,29 @@ using System.Text;
 using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.Authentication;
-using biz.dfch.CS.Abiquo.Client.Factory;
+﻿using biz.dfch.CS.Abiquo.Client.Communication;
+﻿using biz.dfch.CS.Abiquo.Client.Factory;
+using biz.dfch.CS.Abiquo.Client.v1;
+using biz.dfch.CS.Web.Utilities.Rest;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
     [TestClass]
     public class AbiquoClientIntegrationTests
     {
+        private const string ABIQUO_CLIENT_VERSION = "v1";
+
+        private IAuthenticationInformation basicAuthenticationInformation = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
+
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void LoginWithValidAuthenticationInformationReturnsTrue()
+        public void LoginWithValidBasicAuthenticationInformationReturnsTrue()
         {
             // Arrange
-            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
-            var basicAuthInfo = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
 
             // Act
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthInfo);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUrl, basicAuthenticationInformation);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -46,10 +52,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void LoginWithInValidAuthenticationInformationReturnsFalse()
+        public void LoginWithInValidBasicAuthenticationInformationReturnsFalse()
         {
             // Arrange
-            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
             var basicAuthInfo = new BasicAuthenticationInformation("invalid-username", "invalid-password", IntegrationTestEnvironment.TenantId);
 
             // Act
