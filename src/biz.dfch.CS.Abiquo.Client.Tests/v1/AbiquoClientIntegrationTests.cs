@@ -146,16 +146,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var body = string.Format(bodyTemplate, enterpriseName);
 
             // Act
-            var result = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffix.ENTERPRISES, null, headers, body);
+            var creationResult = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffix.ENTERPRISES, null, headers, body);
 
-            var resultingEnterprise = JsonConvert.DeserializeObject<dynamic>(result);
-
-            // Assert
-            Assert.IsTrue(loginSucceeded);
-            Assert.IsNotNull(result);
+            var resultingEnterprise = JsonConvert.DeserializeObject<dynamic>(creationResult);
 
             var requestUrlSuffix = string.Format(AbiquoUrlSuffix.ENTERPRISE_BY_ID_TEMPLATE, resultingEnterprise.id.ToString());
-            result = abiquoClient.Invoke(HttpMethod.Delete, requestUrlSuffix, null, headers, null);
+            var deletionResult = abiquoClient.Invoke(HttpMethod.Delete, requestUrlSuffix, null, headers, null);
+            
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(creationResult);
+            Assert.IsNotNull(deletionResult);
         }
     }
 }
