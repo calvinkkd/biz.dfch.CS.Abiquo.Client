@@ -30,6 +30,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
     [TestClass]
     public class AbiquoClientFactoryTest
     {
+        private const string ABIQUO_CLIENT_VERSION = "v1";
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetByVersionWithNullVersionThrowsContractException()
@@ -48,7 +50,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Factory
             // Arrange
             
             // Act
-            var abiquoClient = AbiquoClientFactory.GetByVersion("v1");
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
             
             // Assert
             Assert.IsNotNull(abiquoClient);
