@@ -58,6 +58,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             // Assert
         }
 
+        [ExpectContractFailure]
+        public void DeserializeSampleDtoWithEmptyValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            AbiquoBaseDto.DeserializeObject(" ", typeof(SampleDto));
+
+            // Assert
+        }
+
         [TestMethod]
         [ExpectContractFailure]
         public void DeserializeSampleDtoWithNullTypeThrowsContractException()
@@ -71,34 +82,111 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
         }
 
         [TestMethod]
-        public void DeserializationOfSampleDtoSucceeds()
+        public void DeserializeSampleDtoSucceeds()
         {
             // Arrange
 
             // Act
-            var dto = AbiquoBaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, typeof(SampleDto));
+            var sampleDto = AbiquoBaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, typeof(SampleDto));
 
             // Assert
-            Assert.IsTrue(dto.GetType() == typeof(SampleDto));
-            Assert.AreEqual(SAMPLE_DTO_NAME, ((SampleDto)dto).Name);
+            Assert.IsTrue(typeof(SampleDto) == sampleDto.GetType());
+            Assert.AreEqual(SAMPLE_DTO_NAME, ((SampleDto)sampleDto).Name);
         }
 
         [TestMethod]
-        public void GenericDeserializationOfSampleDtoSucceeds()
+        public void GenericDeserializeSampleDtoSucceeds()
         {
             // Arrange
 
             // Act
-            var dto = AbiquoBaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, typeof(SampleDto));
+            var sampleDto = AbiquoBaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION);
 
             // Assert
-            Assert.IsTrue(dto.GetType() == typeof(SampleDto));
-            Assert.AreEqual(SAMPLE_DTO_NAME, ((SampleDto)dto).Name);
+            Assert.IsTrue(typeof(SampleDto) == sampleDto.GetType());
+            Assert.AreEqual(SAMPLE_DTO_NAME, sampleDto.Name);
+        }
+
+        [TestMethod]
+        public void IsValidForSampleDtoWithoutNameReturnsFalse()
+        {
+            // Arrange
+            var sampleDto = new SampleDto();
+
+            // Act
+            var isValid = sampleDto.IsValid();
+
+            // Assert
+            Assert.IsFalse(isValid);
+        }
+
+        [TestMethod]
+        public void IsValidForSampleDtoWithValidNameReturnsTrue()
+        {
+            // Arrange
+            var sampleDto = new SampleDto() { Name = SAMPLE_DTO_NAME };
+
+            // Act
+            var isValid = sampleDto.IsValid();
+
+            // Assert
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        public void GetValidationResultsForSampleDtoWithInvalidNameReturnsListOfResults()
+        {
+            // Arrange
+            var sampleDto = new SampleDto() { Name = "" };
+
+            // Act
+            var validationResults = sampleDto.GetValidationResults();
+
+            // Arrange
+            Assert.AreEqual(1, validationResults.Count);
+        }
+
+        [TestMethod]
+        public void GetValidationResultsForSampleDtoWithValidNameReturnsEmptyList()
+        {
+            // Arrange
+            var sampleDto = new SampleDto() { Name = SAMPLE_DTO_NAME };
+
+            // Act
+            var validationResults = sampleDto.GetValidationResults();
+
+            // Arrange
+            Assert.AreEqual(0, validationResults.Count);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ValidateSampleDtoWithInvalidNameThrowsContractException()
+        {
+            // Arrange
+            var sampleDto = new SampleDto() { Name = "" };
+
+            // Act
+            sampleDto.Validate();
+
+            // Arrange
+        }
+
+        [TestMethod]
+        public void ValidateSampleDtoWithValidNameSucceeds()
+        {
+            // Arrange
+            var sampleDto = new SampleDto() { Name = SAMPLE_DTO_NAME };
+
+            // Act
+            sampleDto.Validate();
+
+            // Arrange
         }
 
         private class SampleDto : AbiquoBaseDto
         {
-            [Required]
+            [Required(AllowEmptyStrings = true)]
             public string Name { get; set; }
         }
     }
