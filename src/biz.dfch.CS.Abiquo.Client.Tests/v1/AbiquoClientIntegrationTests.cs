@@ -113,7 +113,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void InvokePostEnterprisesCreatesNewAbiquoEnterprise()
+        public void InvokePostEnterprisesCreatesNewAbiquoEnterpriseAndDeletesTheNewCreatedEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
@@ -141,9 +141,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 ""vlansSoft"": 0, 
                 ""cpuCountSoftLimit"": 1, 
                 ""diskSoftLimitInMb"": 1, 
-                ""name"": ""{0}""
+                ""name"": ""ENTERPRISE_NAME""
             }";
-            var body = string.Format(bodyTemplate, enterpriseName);
+            var body = bodyTemplate.Replace("ENTERPRISE_NAME", enterpriseName);
 
             // Act
             var creationResult = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffixes.ENTERPRISES, null, headers, body);
