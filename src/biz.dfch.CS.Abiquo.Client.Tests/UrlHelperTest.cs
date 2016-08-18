@@ -88,14 +88,14 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Act
 
             // Assert
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/", "/api"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/", "/api/"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/", "api"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/", "api/"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com", "/api"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com", "/api/"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com", "api"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com", "api/"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "/login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "login/"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "/login/"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "/login"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "login/"));
+            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "/login/"));
         }
 
         [TestMethod]
