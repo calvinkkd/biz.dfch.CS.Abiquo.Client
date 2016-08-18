@@ -149,14 +149,81 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        public void Test()
+        [ExpectContractFailure]
+        public void InvokeWithEmptyUrlSuffixThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
+
+            // Act
+            abiquoClient.Invoke(HttpMethod.Get, " ", null, null, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void InvokeWithInvalidUrlSuffixThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
+
+            // Act
+            abiquoClient.Invoke(HttpMethod.Get, "http://example.com", null, null, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void InvokeIfNotLoggedInThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
+            abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, null, null, null);
 
             // Assert
+        }
+
+        [TestMethod]
+        public void InvokeWithFilterCallsRestCallExecutorWithRequestUrlContainingFilterExpression()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+            abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
+
+            var filter = new Dictionary<string, object>()
+            {
+                {"currentPage", 1},
+                {"limit", "25"}
+            };
+
+            var expectedRequestUrl = string.Format("{0}?{1}", UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, URL_SUFFIX), "currentPage=1&limit=25");
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                ,
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUrl, headers, null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
+
+            // Act
+            var result = abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, filter, headers, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+
+            Mock.Assert(restCallExecutor);
         }
 
         private class DummyAbiquoClient : BaseAbiquoClient
