@@ -82,7 +82,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             };
 
             // Act
-            var requestUrlSuffix = string.Format(AbiquoUrlSuffix.USERS_BY_ENTERPRISE_ID_TEMPLATE, IntegrationTestEnvironment.TenantId);
+            var requestUrlSuffix = string.Format(AbiquoUrlSuffixes.USERS_BY_ENTERPRISE_ID, IntegrationTestEnvironment.TenantId);
             var result = abiquoClient.Invoke(HttpMethod.Get, requestUrlSuffix, null, headers, null);
 
             // Assert
@@ -104,7 +104,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             };
 
             // Act
-            var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUrlSuffix.ENTERPRISES, null, headers, null);
+            var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUrlSuffixes.ENTERPRISES, null, headers, null);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -146,11 +146,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var body = string.Format(bodyTemplate, enterpriseName);
 
             // Act
-            var creationResult = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffix.ENTERPRISES, null, headers, body);
+            var creationResult = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffixes.ENTERPRISES, null, headers, body);
 
             var resultingEnterprise = JsonConvert.DeserializeObject<dynamic>(creationResult);
 
-            var requestUrlSuffix = string.Format(AbiquoUrlSuffix.ENTERPRISE_BY_ID_TEMPLATE, resultingEnterprise.id.ToString());
+            var requestUrlSuffix = string.Format(AbiquoUrlSuffixes.ENTERPRISE_BY_ID, resultingEnterprise.id.ToString());
             var deletionResult = abiquoClient.Invoke(HttpMethod.Delete, requestUrlSuffix, null, headers, null);
             
             // Assert

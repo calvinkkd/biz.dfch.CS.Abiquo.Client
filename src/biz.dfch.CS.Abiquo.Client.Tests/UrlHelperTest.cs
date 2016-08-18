@@ -38,7 +38,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            UrlHelper.ConcatUrl(null, AbiquoUrlSuffix.LOGIN);
+            UrlHelper.ConcatUrl(null, AbiquoUrlSuffixes.LOGIN);
 
             // Assert
         }
@@ -50,7 +50,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            UrlHelper.ConcatUrl(" ", AbiquoUrlSuffix.LOGIN);
+            UrlHelper.ConcatUrl(" ", AbiquoUrlSuffixes.LOGIN);
 
             // Assert
         }

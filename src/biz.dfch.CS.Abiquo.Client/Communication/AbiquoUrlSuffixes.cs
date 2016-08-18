@@ -23,11 +23,11 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    public abstract class AbiquoUrlSuffix
+    public abstract class AbiquoUrlSuffixes
     {
         public const string LOGIN = "/login";
-        public const string USERS_BY_ENTERPRISE_ID_TEMPLATE = "/admin/enterprises/{0}/users";
+        public const string USERS_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
         public const string ENTERPRISES = "/admin/enterprises";
-        public const string ENTERPRISE_BY_ID_TEMPLATE = "/admin/enterprises/{0}";
+        public const string ENTERPRISE_BY_ID = "/admin/enterprises/{0}";
     }
 }

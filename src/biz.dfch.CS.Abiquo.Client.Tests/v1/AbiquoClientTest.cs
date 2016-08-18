@@ -99,7 +99,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LoginWithValidAuthenticationInformationReturnsTrue()
         {
             // Arrange
-            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
+            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
@@ -122,7 +122,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LoginWithInvalidAuthenticationInformationReturnsFalse()
         {
             // Arrange
-            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
+            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 
@@ -146,7 +146,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LogoutResetsAuthenticationInformationApiBaseUrlAndSetsLoggedInToFalse()
         {
             // Arrange
-            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffix.LOGIN);
+            var expectedRequestUrl = string.Format("{0}{1}", ABIQUO_API_BASE_URL.TrimEnd('/'), AbiquoUrlSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
 

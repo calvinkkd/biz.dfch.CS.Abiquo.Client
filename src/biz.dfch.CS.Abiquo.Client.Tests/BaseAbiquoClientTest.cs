@@ -62,7 +62,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.ExecuteRequest(HttpMethod.Put, AbiquoUrlSuffix.LOGIN);
+            abiquoClient.ExecuteRequest(HttpMethod.Put, AbiquoUrlSuffixes.LOGIN);
 
             // Assert
         }
