@@ -137,7 +137,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
         public void GetValidationResultsForSampleDtoWithInvalidNameReturnsListOfResults()
         {
             // Arrange
-            var sampleDto = new SampleDto() { Name = "" };
+            var sampleDto = new SampleDto() { Name = " " };
 
             // Act
             var validationResults = sampleDto.GetValidationResults();
@@ -164,7 +164,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
         public void ValidateSampleDtoWithInvalidNameThrowsContractException()
         {
             // Arrange
-            var sampleDto = new SampleDto() { Name = "" };
+            var sampleDto = new SampleDto() { Name = " " };
 
             // Act
             sampleDto.Validate();
@@ -186,7 +186,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
 
         private class SampleDto : AbiquoBaseDto
         {
-            [Required(AllowEmptyStrings = true)]
+            [Required(AllowEmptyStrings = false)]
             public string Name { get; set; }
         }
     }
