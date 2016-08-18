@@ -136,14 +136,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public static string VND_ABIQUO_USER = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.user", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_USERS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.users", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_USERWITHROLES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.userwithroles", AbiquoClient.ABIQUO_API_VERSION);
-        public static string VND_ABIQUO_USERSWITHROLESDTO = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.userswithrolesdto", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_USERSWITHROLES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.userswithroles", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALAPPLIANCE = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualappliance", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALAPPLIANCES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualappliances", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALAPPLIANCESTATE = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualappliancestate", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALAPPLIANCEPRICE = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualapplianceprice", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALAPPRESOURCES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualappresources", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALAPPSRESOURCES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualappsresources", AbiquoClient.ABIQUO_API_VERSION);
-        public static string VND_ABIQUO_VIRTUALDATACENTERDTO = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualdatacenterdto", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_VIRTUALDATACENTER = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualdatacenter", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALDATACENTERS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualdatacenters", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALDATACENTERRESOURCES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualdatacenterresources", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_VIRTUALDATACENTERSRESOURCES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.virtualdatacentersresources", AbiquoClient.ABIQUO_API_VERSION);

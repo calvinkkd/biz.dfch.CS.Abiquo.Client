@@ -78,7 +78,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var headers = new Dictionary<string, string>()
             {
-                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLESDTO }
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES }
             };
 
             // Act
