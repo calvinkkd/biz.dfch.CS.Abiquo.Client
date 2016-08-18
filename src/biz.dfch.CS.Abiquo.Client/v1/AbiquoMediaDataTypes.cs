@@ -25,7 +25,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public abstract class AbiquoMediaDataTypes
     {
-        private const string VERSIONED_MEDIA_DATA_TYPE_TEMPLATE = "{0}+json; version {1}";
+        private const string VERSIONED_MEDIA_DATA_TYPE_TEMPLATE = "{0}+json; version={1}";
 
         public static string VND_ABIQUO_ACCEPTEDREQUEST = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.acceptedrequest", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_APPLICATIONS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.applications", AbiquoClient.ABIQUO_API_VERSION);
