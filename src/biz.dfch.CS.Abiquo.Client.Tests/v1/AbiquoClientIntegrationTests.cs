@@ -169,7 +169,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var resultingEnterprise = JsonConvert.DeserializeObject<dynamic>(creationResult);
 
             var requestUrlSuffix = string.Format(AbiquoUrlSuffixes.ENTERPRISE_BY_ID, resultingEnterprise.id.ToString());
-            var deletionResult = abiquoClient.Invoke(HttpMethod.Delete, requestUrlSuffix, null, headers, null);
+            var deletionResult = abiquoClient.Invoke(HttpMethod.Delete, requestUrlSuffix, null, headers);
             
             // Assert
             Assert.IsTrue(loginSucceeded);
