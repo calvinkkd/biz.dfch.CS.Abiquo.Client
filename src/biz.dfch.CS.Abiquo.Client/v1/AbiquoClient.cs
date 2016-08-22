@@ -47,7 +47,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             try
             {
-                ExecuteRequest(HttpMethod.Get, AbiquoUrlSuffixes.LOGIN);
+                ExecuteRequest(AbiquoUrlSuffixes.LOGIN);
 
                 this.IsLoggedIn = true;
                 Trace.WriteLine("END Login SUCCEEDED");

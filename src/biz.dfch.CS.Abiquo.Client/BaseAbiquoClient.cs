@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using Newtonsoft.Json;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
@@ -67,19 +68,12 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region ExecuteRequest
 
-        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix)
+        internal string ExecuteRequest(string urlSuffix)
         {
-            Contract.Requires(httpMethod != HttpMethod.Put);
-
-            return ExecuteRequest(httpMethod, urlSuffix, null, null);
+            return ExecuteRequest(HttpMethod.Get, urlSuffix, null, null);
         }
 
-        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, object body)
-        {
-            return ExecuteRequest(httpMethod, urlSuffix, null, body);
-        }
-
-        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, IDictionary<string, string> headers, object body)
+        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, IDictionary<string, string> headers, string body)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
             Contract.Requires(!string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
@@ -94,14 +88,8 @@ namespace biz.dfch.CS.Abiquo.Client
                 headers.ToList().ForEach(header => requestHeaders[header.Key] = header.Value);
             }
 
-            String requestBody = null;
-            if (null != body)
-            {
-                requestBody = JsonConvert.SerializeObject(body);
-            }
-
             var restCallExecutor = new RestCallExecutor();
-            var result = restCallExecutor.Invoke(httpMethod, requestUrl, requestHeaders, requestBody);
+            var result = restCallExecutor.Invoke(httpMethod, requestUrl, requestHeaders, body);
 
             Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUrl));
             return result;
@@ -113,27 +101,41 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public string Invoke(string urlSuffix)
         {
-            return Invoke(HttpMethod.Get, urlSuffix, null, null, null);
+            return Invoke(HttpMethod.Get, urlSuffix, null, null, default(string));
         }
 
         public string Invoke(string urlSuffix, IDictionary<string, object> filter)
         {
-            return Invoke(HttpMethod.Get, urlSuffix, filter, null, null);
+            return Invoke(HttpMethod.Get, urlSuffix, filter, null, default(string));
         }
 
         public string Invoke(HttpMethod httpMethod, string urlSuffix)
         {
             Contract.Requires(httpMethod != HttpMethod.Put);
 
-            return Invoke(httpMethod, urlSuffix, null, null, null);
+            return Invoke(httpMethod, urlSuffix, null, null, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, object body)
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, AbiquoBaseDto body)
         {
-            return Invoke(httpMethod, urlSuffix, null, null, body);
+            Contract.Requires(null != body);
+
+            return Invoke(httpMethod, urlSuffix, null, null, body.SerializeObject());
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, object body)
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
+        {
+            return Invoke(httpMethod, urlSuffix, filter, headers, default(string));
+        }
+
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, AbiquoBaseDto body)
+        {
+            Contract.Requires(null != body);
+
+            return Invoke(httpMethod, urlSuffix, filter, headers, body.SerializeObject());
+        }
+
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
             Contract.Requires(Uri.IsWellFormedUriString(urlSuffix, UriKind.Relative), "Invalid relative url");

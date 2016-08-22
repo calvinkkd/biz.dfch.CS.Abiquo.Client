@@ -83,7 +83,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var requestUrlSuffix = string.Format(AbiquoUrlSuffixes.USERS_BY_ENTERPRISE_ID, IntegrationTestEnvironment.TenantId);
-            var result = abiquoClient.Invoke(HttpMethod.Get, requestUrlSuffix, null, headers, null);
+            var result = abiquoClient.Invoke(HttpMethod.Get, requestUrlSuffix, null, headers);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -104,7 +104,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             };
 
             // Act
-            var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUrlSuffixes.ENTERPRISES, null, headers, null);
+            var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUrlSuffixes.ENTERPRISES, null, headers);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -161,8 +161,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 { "name", enterpriseName }
             };
 
+            var jsonBody = JsonConvert.SerializeObject(body);
+
             // Act
-            var creationResult = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffixes.ENTERPRISES, null, headers, body);
+            var creationResult = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffixes.ENTERPRISES, null, headers, jsonBody);
 
             var resultingEnterprise = JsonConvert.DeserializeObject<dynamic>(creationResult);
 

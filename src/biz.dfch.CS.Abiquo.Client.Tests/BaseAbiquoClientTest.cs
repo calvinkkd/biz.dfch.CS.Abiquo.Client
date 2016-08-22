@@ -55,32 +55,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectContractFailure]
-        public void ExecuteRequestWithHttpPutAndValidUrlSuffixThrowsContractException()
-        {
-            // Arrange
-            var abiquoClient = new DummyAbiquoClient();
-
-            // Act
-            abiquoClient.ExecuteRequest(HttpMethod.Put, AbiquoUrlSuffixes.LOGIN);
-
-            // Assert
-        }
-
-        [TestMethod]
-        [ExpectContractFailure]
-        public void ExecuteRequestWithInvalidUrlSuffixThrowsContractException()
-        {
-            // Arrange
-            var abiquoClient = new DummyAbiquoClient();
-
-            // Act
-            abiquoClient.ExecuteRequest(HttpMethod.Get, " ");
-
-            // Assert
-        }
-
-        [TestMethod]
         public void ExecuteRequestWithoutAdditionalHeadersAndBodyCallsRestCallExecutor()
         {
             // Arrange
@@ -144,7 +118,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
 
             // Act
-            abiquoClient.Invoke(HttpMethod.Get, " ", null, null, null);
+            abiquoClient.Invoke(HttpMethod.Get, " ", null, null);
 
             // Assert
         }
@@ -158,7 +132,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             abiquoClient.Login(ABIQUO_API_BASE_URL, authenticationInformation);
 
             // Act
-            abiquoClient.Invoke(HttpMethod.Get, "http://example.com", null, null, null);
+            abiquoClient.Invoke(HttpMethod.Get, "http://example.com", null, null);
 
             // Assert
         }
@@ -171,7 +145,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, null, null, null);
+            abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, null, null);
 
             // Assert
         }
@@ -205,7 +179,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 .OccursOnce();
 
             // Act
-            var result = abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, filter, headers, null);
+            var result = abiquoClient.Invoke(HttpMethod.Get, URL_SUFFIX, filter, headers);
 
             // Assert
             Assert.AreEqual("Arbitrary-Result", result);
