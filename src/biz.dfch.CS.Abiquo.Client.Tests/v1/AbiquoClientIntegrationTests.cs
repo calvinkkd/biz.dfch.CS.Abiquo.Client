@@ -127,25 +127,39 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             };
 
             var enterpriseName = Guid.NewGuid().ToString();
-            var bodyTemplate = @"
+
+            var body = new Dictionary<string, object>()
             {
-                ""cpuCountHardLimit"": 2, 
-                ""diskHardLimitInMb"": 2, 
-                ""isReservationRestricted"": false, 
-                ""twoFactorAuthenticationMandatory"": false, 
-                ""ramSoftLimitInMb"": 1, 
-                ""links"": [], 
-                ""workflow"": false, 
-                ""vlansHard"": 0, 
-                ""publicIpsHard"": 0, 
-                ""publicIpsSoft"": 0, 
-                ""ramHardLimitInMb"": 2, 
-                ""vlansSoft"": 0, 
-                ""cpuCountSoftLimit"": 1, 
-                ""diskSoftLimitInMb"": 1, 
-                ""name"": ""ENTERPRISE_NAME""
-            }";
-            var body = bodyTemplate.Replace("ENTERPRISE_NAME", enterpriseName);
+                { "cpuCountHardLimit", 2 }
+                ,
+                { "diskHardLimitInMb", 2 }
+                ,
+                { "isReservationRestricted", false }
+                ,
+                { "twoFactorAuthenticationMandatory", false }
+                ,
+                { "ramSoftLimitInMb", 1 }
+                ,
+                { "links", new string[0] }
+                ,
+                { "workflow", false }
+                ,
+                { "vlansHard", 0 }
+                ,
+                { "publicIpsHard", 0 }
+                ,
+                { "publicIpsSoft", 0 }
+                ,
+                { "ramHardLimitInMb", 2 }
+                ,
+                { "vlansSoft", 0 }
+                ,
+                { "cpuCountSoftLimit", 1 }
+                ,
+                { "diskSoftLimitInMb", 1 }
+                ,
+                { "name", enterpriseName }
+            };
 
             // Act
             var creationResult = abiquoClient.Invoke(HttpMethod.Post, AbiquoUrlSuffixes.ENTERPRISES, null, headers, body);
