@@ -23,9 +23,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.v1.Model
+namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    public abstract class AbiquoBaseDto
+    public abstract class BaseDto
     {
         public string SerializeObject()
         {

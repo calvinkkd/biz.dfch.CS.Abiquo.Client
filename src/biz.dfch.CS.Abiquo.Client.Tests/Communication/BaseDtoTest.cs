@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-﻿using biz.dfch.CS.Utilities.Testing;
 
-namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
+using System.ComponentModel.DataAnnotations;
+using biz.dfch.CS.Utilities.Testing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using biz.dfch.CS.Abiquo.Client.Communication;
+
+namespace biz.dfch.CS.Abiquo.Client.Tests.Communication
 {
     [TestClass]
-    public class AbiquoBaseDtoTest
+    public class BaseDtoTest
     {
         private const string SAMPLE_DTO_NAME = "ArbitraryName";
         private const string SAMPLE_DTO_JSON_REPRESENTATION = "{\"Name\":\"ArbitraryName\"}";
@@ -53,7 +47,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             // Arrange
 
             // Act
-            AbiquoBaseDto.DeserializeObject(null, typeof(SampleDto));
+            BaseDto.DeserializeObject(null, typeof(SampleDto));
 
             // Assert
         }
@@ -64,7 +58,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             // Arrange
 
             // Act
-            AbiquoBaseDto.DeserializeObject(" ", typeof(SampleDto));
+            BaseDto.DeserializeObject(" ", typeof(SampleDto));
 
             // Assert
         }
@@ -76,7 +70,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             // Arrange
 
             // Act
-            AbiquoBaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, null);
+            BaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, null);
 
             // Assert
         }
@@ -87,7 +81,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             // Arrange
 
             // Act
-            var sampleDto = AbiquoBaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, typeof(SampleDto));
+            var sampleDto = BaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, typeof(SampleDto));
 
             // Assert
             Assert.IsTrue(typeof(SampleDto) == sampleDto.GetType());
@@ -100,7 +94,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             // Arrange
 
             // Act
-            var sampleDto = AbiquoBaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION);
+            var sampleDto = BaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION);
 
             // Assert
             Assert.IsTrue(typeof(SampleDto) == sampleDto.GetType());
@@ -184,7 +178,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             // Arrange
         }
 
-        private class SampleDto : AbiquoBaseDto
+        private class SampleDto : BaseDto
         {
             [Required(AllowEmptyStrings = false)]
             public string Name { get; set; }
