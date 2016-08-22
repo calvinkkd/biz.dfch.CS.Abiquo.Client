@@ -198,7 +198,7 @@
     <Compile Include="Factory\AbiquoClientFactoryTest.cs" />
     <Compile Include="Authentication\BasicAuthenticationInformationTest.cs" />
     <Compile Include="IntegrationTestEnvironment.cs" />
-    <Compile Include="v1\Model\AbiquoBaseDtoTest.cs" />
+    <Compile Include="Communication\BaseDtoTest.cs" />
     <Compile Include="UrlHelperTest.cs" />
     <Compile Include="v1\AbiquoClientIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,6 +213,9 @@
       <Project>{a149c0f8-d483-4a91-a26c-95230148ee3a}</Project>
       <Name>biz.dfch.CS.Abiquo.Client</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="v1\Model\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
