@@ -27,13 +27,13 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
         /// <summary>
         /// The authentication headers for authentication against Abiquo
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Authorization headers</returns>
         IDictionary<string, string> GetAuthorizationHeaders(); 
 
         /// <summary>
         /// The Abiquo enterprise Id
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Current tenant Id</returns>
         string GetTenantId();
     }
 }

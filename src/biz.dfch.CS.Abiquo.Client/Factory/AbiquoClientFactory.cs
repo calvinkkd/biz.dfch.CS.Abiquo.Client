@@ -33,7 +33,7 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
 
             Debug.WriteLine(string.Format("START Get AbiquoClient instance of version '{0}' ...", version));
 
-            AbiquoClient abiquoClient = null;
+            AbiquoClient abiquoClient;
 
             switch (version)
             {

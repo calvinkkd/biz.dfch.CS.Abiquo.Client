@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 ﻿using Newtonsoft.Json;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
+using biz.dfch.CS.Abiquo.Client.General;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
@@ -59,9 +60,9 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             Debug.WriteLine(string.Format("START {0}", Method.fn()));
 
-            this.IsLoggedIn = false;
-            this.AbiquoApiBaseUrl = null;
-            this.AuthenticationInformation = null;
+            IsLoggedIn = false;
+            AbiquoApiBaseUrl = null;
+            AuthenticationInformation = null;
 
             Trace.WriteLine(string.Format("END {0}", Method.fn()));
         }
@@ -76,10 +77,10 @@ namespace biz.dfch.CS.Abiquo.Client
         internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, IDictionary<string, string> headers, string body)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
-            Contract.Requires(!string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
-            Contract.Requires(null != this.AuthenticationInformation);
+            Contract.Requires(!string.IsNullOrWhiteSpace(AbiquoApiBaseUrl));
+            Contract.Requires(null != AuthenticationInformation);
 
-            var requestUrl = UrlHelper.ConcatUrl(this.AbiquoApiBaseUrl, urlSuffix);
+            var requestUrl = UrlHelper.ConcatUrl(AbiquoApiBaseUrl, urlSuffix);
             Debug.WriteLine(string.Format("START Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUrl, headers, body));
 
             var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
@@ -139,7 +140,7 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
             Contract.Requires(Uri.IsWellFormedUriString(urlSuffix, UriKind.Relative), "Invalid relative url");
-            Contract.Requires(this.IsLoggedIn, "Not logged in, call method login first");
+            Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
             Debug.WriteLine(string.Format("START calling invoke method({0}, {1}, {2} - {3} - {4}) ...", httpMethod, urlSuffix, filter, headers, body));
 

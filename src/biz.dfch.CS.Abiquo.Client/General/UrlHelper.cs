@@ -21,7 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client
+namespace biz.dfch.CS.Abiquo.Client.General
 {
     public class UrlHelper
     {

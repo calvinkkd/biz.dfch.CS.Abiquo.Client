@@ -24,7 +24,6 @@ using System.Linq;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
-﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -42,14 +41,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUrl: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));
 
             Logout();
-            this.AuthenticationInformation = authenticationInformation;
-            this.AbiquoApiBaseUrl = abiquoApiBaseUrl;
+            AuthenticationInformation = authenticationInformation;
+            AbiquoApiBaseUrl = abiquoApiBaseUrl;
 
             try
             {
                 ExecuteRequest(AbiquoUrlSuffixes.LOGIN);
 
-                this.IsLoggedIn = true;
+                IsLoggedIn = true;
                 Trace.WriteLine("END Login SUCCEEDED");
                 return true;
             }

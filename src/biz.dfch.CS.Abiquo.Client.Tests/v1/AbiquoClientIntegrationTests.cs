@@ -28,7 +28,6 @@ using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Web.Utilities.Rest;
 ﻿using Newtonsoft.Json;
-﻿using Newtonsoft.Json.Linq;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {

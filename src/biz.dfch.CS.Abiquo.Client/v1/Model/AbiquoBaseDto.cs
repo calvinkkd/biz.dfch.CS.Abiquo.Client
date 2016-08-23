@@ -20,11 +20,12 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-﻿using biz.dfch.CS.Abiquo.Client.Communication;
+using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class AbiquoBaseDto : BaseDto
     {
+
     }
 }

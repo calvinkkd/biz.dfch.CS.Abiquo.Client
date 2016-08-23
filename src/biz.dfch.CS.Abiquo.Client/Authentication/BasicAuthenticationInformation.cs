@@ -37,9 +37,9 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             Contract.Requires(!string.IsNullOrWhiteSpace(password));
             Contract.Requires(!string.IsNullOrWhiteSpace(tenantId));
 
-            this.Username = username;
-            this.Password = password;
-            this.TenantId = tenantId;
+            Username = username;
+            Password = password;
+            TenantId = tenantId;
         }
 
         public IDictionary<string, string> GetAuthorizationHeaders()
@@ -55,7 +55,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
         private string CreateBasicAuthorizationHeaderValue()
         {
             var plainText = string.Format("{0}:{1}", Username, Password);
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             var base64EncodedAuthorizationHeaderValue = Convert.ToBase64String(plainTextBytes);
 
             return string.Format(Constants.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
@@ -63,7 +63,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
 
         public string GetTenantId()
         {
-            return this.TenantId;
+            return TenantId;
         }
     }
 }

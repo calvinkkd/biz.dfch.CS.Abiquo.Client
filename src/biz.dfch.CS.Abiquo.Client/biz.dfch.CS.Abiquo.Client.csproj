@@ -186,9 +186,9 @@
     <Compile Include="Authentication\IAuthenticationInformation.cs" />
     <Compile Include="BaseAbiquoClient.cs" />
     <Compile Include="ContractClassForBaseAbiquoClient.cs" />
-    <Compile Include="Communication\BaseDto.cs" />
+    <Compile Include="General\BaseDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UrlHelper.cs" />
+    <Compile Include="General\UrlHelper.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
     <Compile Include="v1\AbiquoMediaDataTypes.cs" />
     <Compile Include="v1\Model\AbiquoBaseDto.cs" />

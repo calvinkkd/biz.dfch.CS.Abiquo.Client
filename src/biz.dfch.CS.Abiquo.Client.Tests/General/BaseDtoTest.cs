@@ -17,9 +17,9 @@
 using System.ComponentModel.DataAnnotations;
 using biz.dfch.CS.Utilities.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using biz.dfch.CS.Abiquo.Client.Communication;
+using biz.dfch.CS.Abiquo.Client.General;
 
-namespace biz.dfch.CS.Abiquo.Client.Tests.Communication
+namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
     [TestClass]
     public class BaseDtoTest

@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.Communication
+namespace biz.dfch.CS.Abiquo.Client.General
 {
     public abstract class BaseDto
     {
@@ -74,7 +74,7 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public virtual void Validate()
         {
             var results = TryValidate();
-            var isValid = 0 >= results.Count ? true : false;
+            var isValid = 0 >= results.Count;
 
             if (isValid)
             {
