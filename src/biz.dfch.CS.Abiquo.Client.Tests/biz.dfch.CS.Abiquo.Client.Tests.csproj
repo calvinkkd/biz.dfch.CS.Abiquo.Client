@@ -207,15 +207,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="JsonSamples\Enterprise.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="JsonSamples\Enterprises.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="JsonSamples\User.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="JsonSamples\Enterprise.json" />
+    <None Include="JsonSamples\Enterprises.json" />
+    <None Include="JsonSamples\User.json" />
     <None Include="JsonSamples\UsersWithRoles.json" />
     <None Include="packages.config" />
   </ItemGroup>

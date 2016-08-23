@@ -30,6 +30,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
     [TestClass]
     public class DeserializationTest
     {
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void DeserializationOfEnterpriseSucceeds()
         {
@@ -51,6 +52,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             Assert.IsFalse(enterprise.IsReservationRestricted);
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void DeserializationOfEnterprisesSucceeds()
         {
@@ -73,8 +75,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             Assert.AreEqual(0, enterprise.RepositorySoftInMb);
             Assert.AreEqual(0, enterprise.RepositoryHardInMb);
             Assert.IsFalse(enterprise.Workflow);
-        }        
-        
+        }
+
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void DeserializationOfUserSucceeds()
         {
@@ -95,6 +98,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             Assert.IsTrue(user.Active);
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void DeserializationOfUsersWithRolesSucceeds()
         {
