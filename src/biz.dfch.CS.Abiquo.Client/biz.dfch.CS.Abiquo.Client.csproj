@@ -192,6 +192,16 @@
     <Compile Include="v1\AbiquoClient.cs" />
     <Compile Include="v1\AbiquoMediaDataTypes.cs" />
     <Compile Include="v1\Model\AbiquoBaseDto.cs" />
+    <Compile Include="v1\Model\AbiquoBaseCollectionDto.cs" />
+    <Compile Include="v1\Model\Enterprise.cs" />
+    <Compile Include="v1\Model\Enterprises.cs" />
+    <Compile Include="v1\Model\Link.cs" />
+    <Compile Include="v1\Model\Privilege.cs" />
+    <Compile Include="v1\Model\Privileges.cs" />
+    <Compile Include="v1\Model\Role.cs" />
+    <Compile Include="v1\Model\User.cs" />
+    <Compile Include="v1\Model\UsersWithRoles.cs" />
+    <Compile Include="v1\Model\UserWithRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -26,7 +26,8 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
     public abstract class AbiquoUrlSuffixes
     {
         public const string LOGIN = "/login";
-        public const string USERS_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
+        public const string USERSWITHROLES_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
+        public const string USER_BY_ENTERPRISE_AND_USER_ID = "/admin/enterprises/{0}/users/{1}";
         public const string ENTERPRISES = "/admin/enterprises";
         public const string ENTERPRISE_BY_ID = "/admin/enterprises/{0}";
     }

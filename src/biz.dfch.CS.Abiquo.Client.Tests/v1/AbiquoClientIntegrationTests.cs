@@ -81,7 +81,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             };
 
             // Act
-            var requestUrlSuffix = string.Format(AbiquoUrlSuffixes.USERS_BY_ENTERPRISE_ID, IntegrationTestEnvironment.TenantId);
+            var requestUrlSuffix = string.Format(AbiquoUrlSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, IntegrationTestEnvironment.TenantId);
             var result = abiquoClient.Invoke(HttpMethod.Get, requestUrlSuffix, null, headers);
 
             // Assert

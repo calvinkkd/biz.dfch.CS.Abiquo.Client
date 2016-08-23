@@ -25,7 +25,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using Newtonsoft.Json;
-using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Abiquo.Client.General;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
@@ -117,7 +116,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(httpMethod, urlSuffix, null, null, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, AbiquoBaseDto body)
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, BaseDto body)
         {
             Contract.Requires(null != body);
 
@@ -129,7 +128,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(httpMethod, urlSuffix, filter, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, AbiquoBaseDto body)
+        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
         {
             Contract.Requires(null != body);
 

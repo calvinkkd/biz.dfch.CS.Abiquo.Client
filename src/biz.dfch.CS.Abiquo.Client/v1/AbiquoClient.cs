@@ -59,5 +59,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 return false;
             }
         }
+
+        #region Enterprises
+
+        #endregion Enterprises
+
+        #region Users
+
+        #endregion Users
     }
 }

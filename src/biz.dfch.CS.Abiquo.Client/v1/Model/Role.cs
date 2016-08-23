@@ -14,8 +14,7 @@
  * limitations under the License.
  */
  
-﻿using biz.dfch.CS.Abiquo.Client.General;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -24,13 +23,9 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    /// <summary>
-    /// Base DTO for Abiquo objects
-    /// </summary>
-    public abstract class AbiquoBaseDto : BaseDto
+    public class Role : AbiquoBaseDto
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public List<Link> Links { get; set; }
+        public bool Blocked { get; set; }
+        public Privileges Privileges { get; set; }
     }
 }
