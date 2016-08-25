@@ -120,7 +120,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             abiquoClient.Login(ABIQUO_API_BASE_URI, authenticationInformation);
 
             // Act
-            abiquoClient.Invoke<Enterprise>(null);
+            abiquoClient.Invoke<Enterprise>(null, new Dictionary<string, string>());
 
             // Assert
         }
@@ -147,7 +147,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             abiquoClient.Login(ABIQUO_API_BASE_URI, authenticationInformation);
 
             // Act
-            abiquoClient.Invoke(HttpMethod.Get, " ", null, null);
+            abiquoClient.Invoke(HttpMethod.Get, " ", null);
 
             // Assert
         }
@@ -161,7 +161,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             abiquoClient.Login(ABIQUO_API_BASE_URI, authenticationInformation);
 
             // Act
-            abiquoClient.Invoke(HttpMethod.Get, "http://example.com", null, null);
+            abiquoClient.Invoke(HttpMethod.Get, "http://example.com", null);
 
             // Assert
         }
@@ -174,7 +174,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null);
+            abiquoClient.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null, default(BaseDto));
 
             // Assert
         }
@@ -231,13 +231,26 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetUserWithInvalidIdThrowsContractException()
+        public void GetUsersWithRolesWithInvalidEnterpriseIdThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.GetUser(INVALID_ID);
+            abiquoClient.GetUsersWithRoles(INVALID_ID);
+
+            // Assert
+        }        
+        
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserOfCurrentEnterpriseWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetUserOfCurrentEnterprise(INVALID_ID);
 
             // Assert
         }
@@ -257,7 +270,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetRoleWith0IdThrowsContractException()
+        public void GetUserWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetUser(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetRoleWithInvalidIdThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
@@ -285,9 +311,14 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return true;
             }
 
-            public override Client.v1.Model.Enterprises GetEnterprises()
+            public override Enterprises GetEnterprises()
             {
                 return new Enterprises();
+            }
+
+            public override Enterprise GetCurrentEnterprise()
+            {
+                return new Enterprise();
             }
 
             public override Client.v1.Model.Enterprise GetEnterprise(long id)
@@ -295,12 +326,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Enterprise();
             }
 
-            public override Client.v1.Model.UsersWithRoles GetUsersWithRoles()
+            public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
             {
                 return new UsersWithRoles();
             }
 
-            public override Client.v1.Model.User GetUser(long id)
+            public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+            {
+                return new UsersWithRoles();
+            }
+
+            public override User GetUserOfCurrentEnterprise(long id)
             {
                 return new User();
             }
@@ -310,12 +346,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new User();
             }
 
-            public override Client.v1.Model.Roles GetRoles()
+            public override Roles GetRoles()
             {
                 return new Roles();
             }
 
-            public override Client.v1.Model.Role GetRole(long id)
+            public override Role GetRole(long id)
             {
                 return new Role();
             }
@@ -330,22 +366,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return true;
             }
 
-            public override Client.v1.Model.Enterprises GetEnterprises()
+            public override Enterprises GetEnterprises()
             {
                 throw new NotImplementedException();
             }
 
-            public override Client.v1.Model.Enterprise GetEnterprise(long id)
+            public override Enterprise GetCurrentEnterprise()
             {
                 throw new NotImplementedException();
             }
 
-            public override Client.v1.Model.UsersWithRoles GetUsersWithRoles()
+            public override Enterprise GetEnterprise(long id)
             {
                 throw new NotImplementedException();
             }
 
-            public override Client.v1.Model.User GetUser(long id)
+            public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override User GetUserOfCurrentEnterprise(long id)
             {
                 throw new NotImplementedException();
             }
@@ -355,12 +401,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override Client.v1.Model.Roles GetRoles()
+            public override Roles GetRoles()
             {
                 throw new NotImplementedException();
             }
 
-            public override Client.v1.Model.Role GetRole(long id)
+            public override Role GetRole(long id)
             {
                 throw new NotImplementedException();
             }

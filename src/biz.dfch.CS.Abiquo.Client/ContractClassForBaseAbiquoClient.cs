@@ -44,32 +44,45 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(Enterprises);
         }
-        
+
+        public override Enterprise GetCurrentEnterprise()
+        {
+            return default(Enterprise);
+        }
+
         public override Enterprise GetEnterprise(long id)
         {
-            Contract.Requires(id > 0);
+            Contract.Requires(0 < id);
 
             return default(Enterprise);
         }
 
-        public override UsersWithRoles GetUsersWithRoles()
+        public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
         {
             Contract.Ensures(null != Contract.Result<UsersWithRoles>());
 
             return default(UsersWithRoles);
         }
 
-        public override User GetUser(long id)
+        public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
         {
-            Contract.Requires(id > 0);
+            Contract.Requires(0 < enterpriseId);
+            Contract.Ensures(null != Contract.Result<UsersWithRoles>());
+
+            return default(UsersWithRoles);
+        }
+
+        public override User GetUserOfCurrentEnterprise(long id)
+        {
+            Contract.Requires(0 < id);
 
             return default(User);
         }
 
         public override User GetUser(long enterpriseId, long id)
         {
-            Contract.Requires(enterpriseId > 0);
-            Contract.Requires(id > 0);
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < id);
 
             return default(User);
         }

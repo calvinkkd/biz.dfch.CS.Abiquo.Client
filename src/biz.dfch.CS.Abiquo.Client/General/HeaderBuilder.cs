@@ -20,13 +20,28 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 
-namespace biz.dfch.CS.Abiquo.Client.v1.Model
+namespace biz.dfch.CS.Abiquo.Client.General
 {
-    public class Role : AbiquoBaseDto
+    public class HeaderBuilder
     {
-        public bool Blocked { get; set; }
-        public long IdEnterprise { get; set; }
-        public string Ldap { get; set; }
+        private Dictionary<string, string> _headers; 
+
+        public HeaderBuilder()
+        {
+            _headers = new Dictionary<string, string>();
+        }
+
+        public HeaderBuilder BuildAccept(string acceptHeaderValue)
+        {
+            _headers.Add(Constants.ACCEPT_HEADER_KEY, acceptHeaderValue);
+            return this;
+        }
+
+        public Dictionary<string, string> GetHeaders()
+        {
+            return _headers;
+        }
     }
 }

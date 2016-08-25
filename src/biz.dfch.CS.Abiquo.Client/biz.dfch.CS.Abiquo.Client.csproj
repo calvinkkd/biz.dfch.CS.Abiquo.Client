@@ -187,6 +187,7 @@
     <Compile Include="BaseAbiquoClient.cs" />
     <Compile Include="ContractClassForBaseAbiquoClient.cs" />
     <Compile Include="General\BaseDto.cs" />
+    <Compile Include="General\HeaderBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="General\UriHelper.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
@@ -200,6 +201,8 @@
     <Compile Include="v1\Model\Privileges.cs" />
     <Compile Include="v1\Model\Role.cs" />
     <Compile Include="v1\Model\Roles.cs" />
+    <Compile Include="v1\Model\RolesWithPrivileges.cs" />
+    <Compile Include="v1\Model\RoleWithPrivileges.cs" />
     <Compile Include="v1\Model\User.cs" />
     <Compile Include="v1\Model\UsersWithRoles.cs" />
     <Compile Include="v1\Model\UserWithRole.cs" />

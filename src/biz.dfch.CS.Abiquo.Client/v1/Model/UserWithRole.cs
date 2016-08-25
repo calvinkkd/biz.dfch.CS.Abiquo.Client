@@ -34,7 +34,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool Active { get; set; }
         public bool Locked { get; set; }
         public bool FirstLogin { get; set; }
-        public Role Role { get; set; }
+        public RoleWithPrivileges Role { get; set; }
         public Enterprise Enterprise { get; set; }
     }
 }

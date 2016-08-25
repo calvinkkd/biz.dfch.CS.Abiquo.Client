@@ -107,6 +107,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
 
         #region Generic Invoke
+
         public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : BaseDto
         {
             return Invoke<T>(HttpMethod.Get, uriSuffix, null, headers, default(string));
@@ -199,6 +200,8 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public abstract Enterprises GetEnterprises();
         
+        public abstract Enterprise GetCurrentEnterprise();
+
         public abstract Enterprise GetEnterprise(long id);
         
         #endregion Enterprises
@@ -206,9 +209,11 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Users
 
-        public abstract UsersWithRoles GetUsersWithRoles();
+        public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
 
-        public abstract User GetUser(long id);
+        public abstract UsersWithRoles GetUsersWithRoles(long enterpriseId);
+
+        public abstract User GetUserOfCurrentEnterprise(long id);
 
         public abstract User GetUser(long enterpriseId, long id);
 

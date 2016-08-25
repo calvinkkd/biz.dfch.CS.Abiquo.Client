@@ -23,10 +23,9 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Role : AbiquoBaseDto
+    public class RoleWithPrivileges : Role
     {
-        public bool Blocked { get; set; }
-        public long IdEnterprise { get; set; }
-        public string Ldap { get; set; }
+        public Enterprise Enterprise { get; set; }
+        public Privileges Privileges { get; set; }
     }
 }

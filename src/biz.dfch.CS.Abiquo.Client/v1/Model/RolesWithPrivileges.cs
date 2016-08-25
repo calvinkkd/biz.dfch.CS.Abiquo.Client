@@ -23,10 +23,8 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Role : AbiquoBaseDto
+    public class RolesWithPrivileges : AbiquoBaseCollectionDto<RoleWithPrivileges>
     {
-        public bool Blocked { get; set; }
-        public long IdEnterprise { get; set; }
-        public string Ldap { get; set; }
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto
     }
 }

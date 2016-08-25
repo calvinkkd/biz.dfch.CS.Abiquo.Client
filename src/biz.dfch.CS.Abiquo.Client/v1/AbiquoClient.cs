@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
+﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
@@ -61,50 +62,79 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             }
         }
 
+        #region Enterprises
+
         public override Enterprises GetEnterprises()
         {
-            // DFTODO - Set headers
-            return Invoke<Enterprises>(AbiquoUriSuffixes.ENTERPRISES);
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES).GetHeaders();
+
+            return Invoke<Enterprises>(AbiquoUriSuffixes.ENTERPRISES, headers);
+        }
+
+        public override Enterprise GetCurrentEnterprise()
+        {
+            return GetEnterprise(AuthenticationInformation.GetTenantId());
         }
 
         public override Enterprise GetEnterprise(long id)
         {
-            // DFTODO - Set headers
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.ENTERPRISE_BY_ID, id);
-            return Invoke<Enterprise>(uriSuffix);
+
+            return Invoke<Enterprise>(uriSuffix, headers);
         }
 
-        public override UsersWithRoles GetUsersWithRoles()
+        #endregion Enterprises
+
+
+        #region Users
+
+        public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
         {
-            // DFTODO - Set headers
-            var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, AuthenticationInformation.GetTenantId());
-            return Invoke<UsersWithRoles>(uriSuffix);
+            return GetUsersWithRoles(AuthenticationInformation.GetTenantId());
         }
 
-        public override User GetUser(long id)
+        public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
         {
-            // DFTODO - Set headers
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, enterpriseId);
+            return Invoke<UsersWithRoles>(uriSuffix, headers);
+        }
+
+        public override User GetUserOfCurrentEnterprise(long id)
+        {
             return GetUser(AuthenticationInformation.GetTenantId(), id);
         }
 
         public override User GetUser(long enterpriseId, long id)
         {
-            // DFTODO - Set headers
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_AND_USER_ID, enterpriseId, id);
-            return Invoke<User>(uriSuffix);
+            
+            return Invoke<User>(uriSuffix, headers);
         }
+
+        #endregion Users
+
+
+        #region Roles
 
         public override Roles GetRoles()
         {
-            // DFTODO - Set headers
-            return Invoke<Roles>(AbiquoUriSuffixes.ROLES);
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ROLES).GetHeaders();
+
+            return Invoke<Roles>(AbiquoUriSuffixes.ROLES, headers);
         }
 
         public override Role GetRole(long id)
         {
-            // DFTODO - Set headers
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ROLE).GetHeaders();
+            
             var uriSuffix = string.Format(AbiquoUriSuffixes.ROLE_BY_ID, id);
-            return Invoke<Role>(uriSuffix);
+            return Invoke<Role>(uriSuffix, headers);
         }
+
+        #endregion Roles
     }
 }
