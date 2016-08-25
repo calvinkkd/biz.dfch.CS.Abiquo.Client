@@ -35,5 +35,7 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string VIRTUALMACHINES = "/cloud/virtualmachines";
         public const string VIRTUALDATACENTERS = "/cloud/virtualdatacenters";
         public const string VIRTUALDATACENTER_BY_ID = "/cloud/virtualdatacenters/{0}";
+        public const string VIRTUALAPPLIANCES = "/cloud/virtualdatacenters/{0}/virtualappliances";
+        public const string VIRTUALAPPLIANCE_BY_ID = "/cloud/virtualdatacenters/{0}/virtualappliances{1}";
     }
 }

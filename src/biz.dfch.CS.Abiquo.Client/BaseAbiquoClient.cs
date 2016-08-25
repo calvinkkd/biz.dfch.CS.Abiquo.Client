@@ -281,11 +281,16 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #endregion VirtualMachines
 
+
         #region Virtual Data Centers
 
         public abstract VirtualDataCenters GetVirtualDataCenters();
 
         public abstract VirtualDataCenter GetVirtualDataCenter(int id);
+
+        public abstract VirtualAppliances GetVirtualAppliances(int virtualDataCenterId);
+
+        public abstract VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id);
 
         #endregion Virtual Data Centers
     }

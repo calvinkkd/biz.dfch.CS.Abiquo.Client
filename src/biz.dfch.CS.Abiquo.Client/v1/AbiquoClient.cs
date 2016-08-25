@@ -168,5 +168,26 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion Virtual Data Centers
+
+
+        #region Virtual Appliances
+
+        public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCES).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCES, virtualDataCenterId);
+            return Invoke<VirtualAppliances>(uriSuffix, headers);
+        }
+
+        public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCE).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCE_BY_ID, virtualDataCenterId, id);
+            return Invoke<VirtualAppliance>(uriSuffix, headers);
+        }
+
+        #endregion Virtual Appliances
     }
 }

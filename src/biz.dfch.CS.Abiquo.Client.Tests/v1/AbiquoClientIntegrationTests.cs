@@ -515,7 +515,73 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(virtualDataCenter.Vlan.DhcpOptions);
             Assert.IsNotNull(virtualDataCenter.Vlan.DhcpOptions.Collection);
         }
-        
+
         #endregion Virtual Data Centers
+
+
+        #region Virtual Appliances
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetVirtualAppliancesReturnsAbiquoVirtualAppliances()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var expectedVirtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            var virtualDataCenter = abiquoClient.GetVirtualDataCenter(expectedVirtualDataCenter.Id);
+
+            // Act
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualAppliances);
+            Assert.IsNotNull(virtualAppliances.Collection);
+            Assert.IsTrue(virtualAppliances.TotalSize > 0);
+            Assert.IsTrue(virtualAppliances.Links.Count > 0);
+
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualAppliance);
+            Assert.IsTrue(virtualAppliance.Id > 0);
+            Assert.IsNotNull(virtualAppliance.Name);
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(virtualAppliance.State));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetVirtualApplianceReturnsAbiquoVirtualAppliance()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var expectedVirtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            var virtualDataCenter = abiquoClient.GetVirtualDataCenter(expectedVirtualDataCenter.Id);
+            
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var expectedVirtualApplicance = virtualAppliances.Collection.FirstOrDefault();
+
+            // Act
+            var virtualAppliance = abiquoClient.GetVirtualAppliance(virtualDataCenter.Id, expectedVirtualApplicance.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualAppliance);
+            Assert.AreEqual(expectedVirtualApplicance.Id, virtualAppliance.Id);
+            Assert.AreEqual(expectedVirtualApplicance.Error, virtualAppliance.Error);
+            Assert.AreEqual(expectedVirtualApplicance.HighDisponibility, virtualAppliance.HighDisponibility);
+            Assert.AreEqual(expectedVirtualApplicance.NodeConnections, virtualAppliance.NodeConnections);
+            Assert.AreEqual(expectedVirtualApplicance.State, virtualAppliance.State);
+            Assert.AreEqual(expectedVirtualApplicance.SubState, virtualAppliance.SubState);
+            Assert.AreEqual(expectedVirtualApplicance.PublicApp, virtualAppliance.PublicApp);
+        }
+
+        #endregion Virtual Appliances
     }
 }

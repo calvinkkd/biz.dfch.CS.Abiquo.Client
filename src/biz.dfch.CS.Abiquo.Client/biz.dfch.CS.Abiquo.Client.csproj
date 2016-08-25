@@ -209,6 +209,8 @@
     <Compile Include="v1\Model\User.cs" />
     <Compile Include="v1\Model\UsersWithRoles.cs" />
     <Compile Include="v1\Model\UserWithRole.cs" />
+    <Compile Include="v1\Model\VirtualAppliance.cs" />
+    <Compile Include="v1\Model\VirtualAppliances.cs" />
     <Compile Include="v1\Model\VirtualDataCenter.cs" />
     <Compile Include="v1\Model\VirtualDataCenters.cs" />
     <Compile Include="v1\Model\VirtualMachine.cs" />

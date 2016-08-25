@@ -96,7 +96,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public override Role GetRole(int id)
         {
-            Contract.Requires(id > 0);
+            Contract.Requires(0 < id);
 
             return default(Role);
         }
@@ -117,9 +117,25 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public override VirtualDataCenter GetVirtualDataCenter(int id)
         {
-            Contract.Requires(id > 0);
+            Contract.Requires(0 < id);
 
             return default(VirtualDataCenter);
+        }
+
+        public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Ensures(null != Contract.Result<VirtualAppliances>());
+
+            return default(VirtualAppliances);
+        }
+
+        public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < id);
+
+            return default(VirtualAppliance);
         }
     }
 }

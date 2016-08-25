@@ -294,6 +294,58 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualDataCenterWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualDataCenter(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualAppliancesWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualAppliances(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualApplianceWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualAppliance(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualApplianceWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualAppliance(42, INVALID_ID);
+
+            // Assert
+        }
+
         private class DummyAbiquoClient : BaseAbiquoClient
         {
             public DummyAbiquoClient()
@@ -370,6 +422,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 return new VirtualDataCenter();
             }
+
+            public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
+            {
+                return new VirtualAppliances();
+            }
+
+            public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
+            {
+                return new VirtualAppliance();
+            }
         }
 
         private class InvalidAbiquoClient : BaseAbiquoClient
@@ -437,6 +499,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override VirtualDataCenter GetVirtualDataCenter(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
             {
                 throw new NotImplementedException();
             }
