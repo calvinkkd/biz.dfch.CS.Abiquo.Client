@@ -227,5 +227,12 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract Role GetRole(long id);
 
         #endregion Roles
+
+
+        #region VirtualMachines
+
+
+
+        #endregion VirtualMachines
     }
 }

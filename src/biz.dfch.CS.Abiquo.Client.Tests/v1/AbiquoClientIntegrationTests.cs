@@ -410,5 +410,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         #endregion Roles
+
+
+        #region VirtualMachines
+
+
+
+        #endregion VirtualMachines
     }
 }
