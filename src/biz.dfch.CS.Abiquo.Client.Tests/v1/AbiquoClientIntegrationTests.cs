@@ -38,6 +38,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         private readonly IAuthenticationInformation basicAuthenticationInformation = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
 
+        #region Login
+
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
         public void LoginWithValidBasicAuthenticationInformationReturnsTrue()
@@ -67,6 +69,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsFalse(loginSucceeded);
         }
 
+        #endregion Login
+
+        #region Enterprises
+
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
         public void GetEnterprisesReturnsAbiquoEnterprises()
@@ -82,49 +88,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, headers);
-
-            // Assert
-            Assert.IsTrue(loginSucceeded);
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
-        public void GetUsersReturnsAbiquoUsersWithRoles()
-        {
-            // Arrange
-            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
-
-            var headers = new Dictionary<string, string>()
-            {
-                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES }
-            };
-
-            // Act
-            var requestUriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, IntegrationTestEnvironment.TenantId);
-            var result = abiquoClient.Invoke(HttpMethod.Get, requestUriSuffix, null, headers);
-
-            // Assert
-            Assert.IsTrue(loginSucceeded);
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
-        public void GetRolesSucceedsReturnsAbiquoRoles()
-        {
-            // Arrange
-            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
-
-            var headers = new Dictionary<string, string>()
-            {
-                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ROLES }
-            };
-
-            // Act
-            var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ROLES, null, headers);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -190,11 +153,64 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var requestUriSuffix = string.Format(AbiquoUriSuffixes.ENTERPRISE_BY_ID, resultingEnterprise.id.ToString());
             var deletionResult = abiquoClient.Invoke(HttpMethod.Delete, requestUriSuffix, null, headers);
-            
+
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(creationResult);
             Assert.IsNotNull(deletionResult);
         }
+
+        #endregion Enterprises
+
+        #region Users
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetUsersReturnsAbiquoUsersWithRoles()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES }
+            };
+
+            // Act
+            var requestUriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, IntegrationTestEnvironment.TenantId);
+            var result = abiquoClient.Invoke(HttpMethod.Get, requestUriSuffix, null, headers);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+        }
+
+        #endregion Users
+
+        #region Roles
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetRolesSucceedsReturnsAbiquoRoles()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ROLES }
+            };
+
+            // Act
+            var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ROLES, null, headers);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+        }
+
+        #endregion Roles
     }
 }
