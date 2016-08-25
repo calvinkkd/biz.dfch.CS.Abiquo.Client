@@ -35,7 +35,17 @@ namespace biz.dfch.CS.Abiquo.Client.General
 
         public HeaderBuilder BuildAccept(string acceptHeaderValue)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(acceptHeaderValue));
+
             _headers.Add(Constants.ACCEPT_HEADER_KEY, acceptHeaderValue);
+            return this;
+        }
+
+        public HeaderBuilder BuildContentType(string contentTypeHeaderValue)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(contentTypeHeaderValue));
+
+            _headers.Add(Constants.CONTENT_TYPE_HEADER_KEY, contentTypeHeaderValue);
             return this;
         }
 

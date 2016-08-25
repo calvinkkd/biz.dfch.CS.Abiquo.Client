@@ -24,12 +24,37 @@ using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.General;
 using biz.dfch.CS.Abiquo.Client.v1;
+﻿using biz.dfch.CS.Utilities.Testing;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
     [TestClass]
     public class HeaderBuilderTest
     {
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildAcceptHeaderWithNullValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildAccept(null);
+
+            // Assert
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildAcceptHeaderWithEmptyValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildAccept(" ");
+
+            // Assert
+        }
+
         [TestMethod]
         public void BuildAcceptHeaderReturnsDictionaryContainingExpectedAcceptHeader()
         {
@@ -42,6 +67,44 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             Assert.AreEqual(1, headers.Count);
             Assert.IsTrue(headers.ContainsKey(Constants.ACCEPT_HEADER_KEY));
             Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[Constants.ACCEPT_HEADER_KEY]);
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildContentTypeHeaderWithNullValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildContentType(null);
+
+            // Assert
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildContentTypeHeaderWithEmptyValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildContentType(" ");
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void BuildContentTypeHeaderReturnsDictionaryContainingExpectedAcceptHeader()
+        {
+            // Arrange
+
+            // Act
+            var headers = new HeaderBuilder().BuildContentType(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
+
+            // Assert
+            Assert.AreEqual(1, headers.Count);
+            Assert.IsTrue(headers.ContainsKey(Constants.CONTENT_TYPE_HEADER_KEY));
+            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[Constants.CONTENT_TYPE_HEADER_KEY]);
         }
     }
 }
