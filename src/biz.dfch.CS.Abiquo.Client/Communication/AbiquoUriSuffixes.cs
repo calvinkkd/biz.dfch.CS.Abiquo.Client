@@ -14,23 +14,23 @@
  * limitations under the License.
  */
  
-﻿using biz.dfch.CS.Abiquo.Client.General;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.v1.Model
+namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    /// <summary>
-    /// Base DTO for Abiquo objects
-    /// </summary>
-    public abstract class AbiquoBaseDto : BaseDto
+    public abstract class AbiquoUriSuffixes
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public List<Link> Links { get; set; }
+        public const string LOGIN = "/login";
+        public const string ENTERPRISES = "/admin/enterprises";
+        public const string ENTERPRISE_BY_ID = "/admin/enterprises/{0}";
+        public const string USERSWITHROLES_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
+        public const string USER_BY_ENTERPRISE_AND_USER_ID = "/admin/enterprises/{0}/users/{1}";
+        public const string ROLES = "/admin/roles";
+        public const string ROLE_BY_ID = "/admin/roles/{0}";
     }
 }

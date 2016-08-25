@@ -25,8 +25,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using Newtonsoft.Json;
-using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Abiquo.Client.General;
+﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
@@ -40,9 +40,16 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         public string AbiquoApiVersion { get; protected set; }
 
+        /// <summary>
+        /// Indicates that the call to the /login endpoint succeeded
+        /// with the provided authentication information.
+        /// </summary>
         public bool IsLoggedIn { get; protected set; }
 
-        public string AbiquoApiBaseUrl { get; protected set; }
+        /// <summary>
+        /// Base URI of the Abiquo API
+        /// </summary>
+        public string AbiquoApiBaseUri { get; protected set; }
 
         public IAuthenticationInformation AuthenticationInformation { get; protected set; }
 
@@ -54,14 +61,14 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
 
-        public abstract bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation);
+        public abstract bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation);
 
         public void Logout()
         {
             Debug.WriteLine(string.Format("START {0}", Method.fn()));
 
             IsLoggedIn = false;
-            AbiquoApiBaseUrl = null;
+            AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
 
             Trace.WriteLine(string.Format("END {0}", Method.fn()));
@@ -69,19 +76,19 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region ExecuteRequest
 
-        internal string ExecuteRequest(string urlSuffix)
+        internal string ExecuteRequest(string uriSuffix)
         {
-            return ExecuteRequest(HttpMethod.Get, urlSuffix, null, null);
+            return ExecuteRequest(HttpMethod.Get, uriSuffix, null, null);
         }
 
-        internal string ExecuteRequest(HttpMethod httpMethod, string urlSuffix, IDictionary<string, string> headers, string body)
+        internal string ExecuteRequest(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers, string body)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
-            Contract.Requires(!string.IsNullOrWhiteSpace(AbiquoApiBaseUrl));
+            Contract.Requires(!string.IsNullOrWhiteSpace(uriSuffix));
+            Contract.Requires(!string.IsNullOrWhiteSpace(AbiquoApiBaseUri));
             Contract.Requires(null != AuthenticationInformation);
 
-            var requestUrl = UrlHelper.ConcatUrl(AbiquoApiBaseUrl, urlSuffix);
-            Debug.WriteLine(string.Format("START Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUrl, headers, body));
+            var requestUri = UriHelper.ConcatUri(AbiquoApiBaseUri, uriSuffix);
+            Debug.WriteLine(string.Format("START Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUri, headers, body));
 
             var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
             if (null != headers)
@@ -90,73 +97,135 @@ namespace biz.dfch.CS.Abiquo.Client
             }
 
             var restCallExecutor = new RestCallExecutor();
-            var result = restCallExecutor.Invoke(httpMethod, requestUrl, requestHeaders, body);
+            var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
-            Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUrl));
+            Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri));
             return result;
         }
 
         #endregion ExecuteRequest
 
+
+        #region Generic Invoke
+
+        public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : BaseDto
+        {
+            return Invoke<T>(HttpMethod.Get, uriSuffix, null, headers, default(string));
+        }
+
+        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
+            where T : BaseDto
+        {
+            return Invoke<T>(HttpMethod.Get, uriSuffix, filter, headers, default(string));
+        }
+
+        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body) 
+            where T : BaseDto
+        {
+            var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
+            return BaseDto.DeserializeObject<T>(stringResponse);
+        }
+
+        #endregion Generic Invoke
+
+
         #region Invoke
 
-        public string Invoke(string urlSuffix)
+        public string Invoke(string uriSuffix)
         {
-            return Invoke(HttpMethod.Get, urlSuffix, null, null, default(string));
+            return Invoke(HttpMethod.Get, uriSuffix, null, null, default(string));
         }
 
-        public string Invoke(string urlSuffix, IDictionary<string, object> filter)
+        public string Invoke(string uriSuffix, IDictionary<string, string> headers)
         {
-            return Invoke(HttpMethod.Get, urlSuffix, filter, null, default(string));
+            return Invoke(HttpMethod.Get, uriSuffix, null, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix)
+        public string Invoke(string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
+        {
+            return Invoke(HttpMethod.Get, uriSuffix, filter, headers, default(string));
+        }
+
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers)
         {
             Contract.Requires(httpMethod != HttpMethod.Put);
 
-            return Invoke(httpMethod, urlSuffix, null, null, default(string));
+            return Invoke(httpMethod, uriSuffix, null, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, AbiquoBaseDto body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers, BaseDto body)
         {
             Contract.Requires(null != body);
 
-            return Invoke(httpMethod, urlSuffix, null, null, body.SerializeObject());
+            return Invoke(httpMethod, uriSuffix, null, headers, body.SerializeObject());
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
         {
-            return Invoke(httpMethod, urlSuffix, filter, headers, default(string));
+            return Invoke(httpMethod, uriSuffix, filter, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, AbiquoBaseDto body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
         {
             Contract.Requires(null != body);
 
-            return Invoke(httpMethod, urlSuffix, filter, headers, body.SerializeObject());
+            return Invoke(httpMethod, uriSuffix, filter, headers, body.SerializeObject());
         }
 
-        public string Invoke(HttpMethod httpMethod, string urlSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
-            Contract.Requires(Uri.IsWellFormedUriString(urlSuffix, UriKind.Relative), "Invalid relative url");
+            Contract.Requires(!string.IsNullOrWhiteSpace(uriSuffix));
+            Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            Debug.WriteLine(string.Format("START calling invoke method({0}, {1}, {2} - {3} - {4}) ...", httpMethod, urlSuffix, filter, headers, body));
+            Debug.WriteLine(string.Format("START calling invoke method({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
 
             if (null != filter)
             {
-                var filterString = UrlHelper.CreateFilterString(filter);
-                urlSuffix = string.Format("{0}?{1}", urlSuffix, filterString);
+                var filterString = UriHelper.CreateFilterString(filter);
+                uriSuffix = string.Format("{0}?{1}", uriSuffix, filterString);
             }
 
-            var response = ExecuteRequest(httpMethod, urlSuffix, headers, body);
+            var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Trace.WriteLine(string.Format("END calling invoke method({0}, {1} - {2} - {3}) SUCCEEDED", httpMethod, urlSuffix, headers, body));
+            Trace.WriteLine(string.Format("END calling invoke method({0}, {1} - {2} - {3}) SUCCEEDED", httpMethod, uriSuffix, headers, body));
 
             return response;
         }
 
         #endregion Invoke
+
+
+        #region Enterprises
+
+        public abstract Enterprises GetEnterprises();
+        
+        public abstract Enterprise GetCurrentEnterprise();
+
+        public abstract Enterprise GetEnterprise(long id);
+        
+        #endregion Enterprises
+
+
+        #region Users
+
+        public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
+
+        public abstract UsersWithRoles GetUsersWithRoles(long enterpriseId);
+
+        public abstract User GetUserOfCurrentEnterprise(long id);
+
+        public abstract User GetUser(long enterpriseId, long id);
+
+        #endregion Users
+
+
+        #region Roles
+
+        public abstract Roles GetRoles();
+
+        public abstract Role GetRole(long id);
+
+        #endregion Roles
     }
 }

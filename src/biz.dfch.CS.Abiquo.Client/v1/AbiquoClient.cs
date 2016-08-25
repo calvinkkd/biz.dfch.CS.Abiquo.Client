@@ -24,6 +24,8 @@ using System.Linq;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
+﻿using biz.dfch.CS.Abiquo.Client.General;
+﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -36,17 +38,17 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             AbiquoApiVersion = ABIQUO_API_VERSION;
         }
 
-        public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
+        public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
-            Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUrl: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));
+            Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUri: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUri, authenticationInformation.GetTenantId()));
 
             Logout();
             AuthenticationInformation = authenticationInformation;
-            AbiquoApiBaseUrl = abiquoApiBaseUrl;
+            AbiquoApiBaseUri = abiquoApiBaseUri;
 
             try
             {
-                ExecuteRequest(AbiquoUrlSuffixes.LOGIN);
+                ExecuteRequest(AbiquoUriSuffixes.LOGIN);
 
                 IsLoggedIn = true;
                 Trace.WriteLine("END Login SUCCEEDED");
@@ -59,5 +61,80 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 return false;
             }
         }
+
+        #region Enterprises
+
+        public override Enterprises GetEnterprises()
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES).GetHeaders();
+
+            return Invoke<Enterprises>(AbiquoUriSuffixes.ENTERPRISES, headers);
+        }
+
+        public override Enterprise GetCurrentEnterprise()
+        {
+            return GetEnterprise(AuthenticationInformation.GetTenantId());
+        }
+
+        public override Enterprise GetEnterprise(long id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
+            var uriSuffix = string.Format(AbiquoUriSuffixes.ENTERPRISE_BY_ID, id);
+
+            return Invoke<Enterprise>(uriSuffix, headers);
+        }
+
+        #endregion Enterprises
+
+
+        #region Users
+
+        public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
+        {
+            return GetUsersWithRoles(AuthenticationInformation.GetTenantId());
+        }
+
+        public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, enterpriseId);
+            return Invoke<UsersWithRoles>(uriSuffix, headers);
+        }
+
+        public override User GetUserOfCurrentEnterprise(long id)
+        {
+            return GetUser(AuthenticationInformation.GetTenantId(), id);
+        }
+
+        public override User GetUser(long enterpriseId, long id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_AND_USER_ID, enterpriseId, id);
+            
+            return Invoke<User>(uriSuffix, headers);
+        }
+
+        #endregion Users
+
+
+        #region Roles
+
+        public override Roles GetRoles()
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ROLES).GetHeaders();
+
+            return Invoke<Roles>(AbiquoUriSuffixes.ROLES, headers);
+        }
+
+        public override Role GetRole(long id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ROLE).GetHeaders();
+            
+            var uriSuffix = string.Format(AbiquoUriSuffixes.ROLE_BY_ID, id);
+            return Invoke<Role>(uriSuffix, headers);
+        }
+
+        #endregion Roles
     }
 }

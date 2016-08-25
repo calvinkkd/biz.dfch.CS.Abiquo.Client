@@ -14,23 +14,34 @@
  * limitations under the License.
  */
  
-﻿using biz.dfch.CS.Abiquo.Client.General;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 
-namespace biz.dfch.CS.Abiquo.Client.v1.Model
+namespace biz.dfch.CS.Abiquo.Client.General
 {
-    /// <summary>
-    /// Base DTO for Abiquo objects
-    /// </summary>
-    public abstract class AbiquoBaseDto : BaseDto
+    public class HeaderBuilder
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public List<Link> Links { get; set; }
+        private Dictionary<string, string> _headers; 
+
+        public HeaderBuilder()
+        {
+            _headers = new Dictionary<string, string>();
+        }
+
+        public HeaderBuilder BuildAccept(string acceptHeaderValue)
+        {
+            _headers.Add(Constants.ACCEPT_HEADER_KEY, acceptHeaderValue);
+            return this;
+        }
+
+        public Dictionary<string, string> GetHeaders()
+        {
+            return _headers;
+        }
     }
 }

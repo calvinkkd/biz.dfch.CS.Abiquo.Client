@@ -21,20 +21,84 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
-        public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
+        public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUrl));
+            Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUri));
             Contract.Requires(null != authenticationInformation);
-            Contract.Ensures(Contract.Result<bool>() == !string.IsNullOrWhiteSpace(this.AbiquoApiBaseUrl));
+            Contract.Ensures(Contract.Result<bool>() == !string.IsNullOrWhiteSpace(this.AbiquoApiBaseUri));
             Contract.Ensures(Contract.Result<bool>() == (null != this.AuthenticationInformation));
 
             return default(bool);
+        }
+
+        public override Enterprises GetEnterprises()
+        {
+            Contract.Ensures(null != Contract.Result<Enterprises>());
+
+            return default(Enterprises);
+        }
+
+        public override Enterprise GetCurrentEnterprise()
+        {
+            return default(Enterprise);
+        }
+
+        public override Enterprise GetEnterprise(long id)
+        {
+            Contract.Requires(0 < id);
+
+            return default(Enterprise);
+        }
+
+        public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
+        {
+            Contract.Ensures(null != Contract.Result<UsersWithRoles>());
+
+            return default(UsersWithRoles);
+        }
+
+        public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Ensures(null != Contract.Result<UsersWithRoles>());
+
+            return default(UsersWithRoles);
+        }
+
+        public override User GetUserOfCurrentEnterprise(long id)
+        {
+            Contract.Requires(0 < id);
+
+            return default(User);
+        }
+
+        public override User GetUser(long enterpriseId, long id)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < id);
+
+            return default(User);
+        }
+
+        public override Roles GetRoles()
+        {
+            Contract.Ensures(null != Contract.Result<Roles>());
+
+            return default(Roles);
+        }
+ 
+        public override Role GetRole(long id)
+        {
+            Contract.Requires(id > 0);
+
+            return default(Role);
         }
     }
 }

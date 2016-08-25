@@ -27,15 +27,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
     {
         static IntegrationTestEnvironment()
         {
-            IntegrationTestEnvironment.AbiquoApiBaseUrl = @"https://abiquo.com/api/";
-            IntegrationTestEnvironment.Username = "Arbitrary-User";
-            IntegrationTestEnvironment.Password = "Arbitrary-Password";
-            IntegrationTestEnvironment.TenantId = "1";
+            AbiquoApiBaseUri = @"https://abiquo/api/";
+            Username = "arbitrary";
+            Password = "arbitrary";
+            TenantId = 1;
         }
 
-        public static string AbiquoApiBaseUrl { get; set; }
+        public static string AbiquoApiBaseUri { get; set; }
         public static string Username { get; set; }
         public static string Password { get; set; }
-        public static string TenantId { get; set; }
+        public static long TenantId { get; set; }
     }
 }
