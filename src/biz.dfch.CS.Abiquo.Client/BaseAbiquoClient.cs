@@ -107,9 +107,15 @@ namespace biz.dfch.CS.Abiquo.Client
 
 
         #region Generic Invoke
-        public T Invoke<T>(string uriSuffix) where T : BaseDto
+        public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : BaseDto
         {
-            return Invoke<T>(HttpMethod.Get, uriSuffix, null, null, default(string));
+            return Invoke<T>(HttpMethod.Get, uriSuffix, null, headers, default(string));
+        }
+
+        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
+            where T : BaseDto
+        {
+            return Invoke<T>(HttpMethod.Get, uriSuffix, filter, headers, default(string));
         }
 
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body) 
@@ -129,23 +135,28 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(HttpMethod.Get, uriSuffix, null, null, default(string));
         }
 
-        public string Invoke(string uriSuffix, IDictionary<string, object> filter)
+        public string Invoke(string uriSuffix, IDictionary<string, string> headers)
         {
-            return Invoke(HttpMethod.Get, uriSuffix, filter, null, default(string));
+            return Invoke(HttpMethod.Get, uriSuffix, null, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string uriSuffix)
+        public string Invoke(string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
+        {
+            return Invoke(HttpMethod.Get, uriSuffix, filter, headers, default(string));
+        }
+
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers)
         {
             Contract.Requires(httpMethod != HttpMethod.Put);
 
-            return Invoke(httpMethod, uriSuffix, null, null, default(string));
+            return Invoke(httpMethod, uriSuffix, null, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string uriSuffix, BaseDto body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers, BaseDto body)
         {
             Contract.Requires(null != body);
 
-            return Invoke(httpMethod, uriSuffix, null, null, body.SerializeObject());
+            return Invoke(httpMethod, uriSuffix, null, headers, body.SerializeObject());
         }
 
         public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
