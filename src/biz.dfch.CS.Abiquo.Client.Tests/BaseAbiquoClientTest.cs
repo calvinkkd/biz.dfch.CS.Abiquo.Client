@@ -360,6 +360,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 return new VirtualMachines();
             }
+
+            public override VirtualDataCenters GetVirtualDataCenters()
+            {
+                return new VirtualDataCenters();
+            }
+
+            public override VirtualDataCenter GetVirtualDataCenter(int id)
+            {
+                return new VirtualDataCenter();
+            }
         }
 
         private class InvalidAbiquoClient : BaseAbiquoClient
@@ -417,6 +427,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override VirtualMachines GetVirtualMachines()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualDataCenters GetVirtualDataCenters()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualDataCenter GetVirtualDataCenter(int id)
             {
                 throw new NotImplementedException();
             }

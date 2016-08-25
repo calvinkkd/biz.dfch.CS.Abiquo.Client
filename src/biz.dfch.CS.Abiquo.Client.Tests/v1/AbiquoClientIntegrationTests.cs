@@ -435,8 +435,87 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualMachine = virtualMachines.Collection.FirstOrDefault();
             Assert.IsNotNull(virtualMachine);
+            Assert.IsTrue(virtualMachine.Id > 0);
+            Assert.IsNotNull(virtualMachine.Name);
+            Assert.IsTrue(virtualMachine.Cpu > 0);
+            Assert.IsTrue(virtualMachine.Ram > 0);
         }
 
         #endregion VirtualMachines
+
+
+        #region Virtual Data Centers
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetVirtualDataCentersReturnsAbiquoVirtualDataCenters()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
+
+            // Act
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualDataCenters);
+            Assert.IsNotNull(virtualDataCenters.Collection);
+            Assert.IsTrue(virtualDataCenters.TotalSize > 0);
+            Assert.IsTrue(virtualDataCenters.Links.Count > 0);
+
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualDataCenter);
+            Assert.IsTrue(virtualDataCenter.Id > 0);
+            Assert.IsNotNull(virtualDataCenter.Name);
+            Assert.AreEqual(0, virtualDataCenter.CpuCountHardLimit);
+            Assert.AreEqual(0, virtualDataCenter.CpuCountSoftLimit);
+            Assert.AreEqual(0, virtualDataCenter.PublicIpsSoft);
+            Assert.AreEqual(0, virtualDataCenter.PublicIpsHard);
+            Assert.AreEqual(0, virtualDataCenter.DiskSoftLimitInMb);
+            Assert.AreEqual(0, virtualDataCenter.DiskHardLimitInMb);
+            Assert.AreEqual(0, virtualDataCenter.RamHardLimitInMb);
+            Assert.AreEqual(0, virtualDataCenter.RamSoftLimitInMb);
+            Assert.IsNotNull(virtualDataCenter.Vlan);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetVirtualDataCenterReturnsAbiquoVirtualDataCenter()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var expectedVirtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+
+            // Act
+            var virtualDataCenter = abiquoClient.GetVirtualDataCenter(expectedVirtualDataCenter.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualDataCenter);
+            Assert.IsTrue(virtualDataCenter.Id > 0);
+            Assert.IsNotNull(virtualDataCenter.Name);
+            Assert.AreEqual(0, virtualDataCenter.CpuCountHardLimit);
+            Assert.AreEqual(0, virtualDataCenter.CpuCountSoftLimit);
+            Assert.AreEqual(0, virtualDataCenter.PublicIpsSoft);
+            Assert.AreEqual(0, virtualDataCenter.PublicIpsHard);
+            Assert.AreEqual(0, virtualDataCenter.DiskSoftLimitInMb);
+            Assert.AreEqual(0, virtualDataCenter.DiskHardLimitInMb);
+            Assert.AreEqual(0, virtualDataCenter.RamHardLimitInMb);
+            Assert.AreEqual(0, virtualDataCenter.RamSoftLimitInMb);
+            
+            Assert.IsNotNull(virtualDataCenter.Vlan);
+            Assert.IsTrue(virtualDataCenter.Vlan.Id > 0);
+            Assert.IsNotNull(virtualDataCenter.Vlan.Name);
+            Assert.IsNotNull(virtualDataCenter.Vlan.DhcpOptions);
+            Assert.IsNotNull(virtualDataCenter.Vlan.DhcpOptions.Collection);
+        }
+        
+        #endregion Virtual Data Centers
     }
 }

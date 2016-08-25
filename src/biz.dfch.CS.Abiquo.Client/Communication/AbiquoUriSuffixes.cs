@@ -33,5 +33,7 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string ROLES = "/admin/roles";
         public const string ROLE_BY_ID = "/admin/roles/{0}";
         public const string VIRTUALMACHINES = "/cloud/virtualmachines";
+        public const string VIRTUALDATACENTERS = "/cloud/virtualdatacenters";
+        public const string VIRTUALDATACENTER_BY_ID = "/cloud/virtualdatacenters/{0}";
     }
 }

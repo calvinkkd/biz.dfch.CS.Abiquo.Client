@@ -148,5 +148,25 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion VirtualMachines
+
+
+        #region Virtual Data Centers
+
+        public override VirtualDataCenters GetVirtualDataCenters()
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALDATACENTERS).GetHeaders();
+
+            return Invoke<VirtualDataCenters>(AbiquoUriSuffixes.VIRTUALDATACENTERS, headers);
+        }
+
+        public override VirtualDataCenter GetVirtualDataCenter(int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALDATACENTER).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALDATACENTER_BY_ID, id);
+            return Invoke<VirtualDataCenter>(uriSuffix, headers);
+        }
+
+        #endregion Virtual Data Centers
     }
 }

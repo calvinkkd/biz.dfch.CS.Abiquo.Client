@@ -107,5 +107,19 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(VirtualMachines);
         }
+
+        public override VirtualDataCenters GetVirtualDataCenters()
+        {
+            Contract.Ensures(null != Contract.Result<VirtualDataCenters>());
+
+            return default(VirtualDataCenters);
+        }
+
+        public override VirtualDataCenter GetVirtualDataCenter(int id)
+        {
+            Contract.Requires(id > 0);
+
+            return default(VirtualDataCenter);
+        }
     }
 }
