@@ -198,10 +198,23 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Enterprises
 
+        /// <summary>
+        /// Retrieve the list of enterprises/tenants
+        /// </summary>
+        /// <returns>Enterprise/tenant collection</returns>
         public abstract Enterprises GetEnterprises();
         
+        /// <summary>
+        /// Retrieve the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <returns>Enterprise of the specified in the authentication information</returns>
         public abstract Enterprise GetCurrentEnterprise();
 
+        /// <summary>
+        /// Retrieve enterprise/tenant by Id
+        /// </summary>
+        /// <param name="id">Id of the enterprise/tenant</param>
+        /// <returns>Enterprise</returns>
         public abstract Enterprise GetEnterprise(long id);
         
         #endregion Enterprises
@@ -209,12 +222,32 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Users
 
+        /// <summary>
+        /// Retrieve users with roles of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <returns>Users with roles</returns>
         public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
 
+        /// <summary>
+        /// Retrieve users with roles of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <returns>Users with roles</returns>
         public abstract UsersWithRoles GetUsersWithRoles(long enterpriseId);
 
+        /// <summary>
+        /// Retrieve a specific user of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="id">Id of the user</param>
+        /// <returns>User</returns>
         public abstract User GetUserOfCurrentEnterprise(long id);
 
+        /// <summary>
+        /// Retrieve a specific user of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="id">Id of the user</param>
+        /// <returns>User</returns>
         public abstract User GetUser(long enterpriseId, long id);
 
         #endregion Users
@@ -222,8 +255,17 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Roles
 
+        /// <summary>
+        /// Retrieve all roles
+        /// </summary>
+        /// <returns>Role collection</returns>
         public abstract Roles GetRoles();
 
+        /// <summary>
+        /// Retrieve a specific role
+        /// </summary>
+        /// <param name="id">Id of the role</param>
+        /// <returns>Role</returns>
         public abstract Role GetRole(long id);
 
         #endregion Roles
