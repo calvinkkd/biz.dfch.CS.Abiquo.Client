@@ -414,7 +414,28 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         #region VirtualMachines
 
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetVirtualMachinesReturnsAbiquoVirtualMachinesOfUser()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
 
+            // Act
+            var virtualMachines = abiquoClient.GetVirtualMachines();
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualMachines);
+            Assert.IsNotNull(virtualMachines.Collection);
+            Assert.IsTrue(virtualMachines.TotalSize > 0);
+            Assert.IsTrue(virtualMachines.Links.Count > 0);
+
+            var virtualMachine = virtualMachines.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualMachine);
+        }
 
         #endregion VirtualMachines
     }

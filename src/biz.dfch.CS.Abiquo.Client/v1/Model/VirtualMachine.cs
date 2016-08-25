@@ -23,17 +23,26 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class User : AbiquoBaseDto
+    public class VirtualMachine : AbiquoBaseDto
     {
-        public string Nick { get; set; }
-        public string Locale { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
+        public int Cpu { get; set; }
+        public int CoresPerSocket { get; set; }
         public string Description { get; set; }
-        public string AuthType { get; set; }
-        public string AvailableVirtualDatacenters { get; set; }
-        public bool Active { get; set; }
-        public bool Locked { get; set; }
-        public bool FirstLogin { get; set; }
+        public int HighDisponibility { get; set; }
+        public int IdState { get; set; }
+        public int IdType { get; set; }
+        public string Keymap { get; set; }
+        public string Password { get; set; }
+        public int Ram { get; set; }
+        public string State { get; set; }
+        public string Uuid { get; set; }
+        public string VdrpIp { get; set; }
+        public int VdrpPort { get; set; }
+        public bool VdrpEnabled { get; set; }
+        public string Type { get; set; }
+        public string Label { get; set; }
+        public bool Monitored { get; set; }
+        public Dictionary<string, string> Variables { get; set; }
+        public bool Protected { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class Role : AbiquoBaseDto
     {
         public bool Blocked { get; set; }
-        public long IdEnterprise { get; set; }
+        public int IdEnterprise { get; set; }
         public string Ldap { get; set; }
     }
 }

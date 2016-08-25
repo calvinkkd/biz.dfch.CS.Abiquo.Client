@@ -76,7 +76,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetEnterprise(AuthenticationInformation.GetTenantId());
         }
 
-        public override Enterprise GetEnterprise(long id)
+        public override Enterprise GetEnterprise(int id)
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.ENTERPRISE_BY_ID, id);
@@ -94,7 +94,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetUsersWithRoles(AuthenticationInformation.GetTenantId());
         }
 
-        public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+        public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
 
@@ -102,12 +102,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<UsersWithRoles>(uriSuffix, headers);
         }
 
-        public override User GetUserOfCurrentEnterprise(long id)
+        public override User GetUserOfCurrentEnterprise(int id)
         {
             return GetUser(AuthenticationInformation.GetTenantId(), id);
         }
 
-        public override User GetUser(long enterpriseId, long id)
+        public override User GetUser(int enterpriseId, int id)
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_AND_USER_ID, enterpriseId, id);
@@ -127,7 +127,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<Roles>(AbiquoUriSuffixes.ROLES, headers);
         }
 
-        public override Role GetRole(long id)
+        public override Role GetRole(int id)
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ROLE).GetHeaders();
             
@@ -140,7 +140,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualMachines
 
+        public override VirtualMachines GetVirtualMachines()
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
 
+            return Invoke<VirtualMachines>(AbiquoUriSuffixes.VIRTUALMACHINES, headers);
+        }
 
         #endregion VirtualMachines
     }

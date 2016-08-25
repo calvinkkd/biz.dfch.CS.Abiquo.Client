@@ -215,7 +215,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="id">Id of the enterprise/tenant</param>
         /// <returns>Enterprise</returns>
-        public abstract Enterprise GetEnterprise(long id);
+        public abstract Enterprise GetEnterprise(int id);
         
         #endregion Enterprises
 
@@ -233,14 +233,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
         /// <returns>Users with roles</returns>
-        public abstract UsersWithRoles GetUsersWithRoles(long enterpriseId);
+        public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
 
         /// <summary>
         /// Retrieve a specific user of the enterprise/tenant specified in the authentication information
         /// </summary>
         /// <param name="id">Id of the user</param>
         /// <returns>User</returns>
-        public abstract User GetUserOfCurrentEnterprise(long id);
+        public abstract User GetUserOfCurrentEnterprise(int id);
 
         /// <summary>
         /// Retrieve a specific user of a specific enterprise/tenant
@@ -248,7 +248,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
         /// <param name="id">Id of the user</param>
         /// <returns>User</returns>
-        public abstract User GetUser(long enterpriseId, long id);
+        public abstract User GetUser(int enterpriseId, int id);
 
         #endregion Users
 
@@ -266,14 +266,18 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="id">Id of the role</param>
         /// <returns>Role</returns>
-        public abstract Role GetRole(long id);
+        public abstract Role GetRole(int id);
 
         #endregion Roles
 
 
         #region VirtualMachines
 
-
+        /// <summary>
+        /// Retrieve all the virtual machines that the current user has access to.
+        /// </summary>
+        /// <returns>Virtual machine collection</returns>
+        public abstract VirtualMachines GetVirtualMachines();
 
         #endregion VirtualMachines
     }

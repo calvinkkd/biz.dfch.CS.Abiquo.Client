@@ -38,8 +38,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
-        private const long TENANT_ID = 1;
-        private const long INVALID_ID = 0;
+        private const int TENANT_ID = 1;
+        private const int INVALID_ID = 0;
 
         private readonly IAuthenticationInformation authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
         private static readonly string BEARER_TOKEN = "Bearer TESTTOKEN";
@@ -321,7 +321,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Enterprise();
             }
 
-            public override Client.v1.Model.Enterprise GetEnterprise(long id)
+            public override Client.v1.Model.Enterprise GetEnterprise(int id)
             {
                 return new Enterprise();
             }
@@ -331,17 +331,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new UsersWithRoles();
             }
 
-            public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+            public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
             {
                 return new UsersWithRoles();
             }
 
-            public override User GetUserOfCurrentEnterprise(long id)
+            public override User GetUserOfCurrentEnterprise(int id)
             {
                 return new User();
             }
 
-            public override User GetUser(long enterpriseId, long id)
+            public override User GetUser(int enterpriseId, int id)
             {
                 return new User();
             }
@@ -351,9 +351,14 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Roles();
             }
 
-            public override Role GetRole(long id)
+            public override Role GetRole(int id)
             {
                 return new Role();
+            }
+
+            public override VirtualMachines GetVirtualMachines()
+            {
+                return new VirtualMachines();
             }
         }
 
@@ -376,7 +381,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override Enterprise GetEnterprise(long id)
+            public override Enterprise GetEnterprise(int id)
             {
                 throw new NotImplementedException();
             }
@@ -386,17 +391,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+            public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
             {
                 throw new NotImplementedException();
             }
 
-            public override User GetUserOfCurrentEnterprise(long id)
+            public override User GetUserOfCurrentEnterprise(int id)
             {
                 throw new NotImplementedException();
             }
 
-            public override User GetUser(long enterpriseId, long id)
+            public override User GetUser(int enterpriseId, int id)
             {
                 throw new NotImplementedException();
             }
@@ -406,7 +411,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override Role GetRole(long id)
+            public override Role GetRole(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachines GetVirtualMachines()
             {
                 throw new NotImplementedException();
             }

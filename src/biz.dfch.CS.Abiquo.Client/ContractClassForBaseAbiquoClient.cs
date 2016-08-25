@@ -50,7 +50,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Enterprise);
         }
 
-        public override Enterprise GetEnterprise(long id)
+        public override Enterprise GetEnterprise(int id)
         {
             Contract.Requires(0 < id);
 
@@ -64,7 +64,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(UsersWithRoles);
         }
 
-        public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+        public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
             Contract.Ensures(null != Contract.Result<UsersWithRoles>());
@@ -72,14 +72,14 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(UsersWithRoles);
         }
 
-        public override User GetUserOfCurrentEnterprise(long id)
+        public override User GetUserOfCurrentEnterprise(int id)
         {
             Contract.Requires(0 < id);
 
             return default(User);
         }
 
-        public override User GetUser(long enterpriseId, long id)
+        public override User GetUser(int enterpriseId, int id)
         {
             Contract.Requires(0 < enterpriseId);
             Contract.Requires(0 < id);
@@ -93,12 +93,19 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(Roles);
         }
- 
-        public override Role GetRole(long id)
+
+        public override Role GetRole(int id)
         {
             Contract.Requires(id > 0);
 
             return default(Role);
+        }
+
+        public override VirtualMachines GetVirtualMachines()
+        {
+            Contract.Ensures(null != Contract.Result<VirtualMachines>());
+
+            return default(VirtualMachines);
         }
     }
 }

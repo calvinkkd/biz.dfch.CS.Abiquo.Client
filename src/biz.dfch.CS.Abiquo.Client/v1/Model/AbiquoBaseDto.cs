@@ -29,7 +29,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     /// </summary>
     public abstract class AbiquoBaseDto : BaseDto
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<Link> Links { get; set; }
     }

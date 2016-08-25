@@ -206,6 +206,8 @@
     <Compile Include="v1\Model\User.cs" />
     <Compile Include="v1\Model\UsersWithRoles.cs" />
     <Compile Include="v1\Model\UserWithRole.cs" />
+    <Compile Include="v1\Model\VirtualMachine.cs" />
+    <Compile Include="v1\Model\VirtualMachines.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

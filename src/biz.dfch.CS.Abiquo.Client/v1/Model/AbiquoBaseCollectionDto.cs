@@ -33,6 +33,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     {
         public List<Link> Links { get; set; }
         public List<T> Collection { get; set; }
-        public long TotalSize { get; set; }
+        public int TotalSize { get; set; }
     }
 }

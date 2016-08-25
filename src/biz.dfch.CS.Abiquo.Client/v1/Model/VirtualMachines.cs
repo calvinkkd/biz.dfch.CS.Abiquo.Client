@@ -21,21 +21,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.Tests
+namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    internal class IntegrationTestEnvironment
+    public class VirtualMachines : AbiquoBaseCollectionDto<VirtualMachine>
     {
-        static IntegrationTestEnvironment()
-        {
-            AbiquoApiBaseUri = @"https://abiquo/api/";
-            Username = "arbitrary";
-            Password = "arbitrary";
-            TenantId = 1;
-        }
-
-        public static string AbiquoApiBaseUri { get; set; }
-        public static string Username { get; set; }
-        public static string Password { get; set; }
-        public static int TenantId { get; set; }
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto
     }
 }
