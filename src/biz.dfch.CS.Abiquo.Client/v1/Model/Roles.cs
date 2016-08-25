@@ -21,14 +21,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.Communication
+namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public abstract class AbiquoUrlSuffixes
+    public class Roles : AbiquoBaseCollectionDto<Role>
     {
-        public const string LOGIN = "/login";
-        public const string USERSWITHROLES_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
-        public const string USER_BY_ENTERPRISE_AND_USER_ID = "/admin/enterprises/{0}/users/{1}";
-        public const string ENTERPRISES = "/admin/enterprises";
-        public const string ENTERPRISE_BY_ID = "/admin/enterprises/{0}";
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto
     }
 }

@@ -31,7 +31,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
     {
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
-        private const string TENANT_ID = "1";
+        private const long TENANT_ID = 1;
 
         [TestMethod]
         [ExpectContractFailure]
@@ -83,24 +83,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
 
         [TestMethod]
         [ExpectContractFailure]
-        public void CreateBasicAuthenticationInformationWithNullTenantIdThrowsContractException()
+        public void CreateBasicAuthenticationInformationWithInvalidTenantIdThrowsContractException()
         {
             // Arrange
             
             // Act
-            new BasicAuthenticationInformation(USERNAME, PASSWORD, null);
-
-            // Assert
-        }
-
-        [TestMethod]
-        [ExpectContractFailure]
-        public void CreateBasicAuthenticationInformationWithEmptyTenantIdThrowsContractException()
-        {
-            // Arrange
-            
-            // Act
-            new BasicAuthenticationInformation(USERNAME, PASSWORD, " ");
+            new BasicAuthenticationInformation(USERNAME, PASSWORD, 0);
 
             // Assert
         }
@@ -131,7 +119,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             var tenantId = basicAuthInfo.GetTenantId();
 
             // Assert
-            Assert.IsNotNull(tenantId);
             Assert.AreEqual(TENANT_ID, tenantId);
         }
     }

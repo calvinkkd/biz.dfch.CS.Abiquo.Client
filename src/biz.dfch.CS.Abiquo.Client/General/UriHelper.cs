@@ -23,19 +23,17 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.General
 {
-    public class UrlHelper
+    public class UriHelper
     {
         public const char CHARACTER_TO_TRIM_ON = '/';
         public const string FILTER_SEPARATOR = "&";
 
-        public static string ConcatUrl(string baseUrl, string urlSuffix)
+        public static string ConcatUri(string baseUri, string uriSuffix)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(baseUrl));
-            Contract.Requires(!string.IsNullOrWhiteSpace(urlSuffix));
+            Contract.Requires(!string.IsNullOrWhiteSpace(baseUri));
+            Contract.Requires(!string.IsNullOrWhiteSpace(uriSuffix));
 
-            var resultingUrl = string.Format("{0}/{1}", baseUrl.TrimEnd(CHARACTER_TO_TRIM_ON), urlSuffix.TrimStart(CHARACTER_TO_TRIM_ON).TrimEnd(CHARACTER_TO_TRIM_ON));
-
-            return resultingUrl;
+            return string.Format("{0}/{1}", baseUri.TrimEnd(CHARACTER_TO_TRIM_ON), uriSuffix.TrimStart(CHARACTER_TO_TRIM_ON).TrimEnd(CHARACTER_TO_TRIM_ON));
         }
 
         public static string CreateFilterString(IDictionary<string, object> filter)

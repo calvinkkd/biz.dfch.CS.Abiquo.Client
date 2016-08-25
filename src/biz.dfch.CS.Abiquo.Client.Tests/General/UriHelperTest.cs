@@ -28,75 +28,75 @@ using biz.dfch.CS.Abiquo.Client.General;
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
     [TestClass]
-    public class UrlHelperTest
+    public class UriHelperTest
     {
-        private const string ABIQUO_API_BASE_URL = "https://abiquo/api/";
+        private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ConcatUrlWithInvalidBaseUrlThrowsContractException()
+        public void ConcatUriWithInvalidBaseUriThrowsContractException()
         {
             // Arrange
 
             // Act
-            UrlHelper.ConcatUrl(null, AbiquoUrlSuffixes.LOGIN);
+            UriHelper.ConcatUri(null, AbiquoUriSuffixes.LOGIN);
 
             // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ConcatUrlWithEmptyBaseUrlThrowsContractException()
+        public void ConcatUriWithEmptyBaseUriThrowsContractException()
         {
             // Arrange
 
             // Act
-            UrlHelper.ConcatUrl(" ", AbiquoUrlSuffixes.LOGIN);
+            UriHelper.ConcatUri(" ", AbiquoUriSuffixes.LOGIN);
 
             // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ConcatUrlWithNullUrlSuffixThrowsContractException()
+        public void ConcatUriWithNullUriSuffixThrowsContractException()
         {
             // Arrange
 
             // Act
-            UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, null);
+            UriHelper.ConcatUri(ABIQUO_API_BASE_URI, null);
 
             // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ConcatUrlWithEmptyUrlSuffixThrowsContractException()
+        public void ConcatUriWithEmptyUriSuffixThrowsContractException()
         {
             // Arrange
 
             // Act
-            UrlHelper.ConcatUrl(ABIQUO_API_BASE_URL, " ");
+            UriHelper.ConcatUri(ABIQUO_API_BASE_URI, " ");
             
             // Assert
         }
 
         [TestMethod]
-        public void ConcatUrlReturnsValidUrl()
+        public void ConcatUriReturnsValidUri()
         {
             // Arrange
-            var expectedUrl = "http://example.com/api/login";
+            var expectedUri = "http://example.com/api/login";
 
             // Act
 
             // Assert
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "login"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "/login"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "login/"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api/", "/login/"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "login"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "/login"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "login/"));
-            Assert.AreEqual(expectedUrl, UrlHelper.ConcatUrl("http://example.com/api", "/login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "/login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "/login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "/login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "/login/"));
         }
 
         [TestMethod]
@@ -106,7 +106,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            UrlHelper.CreateFilterString(null);
+            UriHelper.CreateFilterString(null);
 
             // Assert
         }
@@ -119,7 +119,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             var emptyFilter = new Dictionary<string, object>();
 
             // Act
-            UrlHelper.CreateFilterString(emptyFilter);
+            UriHelper.CreateFilterString(emptyFilter);
 
             // Assert
         }
@@ -138,7 +138,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             };
 
             // Act
-            var filterString = UrlHelper.CreateFilterString(filter);
+            var filterString = UriHelper.CreateFilterString(filter);
 
             // Assert
             Assert.AreEqual(expectedFilterString, filterString);

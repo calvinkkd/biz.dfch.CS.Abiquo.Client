@@ -199,7 +199,7 @@
     <Compile Include="Authentication\BasicAuthenticationInformationTest.cs" />
     <Compile Include="IntegrationTestEnvironment.cs" />
     <Compile Include="General\BaseDtoTest.cs" />
-    <Compile Include="General\UrlHelperTest.cs" />
+    <Compile Include="General\UriHelperTest.cs" />
     <Compile Include="v1\AbiquoClientIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v1\AbiquoClientTest.cs" />

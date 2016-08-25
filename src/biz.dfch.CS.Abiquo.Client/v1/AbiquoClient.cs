@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
+﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -36,17 +37,17 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             AbiquoApiVersion = ABIQUO_API_VERSION;
         }
 
-        public override bool Login(string abiquoApiBaseUrl, IAuthenticationInformation authenticationInformation)
+        public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
-            Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUrl: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUrl, authenticationInformation.GetTenantId()));
+            Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUri: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUri, authenticationInformation.GetTenantId()));
 
             Logout();
             AuthenticationInformation = authenticationInformation;
-            AbiquoApiBaseUrl = abiquoApiBaseUrl;
+            AbiquoApiBaseUri = abiquoApiBaseUri;
 
             try
             {
-                ExecuteRequest(AbiquoUrlSuffixes.LOGIN);
+                ExecuteRequest(AbiquoUriSuffixes.LOGIN);
 
                 IsLoggedIn = true;
                 Trace.WriteLine("END Login SUCCEEDED");
@@ -60,12 +61,50 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             }
         }
 
-        #region Enterprises
+        public override Enterprises GetEnterprises()
+        {
+            // DFTODO - Set headers
+            return Invoke<Enterprises>(AbiquoUriSuffixes.ENTERPRISES);
+        }
 
-        #endregion Enterprises
+        public override Enterprise GetEnterprise(long id)
+        {
+            // DFTODO - Set headers
+            var uriSuffix = string.Format(AbiquoUriSuffixes.ENTERPRISE_BY_ID, id);
+            return Invoke<Enterprise>(uriSuffix);
+        }
 
-        #region Users
+        public override UsersWithRoles GetUsersWithRoles()
+        {
+            // DFTODO - Set headers
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, AuthenticationInformation.GetTenantId());
+            return Invoke<UsersWithRoles>(uriSuffix);
+        }
 
-        #endregion Users
+        public override User GetUser(long id)
+        {
+            // DFTODO - Set headers
+            return GetUser(AuthenticationInformation.GetTenantId(), id);
+        }
+
+        public override User GetUser(long enterpriseId, long id)
+        {
+            // DFTODO - Set headers
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_AND_USER_ID, enterpriseId, id);
+            return Invoke<User>(uriSuffix);
+        }
+
+        public override Roles GetRoles()
+        {
+            // DFTODO - Set headers
+            return Invoke<Roles>(AbiquoUriSuffixes.ROLES);
+        }
+
+        public override Role GetRole(long id)
+        {
+            // DFTODO - Set headers
+            var uriSuffix = string.Format(AbiquoUriSuffixes.ROLE_BY_ID, id);
+            return Invoke<Role>(uriSuffix);
+        }
     }
 }
