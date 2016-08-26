@@ -211,7 +211,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract Enterprise GetCurrentEnterprise();
 
         /// <summary>
-        /// Retrieve enterprise/tenant by Id
+        /// Retrieve enterprise/tenant by id
         /// </summary>
         /// <param name="id">Id of the enterprise/tenant</param>
         /// <returns>Enterprise</returns>
@@ -236,14 +236,14 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
 
         /// <summary>
-        /// Retrieve a specific user of the enterprise/tenant specified in the authentication information
+        /// Retrieve a specific user by id of the enterprise/tenant specified in the authentication information
         /// </summary>
         /// <param name="id">Id of the user</param>
         /// <returns>User</returns>
         public abstract User GetUserOfCurrentEnterprise(int id);
 
         /// <summary>
-        /// Retrieve a specific user of a specific enterprise/tenant
+        /// Retrieve a specific user by id of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
         /// <param name="id">Id of the user</param>
@@ -262,7 +262,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract Roles GetRoles();
 
         /// <summary>
-        /// Retrieve a specific role
+        /// Retrieve a specific role by id
         /// </summary>
         /// <param name="id">Id of the role</param>
         /// <returns>Role</returns>
@@ -276,7 +276,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all virtual machines across all virtual datacenters the current user has access to
         /// </summary>
-        /// <returns>Collection of virtual machines</returns>
+        /// <returns>Collection of VirtualMachines</returns>
         public abstract VirtualMachines GetAllVirtualMachines();
 
         public abstract 
@@ -293,7 +293,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract VirtualDataCenters GetVirtualDataCenters();
 
         /// <summary>
-        /// Retrieve a specific virtual datacenter
+        /// Retrieve a specific virtual datacenter by id
         /// </summary>
         /// <param name="id">Id of the virtual datacenter</param>
         /// <returns>VirtualDataCenter</returns>
@@ -307,7 +307,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract VirtualAppliances GetVirtualAppliances(int virtualDataCenterId);
 
         /// <summary>
-        /// Retrieve a specific virtual appliance of a specific virtual datacenter
+        /// Retrieve a specific virtual appliance by id of a specific virtual datacenter
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
         /// <param name="id">Id of the virtual appliance</param>
