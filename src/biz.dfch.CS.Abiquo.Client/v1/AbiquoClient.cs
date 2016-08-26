@@ -140,7 +140,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualMachines
 
-        public override VirtualMachines GetVirtualMachines()
+        public override VirtualMachines GetAllVirtualMachines()
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
 

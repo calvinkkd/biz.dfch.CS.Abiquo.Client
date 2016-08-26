@@ -101,7 +101,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Role);
         }
 
-        public override VirtualMachines GetVirtualMachines()
+        public override VirtualMachines GetAllVirtualMachines()
         {
             Contract.Ensures(null != Contract.Result<VirtualMachines>());
 

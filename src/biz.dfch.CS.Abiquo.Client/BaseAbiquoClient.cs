@@ -279,6 +279,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>Collection of virtual machines</returns>
         public abstract VirtualMachines GetVirtualMachines();
 
+
+
         #endregion VirtualMachines
 
 

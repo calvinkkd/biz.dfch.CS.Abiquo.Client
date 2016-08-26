@@ -408,7 +408,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Role();
             }
 
-            public override VirtualMachines GetVirtualMachines()
+            public override VirtualMachines GetAllVirtualMachines()
             {
                 return new VirtualMachines();
             }
@@ -488,7 +488,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override VirtualMachines GetVirtualMachines()
+            public override VirtualMachines GetAllVirtualMachines()
             {
                 throw new NotImplementedException();
             }
