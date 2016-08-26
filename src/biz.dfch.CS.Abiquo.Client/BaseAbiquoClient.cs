@@ -274,12 +274,12 @@ namespace biz.dfch.CS.Abiquo.Client
         #region VirtualMachines
 
         /// <summary>
-        /// Retrieve all the virtual machines that the current user has access to
+        /// Retrieve all virtual machines across all virtual datacenters the current user has access to
         /// </summary>
         /// <returns>Collection of virtual machines</returns>
         public abstract VirtualMachines GetAllVirtualMachines();
 
-
+        public abstract 
 
         #endregion VirtualMachines
 
