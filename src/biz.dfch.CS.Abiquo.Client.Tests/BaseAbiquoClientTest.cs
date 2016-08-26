@@ -56,6 +56,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        #region ExecuteRequest
+
         [TestMethod]
         public void ExecuteRequestWithoutAdditionalHeadersAndBodyCallsRestCallExecutor()
         {
@@ -111,6 +113,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Mock.Assert(restCallExecutor);
         }
 
+        #endregion ExecuteRequest
+
+
+        #region Generic Invoke
+
         [TestMethod]
         [ExpectContractFailure]
         public void GenericInvokeWithEmptyUriSuffixThrowsContractException()
@@ -137,7 +144,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
         }
-        
+
+        #endregion Generic Invoke
+
+
+        #region Invoke
+
         [TestMethod]
         [ExpectContractFailure]
         public void InvokeWithEmptyUriSuffixThrowsContractException()
@@ -216,6 +228,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Mock.Assert(restCallExecutor);
         }
 
+        #endregion Invoke
+
+
+        #region Enterprises
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetEnterpriseWithInvalidIdThrowsContractException()
@@ -228,6 +245,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
         }
+
+        #endregion Enterprises
+
+
+        #region Users
 
         [TestMethod]
         [ExpectContractFailure]
@@ -281,6 +303,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        #endregion Users
+
+
+        #region Roles
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetRoleWithInvalidIdThrowsContractException()
@@ -294,6 +321,81 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        #endregion Roles
+
+
+        #region VirtualMachines
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachinesWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachines(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachinesWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachines(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachine(INVALID_ID, 42, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachine(42, INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachine(42, 42, INVALID_ID);
+
+            // Assert
+        }
+
+        #endregion VirtualMachines
+
+
+        #region Virtual Data Centers
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetVirtualDataCenterWithInvalidIdThrowsContractException()
@@ -306,6 +408,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
         }
+
+        #endregion Virtual Data Centers
+
+
+        #region Virtual Appliances
 
         [TestMethod]
         [ExpectContractFailure]
@@ -322,7 +429,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetVirtualApplianceWithInvalidVirtualApplianceIdThrowsContractException()
+        public void GetVirtualApplianceWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
@@ -345,6 +452,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
         }
+
+        #endregion Virtual Appliances
+
 
         private class DummyAbiquoClient : BaseAbiquoClient
         {
