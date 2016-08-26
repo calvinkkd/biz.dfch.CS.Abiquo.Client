@@ -29,13 +29,15 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string ENTERPRISES = "/admin/enterprises";
         public const string ENTERPRISE_BY_ID = "/admin/enterprises/{0}";
         public const string USERSWITHROLES_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
-        public const string USER_BY_ENTERPRISE_AND_USER_ID = "/admin/enterprises/{0}/users/{1}";
+        public const string USER_BY_ENTERPRISE_ID_AND_USER_ID = "/admin/enterprises/{0}/users/{1}";
         public const string ROLES = "/admin/roles";
         public const string ROLE_BY_ID = "/admin/roles/{0}";
         public const string VIRTUALMACHINES = "/cloud/virtualmachines";
         public const string VIRTUALDATACENTERS = "/cloud/virtualdatacenters";
         public const string VIRTUALDATACENTER_BY_ID = "/cloud/virtualdatacenters/{0}";
-        public const string VIRTUALAPPLIANCES = "/cloud/virtualdatacenters/{0}/virtualappliances";
-        public const string VIRTUALAPPLIANCE_BY_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}";
+        public const string VIRTUALAPPLIANCES_BY_VIRTUALDATACENTER_ID = "/cloud/virtualdatacenters/{0}/virtualappliances";
+        public const string VIRTUALAPPLIANCE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}";
+        public const string VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines";
+        public const string VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}";
     }
 }

@@ -110,7 +110,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override User GetUser(int enterpriseId, int id)
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
-            var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_AND_USER_ID, enterpriseId, id);
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_ID_AND_USER_ID, enterpriseId, id);
             
             return Invoke<User>(uriSuffix, headers);
         }
@@ -176,7 +176,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCES).GetHeaders();
 
-            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCES, virtualDataCenterId);
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCES_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
             return Invoke<VirtualAppliances>(uriSuffix, headers);
         }
 
@@ -184,7 +184,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCE).GetHeaders();
 
-            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCE_BY_ID, virtualDataCenterId, id);
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID, virtualDataCenterId, id);
             return Invoke<VirtualAppliance>(uriSuffix, headers);
         }
 

@@ -201,7 +201,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve the list of enterprises/tenants
         /// </summary>
-        /// <returns>Enterprise/tenant collection</returns>
+        /// <returns>Collection of Enterprises/tenants</returns>
         public abstract Enterprises GetEnterprises();
         
         /// <summary>
@@ -225,14 +225,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve users with roles of the enterprise/tenant specified in the authentication information
         /// </summary>
-        /// <returns>Users with roles</returns>
+        /// <returns>Collection of Users with roles</returns>
         public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
 
         /// <summary>
         /// Retrieve users with roles of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
-        /// <returns>Users with roles</returns>
+        /// <returns>Collection of Users with roles</returns>
         public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all roles
         /// </summary>
-        /// <returns>Role collection</returns>
+        /// <returns>Colleciton of Roles</returns>
         public abstract Roles GetRoles();
 
         /// <summary>
@@ -274,9 +274,9 @@ namespace biz.dfch.CS.Abiquo.Client
         #region VirtualMachines
 
         /// <summary>
-        /// Retrieve all the virtual machines that the current user has access to.
+        /// Retrieve all the virtual machines that the current user has access to
         /// </summary>
-        /// <returns>Virtual machine collection</returns>
+        /// <returns>Collection of virtual machines</returns>
         public abstract VirtualMachines GetVirtualMachines();
 
         #endregion VirtualMachines
@@ -284,12 +284,32 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Virtual Data Centers
 
+        /// <summary>
+        /// Retrieve all available virtual datacenters
+        /// </summary>
+        /// <returns>Collection of VirtualDataCenters</returns>
         public abstract VirtualDataCenters GetVirtualDataCenters();
 
+        /// <summary>
+        /// Retrieve a specific virtual datacenter
+        /// </summary>
+        /// <param name="id">Id of the virtual datacenter</param>
+        /// <returns>VirtualDataCenter</returns>
         public abstract VirtualDataCenter GetVirtualDataCenter(int id);
 
+        /// <summary>
+        /// Retrieve all available virtual applicance of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <returns>Collection of VirtualApplicances</returns>
         public abstract VirtualAppliances GetVirtualAppliances(int virtualDataCenterId);
 
+        /// <summary>
+        /// Retrieve a specific virtual appliance of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="id">Id of the virtual appliance</param>
+        /// <returns>VirtualAppliance</returns>
         public abstract VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id);
 
         #endregion Virtual Data Centers
