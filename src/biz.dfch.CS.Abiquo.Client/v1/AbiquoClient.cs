@@ -149,14 +149,18 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
         {
-            // DFTODO - implement
-            throw new NotImplementedException();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID, virtualDataCenterId, virtualApplianceId);
+            return Invoke<VirtualMachines>(uriSuffix, headers);
         }
 
         public override VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id)
         {
-            // DFTODO - implement
-            throw new NotImplementedException();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, virtualDataCenterId, virtualApplianceId, id);
+            return Invoke<VirtualMachine>(uriSuffix, headers);
         }
 
         #endregion VirtualMachines
