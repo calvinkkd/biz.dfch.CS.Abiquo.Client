@@ -163,6 +163,19 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(uriSuffix, headers);
         }
 
+        // DFTODO - method description
+        // DFTODO - create a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-Createavirtualmachine)
+        // DFTODO - method description
+        // DFTODO - deploy a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-DeployaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - modify a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ModifyaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - change the state of a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ChangethestateofaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - retrieve a Task (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveaTask)
+        // DFTODO - method description
+        // DFTODO - retrieve all tasks for a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveallTasksforthisVirtualMachine)
+
         #endregion VirtualMachines
 
 
