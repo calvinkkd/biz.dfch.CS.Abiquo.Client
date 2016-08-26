@@ -277,7 +277,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// Retrieve all the virtual machines that the current user has access to
         /// </summary>
         /// <returns>Collection of virtual machines</returns>
-        public abstract VirtualMachines GetVirtualMachines();
+        public abstract VirtualMachines GetAllVirtualMachines();
 
 
 
