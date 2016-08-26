@@ -279,7 +279,22 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>Collection of VirtualMachines</returns>
         public abstract VirtualMachines GetAllVirtualMachines();
 
-        public abstract 
+        /// <summary>
+        /// Retrieve all virtual machines of a specific virtual appliance of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance</param>
+        /// <returns>Collection of VirtualMachines</returns>
+        public abstract VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId);
+
+        /// <summary>
+        /// Retrieve a virtual machine by id of a specific virtual appliance of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance</param>
+        /// <param name="id">Id of the virtual machine</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id);
 
         #endregion VirtualMachines
 

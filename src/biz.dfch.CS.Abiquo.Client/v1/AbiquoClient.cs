@@ -147,6 +147,18 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachines>(AbiquoUriSuffixes.VIRTUALMACHINES, headers);
         }
 
+        public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
+        {
+            // DFTODO - implement
+            throw new NotImplementedException();
+        }
+
+        public override VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id)
+        {
+            // DFTODO - implement
+            throw new NotImplementedException();
+        }
+
         #endregion VirtualMachines
 
 

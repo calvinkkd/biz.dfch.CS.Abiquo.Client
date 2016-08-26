@@ -373,7 +373,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Enterprise();
             }
 
-            public override Client.v1.Model.Enterprise GetEnterprise(int id)
+            public override Enterprise GetEnterprise(int id)
             {
                 return new Enterprise();
             }
@@ -411,6 +411,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public override VirtualMachines GetAllVirtualMachines()
             {
                 return new VirtualMachines();
+            }
+
+            public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
+            {
+                return new VirtualMachines();
+            }
+
+            public override VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id)
+            {
+                return new VirtualMachine();
             }
 
             public override VirtualDataCenters GetVirtualDataCenters()
@@ -489,6 +499,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override VirtualMachines GetAllVirtualMachines()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id)
             {
                 throw new NotImplementedException();
             }

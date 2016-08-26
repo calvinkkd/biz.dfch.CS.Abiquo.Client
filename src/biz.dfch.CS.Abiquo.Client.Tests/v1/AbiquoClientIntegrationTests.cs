@@ -18,6 +18,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+﻿using System.Net.Http;
 ﻿using System.Runtime.CompilerServices;
 ﻿using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,9 @@ using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
 ﻿using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Abiquo.Client.v1;
-using biz.dfch.CS.Web.Utilities.Rest;
 ﻿using Newtonsoft.Json;
 using biz.dfch.CS.Abiquo.Client.General;
+﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
@@ -144,6 +145,21 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(enterprise);
             Assert.AreEqual(basicAuthenticationInformation.GetTenantId(), enterprise.Id);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        [ExpectedException(typeof(HttpRequestException))]
+        public void GetInexistentEnterpriseThrowsException()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthenticationInformation);
+
+            // Act
+            abiquoClient.GetEnterprise(5000);
+
+            // Assert
         }
 
         [TestMethod]
