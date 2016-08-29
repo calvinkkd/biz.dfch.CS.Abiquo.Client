@@ -167,12 +167,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             int virtualMachineTemplateId)
         {
             // DFTODO - implement
+            // DFTODO - implement integration test
             throw new NotImplementedException();
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
         {
             // DFTODO - implement
+            // DFTODO - implement integration test
             throw new NotImplementedException();
         }
 
@@ -180,6 +182,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             int virtualMachineTemplateId, VirtualMachine virtualMachine)
         {
             // DFTODO - implement
+            // DFTODO - implement integration test
             throw new NotImplementedException();
         }
 
@@ -187,6 +190,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             VirtualMachine virtualMachine)
         {
             // DFTODO - implement
+            // DFTODO - implement integration test
             throw new NotImplementedException();
         }
 
