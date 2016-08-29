@@ -38,6 +38,9 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(bool);
         }
 
+
+        #region Enterprises
+
         public override Enterprises GetEnterprises()
         {
             Contract.Ensures(null != Contract.Result<Enterprises>());
@@ -56,6 +59,11 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(Enterprise);
         }
+
+        #endregion Enterprises
+
+
+        #region Users
 
         public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
         {
@@ -87,6 +95,11 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(User);
         }
 
+        #endregion Users
+
+
+        #region Roles
+
         public override Roles GetRoles()
         {
             Contract.Ensures(null != Contract.Result<Roles>());
@@ -100,6 +113,11 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(Role);
         }
+
+        #endregion Users
+
+
+        #region VirtualMachines
 
         public override VirtualMachines GetAllVirtualMachines()
         {
@@ -140,6 +158,11 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualDataCenter);
         }
 
+        #endregion VirtualDataCenters
+
+
+        #region VirtualAppliances
+
         public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -155,5 +178,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(VirtualAppliance);
         }
+
+        #endregion VirtualAppliances
     }
 }
