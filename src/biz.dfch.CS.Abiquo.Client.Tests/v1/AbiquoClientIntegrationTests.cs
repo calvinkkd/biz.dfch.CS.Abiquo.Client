@@ -695,5 +695,60 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         #endregion VirtualAppliances
+
+
+        #region DataCenterRepositories
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetDataCenterRepositoriesReturnsAbiquoDataCenterRepositories()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            // Act
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositories(IntegrationTestEnvironment.TenantId);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCenterRepositories);
+            Assert.IsNotNull(dataCenterRepositories.Collection);
+            //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
+            //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
+
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Assert.IsNotNull(dataCenterRepository);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetDataCenterRepositoriesReturnsAbiquoDataCenterRepositoriesOfCurrentEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            // Act
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCenterRepositories);
+            Assert.IsNotNull(dataCenterRepositories.Collection);
+            //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
+            //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
+
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Assert.IsNotNull(dataCenterRepository);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
+        }
+
+        #endregion DataCenterRepositories
     }
 }

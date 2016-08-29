@@ -36,6 +36,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
     public class BaseAbiquoClientTest
     {
         private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
+        private const string VIRTUALMACHINE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
         private const int TENANT_ID = 1;
@@ -391,10 +392,236 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(0, VIRTUALMACHINE_HREF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithNullVirtualMachineTemplateHrefThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualMachineTemplateHrefThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, " ");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, 42, 42, new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidEnterpriseIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, INVALID_ID, 42, 42, new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidDataCenterRepositoryIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, 42, INVALID_ID, 42, new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualMachineTemplateIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, 42, 42, INVALID_ID, new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, 42, 42, 42, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualApplianceId3ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(INVALID_ID, VIRTUALMACHINE_HREF, new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithNullVirtualMachineTemplateHref2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, null, new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualMachineTemplateHref2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, " ", new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualMachineThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, VIRTUALMACHINE_HREF, null);
+
+            // Assert
+        }
+
         #endregion VirtualMachines
 
 
-        #region Virtual Data Centers
+        #region VirtualMachineTemplates
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineTemplatesWithInvalidEnterpriseIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachineTemplates(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineTemplatesWithInvalidDataCenterRepositoryIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachineTemplates(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineTemplateWithInvalidEnterpriseIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachineTemplate(INVALID_ID, 42, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineTemplateWithInvalidDataCenterRepositoryIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachineTemplate(42, INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachineTemplateWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetVirtualMachineTemplate(42, 42, INVALID_ID);
+
+            // Assert
+        }
+
+        #endregion VirtualMachineTemplates
+
+
+        #region VirtualDataCenters
 
         [TestMethod]
         [ExpectContractFailure]
@@ -454,6 +681,24 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         #endregion VirtualAppliances
+
+
+        #region DataCenterRepositories
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetDataCenterRepositoriesWithInvalidEnterpriseIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetDataCenterRepositories(INVALID_ID);
+
+            // Assert
+        }
+
+        #endregion DataCenterRepositories
 
 
         private class DummyAbiquoClient : BaseAbiquoClient
@@ -533,6 +778,39 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+                int virtualMachineTemplateId)
+            {
+                return new VirtualMachine();
+            }
+
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+            {
+                return new VirtualMachine();
+            }
+
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+                int virtualMachineTemplateId, VirtualMachine virtualMachine)
+            {
+                return new VirtualMachine();
+            }
+
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+                VirtualMachine virtualMachine)
+            {
+                return new VirtualMachine();
+            }
+
+            public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
+            {
+                return new VirtualMachineTemplates();
+            }
+
+            public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
+            {
+                return new VirtualMachineTemplate();
+            }
+
             public override VirtualDataCenters GetVirtualDataCenters()
             {
                 return new VirtualDataCenters();
@@ -551,6 +829,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
             {
                 return new VirtualAppliance();
+            }
+
+            public override DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise()
+            {
+                return new DataCenterRepositories();
+            }
+
+            public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
+            {
+                return new DataCenterRepositories();
             }
         }
 
@@ -623,6 +911,39 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+                int virtualMachineTemplateId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+                int virtualMachineTemplateId, VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+                VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VirtualDataCenters GetVirtualDataCenters()
             {
                 throw new NotImplementedException();
@@ -642,6 +963,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 throw new NotImplementedException();
             }
+
+            public override DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
+            {
+                throw new NotImplementedException();
+            }
+
         }
     }
 }

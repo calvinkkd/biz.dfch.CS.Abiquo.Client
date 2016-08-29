@@ -144,6 +144,75 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            int virtualMachineTemplateId)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Requires(0 < virtualMachineTemplateId);
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            int virtualMachineTemplateId, VirtualMachine virtualMachine)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Requires(0 < virtualMachineTemplateId);
+            Contract.Requires(null != virtualMachine);
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+            VirtualMachine virtualMachine)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
+            Contract.Requires(null != virtualMachine);
+
+            return default(VirtualMachine);
+        }
+
+        #endregion VirtualMachines
+
+
+        #region VirtualMachineTemplates
+
+        public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Ensures(null != Contract.Result<VirtualMachineTemplates>());
+
+            return default(VirtualMachineTemplates);
+        }
+
+        public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Requires(0 < id);
+
+            return default(VirtualMachineTemplate);
+        }
+
+        #endregion VirtualMachineTemplates
+
+
+        #region VirtualDataCenters
+
         public override VirtualDataCenters GetVirtualDataCenters()
         {
             Contract.Ensures(null != Contract.Result<VirtualDataCenters>());
@@ -180,5 +249,25 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         #endregion VirtualAppliances
+
+
+        #region DataCenterRepositories
+
+        public override DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise()
+        {
+            Contract.Ensures(null != Contract.Result<DataCenterRepositories>());
+
+            return default(DataCenterRepositories);
+        }
+
+        public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Ensures(null != Contract.Result<DataCenterRepositories>());
+
+            return default(DataCenterRepositories);
+        }
+
+        #endregion DataCenterRepositories
     }
 }

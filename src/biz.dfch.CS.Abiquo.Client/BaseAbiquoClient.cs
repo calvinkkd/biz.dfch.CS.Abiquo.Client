@@ -296,10 +296,81 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>VirtualMachine</returns>
         public abstract VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id);
 
+        /// <summary>
+        /// Create a virtual machine based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
+        /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId);
+
+        /// <summary>
+        /// Create a virtual machine by based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref);
+
+        /// <summary>
+        /// Create a virtual machine by based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
+        /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
+        /// /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachine virtualMachine);
+
+        /// <summary>
+        /// Create a virtual machine by based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
+        /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref, VirtualMachine virtualMachine);
+
+        // DFTODO - method description
+        // DFTODO - deploy a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-DeployaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - modify a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ModifyaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - change the state of a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ChangethestateofaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - retrieve a Task (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveaTask)
+        // DFTODO - method description
+        // DFTODO - retrieve all tasks for a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveallTasksforthisVirtualMachine)
+
         #endregion VirtualMachines
 
 
-        #region Virtual Data Centers
+        #region VirtualMachineTemplates
+
+        /// <summary>
+        /// Get all virtual machine templaes of a specific specific datacenter repository of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the entperise/tenant</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository</param>
+        /// <returns>Collection of VirtualMachineTemplates</returns>
+        public abstract VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId);
+        
+        /// <summary>
+        /// Get a virtual machine template by id of a specific specific datacenter repository of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository</param>
+        /// <param name="id">Id of the virtual machine template</param>
+        /// <returns>VirtualMachineTemplate</returns>
+        public abstract VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id);
+
+        #endregion VirtualMachineTemplates
+
+
+        #region VirtualDataCenters
 
         /// <summary>
         /// Retrieve all available virtual datacenters
@@ -335,5 +406,23 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id);
 
         #endregion VirtualAppliances
+
+
+        #region DataCenterRepositories
+        
+        /// <summary>
+        /// Retrieve all datacenter repositories of the current enterprise/tenant
+        /// </summary>
+        /// <returns>DataCenterRepositories</returns>
+        public abstract DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise();
+
+        /// <summary>
+        /// Retrieve all datacenter repositories of an enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <returns>DataCenterRepositories</returns>
+        public abstract DataCenterRepositories GetDataCenterRepositories(int enterpriseId);
+
+        #endregion DataCenterRepositories
     }
 }

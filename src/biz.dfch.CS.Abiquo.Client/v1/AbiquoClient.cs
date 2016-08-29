@@ -163,23 +163,65 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(uriSuffix, headers);
         }
 
-        // DFTODO - method description
-        // DFTODO - create a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-Createavirtualmachine)
-        // DFTODO - method description
-        // DFTODO - deploy a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-DeployaVirtualMachine)
-        // DFTODO - method description
-        // DFTODO - modify a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ModifyaVirtualMachine)
-        // DFTODO - method description
-        // DFTODO - change the state of a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ChangethestateofaVirtualMachine)
-        // DFTODO - method description
-        // DFTODO - retrieve a Task (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveaTask)
-        // DFTODO - method description
-        // DFTODO - retrieve all tasks for a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveallTasksforthisVirtualMachine)
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            int virtualMachineTemplateId)
+        {
+            // DFTODO - implement
+            throw new NotImplementedException();
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+        {
+            // DFTODO - implement
+            throw new NotImplementedException();
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            int virtualMachineTemplateId, VirtualMachine virtualMachine)
+        {
+            // DFTODO - implement
+            throw new NotImplementedException();
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+            VirtualMachine virtualMachine)
+        {
+            // DFTODO - implement
+            throw new NotImplementedException();
+        }
 
         #endregion VirtualMachines
 
 
-        #region Virtual Data Centers
+        #region VirtualMachineTemplates
+
+        public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATES).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATES_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID, enterpriseId, dataCenterRepositoryId);
+            return Invoke<VirtualMachineTemplates>(uriSuffix, headers);
+        }
+
+        public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATES).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATE_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID_AND_VIRTUALMACHINETEMPLATE_ID, enterpriseId, dataCenterRepositoryId, id);
+            return Invoke<VirtualMachineTemplate>(uriSuffix, headers);
+        }
+
+        #endregion VirtualMachineTemplates
+
+
+        #region DataCenterRepositories
+
+
+
+        #endregion DataCenterRepositories
+
+
+        #region VirtualDataCenters
 
         public override VirtualDataCenters GetVirtualDataCenters()
         {
@@ -218,5 +260,23 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion VirtualAppliances
+
+
+        #region DataCenterRepositories
+
+        public override DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise()
+        {
+            return GetDataCenterRepositories(AuthenticationInformation.GetTenantId());
+        }
+
+        public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORIES).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTERREPOSITORIES_BY_ENTERPRISE_ID, enterpriseId);
+            return Invoke<DataCenterRepositories>(uriSuffix, headers);
+        }
+
+        #endregion DataCenterRepositories
     }
 }
