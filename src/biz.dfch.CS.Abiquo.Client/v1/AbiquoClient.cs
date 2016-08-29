@@ -196,10 +196,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualDataCenter>(uriSuffix, headers);
         }
 
-        #endregion Virtual Data Centers
+        #endregion VirtualDataCenters
 
 
-        #region Virtual Appliances
+        #region VirtualAppliances
 
         public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
         {
@@ -217,6 +217,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualAppliance>(uriSuffix, headers);
         }
 
-        #endregion Virtual Appliances
+        #endregion VirtualAppliances
     }
 }

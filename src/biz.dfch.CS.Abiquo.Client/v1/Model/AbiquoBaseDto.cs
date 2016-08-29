@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     /// <summary>
-    /// Base DTO for Abiquo objects
+    /// Base DTO for Abiquo objects that contain Id, Name and Links
     /// </summary>
     public abstract class AbiquoBaseDto : BaseDto
     {

@@ -27,6 +27,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     {
         public int Error { get; set; }
         public int HighDisponibility { get; set; }
+        public Tasks LastTasks { get; set; }
         public string NodeConnections {get; set; }
         public int PublicApp { get; set; }
         public string State { get; set; }

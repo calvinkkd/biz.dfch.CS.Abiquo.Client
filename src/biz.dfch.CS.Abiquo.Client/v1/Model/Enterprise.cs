@@ -27,28 +27,28 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class Enterprise : AbiquoBaseDto
     {
-        public int RamSoftLimitInMb { get; set; }
-        public int RamHardLimitInMb { get; set; }
-        public int CpuCountSoftLimit { get; set; }
-        public int CpuCountHardLimit { get; set; }
-        public int DiskSoftLimitInMb { get; set; }
-        public int DiskHardLimitInMb { get; set; }
-        public int StorageSoftInMb { get; set; }
-        public int StorageHardInMb { get; set; }
-        public int VlansSoft { get; set; }
-        public int VlansHard { get; set; }
-        public int PublicIpsSoft { get; set; }
-        public int PublicIpsHard { get; set; }
-        public int RepositorySoftInMb { get; set; }
-        public int RepositoryHardInMb { get; set; }
-        public bool IsReservationRestricted { get; set; }
-        public bool Workflow { get; set; }
-        public bool TwoFactorAuthenticationMandatory { get; set; }
         public string ChefClient { get; set; }
         public string ChefClientCertificate { get; set; }
         public string ChefUrl { get; set; }
         public string ChefValidator { get; set; }
         public string ChefValidatorCertificate { get; set; }
+        public int CpuCountHardLimit { get; set; }
+        public int CpuCountSoftLimit { get; set; }
+        public long DiskHardLimitInMb { get; set; }
+        public long DiskSoftLimitInMb { get; set; }
         public int IdPricingTemplate { get; set; }
+        public bool IsReservationRestricted { get; set; }
+        public long PublicIpsHard { get; set; }
+        public long PublicIpsSoft { get; set; }
+        public int RamHardLimitInMb { get; set; }
+        public int RamSoftLimitInMb { get; set; }
+        public long RepositoryHardInMb { get; set; }
+        public long RepositorySoftInMb { get; set; }
+        public long StorageHardInMb { get; set; }
+        public long StorageSoftInMb { get; set; }
+        public long VlansHard { get; set; }
+        public long VlansSoft { get; set; }
+        public bool Workflow { get; set; }
+        public bool TwoFactorAuthenticationMandatory { get; set; }
     }
 }

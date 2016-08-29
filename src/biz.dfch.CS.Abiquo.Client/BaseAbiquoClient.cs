@@ -314,10 +314,10 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>VirtualDataCenter</returns>
         public abstract VirtualDataCenter GetVirtualDataCenter(int id);
 
-        #endregion Virtual Data Centers
+        #endregion VirtualDataCenters
 
 
-        #region Virtual Appliances
+        #region VirtualAppliances
 
         /// <summary>
         /// Retrieve all available virtual applicance of a specific virtual datacenter
@@ -334,6 +334,6 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>VirtualAppliance</returns>
         public abstract VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id);
 
-        #endregion Virtual Appliances
+        #endregion VirtualAppliances
     }
 }
