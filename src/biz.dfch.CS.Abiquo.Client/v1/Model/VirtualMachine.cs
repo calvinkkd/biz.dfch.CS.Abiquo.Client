@@ -14,7 +14,9 @@
  * limitations under the License.
  */
  
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -34,10 +36,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Keymap { get; set; }
         public string Password { get; set; }
         public int Ram { get; set; }
-        public string State { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public VirtualMachineState State { get; set; }
         public string Uuid { get; set; }
         public string VdrpIp { get; set; }
         public int VdrpPort { get; set; }
+
         public bool VdrpEnabled { get; set; }
         public string Type { get; set; }
         public string Label { get; set; }

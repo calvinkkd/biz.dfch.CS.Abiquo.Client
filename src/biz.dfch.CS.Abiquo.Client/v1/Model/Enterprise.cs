@@ -48,6 +48,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public long StorageSoftInMb { get; set; }
         public long VlansHard { get; set; }
         public long VlansSoft { get; set; }
+
         public bool Workflow { get; set; }
         public bool TwoFactorAuthenticationMandatory { get; set; }
     }

@@ -23,19 +23,22 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class User : AbiquoBaseDto
+    public enum VirtualMachineState
     {
-        public bool Active { get; set; }
-        public string AuthType { get; set; }
-        public string AvailableVirtualDatacenters { get; set; }
-        public string Description { get; set; }
-        public string Email { get; set; }
-        public string Locale { get; set; }
-        public string Nick { get; set; }
-        public string Password { get; set; }
-        public string Surname { get; set; }
-
-        public bool Locked { get; set; }
-        public bool FirstLogin { get; set; }
+        NOT_ALLOCATED
+        ,
+        ALLOCATED
+        ,
+        CONFIGURED
+        ,
+        ON
+        ,
+        PAUSED
+        ,
+        OFF
+        ,
+        LOCKED
+        ,
+        UNKNOWN
     }
 }

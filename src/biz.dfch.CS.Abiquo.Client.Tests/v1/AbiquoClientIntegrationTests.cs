@@ -585,7 +585,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(0, virtualDataCenter.DiskHardLimitInMb);
             Assert.AreEqual(0, virtualDataCenter.RamHardLimitInMb);
             Assert.AreEqual(0, virtualDataCenter.RamSoftLimitInMb);
-            Assert.IsNotNull(virtualDataCenter.VlanNetwork);
+            Assert.IsNotNull(virtualDataCenter.Vlan);
         }
 
         [TestMethod]
@@ -618,11 +618,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(0, virtualDataCenter.RamHardLimitInMb);
             Assert.AreEqual(0, virtualDataCenter.RamSoftLimitInMb);
             
-            Assert.IsNotNull(virtualDataCenter.VlanNetwork);
-            Assert.IsTrue(0 < virtualDataCenter.VlanNetwork.Id);
-            Assert.IsNotNull(virtualDataCenter.VlanNetwork.Name);
-            Assert.IsNotNull(virtualDataCenter.VlanNetwork.DhcpOptions);
-            Assert.IsNotNull(virtualDataCenter.VlanNetwork.DhcpOptions.Collection);
+            Assert.IsNotNull(virtualDataCenter.Vlan);
+            Assert.IsTrue(0 < virtualDataCenter.Vlan.Id);
+            Assert.IsNotNull(virtualDataCenter.Vlan.Name);
+            Assert.IsNotNull(virtualDataCenter.Vlan.DhcpOptions);
+            Assert.IsNotNull(virtualDataCenter.Vlan.DhcpOptions.Collection);
         }
 
         #endregion VirtualDataCenters
@@ -658,7 +658,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(virtualAppliance);
             Assert.IsTrue(0 < virtualAppliance.Id);
             Assert.IsNotNull(virtualAppliance.Name);
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(virtualAppliance.State));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(virtualAppliance.State));
         }
 
         [TestMethod]

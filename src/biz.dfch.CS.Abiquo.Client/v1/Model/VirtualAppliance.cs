@@ -14,7 +14,9 @@
  * limitations under the License.
  */
  
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -30,7 +32,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public Tasks LastTasks { get; set; }
         public string NodeConnections {get; set; }
         public int PublicApp { get; set; }
-        public string State { get; set; }
-        public string SubState { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public VirtualApplianceState State { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public VirtualApplianceState SubState { get; set; }
     }
 }

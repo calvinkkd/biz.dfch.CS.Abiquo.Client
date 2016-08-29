@@ -198,6 +198,7 @@
     <Compile Include="v1\Model\DhcpOptions.cs" />
     <Compile Include="v1\Model\Enterprise.cs" />
     <Compile Include="v1\Model\Enterprises.cs" />
+    <Compile Include="v1\Model\HypervisorType.cs" />
     <Compile Include="v1\Model\Link.cs" />
     <Compile Include="v1\Model\NetworkType.cs" />
     <Compile Include="v1\Model\Privilege.cs" />
@@ -211,10 +212,12 @@
     <Compile Include="v1\Model\UserWithRole.cs" />
     <Compile Include="v1\Model\VirtualAppliance.cs" />
     <Compile Include="v1\Model\VirtualAppliances.cs" />
+    <Compile Include="v1\Model\VirtualApplianceState.cs" />
     <Compile Include="v1\Model\VirtualDataCenter.cs" />
     <Compile Include="v1\Model\VirtualDataCenters.cs" />
     <Compile Include="v1\Model\VirtualMachine.cs" />
     <Compile Include="v1\Model\VirtualMachines.cs" />
+    <Compile Include="v1\Model\VirtualMachineState.cs" />
     <Compile Include="v1\Model\VlanNetwork.cs" />
     <Compile Include="v1\Model\VlanNetworks.cs" />
   </ItemGroup>
