@@ -658,7 +658,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(virtualAppliance);
             Assert.IsTrue(0 < virtualAppliance.Id);
             Assert.IsNotNull(virtualAppliance.Name);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(virtualAppliance.State));
         }
 
         [TestMethod]
