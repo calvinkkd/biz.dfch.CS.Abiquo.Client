@@ -218,13 +218,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         #endregion VirtualMachineTemplates
 
 
-        #region DataCenterRepositories
-
-
-
-        #endregion DataCenterRepositories
-
-
         #region VirtualDataCenters
 
         public override VirtualDataCenters GetVirtualDataCenters()
