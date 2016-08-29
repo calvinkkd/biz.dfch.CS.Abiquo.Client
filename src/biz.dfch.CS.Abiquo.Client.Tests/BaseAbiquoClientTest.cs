@@ -409,10 +409,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
-        #endregion Virtual Data Centers
+        #endregion VirtualDataCenters
 
 
-        #region Virtual Appliances
+        #region VirtualAppliances
 
         [TestMethod]
         [ExpectContractFailure]
@@ -453,7 +453,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
-        #endregion Virtual Appliances
+        #endregion VirtualAppliances
 
 
         private class DummyAbiquoClient : BaseAbiquoClient
