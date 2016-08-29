@@ -215,7 +215,8 @@
     <Compile Include="v1\Model\VirtualDataCenters.cs" />
     <Compile Include="v1\Model\VirtualMachine.cs" />
     <Compile Include="v1\Model\VirtualMachines.cs" />
-    <Compile Include="v1\Model\Vlan.cs" />
+    <Compile Include="v1\Model\VlanNetwork.cs" />
+    <Compile Include="v1\Model\VlanNetworks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

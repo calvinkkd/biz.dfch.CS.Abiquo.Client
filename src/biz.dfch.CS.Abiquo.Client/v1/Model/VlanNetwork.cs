@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Vlan : AbiquoBaseDto
+    public class VlanNetwork : AbiquoBaseDto
     {
         public string Address { get; set; }
         public bool DefaultNetwork { get; set; }
@@ -38,8 +38,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int Tag { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public NetworkType Type { get; set; }
+        public bool Unmanaged { get; set; }
         public bool Ipv6 { get; set; }
         public bool Strict { get; set; }
-        public bool Unmanaged { get; set; }
     }
 }
