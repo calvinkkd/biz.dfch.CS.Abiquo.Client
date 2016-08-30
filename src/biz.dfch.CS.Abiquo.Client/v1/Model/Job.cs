@@ -21,42 +21,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.General;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class User : AbiquoBaseDto
+    public class Job : AbiquoBaseDto
     {
-        [Required]
-        public bool Active { get; set; }
-
-        [Required]
-        public string AuthType { get; set; }
-        
-        public string AvailableVirtualDatacenters { get; set; }
-        
         public string Description { get; set; }
-        
-        public string Email { get; set; }
-
-        public int Id { get; set; }
-        
-        public string Locale { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Id { get; set; }
+        
+        public string ParentTaskId { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public JobState RollbackState { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public JobState State { get; set; }
 
         [Required]
-        public string Nick { get; set; }
-        
-        public string Password { get; set; }
-        
-        public string Surname { get; set; }
+        [Range(1, Int64.MaxValue)]
+        public long Timestamp { get; set; }
 
-        // The following properties get delivered by the rest response 
-        // but are not mentioned in the wiki
-        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-UserMediaType
-        public bool Locked { get; set; }
-
-        public bool FirstLogin { get; set; }
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public JobType Type { get; set; }
     }
 }

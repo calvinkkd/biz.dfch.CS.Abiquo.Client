@@ -23,18 +23,10 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class UserWithRole : AbiquoBaseDto
+    public class UserWithRole : User
     {
-        public string Nick { get; set; }
-        public string Locale { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public string Description { get; set; }
-        public string AuthType { get; set; }
-        public bool Active { get; set; }
-        public bool Locked { get; set; }
-        public bool FirstLogin { get; set; }
-        public RoleWithPrivileges Role { get; set; }
         public Enterprise Enterprise { get; set; }
+
+        public RoleWithPrivileges Role { get; set; }
     }
 }

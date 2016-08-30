@@ -14,27 +14,39 @@
  * limitations under the License.
  */
  
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Role : AbiquoBaseDto
+    public class VirtualAppliance : AbiquoBaseDto
     {
-        public bool Blocked { get; set; }
+        public int Error { get; set; }
+
+        public int HighDisponibility { get; set; }
 
         public int Id { get; set; }
 
-        public int IdEnterprise { get; set; }
-
-        public string Ldap { get; set; }
-
+        public Tasks LastTasks { get; set; }
+        
         [Required]
         public string Name { get; set; }
+        
+        public string NodeConnections {get; set; }
+        
+        public int PublicApp { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public VirtualApplianceState State { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public VirtualApplianceState SubState { get; set; }
     }
 }

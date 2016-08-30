@@ -31,7 +31,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
     {
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
-        private const long TENANT_ID = 1;
+        private const int TENANT_ID = 1;
 
         [TestMethod]
         [ExpectContractFailure]

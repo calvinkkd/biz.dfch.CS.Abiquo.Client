@@ -36,6 +36,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public static string AbiquoApiBaseUri { get; set; }
         public static string Username { get; set; }
         public static string Password { get; set; }
-        public static long TenantId { get; set; }
+        public static int TenantId { get; set; }
     }
 }

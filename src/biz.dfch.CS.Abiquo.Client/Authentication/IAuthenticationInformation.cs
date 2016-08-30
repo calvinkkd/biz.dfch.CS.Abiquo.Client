@@ -34,6 +34,6 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
         /// The Abiquo enterprise Id
         /// </summary>
         /// <returns>Current tenant Id</returns>
-        long GetTenantId();
+        int GetTenantId();
     }
 }

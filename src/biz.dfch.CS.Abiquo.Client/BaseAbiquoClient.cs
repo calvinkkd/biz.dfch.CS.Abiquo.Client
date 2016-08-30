@@ -198,34 +198,246 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Enterprises
 
+        /// <summary>
+        /// Retrieve the list of enterprises/tenants
+        /// </summary>
+        /// <returns>Collection of Enterprises/tenants</returns>
         public abstract Enterprises GetEnterprises();
         
+        /// <summary>
+        /// Retrieve the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <returns>Enterprise of the specified in the authentication information</returns>
         public abstract Enterprise GetCurrentEnterprise();
 
-        public abstract Enterprise GetEnterprise(long id);
+        /// <summary>
+        /// Retrieve enterprise/tenant by id
+        /// </summary>
+        /// <param name="id">Id of the enterprise/tenant</param>
+        /// <returns>Enterprise</returns>
+        public abstract Enterprise GetEnterprise(int id);
         
         #endregion Enterprises
 
 
         #region Users
 
+        /// <summary>
+        /// Retrieve users with roles of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <returns>Collection of Users with roles</returns>
         public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
 
-        public abstract UsersWithRoles GetUsersWithRoles(long enterpriseId);
+        /// <summary>
+        /// Retrieve users with roles of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <returns>Collection of Users with roles</returns>
+        public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
 
-        public abstract User GetUserOfCurrentEnterprise(long id);
+        /// <summary>
+        /// Retrieve a specific user by id of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="id">Id of the user</param>
+        /// <returns>User</returns>
+        public abstract User GetUserOfCurrentEnterprise(int id);
 
-        public abstract User GetUser(long enterpriseId, long id);
+        /// <summary>
+        /// Retrieve a specific user by id of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="id">Id of the user</param>
+        /// <returns>User</returns>
+        public abstract User GetUser(int enterpriseId, int id);
 
         #endregion Users
 
 
         #region Roles
 
+        /// <summary>
+        /// Retrieve all roles
+        /// </summary>
+        /// <returns>Colleciton of Roles</returns>
         public abstract Roles GetRoles();
 
-        public abstract Role GetRole(long id);
+        /// <summary>
+        /// Retrieve a specific role by id
+        /// </summary>
+        /// <param name="id">Id of the role</param>
+        /// <returns>Role</returns>
+        public abstract Role GetRole(int id);
 
         #endregion Roles
+
+
+        #region VirtualMachines
+
+        /// <summary>
+        /// Retrieve all virtual machines across all virtual datacenters the current user has access to
+        /// </summary>
+        /// <returns>Collection of VirtualMachines</returns>
+        public abstract VirtualMachines GetAllVirtualMachines();
+
+        /// <summary>
+        /// Retrieve all virtual machines of a specific virtual appliance of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance</param>
+        /// <returns>Collection of VirtualMachines</returns>
+        public abstract VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId);
+
+        /// <summary>
+        /// Retrieve a virtual machine by id of a specific virtual appliance of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance</param>
+        /// <param name="id">Id of the virtual machine</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id);
+
+        /// <summary>
+        /// Create a virtual machine based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
+        /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId);
+
+        /// <summary>
+        /// Create a virtual machine by based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref);
+
+        /// <summary>
+        /// Create a virtual machine by based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
+        /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
+        /// /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachine virtualMachine);
+
+        /// <summary>
+        /// Create a virtual machine by based on a virtual machine template
+        /// </summary>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
+        /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref, VirtualMachine virtualMachine);
+
+        // DFTODO - method description
+        // DFTODO - deploy a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-DeployaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - modify a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ModifyaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - change the state of a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ChangethestateofaVirtualMachine)
+        // DFTODO - method description
+        // DFTODO - retrieve a Task (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveaTask)
+        // DFTODO - method description
+        // DFTODO - retrieve all tasks for a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveallTasksforthisVirtualMachine)
+
+        #endregion VirtualMachines
+
+
+        #region VirtualMachineTemplates
+
+        /// <summary>
+        /// Get all virtual machine templaes of a specific specific datacenter repository of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the entperise/tenant</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository</param>
+        /// <returns>Collection of VirtualMachineTemplates</returns>
+        public abstract VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId);
+        
+        /// <summary>
+        /// Get a virtual machine template by id of a specific specific datacenter repository of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="dataCenterRepositoryId">Id of the datacenter repository</param>
+        /// <param name="id">Id of the virtual machine template</param>
+        /// <returns>VirtualMachineTemplate</returns>
+        public abstract VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id);
+
+        #endregion VirtualMachineTemplates
+
+
+        #region VirtualDataCenters
+
+        /// <summary>
+        /// Retrieve all available virtual datacenters
+        /// </summary>
+        /// <returns>Collection of VirtualDataCenters</returns>
+        public abstract VirtualDataCenters GetVirtualDataCenters();
+
+        /// <summary>
+        /// Retrieve a specific virtual datacenter by id
+        /// </summary>
+        /// <param name="id">Id of the virtual datacenter</param>
+        /// <returns>VirtualDataCenter</returns>
+        public abstract VirtualDataCenter GetVirtualDataCenter(int id);
+
+        #endregion VirtualDataCenters
+
+
+        #region VirtualAppliances
+
+        /// <summary>
+        /// Retrieve all available virtual applicance of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <returns>Collection of VirtualApplicances</returns>
+        public abstract VirtualAppliances GetVirtualAppliances(int virtualDataCenterId);
+
+        /// <summary>
+        /// Retrieve a specific virtual appliance by id of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="id">Id of the virtual appliance</param>
+        /// <returns>VirtualAppliance</returns>
+        public abstract VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id);
+
+        #endregion VirtualAppliances
+
+
+        #region DataCenterRepositories
+        
+        /// <summary>
+        /// Retrieve all datacenter repositories of the current enterprise/tenant
+        /// </summary>
+        /// <returns>DataCenterRepositories</returns>
+        public abstract DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise();
+
+        /// <summary>
+        /// Retrieve all datacenter repositories of an enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <returns>DataCenterRepositories</returns>
+        public abstract DataCenterRepositories GetDataCenterRepositories(int enterpriseId);
+
+        /// <summary>
+        /// Retrieve a specific datacenter repository by id of the current enterprise/tenant
+        /// </summary>
+        /// <param name="id">Id of the datacenter repository</param>
+        /// <returns>DataCenterRepository</returns>
+        public abstract DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id);
+
+        /// <summary>
+        /// Retrieve a specific datacenter repository by id of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="id">Id of the datacenter repository</param>
+        /// <returns>DataCenterRepository</returns>
+        public abstract DataCenterRepository GetDataCenterRepository(int enterpriseId, int id);
+
+        #endregion DataCenterRepositories
     }
 }

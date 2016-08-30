@@ -16,33 +16,39 @@
  
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using biz.dfch.CS.Abiquo.Client.General;
+﻿using biz.dfch.CS.Abiquo.Client.General;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    /// <summary>
-    /// Base DTO for abiquo collections
-    /// </summary>
-    /// <typeparam name="T">Type of collection entries</typeparam>
-    public abstract class AbiquoBaseCollectionDto<T> : BaseDto
-        where T : BaseDto
+    public class Task : AbiquoBaseDto
     {
-        public List<Link> Links { get; set; }
+        public List<Jobs> Jobs { get; set; }
 
-        public List<T> Collection { get; set; }
+        [Required]
+        public string OwnerId { get; set; }
 
-        public int TotalSize { get; set; }
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public TaskState State { get; set; }
 
-        public Link GetLinkByRel(string rel)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
-            Contract.Ensures(null != Contract.Result<Link>());
+        [Required]
+        public string TaskId { get; set; }
 
-            return Links.Find(l => l.Rel == rel);
-        }
+        [Required]
+        [Range(1, Int64.MaxValue)]
+        public long Timestamp { get; set; }
+
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public TaskType Type { get; set; }
+        
+        public string UserId { get; set; }
     }
 }

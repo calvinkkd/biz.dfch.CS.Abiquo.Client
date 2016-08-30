@@ -20,29 +20,23 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using biz.dfch.CS.Abiquo.Client.General;
+﻿using biz.dfch.CS.Abiquo.Client.General;
+using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    /// <summary>
-    /// Base DTO for abiquo collections
-    /// </summary>
-    /// <typeparam name="T">Type of collection entries</typeparam>
-    public abstract class AbiquoBaseCollectionDto<T> : BaseDto
-        where T : BaseDto
+    public class DataCenterRepository : AbiquoBaseDto
     {
-        public List<Link> Links { get; set; }
+        public string Error { get; set; }
 
-        public List<T> Collection { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-        public int TotalSize { get; set; }
+        public long RepositoryCapacityMb { get; set; }
 
-        public Link GetLinkByRel(string rel)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
-            Contract.Ensures(null != Contract.Result<Link>());
+        [Required]
+        public string RepositoryLocation { get; set; }
 
-            return Links.Find(l => l.Rel == rel);
-        }
+        public long RepositoryRemainingMb { get; set; }
     }
 }

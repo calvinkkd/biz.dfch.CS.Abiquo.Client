@@ -14,29 +14,20 @@
  * limitations under the License.
  */
  
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Enterprise : AbiquoBaseDto
+    public class VirtualDataCenter : AbiquoBaseDto
     {
-        public string ChefClient { get; set; }
-
-        public string ChefClientCertificate { get; set; }
-
-        public string ChefUrl { get; set; }
-
-        public string ChefValidator { get; set; }
-
-        public string ChefValidatorCertificate { get; set; }
-
         [Required]
         [Range(1, Int32.MaxValue)]
         public int CpuCountHardLimit { get; set; }
@@ -53,12 +44,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Range(1, Int64.MaxValue)]
         public long DiskSoftLimitInMb { get; set; }
 
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public HypervisorType HypervisorType { get; set; }
+
         public int Id { get; set; }
 
-        public int IdPricingTemplate { get; set; }
-        
-        public bool IsReservationRestricted { get; set; }
-        
         [Required]
         public string Name { get; set; }
 
@@ -80,19 +71,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         [Range(1, Int64.MaxValue)]
-        public long RepositoryHardInMb { get; set; }
-
-        [Required]
-        [Range(1, Int64.MaxValue)]
-        public long RepositorySoftInMb { get; set; }
-
-        [Required]
-        [Range(1, Int64.MaxValue)]
         public long StorageHardInMb { get; set; }
 
         [Required]
         [Range(1, Int64.MaxValue)]
         public long StorageSoftInMb { get; set; }
+
+        [Required]
+        public VlanNetwork Vlan { get; set; }
 
         [Required]
         [Range(1, Int64.MaxValue)]
@@ -101,12 +87,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         [Range(1, Int64.MaxValue)]
         public long VlansSoft { get; set; }
-
-        // The following properties get delivered by the rest response 
-        // but are not mentioned in the wiki 
-        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-EnterpriseMediaType
-        public bool Workflow { get; set; }
-
-        public bool TwoFactorAuthenticationMandatory { get; set; }
     }
 }

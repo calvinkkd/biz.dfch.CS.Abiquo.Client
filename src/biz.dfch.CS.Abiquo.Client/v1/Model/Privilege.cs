@@ -16,6 +16,7 @@
  
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class Privilege : AbiquoBaseDto
     {
-        // N/A
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
     }
 }

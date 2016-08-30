@@ -16,6 +16,7 @@
  
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
@@ -26,9 +27,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class Link : BaseDto
     {
-        public string Title { get; set; }
+        [Required]
         public string Rel { get; set; }
-        public string Type { get; set; }
+
+        [Required]
         public string Href { get; set; }
+        
+        public string Title { get; set; }
+
+        public string Type { get; set; }
     }
 }

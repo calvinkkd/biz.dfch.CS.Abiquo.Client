@@ -143,5 +143,53 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Assert
             Assert.AreEqual(expectedFilterString, filterString);
         }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ExtractIdFromHrefWithNullValueThrowsContractException()
+        {
+            // Arrange
+            
+            // Act
+            UriHelper.ExtractIdFromHref(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ExtractIdFromHrefWithInvalidUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractIdFromHref("Arbitrary");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ExtractIdFromHrefWithUriNotContainigIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractIdFromHref(ABIQUO_API_BASE_URI);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void ExtractIdFromHrefWithUriContainigIdSucceeds()
+        {
+            // Arrange
+
+            // Act
+            var id = UriHelper.ExtractIdFromHref("https://example/api/users/155");
+
+            // Assert
+            Assert.IsTrue(155 == id);
+        }
     }
 }

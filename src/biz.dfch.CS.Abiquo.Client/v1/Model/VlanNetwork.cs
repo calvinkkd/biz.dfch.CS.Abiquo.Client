@@ -14,7 +14,9 @@
  * limitations under the License.
  */
  
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 ﻿using System.ComponentModel.DataAnnotations;
 ﻿using System.Diagnostics.Contracts;
@@ -24,39 +26,42 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class User : AbiquoBaseDto
+    public class VlanNetwork : AbiquoBaseDto
     {
         [Required]
-        public bool Active { get; set; }
-
+        public string Address { get; set; }
+        
+        public bool DefaultNetwork { get; set; }
+        
+        public DhcpOptions DhcpOptions { get; set; }
+        
         [Required]
-        public string AuthType { get; set; }
-        
-        public string AvailableVirtualDatacenters { get; set; }
-        
-        public string Description { get; set; }
-        
-        public string Email { get; set; }
+        public string Gateway { get; set; }
 
         public int Id { get; set; }
-        
-        public string Locale { get; set; }
 
+        [Required]
+        [Range(1, Int32.MaxValue)]
+        public int Mask { get; set; }
+        
         [Required]
         public string Name { get; set; }
-
-        [Required]
-        public string Nick { get; set; }
         
-        public string Password { get; set; }
+        public string PrimaryDns { get; set; }
         
-        public string Surname { get; set; }
-
-        // The following properties get delivered by the rest response 
-        // but are not mentioned in the wiki
-        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-UserMediaType
-        public bool Locked { get; set; }
-
-        public bool FirstLogin { get; set; }
+        public string SecondaryDns { get; set; }
+        
+        public string SufixDns { get; set; }
+        
+        public int Tag { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public NetworkType Type { get; set; }
+        
+        public bool Unmanaged { get; set; }
+        
+        public bool Ipv6 { get; set; }
+        
+        public bool Strict { get; set; }
     }
 }

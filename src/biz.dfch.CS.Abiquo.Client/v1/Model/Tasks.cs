@@ -20,29 +20,11 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    /// <summary>
-    /// Base DTO for abiquo collections
-    /// </summary>
-    /// <typeparam name="T">Type of collection entries</typeparam>
-    public abstract class AbiquoBaseCollectionDto<T> : BaseDto
-        where T : BaseDto
+    public class Tasks : AbiquoBaseCollectionDto<Task>
     {
-        public List<Link> Links { get; set; }
-
-        public List<T> Collection { get; set; }
-
-        public int TotalSize { get; set; }
-
-        public Link GetLinkByRel(string rel)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
-            Contract.Ensures(null != Contract.Result<Link>());
-
-            return Links.Find(l => l.Rel == rel);
-        }
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto
     }
 }

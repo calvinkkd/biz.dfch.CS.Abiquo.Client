@@ -29,9 +29,9 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
     {
         private readonly string Username;
         private readonly string Password;
-        private readonly long TenantId;
+        private readonly int TenantId;
 
-        public BasicAuthenticationInformation(string username, string password, long tenantId)
+        public BasicAuthenticationInformation(string username, string password, int tenantId)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(username));
             Contract.Requires(!string.IsNullOrWhiteSpace(password));
@@ -61,7 +61,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             return string.Format(Constants.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
         }
 
-        public long GetTenantId()
+        public int GetTenantId()
         {
             return TenantId;
         }

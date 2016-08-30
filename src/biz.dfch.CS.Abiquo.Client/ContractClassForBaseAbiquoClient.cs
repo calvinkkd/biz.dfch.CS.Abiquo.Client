@@ -38,6 +38,9 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(bool);
         }
 
+
+        #region Enterprises
+
         public override Enterprises GetEnterprises()
         {
             Contract.Ensures(null != Contract.Result<Enterprises>());
@@ -50,12 +53,17 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Enterprise);
         }
 
-        public override Enterprise GetEnterprise(long id)
+        public override Enterprise GetEnterprise(int id)
         {
             Contract.Requires(0 < id);
 
             return default(Enterprise);
         }
+
+        #endregion Enterprises
+
+
+        #region Users
 
         public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
         {
@@ -64,7 +72,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(UsersWithRoles);
         }
 
-        public override UsersWithRoles GetUsersWithRoles(long enterpriseId)
+        public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
             Contract.Ensures(null != Contract.Result<UsersWithRoles>());
@@ -72,14 +80,14 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(UsersWithRoles);
         }
 
-        public override User GetUserOfCurrentEnterprise(long id)
+        public override User GetUserOfCurrentEnterprise(int id)
         {
             Contract.Requires(0 < id);
 
             return default(User);
         }
 
-        public override User GetUser(long enterpriseId, long id)
+        public override User GetUser(int enterpriseId, int id)
         {
             Contract.Requires(0 < enterpriseId);
             Contract.Requires(0 < id);
@@ -87,18 +95,194 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(User);
         }
 
+        #endregion Users
+
+
+        #region Roles
+
         public override Roles GetRoles()
         {
             Contract.Ensures(null != Contract.Result<Roles>());
 
             return default(Roles);
         }
- 
-        public override Role GetRole(long id)
+
+        public override Role GetRole(int id)
         {
-            Contract.Requires(id > 0);
+            Contract.Requires(0 < id);
 
             return default(Role);
         }
+
+        #endregion Users
+
+
+        #region VirtualMachines
+
+        public override VirtualMachines GetAllVirtualMachines()
+        {
+            Contract.Ensures(null != Contract.Result<VirtualMachines>());
+
+            return default(VirtualMachines);
+        }
+
+        public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Ensures(null != Contract.Result<VirtualMachines>());
+
+            return default(VirtualMachines);
+        }
+
+        public override VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < id);
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            int virtualMachineTemplateId)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Requires(0 < virtualMachineTemplateId);
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            int virtualMachineTemplateId, VirtualMachine virtualMachine)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Requires(0 < virtualMachineTemplateId);
+            Contract.Requires(null != virtualMachine);
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+            VirtualMachine virtualMachine)
+        {
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
+            Contract.Requires(null != virtualMachine);
+
+            return default(VirtualMachine);
+        }
+
+        #endregion VirtualMachines
+
+
+        #region VirtualMachineTemplates
+
+        public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Ensures(null != Contract.Result<VirtualMachineTemplates>());
+
+            return default(VirtualMachineTemplates);
+        }
+
+        public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterRepositoryId);
+            Contract.Requires(0 < id);
+
+            return default(VirtualMachineTemplate);
+        }
+
+        #endregion VirtualMachineTemplates
+
+
+        #region VirtualDataCenters
+
+        public override VirtualDataCenters GetVirtualDataCenters()
+        {
+            Contract.Ensures(null != Contract.Result<VirtualDataCenters>());
+
+            return default(VirtualDataCenters);
+        }
+
+        public override VirtualDataCenter GetVirtualDataCenter(int id)
+        {
+            Contract.Requires(0 < id);
+
+            return default(VirtualDataCenter);
+        }
+
+        #endregion VirtualDataCenters
+
+
+        #region VirtualAppliances
+
+        public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Ensures(null != Contract.Result<VirtualAppliances>());
+
+            return default(VirtualAppliances);
+        }
+
+        public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < id);
+
+            return default(VirtualAppliance);
+        }
+
+        #endregion VirtualAppliances
+
+
+        #region DataCenterRepositories
+
+        public override DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise()
+        {
+            Contract.Ensures(null != Contract.Result<DataCenterRepositories>());
+
+            return default(DataCenterRepositories);
+        }
+
+        public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Ensures(null != Contract.Result<DataCenterRepositories>());
+
+            return default(DataCenterRepositories);
+        }
+
+        public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
+        {
+            Contract.Requires(0 < id);
+
+            return default(DataCenterRepository);
+        }
+
+        public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < id);
+            
+            return default(DataCenterRepository);
+        }
+
+        #endregion DataCenterRepositories
     }
 }

@@ -25,12 +25,18 @@ using System.Threading.Tasks;
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     /// <summary>
-    /// Base DTO for Abiquo objects
+    /// Base DTO for Abiquo objects that contain Id, Name and Links
     /// </summary>
     public abstract class AbiquoBaseDto : BaseDto
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
         public List<Link> Links { get; set; }
+
+        public Link GetLinkByRel(string rel)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
+            Contract.Ensures(null != Contract.Result<Link>());
+
+            return Links.Find(l => l.Rel == rel);
+        }
     }
 }
