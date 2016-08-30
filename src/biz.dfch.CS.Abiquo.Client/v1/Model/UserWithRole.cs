@@ -26,6 +26,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class UserWithRole : User
     {
         public Enterprise Enterprise { get; set; }
+
         public RoleWithPrivileges Role { get; set; }
     }
 }

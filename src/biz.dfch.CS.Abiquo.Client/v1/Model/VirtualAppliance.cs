@@ -28,12 +28,18 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class VirtualAppliance : AbiquoBaseDto
     {
         public int Error { get; set; }
+
         public int HighDisponibility { get; set; }
+        
         public Tasks LastTasks { get; set; }
+        
         public string NodeConnections {get; set; }
+        
         public int PublicApp { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public VirtualApplianceState State { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public VirtualApplianceState SubState { get; set; }
     }

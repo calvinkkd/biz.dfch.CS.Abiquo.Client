@@ -29,13 +29,22 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class Task : BaseDto
     {
         public List<Jobs> Jobs { get; set; }
+
         public string OwnerId { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public TaskState State { get; set; }
+        
         public string TaskId { get; set; }
+        
         public long Timestamp { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public TaskType Type { get; set; }
+        
         public string UserId { get; set; }
+        
+        // DFTODO - check, if links get delivered by the REST response
+        public List<Link> Links { get; set; }
     }
 }

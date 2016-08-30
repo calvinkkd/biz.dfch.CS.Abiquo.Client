@@ -27,8 +27,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class Link : BaseDto
     {
         public string Title { get; set; }
+
         public string Rel { get; set; }
+
         public string Type { get; set; }
+
         public string Href { get; set; }
     }
 }

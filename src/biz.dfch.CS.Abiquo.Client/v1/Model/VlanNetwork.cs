@@ -28,18 +28,30 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class VlanNetwork : AbiquoBaseDto
     {
         public string Address { get; set; }
+        
         public bool DefaultNetwork { get; set; }
+        
         public DhcpOptions DhcpOptions { get; set; }
+        
         public string Gateway { get; set; }
+        
         public int Mask { get; set; }
+        
         public string PrimaryDns { get; set; }
+        
         public string SecondaryDns { get; set; }
+        
         public string SufixDns { get; set; }
+        
         public int Tag { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public NetworkType Type { get; set; }
+        
         public bool Unmanaged { get; set; }
+        
         public bool Ipv6 { get; set; }
+        
         public bool Strict { get; set; }
     }
 }

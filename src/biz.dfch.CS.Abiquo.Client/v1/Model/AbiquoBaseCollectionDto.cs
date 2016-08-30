@@ -32,7 +32,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         where T : BaseDto
     {
         public List<Link> Links { get; set; }
+
         public List<T> Collection { get; set; }
+
         public int TotalSize { get; set; }
     }
 }

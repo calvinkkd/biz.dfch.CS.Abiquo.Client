@@ -26,9 +26,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class DhcpOption : AbiquoBaseDto
     {
         public string Gateway { get; set; }
+
         public int Mask { get; set; }
+
         public string Netmask { get; set; }
+
         public string NetworkAddress { get; set; }
+
         public int Option { get; set; }
     }
 }

@@ -28,25 +28,45 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class VirtualMachine : AbiquoBaseDto
     {
         public int Cpu { get; set; }
+        
         public int CoresPerSocket { get; set; }
+        
         public string Description { get; set; }
+        
         public int HighDisponibility { get; set; }
+        
         public int IdState { get; set; }
+        
         public int IdType { get; set; }
+        
         public string Keymap { get; set; }
+        
         public string Password { get; set; }
+        
         public int Ram { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public VirtualMachineState State { get; set; }
+        
         public string Uuid { get; set; }
+        
         public string VdrpIp { get; set; }
+        
         public int VdrpPort { get; set; }
 
+        // The following properties get delivered by the rest response 
+        // but are not mentioned in the wiki 
+        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-VirtualMachineMediaType
         public bool VdrpEnabled { get; set; }
+        
         public string Type { get; set; }
+        
         public string Label { get; set; }
+        
         public bool Monitored { get; set; }
+        
         public Dictionary<string, string> Variables { get; set; }
+        
         public bool Protected { get; set; }
     }
 }

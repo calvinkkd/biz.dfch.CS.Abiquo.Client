@@ -26,16 +26,28 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class User : AbiquoBaseDto
     {
         public bool Active { get; set; }
+        
         public string AuthType { get; set; }
+        
         public string AvailableVirtualDatacenters { get; set; }
+        
         public string Description { get; set; }
+        
         public string Email { get; set; }
+        
         public string Locale { get; set; }
+        
         public string Nick { get; set; }
+        
         public string Password { get; set; }
+        
         public string Surname { get; set; }
 
+        // The following properties get delivered by the rest response 
+        // but are not mentioned in the wiki
+        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-UserMediaType
         public bool Locked { get; set; }
+
         public bool FirstLogin { get; set; }
     }
 }

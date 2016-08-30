@@ -28,19 +28,32 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class VirtualDataCenter : AbiquoBaseDto
     {
         public int CpuCountHardLimit { get; set; }
+        
         public int CpuCountSoftLimit { get; set; }
+        
         public long DiskHardLimitInMb { get; set; }
+        
         public long DiskSoftLimitInMb { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public HypervisorType HypervisorType { get; set; }
+        
         public long PublicIpsHard { get; set; }
+        
         public long PublicIpsSoft { get; set; }
+        
         public int RamHardLimitInMb { get; set; }
+        
         public int RamSoftLimitInMb { get; set; }
+        
         public long StorageHardInMb { get; set; }
+        
         public long StorageSoftInMb { get; set; }
+        
         public VlanNetwork Vlan { get; set; }
+        
         public long VlansHard { get; set; }
+        
         public long VlansSoft { get; set; }
     }
 }

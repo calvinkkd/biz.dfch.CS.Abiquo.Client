@@ -28,27 +28,48 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class VirtualMachineTemplate : AbiquoBaseDto
     {
         public bool ChefEnabled { get; set; }
+        
         public int CostCode { get; set; }
+        
         public int CpuRequired { get; set; }
+        
         public int CoresPerSocket { get; set; }
+        
         public string CreationDate { get; set; }
+        
         public string CreationUser { get; set; }
+        
         public string Description { get; set; }
+        
         [JsonConverter(typeof(StringEnumConverter))]
         public EthernetDriverType EthernetDriverType { get; set; }
+        
         public string IconUrl { get; set; }
+        
         public string LoginPassword { get; set; }
+        
         public string LoginUser { get; set; }
+        
         public string OsType { get; set; }
+        
         public string OsVersion { get; set; }
+        
         public int RamRequired { get; set; }
+        
         public bool Shared { get; set; }
+        
         public string State { get; set; }
+        
         public Dictionary<string, string> Variables { get; set; }
+        
         public bool EnableCpuHotAdd { get; set; }
+        
         public bool EnableRamHotAdd { get; set; }
+        
         public bool EnableDisksHotReconfigure { get; set; }
+        
         public bool EnableNicsHotReconfigure { get; set; }
+        
         public bool EnableRemoteAccessHotReconfigure { get; set; }
     }
 }

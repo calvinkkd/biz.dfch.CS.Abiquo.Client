@@ -27,9 +27,15 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class DataCenterRepository : BaseDto
     {
         public string Error { get; set; }
+
         public string Name { get; set; }
+
         public long RepositoryCapacityMb { get; set; }
+
         public string RepositoryLocation { get; set; }
+
         public long RepositoryRemainingMb { get; set; }
+
+        public List<Link> Links { get; set; }
     }
 }
