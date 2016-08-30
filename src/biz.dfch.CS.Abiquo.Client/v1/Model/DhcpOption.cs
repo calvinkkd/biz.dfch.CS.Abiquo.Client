@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DhcpOption : BaseDto
+    public class DhcpOption : AbiquoBaseDto
     {
         public int Id { get; set; }
 
@@ -45,8 +45,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         [Range(1, Int32.MaxValue)]
         public int Option { get; set; }
-
-        // DFTODO - check, if links get delivered by the REST response
-        public List<Link> Links { get; set; }
     }
 }

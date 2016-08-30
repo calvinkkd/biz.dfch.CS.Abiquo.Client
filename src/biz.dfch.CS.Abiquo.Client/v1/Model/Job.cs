@@ -27,7 +27,7 @@ using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Job : BaseDto
+    public class Job : AbiquoBaseDto
     {
         public string Description { get; set; }
 
@@ -49,8 +49,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public JobType Type { get; set; }
-
-        // DFTODO - check, if links get delivered by the REST response
-        public List<Link> Links { get; set; }
     }
 }

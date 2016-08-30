@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachineTemplate : BaseDto
+    public class VirtualMachineTemplate : AbiquoBaseDto
     {
         public bool ChefEnabled { get; set; }
         
@@ -85,8 +85,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool EnableNicsHotReconfigure { get; set; }
         
         public bool EnableRemoteAccessHotReconfigure { get; set; }
-
-        // DFTODO - check, if links get delivered by the REST response
-        public List<Link> Links { get; set; }
     }
 }

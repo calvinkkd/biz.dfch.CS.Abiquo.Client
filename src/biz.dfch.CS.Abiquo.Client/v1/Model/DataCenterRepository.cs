@@ -25,7 +25,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DataCenterRepository : BaseDto
+    public class DataCenterRepository : AbiquoBaseDto
     {
         public string Error { get; set; }
 
@@ -38,7 +38,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string RepositoryLocation { get; set; }
 
         public long RepositoryRemainingMb { get; set; }
-
-        public List<Link> Links { get; set; }
     }
 }
