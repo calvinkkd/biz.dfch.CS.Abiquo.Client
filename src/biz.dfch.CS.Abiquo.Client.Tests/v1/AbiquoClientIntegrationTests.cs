@@ -547,6 +547,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(expectedVirtualMachine.VdrpPort, virtualMachine.VdrpPort);
         }
 
+        // DFTODO - implement integration tests for CreateVirtualMachine
+
         #endregion VirtualMachines
 
 
