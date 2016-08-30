@@ -52,5 +52,19 @@ namespace biz.dfch.CS.Abiquo.Client.General
 
             return filterString;
         }
+
+        public static int ExtractIdFromHref(string href)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(href));
+
+            Uri resultingUri;
+            Contract.Assert(Uri.TryCreate(href, UriKind.Absolute, out resultingUri), "href is not a valid URI");
+
+            var lastSegment = resultingUri.Segments.Last();
+            int id;
+            Contract.Assert(Int32.TryParse(lastSegment, out id), "Last segment of href is not an int");
+
+            return id;
+        }
     }
 }
