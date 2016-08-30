@@ -37,8 +37,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Description { get; set; }
         
         public string Email { get; set; }
+
+        public int Id { get; set; }
         
         public string Locale { get; set; }
+
+        [Required]
+        public string Name { get; set; }
 
         [Required]
         public string Nick { get; set; }

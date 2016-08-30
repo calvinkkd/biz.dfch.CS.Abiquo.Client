@@ -39,12 +39,17 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         [Range(1, Int32.MaxValue)]
         public int HighDisponibility { get; set; }
-        
+
+        public int Id { get; set; }
+
         public int IdState { get; set; }
         
         public int IdType { get; set; }
         
         public string Keymap { get; set; }
+
+        [Required]
+        public string Name { get; set; }
         
         public string Password { get; set; }
 

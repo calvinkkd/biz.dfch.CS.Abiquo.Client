@@ -53,9 +53,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Range(1, Int64.MaxValue)]
         public long DiskSoftLimitInMb { get; set; }
 
+        public int Id { get; set; }
+
         public int IdPricingTemplate { get; set; }
         
         public bool IsReservationRestricted { get; set; }
+        
+        [Required]
+        public string Name { get; set; }
 
         [Required]
         [Range(1, Int64.MaxValue)]

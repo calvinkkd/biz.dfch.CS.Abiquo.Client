@@ -48,6 +48,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [JsonConverter(typeof(StringEnumConverter))]
         public HypervisorType HypervisorType { get; set; }
 
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
         [Required]
         [Range(1, Int64.MaxValue)]
         public long PublicIpsHard { get; set; }

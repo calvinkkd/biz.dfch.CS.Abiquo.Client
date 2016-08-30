@@ -37,10 +37,15 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         
         [Required]
         public string Gateway { get; set; }
-        
+
+        public int Id { get; set; }
+
         [Required]
         [Range(1, Int32.MaxValue)]
         public int Mask { get; set; }
+        
+        [Required]
+        public string Name { get; set; }
         
         public string PrimaryDns { get; set; }
         
