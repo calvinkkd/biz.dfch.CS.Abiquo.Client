@@ -115,7 +115,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetCurrentEnterpriseReturnsAbiquoEnterprise()
+        public void GetCurrentEnterpriseReturnsCurrentAbiquoEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
