@@ -27,6 +27,8 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
 {
     public class AbiquoClientFactory
     {
+        public const string ABIQUO_CLIENT_VERSION_V1 = "v1";
+
         public static BaseAbiquoClient GetByVersion(string version)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(version));
@@ -37,7 +39,7 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
 
             switch (version)
             {
-                case "v1":
+                case ABIQUO_CLIENT_VERSION_V1:
                     abiquoClient = new AbiquoClient();
                     break;
                 default:

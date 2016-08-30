@@ -144,9 +144,10 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId)
         {
+            Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < enterpriseId);
             Contract.Requires(0 < dataCenterRepositoryId);
@@ -155,17 +156,20 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
+            Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
+            Contract.Requires(Uri.IsWellFormedUriString(virtualMachineTemplateHref, UriKind.Absolute));
 
             return default(VirtualMachine);
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId, VirtualMachine virtualMachine)
         {
+            Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < enterpriseId);
             Contract.Requires(0 < dataCenterRepositoryId);
@@ -175,11 +179,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
             VirtualMachine virtualMachine)
         {
+            Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
+            Contract.Requires(Uri.IsWellFormedUriString(virtualMachineTemplateHref, UriKind.Absolute));
             Contract.Requires(null != virtualMachine);
 
             return default(VirtualMachine);

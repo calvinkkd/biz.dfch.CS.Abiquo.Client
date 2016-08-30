@@ -36,7 +36,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
     public class BaseAbiquoClientTest
     {
         private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
-        private const string VIRTUALMACHINE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
+        private const string VIRTUALMACHINETEMPLATE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
         private const int TENANT_ID = 1;
@@ -394,13 +394,26 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void CreateVirtualMachineWithInvalidApplianceIdThrowsContractException()
+        public void CreateVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(0, VIRTUALMACHINE_HREF);
+            abiquoClient.CreateVirtualMachine(0, 42, VIRTUALMACHINETEMPLATE_HREF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, 0, VIRTUALMACHINETEMPLATE_HREF);
 
             // Assert
         }
@@ -413,7 +426,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, null);
+            abiquoClient.CreateVirtualMachine(42, 42, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithEmptyVirtualMachineTemplateHrefThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, 42, " ");
 
             // Assert
         }
@@ -426,7 +452,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, " ");
+            abiquoClient.CreateVirtualMachine(42, 42, "Arbitrary");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, 42, 42, 42, new VirtualMachine());
 
             // Assert
         }
@@ -439,7 +478,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, 42, 42, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, INVALID_ID, 42, 42, 42, new VirtualMachine());
 
             // Assert
         }
@@ -452,7 +491,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, INVALID_ID, 42, 42, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, INVALID_ID, 42, 42, new VirtualMachine());
 
             // Assert
         }
@@ -465,7 +504,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, INVALID_ID, 42, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, 42, INVALID_ID, 42, new VirtualMachine());
 
             // Assert
         }
@@ -478,7 +517,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, 42, INVALID_ID, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, 42, 42, INVALID_ID, new VirtualMachine());
 
             // Assert
         }
@@ -491,7 +530,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, 42, 42, null);
+            abiquoClient.CreateVirtualMachine(42, 42, 42, 42, 42, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualDataCenterId3ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, VIRTUALMACHINETEMPLATE_HREF, new VirtualMachine());
 
             // Assert
         }
@@ -504,7 +556,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(INVALID_ID, VIRTUALMACHINE_HREF, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, INVALID_ID, VIRTUALMACHINETEMPLATE_HREF, new VirtualMachine());
 
             // Assert
         }
@@ -517,20 +569,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, null, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, null, new VirtualMachine());
 
             // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void CreateVirtualMachineWithInvalidVirtualMachineTemplateHref2ThrowsContractException()
+        public void CreateVirtualMachineWithEmptyVirtualMachineTemplateHref2ThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, " ", new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, " ", new VirtualMachine());
 
             // Assert
         }
@@ -543,7 +595,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, VIRTUALMACHINE_HREF, null);
+            abiquoClient.CreateVirtualMachine(42, 42, VIRTUALMACHINETEMPLATE_HREF, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithInvalidVirtualMachineTemplateHref2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.CreateVirtualMachine(42, 42, "Arbitrary", null);
 
             // Assert
         }
@@ -817,24 +882,24 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
                 int virtualMachineTemplateId)
             {
                 return new VirtualMachine();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
             {
                 return new VirtualMachine();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
                 int virtualMachineTemplateId, VirtualMachine virtualMachine)
             {
                 return new VirtualMachine();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
                 VirtualMachine virtualMachine)
             {
                 return new VirtualMachine();
@@ -960,24 +1025,24 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
-                int virtualMachineTemplateId)
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId,
+                int dataCenterRepositoryId, int virtualMachineTemplateId)
             {
                 throw new NotImplementedException();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
             {
                 throw new NotImplementedException();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
-                int virtualMachineTemplateId, VirtualMachine virtualMachine)
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId,
+                int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachine virtualMachine)
             {
                 throw new NotImplementedException();
             }
 
-            public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+            public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
                 VirtualMachine virtualMachine)
             {
                 throw new NotImplementedException();
