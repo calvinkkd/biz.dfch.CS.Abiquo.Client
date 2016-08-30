@@ -16,23 +16,37 @@
  
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DhcpOption : AbiquoBaseDto
+    public class DhcpOption : BaseDto
     {
+        public int Id { get; set; }
+
+        [Required]
         public string Gateway { get; set; }
 
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int Mask { get; set; }
 
+        [Required]
         public string Netmask { get; set; }
 
+        [Required]
         public string NetworkAddress { get; set; }
 
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int Option { get; set; }
+
+        // DFTODO - check, if links get delivered by the REST response
+        public List<Link> Links { get; set; }
     }
 }

@@ -16,7 +16,8 @@
  
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class User : AbiquoBaseDto
     {
+        [Required]
         public bool Active { get; set; }
-        
+
+        [Required]
         public string AuthType { get; set; }
         
         public string AvailableVirtualDatacenters { get; set; }
@@ -36,7 +39,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Email { get; set; }
         
         public string Locale { get; set; }
-        
+
+        [Required]
         public string Nick { get; set; }
         
         public string Password { get; set; }

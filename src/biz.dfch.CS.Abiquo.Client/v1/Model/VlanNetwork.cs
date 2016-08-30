@@ -18,7 +18,8 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,14 +28,18 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class VlanNetwork : AbiquoBaseDto
     {
+        [Required]
         public string Address { get; set; }
         
         public bool DefaultNetwork { get; set; }
         
         public DhcpOptions DhcpOptions { get; set; }
         
+        [Required]
         public string Gateway { get; set; }
         
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int Mask { get; set; }
         
         public string PrimaryDns { get; set; }

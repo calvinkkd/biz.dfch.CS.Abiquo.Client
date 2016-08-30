@@ -18,7 +18,8 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,12 +28,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class VirtualMachine : AbiquoBaseDto
     {
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int Cpu { get; set; }
         
         public int CoresPerSocket { get; set; }
         
         public string Description { get; set; }
-        
+
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int HighDisponibility { get; set; }
         
         public int IdState { get; set; }
@@ -42,7 +47,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Keymap { get; set; }
         
         public string Password { get; set; }
-        
+
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int Ram { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]

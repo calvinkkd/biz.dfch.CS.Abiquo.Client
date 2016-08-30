@@ -16,7 +16,8 @@
  
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,15 +31,21 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     {
         public List<Jobs> Jobs { get; set; }
 
+        [Required]
         public string OwnerId { get; set; }
-        
+
+        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public TaskState State { get; set; }
-        
+
+        [Required]
         public string TaskId { get; set; }
-        
+
+        [Required]
+        [Range(1, Int64.MaxValue)]
         public long Timestamp { get; set; }
-        
+
+        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public TaskType Type { get; set; }
         

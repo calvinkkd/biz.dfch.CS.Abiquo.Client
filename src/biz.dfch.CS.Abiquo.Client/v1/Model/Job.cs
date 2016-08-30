@@ -16,7 +16,8 @@
  
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class Job : BaseDto
     {
         public string Description { get; set; }
-        
+
+        [Required]
         public string Id { get; set; }
         
         public string ParentTaskId { get; set; }
@@ -39,9 +41,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         
         [JsonConverter(typeof(StringEnumConverter))]
         public JobState State { get; set; }
-        
+
+        [Required]
+        [Range(1, Int64.MaxValue)]
         public long Timestamp { get; set; }
-        
+
+        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public JobType Type { get; set; }
 

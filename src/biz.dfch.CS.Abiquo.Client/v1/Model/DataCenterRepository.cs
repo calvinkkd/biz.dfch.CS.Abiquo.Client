@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
+using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
@@ -28,10 +29,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     {
         public string Error { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public long RepositoryCapacityMb { get; set; }
 
+        [Required]
         public string RepositoryLocation { get; set; }
 
         public long RepositoryRemainingMb { get; set; }

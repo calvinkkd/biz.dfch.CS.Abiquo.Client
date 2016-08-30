@@ -18,19 +18,23 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachineTemplate : AbiquoBaseDto
+    public class VirtualMachineTemplate : BaseDto
     {
         public bool ChefEnabled { get; set; }
         
         public int CostCode { get; set; }
-        
+
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int CpuRequired { get; set; }
         
         public int CoresPerSocket { get; set; }
@@ -45,17 +49,27 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public EthernetDriverType EthernetDriverType { get; set; }
         
         public string IconUrl { get; set; }
+
+        [Required]
+        [Range(1, Int32.MaxValue)]
+        public int Id { get; set; }
         
         public string LoginPassword { get; set; }
         
         public string LoginUser { get; set; }
+
+        [Required]
+        public string Name { get; set; }
         
         public string OsType { get; set; }
         
         public string OsVersion { get; set; }
-        
+
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int RamRequired { get; set; }
-        
+
+        [Required]
         public bool Shared { get; set; }
         
         public string State { get; set; }
@@ -71,5 +85,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool EnableNicsHotReconfigure { get; set; }
         
         public bool EnableRemoteAccessHotReconfigure { get; set; }
+
+        // DFTODO - check, if links get delivered by the REST response
+        public List<Link> Links { get; set; }
     }
 }
