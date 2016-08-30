@@ -192,6 +192,7 @@
     <Compile Include="General\UriHelper.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
     <Compile Include="v1\AbiquoMediaDataTypes.cs" />
+    <Compile Include="v1\AbiquoRelations.cs" />
     <Compile Include="v1\Model\AbiquoBaseDto.cs" />
     <Compile Include="v1\Model\AbiquoBaseCollectionDto.cs" />
     <Compile Include="v1\Model\DataCenterRepositories.cs" />
