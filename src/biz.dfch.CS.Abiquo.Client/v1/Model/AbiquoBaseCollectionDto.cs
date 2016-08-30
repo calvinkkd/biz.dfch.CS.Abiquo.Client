@@ -36,5 +36,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public List<T> Collection { get; set; }
 
         public int TotalSize { get; set; }
+
+        public Link GetLinkByRel(string rel)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
+            Contract.Ensures(null != Contract.Result<Link>());
+
+            return Links.Find(l => l.Rel == rel);
+        }
     }
 }

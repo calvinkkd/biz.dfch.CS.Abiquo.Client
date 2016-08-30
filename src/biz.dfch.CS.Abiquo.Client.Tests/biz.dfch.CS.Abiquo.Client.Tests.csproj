@@ -204,6 +204,8 @@
     <Compile Include="v1\AbiquoClientIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v1\AbiquoClientTest.cs" />
+    <Compile Include="v1\Model\AbiquoBaseCollectionDtoTest.cs" />
+    <Compile Include="v1\Model\AbiquoBaseDtoTest.cs" />
     <Compile Include="v1\Model\DeserializationTest.cs" />
   </ItemGroup>
   <ItemGroup>
