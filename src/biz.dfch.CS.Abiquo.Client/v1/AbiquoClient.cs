@@ -166,6 +166,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId)
         {
+            
             // DFTODO - implement
             // DFTODO - implement integration test
             throw new NotImplementedException();
