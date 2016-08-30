@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.General
 {
-    public class UriHelper
+    public static class UriHelper
     {
         public const char CHARACTER_TO_TRIM_ON = '/';
         public const string FILTER_SEPARATOR = "&";
