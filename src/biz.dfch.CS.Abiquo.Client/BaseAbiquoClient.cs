@@ -423,6 +423,21 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>DataCenterRepositories</returns>
         public abstract DataCenterRepositories GetDataCenterRepositories(int enterpriseId);
 
+        /// <summary>
+        /// Retrieve a specific datacenter repository by id of the current enterprise/tenant
+        /// </summary>
+        /// <param name="id">Id of the datacenter repository</param>
+        /// <returns>DataCenterRepository</returns>
+        public abstract DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id);
+
+        /// <summary>
+        /// Retrieve a specific datacenter repository by id of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="id">Id of the datacenter repository</param>
+        /// <returns>DataCenterRepository</returns>
+        public abstract DataCenterRepository GetDataCenterRepository(int enterpriseId, int id);
+
         #endregion DataCenterRepositories
     }
 }

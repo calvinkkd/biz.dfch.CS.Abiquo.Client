@@ -716,7 +716,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(dataCenterRepositories);
             Assert.IsNotNull(dataCenterRepositories.Collection);
             Assert.IsNotNull(dataCenterRepositories.Links);
-            Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
             //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
             //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
 
@@ -745,14 +744,83 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(dataCenterRepositories);
             Assert.IsNotNull(dataCenterRepositories.Collection);
             Assert.IsNotNull(dataCenterRepositories.Links);
-            Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
             //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
             //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
 
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
             Assert.IsNotNull(dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository.Links);
+            Assert.IsTrue(0 < dataCenterRepository.Links.Count);
             Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
             Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetDataCenterRepositoryOfCurrentEnterpriseReturnsAbiquoDataCenterRepositoryOfCurrentEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != expectedDataCenterRepository);
+
+            var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+
+            // Act
+            var dataCenterRepository = abiquoClient.GetDataCenterRepositoryOfCurrentEnterprise(dataCenterRepositoryId);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository.Links);
+            Assert.IsTrue(0 < dataCenterRepository.Links.Count);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
+
+            Assert.AreEqual(expectedDataCenterRepository.Error, dataCenterRepository.Error);
+            Assert.AreEqual(expectedDataCenterRepository.Name, dataCenterRepository.Name);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryCapacityMb, dataCenterRepository.RepositoryCapacityMb);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryLocation, dataCenterRepository.RepositoryLocation);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryRemainingMb, dataCenterRepository.RepositoryRemainingMb);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetDataCenterRepositoryReturnsAbiquoDataCenterRepository()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != expectedDataCenterRepository);
+
+            var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+
+            // Act
+            var dataCenterRepository = abiquoClient.GetDataCenterRepository(IntegrationTestEnvironment.TenantId, dataCenterRepositoryId);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository.Links);
+            Assert.IsTrue(0 < dataCenterRepository.Links.Count);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
+
+            Assert.AreEqual(expectedDataCenterRepository.Error, dataCenterRepository.Error);
+            Assert.AreEqual(expectedDataCenterRepository.Name, dataCenterRepository.Name);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryCapacityMb, dataCenterRepository.RepositoryCapacityMb);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryLocation, dataCenterRepository.RepositoryLocation);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryRemainingMb, dataCenterRepository.RepositoryRemainingMb);
         }
 
         #endregion DataCenterRepositories

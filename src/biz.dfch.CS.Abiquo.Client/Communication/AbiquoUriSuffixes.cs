@@ -42,5 +42,6 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string VIRTUALMACHINETEMPLATES_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID = "/admin/enterprises/{0}/datacenterrepositories/{1}/virtualmachinetemplates";
         public const string VIRTUALMACHINETEMPLATE_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID_AND_VIRTUALMACHINETEMPLATE_ID = "/admin/enterprises/{0}/datacenterrepositories/{1}/virtualmachinetemplates/{2}";
         public const string DATACENTERREPOSITORIES_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/datacenterrepositories";
+        public const string DATACENTERREPOSITORIES_BY_ENTERPRISE_ID_AND_DATACENTERREPOSITORY_ID = "/admin/enterprises/{0}/datacenterrepositories/{1}";
     }
 }

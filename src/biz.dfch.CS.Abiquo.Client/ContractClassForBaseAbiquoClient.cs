@@ -268,6 +268,21 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(DataCenterRepositories);
         }
 
+        public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
+        {
+            Contract.Requires(0 < id);
+
+            return default(DataCenterRepository);
+        }
+
+        public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < id);
+            
+            return default(DataCenterRepository);
+        }
+
         #endregion DataCenterRepositories
     }
 }

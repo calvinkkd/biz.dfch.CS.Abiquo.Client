@@ -274,6 +274,19 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<DataCenterRepositories>(uriSuffix, headers);
         }
 
+        public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
+        {
+            return GetDataCenterRepository(AuthenticationInformation.GetTenantId(), id);
+        }
+
+        public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORY).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTERREPOSITORIES_BY_ENTERPRISE_ID_AND_DATACENTERREPOSITORY_ID, enterpriseId, id);
+            return Invoke<DataCenterRepository>(uriSuffix, headers);
+        }
+
         #endregion DataCenterRepositories
     }
 }

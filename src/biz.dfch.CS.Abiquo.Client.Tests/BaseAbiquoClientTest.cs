@@ -698,6 +698,45 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetDataCenterRepositoryOfCurrentEnterpriseWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetDataCenterRepositoryOfCurrentEnterprise(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetDataCenterRepositoryWithInvalidEnterpriseIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetDataCenterRepository(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetDataCenterRepositoryWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetDataCenterRepository(42, INVALID_ID);
+
+            // Assert
+        }
+
         #endregion DataCenterRepositories
 
 
@@ -840,6 +879,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 return new DataCenterRepositories();
             }
+
+            public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
+            {
+                return new DataCenterRepository();
+            }
+
+            public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
+            {
+                return new DataCenterRepository();
+            }
         }
 
         private class InvalidAbiquoClient : BaseAbiquoClient
@@ -974,6 +1023,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
