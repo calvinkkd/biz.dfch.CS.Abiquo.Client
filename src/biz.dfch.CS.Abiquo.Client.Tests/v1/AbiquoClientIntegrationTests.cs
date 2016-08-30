@@ -552,7 +552,83 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #endregion VirtualMachines
 
 
-        #region Virtual Data Centers
+        #region VirtualMachineTemplates
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetVirtualMachineTemplatesReturnsAbiquoVirtualMachineTemplates()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+
+            // Act
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualMachineTemplates);
+            Assert.IsNotNull(virtualMachineTemplates.Collection);
+            Assert.IsTrue(0 < virtualMachineTemplates.TotalSize);
+            Assert.IsTrue(0 < virtualMachineTemplates.Links.Count);
+
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualMachineTemplate);
+            Assert.IsTrue(0 < virtualMachineTemplate.Id);
+            Assert.IsNotNull(virtualMachineTemplate.Name);
+            Assert.IsTrue(0 < virtualMachineTemplate.CpuRequired);
+            Assert.IsTrue(0 < virtualMachineTemplate.RamRequired);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(virtualMachineTemplate.OsVersion));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetVirtualMachineTemplateReturnsAbiquoVirtualMachineTemplate()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(ABIQUO_CLIENT_VERSION);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var expectedVirtualMachineTemplate = virtualMachineTemplates.Collection.FirstOrDefault();
+            Contract.Assert(null != expectedVirtualMachineTemplate);
+
+            // Act
+            var virtualMachineTemplate = abiquoClient.GetVirtualMachineTemplate(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId, expectedVirtualMachineTemplate.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualMachineTemplate);
+            Assert.IsTrue(0 < virtualMachineTemplate.Id);
+            Assert.IsNotNull(virtualMachineTemplate.Name);
+            Assert.IsTrue(0 < virtualMachineTemplate.CpuRequired);
+            Assert.IsTrue(0 < virtualMachineTemplate.RamRequired);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(virtualMachineTemplate.OsVersion));
+        }
+
+        #endregion VirtualMachineTemplates
+
+
+        #region VirtualDataCenters
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
