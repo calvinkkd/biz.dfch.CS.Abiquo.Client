@@ -299,40 +299,44 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template
         /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
         /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
         /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
         /// <returns>VirtualMachine</returns>
-        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId);
+        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId);
 
         /// <summary>
         /// Create a virtual machine by based on a virtual machine template
         /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
         /// <returns>VirtualMachine</returns>
-        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref);
+        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref);
 
         /// <summary>
         /// Create a virtual machine by based on a virtual machine template
         /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
         /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
         /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
         /// /// <param name="virtualMachine">Virtual machine configuration</param>
         /// <returns>VirtualMachine</returns>
-        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachine virtualMachine);
+        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachine virtualMachine);
 
         /// <summary>
         /// Create a virtual machine by based on a virtual machine template
         /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
         /// <param name="virtualMachine">Virtual machine configuration</param>
         /// <returns>VirtualMachine</returns>
-        public abstract VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref, VirtualMachine virtualMachine);
+        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref, VirtualMachine virtualMachine);
 
         // DFTODO - method description
         // DFTODO - deploy a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-DeployaVirtualMachine)

@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -163,36 +164,46 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(uriSuffix, headers);
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId)
         {
-            
-            // DFTODO - implement
-            // DFTODO - implement integration test
-            throw new NotImplementedException();
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId, new VirtualMachine());
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref)
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
-            // DFTODO - implement
-            // DFTODO - implement integration test
-            throw new NotImplementedException();
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, new VirtualMachine());
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId, VirtualMachine virtualMachine)
         {
-            // DFTODO - implement
-            // DFTODO - implement integration test
-            throw new NotImplementedException();
+            var virtualMachineTemplateHrefSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATE_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID_AND_VIRTUALMACHINETEMPLATE_ID,
+                enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId);
+            var virtualMachineTemplateHref = UriHelper.ConcatUri(AbiquoApiBaseUri, virtualMachineTemplateHrefSuffix);
+
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, virtualMachine);
         }
 
-        public override VirtualMachine CreateVirtualMachine(int virtualApplianceId, string virtualMachineTemplateHref,
+        public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
             VirtualMachine virtualMachine)
         {
-            // DFTODO - implement
-            // DFTODO - implement integration test
-            throw new NotImplementedException();
+            var virtualMachineLink = new Link()
+            {
+                Rel = AbiquoRelations.VIRTUALMACHINETEMPLATE
+                ,
+                Href = virtualMachineTemplateHref
+            };
+            virtualMachine.Links = new List<Link>() { virtualMachineLink };
+            
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)
+                .BuildContentType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE).GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID,
+                    virtualDataCenterId, virtualApplianceId);
+
+            return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine.SerializeObject());
         }
 
         #endregion VirtualMachines
