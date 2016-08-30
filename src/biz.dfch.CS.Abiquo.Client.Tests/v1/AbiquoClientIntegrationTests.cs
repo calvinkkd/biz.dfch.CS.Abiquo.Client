@@ -715,11 +715,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsNotNull(dataCenterRepositories);
             Assert.IsNotNull(dataCenterRepositories.Collection);
+            Assert.IsNotNull(dataCenterRepositories.Links);
+            Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
             //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
             //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
 
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
             Assert.IsNotNull(dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository.Links);
+            Assert.IsTrue(0 < dataCenterRepository.Links.Count);
             Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
             Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
         }
@@ -740,6 +744,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsNotNull(dataCenterRepositories);
             Assert.IsNotNull(dataCenterRepositories.Collection);
+            Assert.IsNotNull(dataCenterRepositories.Links);
+            Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
             //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
             //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
 
