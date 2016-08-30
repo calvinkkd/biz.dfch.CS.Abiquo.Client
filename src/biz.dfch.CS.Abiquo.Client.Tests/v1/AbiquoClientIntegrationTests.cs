@@ -587,7 +587,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(virtualMachineTemplate.Name);
             Assert.IsTrue(0 < virtualMachineTemplate.CpuRequired);
             Assert.IsTrue(0 < virtualMachineTemplate.RamRequired);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(virtualMachineTemplate.OsVersion));
         }
 
         [TestMethod]
@@ -622,7 +621,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(virtualMachineTemplate.Name);
             Assert.IsTrue(0 < virtualMachineTemplate.CpuRequired);
             Assert.IsTrue(0 < virtualMachineTemplate.RamRequired);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(virtualMachineTemplate.OsVersion));
         }
 
         #endregion VirtualMachineTemplates
