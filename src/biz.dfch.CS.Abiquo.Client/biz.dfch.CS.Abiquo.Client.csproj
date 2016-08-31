@@ -180,6 +180,7 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Authentication\Constants.cs" />
+    <Compile Include="Communication\AbiquoHeaderKeys.cs" />
     <Compile Include="Communication\AbiquoUriSuffixes.cs" />
     <Compile Include="Factory\AbiquoClientFactory.cs" />
     <Compile Include="Authentication\BasicAuthenticationInformation.cs" />

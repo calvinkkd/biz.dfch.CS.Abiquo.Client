@@ -21,12 +21,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.Authentication
+namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    public abstract class Constants
+    public class AbiquoHeaderKeys
     {
-        public const string AUTHORIZATION_HEADER_KEY = "Authorization";
-
-        public const string BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Basic {0}";
+        public const string ACCEPT_HEADER_KEY = "Accept";
+        public const string CONTENT_TYPE_HEADER_KEY = "Content-Type";
     }
 }

@@ -20,7 +20,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Abiquo.Client.Communication;
 
 namespace biz.dfch.CS.Abiquo.Client.General
 {
@@ -37,7 +37,7 @@ namespace biz.dfch.CS.Abiquo.Client.General
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(acceptHeaderValue));
 
-            _headers.Add(Constants.ACCEPT_HEADER_KEY, acceptHeaderValue);
+            _headers.Add(AbiquoHeaderKeys.ACCEPT_HEADER_KEY, acceptHeaderValue);
             return this;
         }
 
@@ -45,7 +45,7 @@ namespace biz.dfch.CS.Abiquo.Client.General
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(contentTypeHeaderValue));
 
-            _headers.Add(Constants.CONTENT_TYPE_HEADER_KEY, contentTypeHeaderValue);
+            _headers.Add(AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY, contentTypeHeaderValue);
             return this;
         }
 

@@ -96,7 +96,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
                 ,
-                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
@@ -211,7 +211,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
                 ,
-                { Constants.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
