@@ -355,7 +355,7 @@ YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT, THAT YOU UNDERSTAND THIS AGRE
 
 ============================================================================
 ============================================================================
-"Apache logging services", log4net
+"Apache logging services", log4net 2.0.5
 Copyright 2014 The Apache Software Foundation
 
 This product includes software developed at
@@ -364,7 +364,7 @@ The Apache Software Foundation (http://www.apache.org/).
 
 ============================================================================
 ============================================================================
-Json.NET
+Json.NET 6.0.8
 Popular high-performance JSON framework for .NET
 
 © 2015 Newtonsoft James Newton-King http://www.newtonsoft.com/json
