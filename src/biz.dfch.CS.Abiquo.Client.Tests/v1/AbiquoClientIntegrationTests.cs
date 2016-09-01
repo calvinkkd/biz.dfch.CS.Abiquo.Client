@@ -594,7 +594,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(virtualMachineTemplate.LoginPassword, virtualMachine.Password);
         }
         
-        
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
         public void CreateVirtualMachineWithCustomConfigurationCreatesVirtualMachineBasedOnTemplateAndCustomConfiguration()
