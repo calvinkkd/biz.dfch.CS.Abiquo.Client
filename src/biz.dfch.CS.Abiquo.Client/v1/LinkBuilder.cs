@@ -69,8 +69,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public Link GetLink()
         {
             Contract.Ensures(null != Contract.Result<Link>());
-            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<Link>().Rel));
-            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<Link>().Href));
+            Contract.Ensures(Contract.Result<Link>().IsValid());
 
             return _link;
         }
