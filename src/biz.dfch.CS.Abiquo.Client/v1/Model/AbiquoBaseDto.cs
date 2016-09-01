@@ -15,6 +15,7 @@
  */
  
 ﻿using biz.dfch.CS.Abiquo.Client.General;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -29,6 +30,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     /// </summary>
     public abstract class AbiquoBaseDto : BaseDto
     {
+        [JsonProperty(PropertyName = "links")]
         public List<Link> Links { get; set; }
 
         public Link GetLinkByRel(string rel)
