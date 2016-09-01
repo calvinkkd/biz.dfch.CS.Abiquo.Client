@@ -188,12 +188,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
             VirtualMachine virtualMachine)
         {
-            var virtualMachineLink = new Link()
-            {
-                Rel = AbiquoRelations.VIRTUALMACHINETEMPLATE
-                ,
-                Href = virtualMachineTemplateHref
-            };
+            var virtualMachineLink = new LinkBuilder()
+                .BuildRel(AbiquoRelations.VIRTUALMACHINETEMPLATE)
+                .BuildHref(virtualMachineTemplateHref)
+                .GetLink();
+
             virtualMachine.Links = new List<Link>() { virtualMachineLink };
             
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)

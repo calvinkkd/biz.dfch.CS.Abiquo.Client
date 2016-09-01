@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Utilities.Testing;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
+using biz.dfch.CS.Abiquo.Client.v1;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
 {
@@ -77,8 +78,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
 
         private Enterprises CreateEnterprisesWithLinks()
         {
-            var firstLink = CreateLink(FIRST_REL, FIRST_HREF);
-            var lastLink = CreateLink(LAST_REL, LAST_HREF);
+            var firstLink = new LinkBuilder().BuildRel(FIRST_REL).BuildHref(FIRST_HREF).GetLink();
+            var lastLink = new LinkBuilder().BuildRel(LAST_REL).BuildHref(LAST_HREF).GetLink();
 
             var enterprises = new Enterprises()
             {
@@ -105,16 +106,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             };
 
             return enterprise;
-        }
-
-        private Link CreateLink(string rel, string href)
-        {
-            return new Link()
-            {
-                Rel = rel
-                ,
-                Href = href
-            };
         }
     }
 }

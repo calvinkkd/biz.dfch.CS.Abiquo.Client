@@ -51,6 +51,8 @@ namespace biz.dfch.CS.Abiquo.Client.General
 
         public Dictionary<string, string> GetHeaders()
         {
+            Contract.Ensures(null != Contract.Result<Dictionary<string, string>>());
+
             return _headers;
         }
     }
