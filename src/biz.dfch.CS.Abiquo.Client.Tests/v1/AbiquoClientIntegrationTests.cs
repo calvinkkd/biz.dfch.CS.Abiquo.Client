@@ -39,6 +39,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
     {
         private readonly IAuthenticationInformation BasicAuthenticationInformation = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
         private const string SAMPLE_VIRTUAL_MACHINE_PASSWORD = "SamplePw";
+        private const string SAMPLE_VIRTUAL_MACHINE_NAME = "Abiquo Client TestVM";
 
         #region Login
 
@@ -627,6 +628,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 Ram = 1024
                 ,
                 Password = SAMPLE_VIRTUAL_MACHINE_PASSWORD
+                ,
+                Name = SAMPLE_VIRTUAL_MACHINE_NAME
             };
 
             // Act
@@ -638,7 +641,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsNotNull(virtualMachine);
             Assert.IsTrue(0 < virtualMachine.Id);
-            Assert.AreEqual(virtualMachineConfiguration.Name, virtualMachine.Name);
             Assert.AreEqual(virtualMachineConfiguration.Cpu, virtualMachine.Cpu);
             Assert.AreEqual(virtualMachineTemplate.CoresPerSocket, virtualMachine.CoresPerSocket);
             Assert.AreEqual(virtualMachineConfiguration.Ram, virtualMachine.Ram);
