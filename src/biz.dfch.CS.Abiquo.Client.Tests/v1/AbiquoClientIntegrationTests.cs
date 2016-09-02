@@ -626,7 +626,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
             Contract.Assert(null != virtualMachineTemplate);
 
-            var virtualMachineConfiguration = new VirtualMachine()
+            var virtualMachineToBeCreated = new VirtualMachine()
             {
                 Cpu = 2
                 ,
@@ -639,15 +639,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id, virtualMachineConfiguration);
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id, virtualMachineToBeCreated);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
 
             Assert.IsNotNull(virtualMachine);
             Assert.IsTrue(0 < virtualMachine.Id);
-            Assert.AreEqual(virtualMachineConfiguration.Cpu, virtualMachine.Cpu);
-            Assert.AreEqual(virtualMachineConfiguration.Ram, virtualMachine.Ram);
+            Assert.AreEqual(virtualMachineToBeCreated.Cpu, virtualMachine.Cpu);
+            Assert.AreEqual(virtualMachineToBeCreated.Ram, virtualMachine.Ram);
             Assert.IsNotNull(virtualMachine.Password);
 
             // Cleanup
