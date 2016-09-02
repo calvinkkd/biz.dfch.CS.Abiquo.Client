@@ -80,8 +80,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
 
         private Enterprise CreateEnterpriseWithLinks()
         {
-            var usersLink = CreateLink(USERS_REL, USERS_HREF, AbiquoMediaDataTypes.VND_ABIQUO_USERS, USERS_REL);
-            var propertiesLink = CreateLink(PROPERTIES_REL, PROPERTIES_HREF, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISEPROPERTIES, PROPERTIES_REL);
+            var usersLink = new LinkBuilder()
+                .BuildRel(USERS_REL)
+                .BuildHref(USERS_HREF)
+                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_USERS)
+                .BuildTitle(USERS_REL).GetLink();
+
+            var propertiesLink = new LinkBuilder()
+                .BuildRel(PROPERTIES_REL)
+                .BuildHref(PROPERTIES_HREF)
+                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISEPROPERTIES)
+                .BuildTitle(PROPERTIES_REL)
+                .GetLink();
 
             var enterprise = new Enterprise()
             {
@@ -93,20 +103,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             };
 
             return enterprise;
-        }
-
-        private Link CreateLink(string rel, string href, string type = null, string title = null)
-        {
-            return new Link()
-            {
-                Rel = rel
-                ,
-                Href = href
-                ,
-                Type = type
-                ,
-                Title = title
-            };
         }
     }
 }

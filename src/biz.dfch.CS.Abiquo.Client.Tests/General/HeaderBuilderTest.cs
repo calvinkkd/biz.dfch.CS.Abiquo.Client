@@ -20,11 +20,11 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.General;
 using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using biz.dfch.CS.Utilities.Testing;
+using biz.dfch.CS.Abiquo.Client.Communication;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
@@ -65,8 +65,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
 
             // Assert
             Assert.AreEqual(1, headers.Count);
-            Assert.IsTrue(headers.ContainsKey(Constants.ACCEPT_HEADER_KEY));
-            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[Constants.ACCEPT_HEADER_KEY]);
+            Assert.IsTrue(headers.ContainsKey(AbiquoHeaderKeys.ACCEPT_HEADER_KEY));
+            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[AbiquoHeaderKeys.ACCEPT_HEADER_KEY]);
         }
 
         [ExpectContractFailure]
@@ -103,8 +103,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
 
             // Assert
             Assert.AreEqual(1, headers.Count);
-            Assert.IsTrue(headers.ContainsKey(Constants.CONTENT_TYPE_HEADER_KEY));
-            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[Constants.CONTENT_TYPE_HEADER_KEY]);
+            Assert.IsTrue(headers.ContainsKey(AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY));
+            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY]);
         }
     }
 }

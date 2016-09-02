@@ -308,7 +308,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId);
 
         /// <summary>
-        /// Create a virtual machine by based on a virtual machine template
+        /// Create a virtual machine based on a virtual machine template
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
@@ -317,7 +317,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref);
 
         /// <summary>
-        /// Create a virtual machine by based on a virtual machine template
+        /// Create a virtual machine based on a virtual machine template and custom configuration
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
@@ -326,17 +326,17 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
         /// /// <param name="virtualMachine">Virtual machine configuration</param>
         /// <returns>VirtualMachine</returns>
-        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachine virtualMachine);
+        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachineBase virtualMachine);
 
         /// <summary>
-        /// Create a virtual machine by based on a virtual machine template
+        /// Create a virtual machine based on a virtual machine template and custom configuration
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
         /// <param name="virtualMachine">Virtual machine configuration</param>
         /// <returns>VirtualMachine</returns>
-        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref, VirtualMachine virtualMachine);
+        public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref, VirtualMachineBase virtualMachine);
 
         // DFTODO - method description
         // DFTODO - deploy a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-DeployaVirtualMachine)

@@ -32,7 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         public string Href { get; set; }
-        
+
         public string Title { get; set; }
 
         public string Type { get; set; }
