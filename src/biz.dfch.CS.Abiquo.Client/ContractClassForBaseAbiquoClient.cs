@@ -175,6 +175,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < dataCenterRepositoryId);
             Contract.Requires(0 < virtualMachineTemplateId);
             Contract.Requires(null != virtualMachine);
+            Contract.Requires(virtualMachine.IsValid());
 
             return default(VirtualMachine);
         }
@@ -187,6 +188,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
             Contract.Requires(Uri.IsWellFormedUriString(virtualMachineTemplateHref, UriKind.Absolute));
             Contract.Requires(null != virtualMachine);
+            Contract.Requires(virtualMachine.IsValid());
 
             return default(VirtualMachine);
         }
