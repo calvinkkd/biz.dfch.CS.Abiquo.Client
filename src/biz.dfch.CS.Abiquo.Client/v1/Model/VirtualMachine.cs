@@ -32,7 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Range(1, Int32.MaxValue)]
         public int Cpu { get; set; }
         
-        public int CoresPerSocket { get; set; }
+        public int? CoresPerSocket { get; set; }
         
         public string Description { get; set; }
 
@@ -40,11 +40,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Range(0, Int32.MaxValue)]
         public int HighDisponibility { get; set; }
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
-        public int IdState { get; set; }
-        
-        public int IdType { get; set; }
+        public int? IdState { get; set; }
+
+        public int? IdType { get; set; }
         
         public string Keymap { get; set; }
 
@@ -63,8 +63,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Uuid { get; set; }
         
         public string VdrpIp { get; set; }
-        
-        public int VdrpPort { get; set; }
+
+        public int? VdrpPort { get; set; }
 
         // The following properties get delivered by the rest response 
         // but are not mentioned in the wiki 
