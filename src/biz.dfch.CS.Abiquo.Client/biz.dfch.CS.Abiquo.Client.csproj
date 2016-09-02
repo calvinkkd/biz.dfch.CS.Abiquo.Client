@@ -180,6 +180,7 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Authentication\Constants.cs" />
+    <Compile Include="Communication\AbiquoHeaderKeys.cs" />
     <Compile Include="Communication\AbiquoUriSuffixes.cs" />
     <Compile Include="Factory\AbiquoClientFactory.cs" />
     <Compile Include="Authentication\BasicAuthenticationInformation.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="v1\AbiquoClient.cs" />
     <Compile Include="v1\AbiquoMediaDataTypes.cs" />
     <Compile Include="v1\AbiquoRelations.cs" />
+    <Compile Include="v1\LinkBuilder.cs" />
     <Compile Include="v1\Model\AbiquoBaseDto.cs" />
     <Compile Include="v1\Model\AbiquoBaseCollectionDto.cs" />
     <Compile Include="v1\Model\DataCenterRepositories.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="v1\Model\JobState.cs" />
     <Compile Include="v1\Model\JobType.cs" />
     <Compile Include="v1\Model\Link.cs" />
+    <Compile Include="v1\Model\Links.cs" />
     <Compile Include="v1\Model\NetworkType.cs" />
     <Compile Include="v1\Model\Privilege.cs" />
     <Compile Include="v1\Model\Privileges.cs" />
@@ -232,6 +235,7 @@
     <Compile Include="v1\Model\VirtualMachineState.cs" />
     <Compile Include="v1\Model\VirtualMachineTemplate.cs" />
     <Compile Include="v1\Model\VirtualMachineTemplates.cs" />
+    <Compile Include="v1\Model\VirtualMachineBase.cs" />
     <Compile Include="v1\Model\VlanNetwork.cs" />
     <Compile Include="v1\Model\VlanNetworks.cs" />
   </ItemGroup>

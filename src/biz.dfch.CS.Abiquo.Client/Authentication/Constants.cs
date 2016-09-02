@@ -26,8 +26,6 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
     public abstract class Constants
     {
         public const string AUTHORIZATION_HEADER_KEY = "Authorization";
-        public const string ACCEPT_HEADER_KEY = "Accept";
-        public const string CONTENT_TYPE_HEADER_KEY = "Content-Type";
 
         public const string BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Basic {0}";
     }

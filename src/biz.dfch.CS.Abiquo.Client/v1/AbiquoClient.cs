@@ -27,12 +27,28 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
         public const string ABIQUO_API_VERSION = "3.8";
+
+        static AbiquoClient()
+        {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Formatting.None
+                ,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ,
+                NullValueHandling = NullValueHandling.Ignore
+                ,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+        }
 
         internal AbiquoClient()
         {
@@ -167,16 +183,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId)
         {
-            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId, new VirtualMachine());
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId, new VirtualMachineBase());
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
-            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, new VirtualMachine());
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, new VirtualMachineBase());
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
-            int virtualMachineTemplateId, VirtualMachine virtualMachine)
+            int virtualMachineTemplateId, VirtualMachineBase virtualMachine)
         {
             var virtualMachineTemplateHrefSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATE_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID_AND_VIRTUALMACHINETEMPLATE_ID,
                 enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId);
@@ -186,14 +202,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
-            VirtualMachine virtualMachine)
+            VirtualMachineBase virtualMachine)
         {
-            var virtualMachineLink = new Link()
-            {
-                Rel = AbiquoRelations.VIRTUALMACHINETEMPLATE
-                ,
-                Href = virtualMachineTemplateHref
-            };
+            var virtualMachineLink = new LinkBuilder()
+                .BuildRel(AbiquoRelations.VIRTUALMACHINETEMPLATE)
+                .BuildHref(virtualMachineTemplateHref)
+                .GetLink();
+
             virtualMachine.Links = new List<Link>() { virtualMachineLink };
             
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)

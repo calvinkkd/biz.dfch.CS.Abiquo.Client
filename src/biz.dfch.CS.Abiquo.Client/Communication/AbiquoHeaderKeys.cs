@@ -21,11 +21,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.v1
+namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    public abstract class AbiquoRelations
+    public class AbiquoHeaderKeys
     {
-        public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
+        public const string ACCEPT_HEADER_KEY = "Accept";
+        public const string CONTENT_TYPE_HEADER_KEY = "Content-Type";
     }
 }
-

@@ -21,11 +21,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.v1
+namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public abstract class AbiquoRelations
+    public class Links : AbiquoBaseCollectionDto<Link>
     {
-        public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto
     }
 }
-
