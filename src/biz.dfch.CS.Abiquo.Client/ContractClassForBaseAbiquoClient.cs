@@ -193,6 +193,15 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(bool);
+        }
+
         #endregion VirtualMachines
 
 

@@ -591,6 +591,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(virtualMachineTemplate.CpuRequired, virtualMachine.Cpu);
             Assert.AreEqual(virtualMachineTemplate.RamRequired, virtualMachine.Ram);
             Assert.IsNotNull(virtualMachine.Password);
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+            Assert.IsTrue(deletionResult);
         }
         
         [TestMethod]
@@ -644,6 +649,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(virtualMachineConfiguration.Cpu, virtualMachine.Cpu);
             Assert.AreEqual(virtualMachineConfiguration.Ram, virtualMachine.Ram);
             Assert.IsNotNull(virtualMachine.Password);
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+            Assert.IsTrue(deletionResult);
         }
 
         #endregion VirtualMachines

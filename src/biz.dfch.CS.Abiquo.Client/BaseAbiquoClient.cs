@@ -299,8 +299,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template
         /// </summary>
-        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides in</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
         /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
@@ -310,8 +310,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template
         /// </summary>
-        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides in</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
         /// <returns>VirtualMachine</returns>
         public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref);
@@ -319,8 +319,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template and custom configuration
         /// </summary>
-        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides in</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
         /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
@@ -332,7 +332,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// Create a virtual machine based on a virtual machine template and custom configuration
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
         /// <param name="virtualMachine">Virtual machine configuration</param>
         /// <returns>VirtualMachine</returns>
@@ -348,6 +348,16 @@ namespace biz.dfch.CS.Abiquo.Client
         // DFTODO - retrieve a Task (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveaTask)
         // DFTODO - method description
         // DFTODO - retrieve all tasks for a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveallTasksforthisVirtualMachine)
+
+        /// <summary>
+        /// Delete a virtual machine by Id
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides in</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine resides in</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="force">Indicates if deletion has to be forced</param>
+        /// <returns>True if the virtual machine was deleted successfully</returns>
+        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false);
 
         #endregion VirtualMachines
 

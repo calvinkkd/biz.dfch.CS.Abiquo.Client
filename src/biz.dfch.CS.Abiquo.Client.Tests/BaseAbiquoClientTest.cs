@@ -613,6 +613,45 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeleteVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeleteVirtualMachine(0, 42, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeleteVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeleteVirtualMachine(42, 0, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeleteVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeleteVirtualMachine(42, 42, 0);
+
+            // Assert
+        }
+
         #endregion VirtualMachines
 
 
@@ -905,6 +944,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+            {
+                return true;
+            }
+
             public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
             {
                 return new VirtualMachineTemplates();
@@ -1044,6 +1088,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
                 VirtualMachineBase virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
             {
                 throw new NotImplementedException();
             }

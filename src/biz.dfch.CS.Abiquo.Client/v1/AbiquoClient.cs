@@ -221,6 +221,23 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine.SerializeObject());
         }
 
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+        {
+            var filter = new Dictionary<string, string>();
+            if (force)
+            {
+                filter.Add("force", "true");
+            }
+
+            var uriSuffix = 
+                string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, 
+                virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            Invoke(HttpMethod.Delete, uriSuffix, filter);
+
+            return true;
+        }
+
         #endregion VirtualMachines
 
 
