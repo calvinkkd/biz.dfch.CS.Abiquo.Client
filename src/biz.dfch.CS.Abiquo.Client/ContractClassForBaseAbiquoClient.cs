@@ -213,25 +213,25 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachineConfiguration)
+            VirtualMachine virtualMachine)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
-            Contract.Requires(null != virtualMachineConfiguration);
-            Contract.Requires(virtualMachineConfiguration.IsValid());
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(virtualMachine.IsValid());
 
             return default(Task);
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachineConfiguration, bool waitForCompletion)
+            VirtualMachine virtualMachine, bool waitForCompletion)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
-            Contract.Requires(null != virtualMachineConfiguration);
-            Contract.Requires(virtualMachineConfiguration.IsValid());
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(virtualMachine.IsValid());
 
             return default(Task);
         }

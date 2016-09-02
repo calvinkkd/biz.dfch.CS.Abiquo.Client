@@ -742,7 +742,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void UpdateVirtualMachineWithInvalidVirtualMachineConfigurationThrowsContractException()
+        public void UpdateVirtualMachineWithInvalidVirtualMachineThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
@@ -794,7 +794,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void UpdateVirtualMachineWithInvalidVirtualMachineConfiguration2ThrowsContractException()
+        public void UpdateVirtualMachineWithInvalidVirtualMachine2ThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
@@ -1385,13 +1385,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachineConfiguration)
+                VirtualMachine virtualMachine)
             {
                 return new Task();
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachineConfiguration, bool waitForCompletion)
+                VirtualMachine virtualMachine, bool waitForCompletion)
             {
                 return new Task();
             }
@@ -1582,13 +1582,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachineConfiguration)
+                VirtualMachine virtualMachine)
             {
                 throw new NotImplementedException();
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachineConfiguration, bool waitForCompletion)
+                VirtualMachine virtualMachine, bool waitForCompletion)
             {
                 throw new NotImplementedException();
             }
