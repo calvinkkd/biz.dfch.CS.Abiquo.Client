@@ -43,8 +43,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             {
                 Formatting = Formatting.None
                 ,
+                // As the Abiquo deserializer does not ignore case sensitivity
+                // the C# properties, that start with a upper case letter have to be
+                // changed to start with a lowercase letter when serialized to JSON
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
                 ,
+                // Properties, that are not initialized will not be serialized
                 NullValueHandling = NullValueHandling.Ignore
                 ,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
