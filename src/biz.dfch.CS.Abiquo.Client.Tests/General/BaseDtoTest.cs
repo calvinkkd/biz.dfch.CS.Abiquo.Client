@@ -15,9 +15,11 @@
  */
 
 using System.ComponentModel.DataAnnotations;
+using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Utilities.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.General;
+using biz.dfch.CS.Abiquo.Client.v1;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
@@ -25,7 +27,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
     public class BaseDtoTest
     {
         private const string SAMPLE_DTO_NAME = "ArbitraryName";
-        private const string SAMPLE_DTO_JSON_REPRESENTATION = "{\"Name\":\"ArbitraryName\"}";
+        private const string SAMPLE_DTO_JSON_REPRESENTATION = "{\"name\":\"ArbitraryName\"}";
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext testContext)
+        {
+            // IMPORTANT: A new AbiquoClient gets created to make sure 
+            // the serialization settings defined in the static constructor 
+            // of the AbiquoClient get applied to the Newtonsoft JsonConverter
+            AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);            
+        }
 
         [TestMethod]
         public void SerializeSampleDtoReturnsJsonRepresentationOfSampleDto()

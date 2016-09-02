@@ -27,12 +27,28 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
         public const string ABIQUO_API_VERSION = "3.8";
+
+        static AbiquoClient()
+        {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Formatting.None
+                ,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ,
+                NullValueHandling = NullValueHandling.Ignore
+                ,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+        }
 
         internal AbiquoClient()
         {

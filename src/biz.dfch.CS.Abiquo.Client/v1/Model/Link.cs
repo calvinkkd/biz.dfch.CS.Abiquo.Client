@@ -22,24 +22,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
-using Newtonsoft.Json;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class Link : BaseDto
     {
         [Required]
-        [JsonProperty(PropertyName = "rel")]
         public string Rel { get; set; }
 
         [Required]
-        [JsonProperty(PropertyName = "href")]
         public string Href { get; set; }
 
-        [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
-        [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
     }
 }
