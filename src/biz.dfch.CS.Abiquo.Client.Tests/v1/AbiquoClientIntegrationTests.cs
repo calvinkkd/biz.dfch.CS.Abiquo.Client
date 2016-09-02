@@ -642,7 +642,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(virtualMachine);
             Assert.IsTrue(0 < virtualMachine.Id);
             Assert.AreEqual(virtualMachineConfiguration.Cpu, virtualMachine.Cpu);
-            Assert.AreEqual(virtualMachineTemplate.CoresPerSocket, virtualMachine.CoresPerSocket);
             Assert.AreEqual(virtualMachineConfiguration.Ram, virtualMachine.Ram);
             Assert.IsNotNull(virtualMachine.Password);
         }
