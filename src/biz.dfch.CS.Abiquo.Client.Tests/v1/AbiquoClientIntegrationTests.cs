@@ -38,7 +38,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
     public class AbiquoClientIntegrationTests
     {
         private readonly IAuthenticationInformation BasicAuthenticationInformation = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
-        private const string SAMPLE_VIRTUAL_MACHINE_PASSWORD = "P@ssw0rd";
+        private const string SAMPLE_VIRTUAL_MACHINE_PASSWORD = "ArbitraryPwd";
         private const string SAMPLE_VIRTUAL_MACHINE_NAME = "Abiquo client test VM";
 
         #region Login
