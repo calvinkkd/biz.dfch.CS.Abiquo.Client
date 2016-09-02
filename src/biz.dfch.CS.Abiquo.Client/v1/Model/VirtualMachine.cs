@@ -51,6 +51,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         public string Name { get; set; }
         
+        [StringLength(8)]
         public string Password { get; set; }
 
         [Required]

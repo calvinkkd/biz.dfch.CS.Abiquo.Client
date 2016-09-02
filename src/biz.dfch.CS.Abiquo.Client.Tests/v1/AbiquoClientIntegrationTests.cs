@@ -523,7 +523,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                expectedVirtualMachine.Id);
+                expectedVirtualMachine.Id.GetValueOrDefault());
 
             // Assert
             Assert.IsTrue(loginSucceeded);
