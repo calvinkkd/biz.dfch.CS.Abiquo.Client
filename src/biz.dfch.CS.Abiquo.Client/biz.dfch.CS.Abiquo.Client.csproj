@@ -235,6 +235,7 @@
     <Compile Include="v1\Model\VirtualMachineState.cs" />
     <Compile Include="v1\Model\VirtualMachineTemplate.cs" />
     <Compile Include="v1\Model\VirtualMachineTemplates.cs" />
+    <Compile Include="v1\Model\VirtualMachineBase.cs" />
     <Compile Include="v1\Model\VlanNetwork.cs" />
     <Compile Include="v1\Model\VlanNetworks.cs" />
   </ItemGroup>

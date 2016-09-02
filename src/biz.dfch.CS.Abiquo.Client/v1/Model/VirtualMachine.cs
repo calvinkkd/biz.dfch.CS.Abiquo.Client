@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachine : AbiquoBaseDto
+    public class VirtualMachine : VirtualMachineBase
     {
         [Required]
         [Range(1, Int32.MaxValue)]

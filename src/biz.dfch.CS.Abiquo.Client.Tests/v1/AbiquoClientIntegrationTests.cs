@@ -624,13 +624,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualMachineConfiguration = new VirtualMachine()
             {
-                Cpu = 4
+                Cpu = 2
                 ,
-                Ram = 2048
+                Ram = 1024
                 ,
                 Password = SAMPLE_VIRTUAL_MACHINE_PASSWORD
                 ,
                 Name = SAMPLE_VIRTUAL_MACHINE_NAME
+                ,
+                CoresPerSocket = 1
             };
 
             // Act

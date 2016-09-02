@@ -183,16 +183,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId)
         {
-            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId, new VirtualMachine());
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId, new VirtualMachineBase());
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
-            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, new VirtualMachine());
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, new VirtualMachineBase());
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
-            int virtualMachineTemplateId, VirtualMachine virtualMachine)
+            int virtualMachineTemplateId, VirtualMachineBase virtualMachine)
         {
             var virtualMachineTemplateHrefSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATE_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID_AND_VIRTUALMACHINETEMPLATE_ID,
                 enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId);
@@ -202,7 +202,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
-            VirtualMachine virtualMachine)
+            VirtualMachineBase virtualMachine)
         {
             var virtualMachineLink = new LinkBuilder()
                 .BuildRel(AbiquoRelations.VIRTUALMACHINETEMPLATE)

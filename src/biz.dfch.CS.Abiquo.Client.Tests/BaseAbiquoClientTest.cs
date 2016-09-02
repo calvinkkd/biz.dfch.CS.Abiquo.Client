@@ -894,13 +894,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
-                int virtualMachineTemplateId, VirtualMachine virtualMachine)
+                int virtualMachineTemplateId, VirtualMachineBase virtualMachine)
             {
                 return new VirtualMachine();
             }
 
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
-                VirtualMachine virtualMachine)
+                VirtualMachineBase virtualMachine)
             {
                 return new VirtualMachine();
             }
@@ -1037,13 +1037,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId,
-                int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachine virtualMachine)
+                int dataCenterRepositoryId, int virtualMachineTemplateId, VirtualMachineBase virtualMachine)
             {
                 throw new NotImplementedException();
             }
 
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
-                VirtualMachine virtualMachine)
+                VirtualMachineBase virtualMachine)
             {
                 throw new NotImplementedException();
             }
