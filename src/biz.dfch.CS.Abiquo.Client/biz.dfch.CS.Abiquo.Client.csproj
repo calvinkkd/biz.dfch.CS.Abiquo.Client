@@ -197,6 +197,7 @@
     <Compile Include="v1\LinkBuilder.cs" />
     <Compile Include="v1\Model\AbiquoBaseDto.cs" />
     <Compile Include="v1\Model\AbiquoBaseCollectionDto.cs" />
+    <Compile Include="v1\Model\AcceptedRequest.cs" />
     <Compile Include="v1\Model\DataCenterRepositories.cs" />
     <Compile Include="v1\Model\DataCenterRepository.cs" />
     <Compile Include="v1\Model\DhcpOption.cs" />
