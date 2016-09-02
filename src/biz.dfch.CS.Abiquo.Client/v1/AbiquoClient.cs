@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -42,8 +43,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             {
                 Formatting = Formatting.None
                 ,
+                // As the Abiquo deserializer does not ignore case sensitivity
+                // the C# properties, that start with a upper case letter have to be
+                // changed to start with a lowercase letter when serialized to JSON
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
                 ,
+                // Properties, that are not initialized will not be serialized
                 NullValueHandling = NullValueHandling.Ignore
                 ,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -221,6 +226,67 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine.SerializeObject());
         }
 
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachine virtualMachineConfiguration)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachine virtualMachineConfiguration, bool waitForCompletion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachineState state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachineState state, bool waitForCompletion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+        {
+            var filter = new Dictionary<string, string>();
+            if (force)
+            {
+                filter.Add("force", "true");
+            }
+
+            var uriSuffix = 
+                string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, 
+                virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            Invoke(HttpMethod.Delete, uriSuffix, filter);
+
+            return true;
+        }
+
+        public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion VirtualMachines
 
 
@@ -315,5 +381,15 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion DataCenterRepositories
+
+
+        #region Tasks
+
+        public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Tasks
     }
 }

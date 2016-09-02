@@ -24,7 +24,6 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-﻿using Newtonsoft.Json;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 
@@ -299,8 +298,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template
         /// </summary>
-        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
         /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
@@ -310,8 +309,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template
         /// </summary>
-        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
         /// <returns>VirtualMachine</returns>
         public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref);
@@ -319,8 +318,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template and custom configuration
         /// </summary>
-        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="enterpriseId">Id of the enterprise/tenant the template belongs to</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository the template belongs to</param>
         /// <param name="virtualMachineTemplateId">Id of the virtual machine template</param>
@@ -331,23 +330,102 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template and custom configuration
         /// </summary>
-        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance resides</param>
-        /// <param name="virtualApplianceId">Id of the virtual appliance to create the VirtualMachine in</param>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
         /// <param name="virtualMachine">Virtual machine configuration</param>
         /// <returns>VirtualMachine</returns>
         public abstract VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref, VirtualMachineBase virtualMachine);
 
-        // DFTODO - method description
-        // DFTODO - deploy a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-DeployaVirtualMachine)
-        // DFTODO - method description
-        // DFTODO - modify a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ModifyaVirtualMachine)
-        // DFTODO - method description
-        // DFTODO - change the state of a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-ChangethestateofaVirtualMachine)
-        // DFTODO - method description
-        // DFTODO - retrieve a Task (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveaTask)
-        // DFTODO - method description
-        // DFTODO - retrieve all tasks for a VirtualMachine (http://wiki.abiquo.com/display/ABI38/VirtualMachineResource#VirtualMachineResource-RetrieveallTasksforthisVirtualMachine)
+        /// <summary>
+        /// Initiates deplyoment of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine gets deployed in</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <returns>Task containing information about the status of the deployment</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Deplyoment of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine gets deployed in</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <returns>Task containing information about the status of the deployment</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion);
+        
+        /// <summary>
+        /// Initiates update of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="virtualMachineConfiguration">Virtual machine configuration</param>
+        /// <returns>Task containing information about the status of the update</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachine virtualMachineConfiguration);
+
+        /// <summary>
+        /// Update a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="virtualMachineConfiguration">Virtual machine configuration</param>
+        /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <returns>Task containing information about the status of the update</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachine virtualMachineConfiguration, bool waitForCompletion);
+
+        /// <summary>
+        /// Initiates state change of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="state">Target state</param>
+        /// <returns>Task containing information about the status of the state change</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachineState state);
+        
+        /// <summary>
+        /// Changes state of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="state">Target state</param>
+        /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <returns>Task containing information about the status of the state change</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachineState state, bool waitForCompletion);
+
+        /// <summary>
+        /// Delete a virtual machine by Id
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="force">Indicates if deletion has to be forced</param>
+        /// <returns>True, if the virtual machine was deleted successfully</returns>
+        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false);
+
+        /// <summary>
+        /// Retrieve tasks of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual mahcine</param>
+        /// <returns>Collection of Tasks</returns>
+        public abstract Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Retrieve a task by Id of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual mahcine</param>
+        /// <param name="taskId">Id of the task</param>
+        /// <returns>Task</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId);
 
         #endregion VirtualMachines
 
@@ -443,5 +521,19 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract DataCenterRepository GetDataCenterRepository(int enterpriseId, int id);
 
         #endregion DataCenterRepositories
+
+
+        #region Tasks
+
+        /// <summary>
+        /// Wait for a task to complete
+        /// </summary>
+        /// <param name="relativeTaskHref">Href suffix of the task</param>
+        /// <param name="basePollingWaitTimeMilliseconds">Polling wait time in milliseconds</param>
+        /// <param name="timeoutMilliseconds">timoeut in milliseconds</param>
+        /// <returns>Completed Task</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds);
+        
+        #endregion Tasks
     }
 }
