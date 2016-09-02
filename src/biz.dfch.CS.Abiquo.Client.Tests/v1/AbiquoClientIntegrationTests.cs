@@ -587,11 +587,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsNotNull(virtualMachine);
             Assert.IsTrue(0 < virtualMachine.Id);
-            Assert.AreEqual(virtualMachineTemplate.Name, virtualMachine.Name);
+            Assert.AreNotEqual(virtualMachineTemplate.Name, virtualMachine.Name);
             Assert.AreEqual(virtualMachineTemplate.CpuRequired, virtualMachine.Cpu);
             Assert.AreEqual(virtualMachineTemplate.CoresPerSocket, virtualMachine.CoresPerSocket);
             Assert.AreEqual(virtualMachineTemplate.RamRequired, virtualMachine.Ram);
-            Assert.AreEqual(virtualMachineTemplate.LoginPassword, virtualMachine.Password);
+            Assert.IsNotNull(virtualMachine.Password);
         }
         
         [TestMethod]
@@ -646,7 +646,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(virtualMachineConfiguration.Cpu, virtualMachine.Cpu);
             Assert.AreEqual(virtualMachineTemplate.CoresPerSocket, virtualMachine.CoresPerSocket);
             Assert.AreEqual(virtualMachineConfiguration.Ram, virtualMachine.Ram);
-            Assert.AreEqual(virtualMachineConfiguration.Password, virtualMachine.Password);
+            Assert.IsNotNull(virtualMachine.Password);
         }
 
         #endregion VirtualMachines
