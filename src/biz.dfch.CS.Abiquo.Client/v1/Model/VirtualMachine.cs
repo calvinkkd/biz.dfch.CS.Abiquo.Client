@@ -37,7 +37,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Description { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int HighDisponibility { get; set; }
 
         public int Id { get; set; }
