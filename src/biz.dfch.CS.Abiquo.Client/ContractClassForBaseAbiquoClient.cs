@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
@@ -193,6 +194,68 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(Task);
+        }
+
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(Task);
+        }
+
+        public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachine virtualMachineConfiguration)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+            Contract.Requires(null != virtualMachineConfiguration);
+            Contract.Requires(virtualMachineConfiguration.IsValid());
+
+            return default(Task);
+        }
+
+        public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachine virtualMachineConfiguration, bool waitForCompletion)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+            Contract.Requires(null != virtualMachineConfiguration);
+            Contract.Requires(virtualMachineConfiguration.IsValid());
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachineState state)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+            VirtualMachineState state, bool waitForCompletion)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(Task);
+        }
+
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -200,6 +263,26 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
 
             return default(bool);
+        }
+
+        public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+            Contract.Ensures(null != Contract.Result<Tasks>());
+
+            return default(Tasks);
+        }
+
+        public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+            Contract.Requires(!string.IsNullOrWhiteSpace(taskId));
+
+            return default(Task);
         }
 
         #endregion VirtualMachines
@@ -301,5 +384,19 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         #endregion DataCenterRepositories
+
+
+        #region Tasks
+
+        public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(relativeTaskHref));
+            Contract.Requires(0 < basePollingWaitTimeMilliseconds);
+            Contract.Requires(0 < timeoutMilliseconds);
+
+            return default(Task);
+        }
+
+        #endregion Tasks
     }
 }

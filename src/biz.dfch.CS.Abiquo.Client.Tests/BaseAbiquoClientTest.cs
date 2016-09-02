@@ -29,6 +29,7 @@ using Telerik.JustMock;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests
 {
@@ -44,6 +45,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         private readonly IAuthenticationInformation authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
         private static readonly string BEARER_TOKEN = "Bearer TESTTOKEN";
+
+        private VirtualMachine validVirtualMachine = new VirtualMachine()
+        {
+            Cpu = 2
+            ,
+            Ram = 512
+            ,
+            Name = "Arbitrary"
+        };
 
         [TestMethod]
         [ExpectContractFailure]
@@ -465,7 +475,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, 42, 42, 42, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, 42, 42, 42, validVirtualMachine);
 
             // Assert
         }
@@ -478,7 +488,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, INVALID_ID, 42, 42, 42, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, INVALID_ID, 42, 42, 42, validVirtualMachine);
 
             // Assert
         }
@@ -491,7 +501,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, INVALID_ID, 42, 42, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, INVALID_ID, 42, 42, validVirtualMachine);
 
             // Assert
         }
@@ -504,7 +514,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, 42, INVALID_ID, 42, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, 42, INVALID_ID, 42, validVirtualMachine);
 
             // Assert
         }
@@ -517,7 +527,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, 42, 42, INVALID_ID, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, 42, 42, INVALID_ID, validVirtualMachine);
 
             // Assert
         }
@@ -543,7 +553,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, VIRTUALMACHINETEMPLATE_HREF, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(INVALID_ID, 42, VIRTUALMACHINETEMPLATE_HREF, validVirtualMachine);
 
             // Assert
         }
@@ -556,7 +566,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, INVALID_ID, VIRTUALMACHINETEMPLATE_HREF, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, INVALID_ID, VIRTUALMACHINETEMPLATE_HREF, validVirtualMachine);
 
             // Assert
         }
@@ -569,7 +579,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, null, new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, null, validVirtualMachine);
 
             // Assert
         }
@@ -582,7 +592,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.CreateVirtualMachine(42, 42, " ", new VirtualMachine());
+            abiquoClient.CreateVirtualMachine(42, 42, " ", validVirtualMachine);
 
             // Assert
         }
@@ -609,6 +619,266 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             abiquoClient.CreateVirtualMachine(42, 42, "Arbitrary", null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeployVirtualMachine(INVALID_ID, 42, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeployVirtualMachine(42, INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeployVirtualMachine(42, 42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeployVirtualMachine(INVALID_ID, 42, 42, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeployVirtualMachine(42, INVALID_ID, 42, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeployVirtualMachine(42, 42, INVALID_ID, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(INVALID_ID, 42, 42, validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(42, INVALID_ID, 42, validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(42, 42, INVALID_ID, validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualMachineConfigurationThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(42, 42, 42, new VirtualMachine());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(INVALID_ID, 42, 42, validVirtualMachine, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(42, INVALID_ID, 42, validVirtualMachine, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(42, 42, INVALID_ID, validVirtualMachine, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithInvalidVirtualMachineConfiguration2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.UpdateVirtualMachine(42, 42, 42, new VirtualMachine(), true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, VirtualMachineState.OFF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, VirtualMachineState.OFF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, VirtualMachineState.OFF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, VirtualMachineState.OFF, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, VirtualMachineState.OFF, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, VirtualMachineState.OFF, true);
 
             // Assert
         }
@@ -648,6 +918,110 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             abiquoClient.DeleteVirtualMachine(42, 42, 0);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetAllTasksOfVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetAllTasksOfVirtualMachine(INVALID_ID, 42, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetAllTasksOfVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetAllTasksOfVirtualMachine(42, INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetAllTasksOfVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetAllTasksOfVirtualMachine(42, 42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTaskOfVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetTaskOfVirtualMachine(INVALID_ID, 42, 42, Guid.NewGuid().ToString());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTaskOfVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetTaskOfVirtualMachine(42, INVALID_ID, 42, Guid.NewGuid().ToString());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTaskOfVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetTaskOfVirtualMachine(42, 42, INVALID_ID, Guid.NewGuid().ToString());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTaskOfVirtualMachineWithNullTaskIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetTaskOfVirtualMachine(42, 42, 42, "");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTaskOfVirtualMachineWithEmptyTaskIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.GetTaskOfVirtualMachine(42, 42, 42, "");
 
             // Assert
         }
@@ -844,6 +1218,62 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #endregion DataCenterRepositories
 
 
+        #region Tasks
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void WaitForTaskCompletionWithNullTaskIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.WaitForTaskCompletion(null, 1, 1);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void WaitForTaskCompletionWithEmptyTaskIdThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.WaitForTaskCompletion("", 1, 1);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void WaitForTaskCompletionWithInvalidBasePollingWaitTimeThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.WaitForTaskCompletion(Guid.NewGuid().ToString(), INVALID_ID, 1);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void WaitForTaskCompletionWithInvalidTimeoutThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.WaitForTaskCompletion(Guid.NewGuid().ToString(), 1, INVALID_ID);
+
+            // Assert
+        }
+
+        #endregion Tasks
+
         private class DummyAbiquoClient : BaseAbiquoClient
         {
             public DummyAbiquoClient()
@@ -944,9 +1374,53 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                return new Task();
+            }
+
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
+            public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachine virtualMachineConfiguration)
+            {
+                return new Task();
+            }
+
+            public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachine virtualMachineConfiguration, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachineState state)
+            {
+                return new Task();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachineState state, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
             public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
             {
                 return true;
+            }
+
+            public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                return new Tasks();
+            }
+
+            public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
+            {
+                return new Task();
             }
 
             public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
@@ -997,6 +1471,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
             {
                 return new DataCenterRepository();
+            }
+
+            public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+            {
+                return new Task();
             }
         }
 
@@ -1092,7 +1571,51 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachine virtualMachineConfiguration)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachine virtualMachineConfiguration, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachineState state)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
+                VirtualMachineState state, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
             {
                 throw new NotImplementedException();
             }
@@ -1143,6 +1666,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int tsimeoutMilliseconds)
             {
                 throw new NotImplementedException();
             }
