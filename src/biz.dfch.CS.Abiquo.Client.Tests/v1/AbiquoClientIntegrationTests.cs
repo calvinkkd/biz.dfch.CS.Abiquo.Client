@@ -575,7 +575,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
-            var virtualMachineTemplate = virtualMachineTemplates.Collection.FirstOrDefault();
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
             Contract.Assert(null != virtualMachineTemplate);
 
             // Act
@@ -619,7 +619,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
-            var virtualMachineTemplate = virtualMachineTemplates.Collection.FirstOrDefault();
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
             Contract.Assert(null != virtualMachineTemplate);
 
             var virtualMachineConfiguration = new VirtualMachine()
