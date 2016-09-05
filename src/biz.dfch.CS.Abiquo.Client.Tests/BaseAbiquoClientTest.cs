@@ -961,6 +961,45 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void DeleteVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeleteVirtualMachine(0, 42, 42, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeleteVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeleteVirtualMachine(42, 0, 42, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeleteVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        {
+            // Arrange
+            var abiquoClient = new DummyAbiquoClient();
+
+            // Act
+            abiquoClient.DeleteVirtualMachine(42, 42, 0, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetAllTasksOfVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
@@ -1447,7 +1486,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
-            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                return true;
+            }
+
+            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
             {
                 return true;
             }
@@ -1649,7 +1693,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
             {
                 throw new NotImplementedException();
             }

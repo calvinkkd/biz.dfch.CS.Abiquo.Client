@@ -449,9 +449,18 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <returns>True, if the virtual machine was deleted successfully</returns>
+        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Delete a virtual machine by Id
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <param name="force">Indicates if deletion has to be forced</param>
         /// <returns>True, if the virtual machine was deleted successfully</returns>
-        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false);
+        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
         /// Retrieve tasks of a specific virtual machine

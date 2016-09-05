@@ -301,9 +301,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             VirtualMachineState state, bool waitForCompletion)
         {
             throw new NotImplementedException();
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            return DeleteVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false);
         }
 
-        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
             Dictionary<string, object> filter = null;
             if (force)
