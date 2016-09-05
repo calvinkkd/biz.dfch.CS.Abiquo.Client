@@ -530,11 +530,11 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Wait for a task to complete
         /// </summary>
-        /// <param name="relativeTaskHref">Href suffix of the task</param>
+        /// <param name="task">Task object</param>
         /// <param name="basePollingWaitTimeMilliseconds">Polling wait time in milliseconds</param>
         /// <param name="timeoutMilliseconds">timoeut in milliseconds</param>
         /// <returns>Completed Task</returns>
-        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds);
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds);
         
         #endregion Tasks
     }

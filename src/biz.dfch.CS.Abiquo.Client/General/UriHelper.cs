@@ -53,18 +53,26 @@ namespace biz.dfch.CS.Abiquo.Client.General
             return filterString;
         }
 
-        public static int ExtractIdFromHref(string href)
+        public static int ExtractIdAsInt(string uri)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(href));
+            Contract.Requires(!string.IsNullOrWhiteSpace(uri));
+
+            var idAsString = ExtractLastSegmentAsString(uri);
+            int idAsInt;
+            Contract.Assert(Int32.TryParse(idAsString, out idAsInt), "Last segment of URI is not an integer");
+
+            return idAsInt;
+        }
+
+        public static string ExtractLastSegmentAsString(string uri)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(uri));
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
             Uri resultingUri;
-            Contract.Assert(Uri.TryCreate(href, UriKind.Absolute, out resultingUri), "href is not a valid URI");
+            Contract.Assert(Uri.TryCreate(uri, UriKind.Absolute, out resultingUri), "Invalid absolute URI");
 
-            var lastSegment = resultingUri.Segments.Last();
-            int id;
-            Contract.Assert(Int32.TryParse(lastSegment, out id), "Last segment of href is not an int");
-
-            return id;
+            return resultingUri.Segments.Last();
         }
     }
 }

@@ -571,7 +571,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != dataCenterRepository);
 
             var editLink = dataCenterRepository.GetLinkByRel("edit");
-            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
@@ -619,7 +619,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != dataCenterRepository);
 
             var editLink = dataCenterRepository.GetLinkByRel("edit");
-            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
@@ -763,7 +763,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != dataCenterRepository);
 
             var editLink = dataCenterRepository.GetLinkByRel("edit");
-            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             // Act
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
@@ -798,7 +798,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != dataCenterRepository);
 
             var editLink = dataCenterRepository.GetLinkByRel("edit");
-            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
@@ -1038,7 +1038,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != expectedDataCenterRepository);
 
             var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
-            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             // Act
             var dataCenterRepository = abiquoClient.GetDataCenterRepositoryOfCurrentEnterprise(dataCenterRepositoryId);
@@ -1072,7 +1072,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != expectedDataCenterRepository);
 
             var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
-            var dataCenterRepositoryId = UriHelper.ExtractIdFromHref(editLink.Href);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             // Act
             var dataCenterRepository = abiquoClient.GetDataCenterRepository(IntegrationTestEnvironment.TenantId, dataCenterRepositoryId);

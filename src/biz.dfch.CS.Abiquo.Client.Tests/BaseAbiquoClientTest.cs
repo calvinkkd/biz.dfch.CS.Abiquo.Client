@@ -55,6 +55,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Name = "Arbitrary"
         };
 
+        private Task validTask = new Task()
+        {
+            OwnerId = "ArbitraryOwnerId"
+            ,
+            State = TaskState.FINISHED_SUCCESSFULLY
+            ,
+            TaskId = Guid.NewGuid().ToString()
+            ,
+            Timestamp = 1
+            ,
+            Type = TaskType.DEPLOY
+        };
+
         [TestMethod]
         [ExpectContractFailure]
         public void InvalidBaseAbqiuoClientThatDoesNotSetVersionPropertyThrowsContractExceptionOnInstantiation()
@@ -1222,7 +1235,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void WaitForTaskCompletionWithNullTaskIdThrowsContractException()
+        public void WaitForTaskCompletionWithNullTaskThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
@@ -1235,13 +1248,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void WaitForTaskCompletionWithEmptyTaskIdThrowsContractException()
+        public void WaitForTaskCompletionWithInvalidTaskThrowsContractException()
         {
             // Arrange
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.WaitForTaskCompletion("", 1, 1);
+            abiquoClient.WaitForTaskCompletion(new Task(), 1, 1);
 
             // Assert
         }
@@ -1254,7 +1267,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.WaitForTaskCompletion(Guid.NewGuid().ToString(), INVALID_ID, 1);
+            abiquoClient.WaitForTaskCompletion(validTask, INVALID_ID, 1);
 
             // Assert
         }
@@ -1267,7 +1280,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.WaitForTaskCompletion(Guid.NewGuid().ToString(), 1, INVALID_ID);
+            abiquoClient.WaitForTaskCompletion(validTask, 1, INVALID_ID);
 
             // Assert
         }
@@ -1473,7 +1486,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new DataCenterRepository();
             }
 
-            public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+            public override Task WaitForTaskCompletion(Task task, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
             {
                 return new Task();
             }
@@ -1670,7 +1683,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int tsimeoutMilliseconds)
+            public override Task WaitForTaskCompletion(Task task, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
             {
                 throw new NotImplementedException();
             }

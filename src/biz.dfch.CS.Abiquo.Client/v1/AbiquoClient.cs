@@ -373,7 +373,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region Tasks
 
-        public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+        public override Task WaitForTaskCompletion(Task task, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
         {
             throw new NotImplementedException();
 

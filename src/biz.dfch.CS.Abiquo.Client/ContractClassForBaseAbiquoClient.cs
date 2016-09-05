@@ -388,9 +388,10 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Tasks
 
-        public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+        public override Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(relativeTaskHref));
+            Contract.Requires(null != task);
+            Contract.Requires(task.IsValid());
             Contract.Requires(0 < basePollingWaitTimeMilliseconds);
             Contract.Requires(0 < timeoutMilliseconds);
 
