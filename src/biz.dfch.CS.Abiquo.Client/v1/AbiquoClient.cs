@@ -38,6 +38,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         internal AbiquoClient()
         {
             AbiquoApiVersion = ABIQUO_API_VERSION;
+
+            TaskPollingWaitTimeMilliseconds = DEFAULT_TASK_POLLING_WAIT_TIME_MILLISECONDS;
+            TaskPollingTimeoutMilliseconds = DEFAULT_TASK_POLLING_TIMEOUT_MILLISECONDS;
         }
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
@@ -235,7 +238,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             if (waitForCompletion)
             {
-                
+                WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
             }
 
             return task;
@@ -396,7 +399,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region Tasks
 
-        public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskTimeoutMilliseconds)
+        public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
         {
             throw new NotImplementedException();
 

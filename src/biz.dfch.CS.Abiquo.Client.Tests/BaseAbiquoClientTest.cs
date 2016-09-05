@@ -1486,7 +1486,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new DataCenterRepository();
             }
 
-            public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskTimeoutMilliseconds)
+            public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
             {
                 return new Task();
             }
@@ -1683,7 +1683,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskTimeoutMilliseconds)
+            public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
             {
                 throw new NotImplementedException();
             }

@@ -33,6 +33,22 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
     public abstract class BaseAbiquoClient
     {
+        #region Awaiting Constants
+        /// <summary>
+        /// Default task polling wait time
+        /// </summary>
+        protected const int DEFAULT_TASK_POLLING_WAIT_TIME_MILLISECONDS = 5 * 1000;
+
+        /// <summary>
+        /// Default timoeut for task polling
+        /// </summary>
+        protected const int DEFAULT_TASK_POLLING_TIMEOUT_MILLISECONDS = 30 * 1000;
+
+        #endregion Awaiting Constants
+
+
+        #region Properties
+
         /// <summary>
         /// The Abiquo Api version the client is implemented for.
         /// Has to be set in the constructor of the derived class
@@ -55,11 +71,25 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         public IAuthenticationInformation AuthenticationInformation { get; protected set; }
 
+        /// <summary>
+        /// Polling wait time for task handling
+        /// </summary>
+        public int TaskPollingWaitTimeMilliseconds { get; set; }
+        
+        /// <summary>
+        /// Timeout for task polling
+        /// </summary>
+        public int TaskPollingTimeoutMilliseconds { get; set; }
+        
+        #endregion Properties
+
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
             Contract.Invariant(!string.IsNullOrWhiteSpace(AbiquoApiVersion));
+            Contract.Invariant(0 < TaskPollingWaitTimeMilliseconds);
+            Contract.Invariant(0 < TaskPollingTimeoutMilliseconds);
         }
 
 
@@ -536,9 +566,9 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="task">Task object</param>
         /// <param name="taskPollingWaitTimeMilliseconds">Polling wait time in milliseconds</param>
-        /// <param name="taskTimeoutMilliseconds">timeout in milliseconds</param>
+        /// <param name="taskPollingTimeoutMilliseconds">timeout in milliseconds</param>
         /// <returns>Completed Task</returns>
-        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int taskPollingWaitTimeMilliseconds, int taskTimeoutMilliseconds);
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds);
         
         #endregion Tasks
     }
