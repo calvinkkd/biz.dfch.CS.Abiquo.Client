@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
+using System.Threading;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -404,57 +405,42 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Debug.WriteLine(
                 string.Format(
                     "START waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
-                    task.TaskId, taskPollingTimeoutMilliseconds, TaskPollingTimeoutMilliseconds));
+                    task.TaskId, taskPollingWaitTimeMilliseconds, taskPollingTimeoutMilliseconds));
 
-            var completedTask = new Task();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
+            var taskSelfLink = task.GetLinkByRel(AbiquoRelations.SELF);
+            var uriSuffix = taskSelfLink.Href.Trim(AbiquoApiBaseUri.ToCharArray());
 
-            /*
-            
-                        #region Contract
-            Contract.Requires(this.IsLoggedIn, "Not logged in, call method login first");
-            Contract.Requires(!string.IsNullOrEmpty(id), "No job id defined");
-            Contract.Requires(totalAttempts > 0, "TotalAttempts must be greater than 0");
-            Contract.Requires(baseWaitingMilliseconds > 0, "BaseWaitingMilliseconds must be greater than 0");
-            Contract.Requires(basePollingWaitingMilliseconds > 0, "BasePollingWaitingMilliseconds must be greater than 0");
-            Contract.Requires(timeOut > 0, "TimeOut must be greater than 0");
-            #endregion Contract
+            var timeLimit = DateTime.Now.AddMilliseconds(taskPollingTimeoutMilliseconds);
+            var currentTaskPollingWaitTime = taskPollingWaitTimeMilliseconds;
 
-            Trace.WriteLine(string.Format("v2.CimiClient.WaitForJobCompletion({0}, {1}, {2}, {3}, {4})", id, totalAttempts, baseWaitingMilliseconds, basePollingWaitingMilliseconds, timeOut));
-
-            DateTime timeLimit = DateTime.Now.AddMilliseconds(timeOut);
-            int currentPollingWaitingTime = basePollingWaitingMilliseconds;
             while (DateTime.Now < timeLimit)
             {
-                Model.PostModel.Job job = this.GetJob(id, totalAttempts, baseWaitingMilliseconds);
-                switch (job.State)
+                var taskToWaitFor = Invoke<Task>(uriSuffix, headers);
+                switch (taskToWaitFor.State)
                 {
-                    case Job.StateEnum.FAILED:
-                    case Job.StateEnum.STOPPED:
-                    case Job.StateEnum.SUCCESS:
-                        return job.State;
+                    case TaskState.FINISHED_SUCCESSFULLY:
+                    case TaskState.FINISHED_UNSUCCESSFULLY:
+                    case TaskState.ABORTED:
+                        Trace.WriteLine(string.Format(
+                            "END waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+                            task.TaskId,
+                            taskPollingWaitTimeMilliseconds, 
+                            taskPollingTimeoutMilliseconds));
+
+                        return taskToWaitFor;
                 }
-                Thread.Sleep(currentPollingWaitingTime);
-                currentPollingWaitingTime = System.Convert.ToInt32(Math.Floor(currentPollingWaitingTime * 1.5));
+
+                Thread.Sleep(currentTaskPollingWaitTime);
+                currentTaskPollingWaitTime = System.Convert.ToInt32(Math.Floor(currentTaskPollingWaitTime*1.5));
             }
-            Model.PostModel.Job jobAtEndOfTimeout = this.GetJob(id, totalAttempts, baseWaitingMilliseconds);
-            switch (jobAtEndOfTimeout.State)
-            {
-                case Job.StateEnum.FAILED:
-                case Job.StateEnum.STOPPED:
-                case Job.StateEnum.SUCCESS:
-                    return jobAtEndOfTimeout.State;
-            }
-            
-            throw new TimeoutException(string.Format("Timeout exceeded while waiting for Job with ID '{0}'", id));
 
-            */
+            Trace.WriteLine(string.Format(
+                            "END waiting for task [{0}] completion FAILED (Timeout ['{1}'] exceeded)",
+                            task.TaskId,
+                            taskPollingTimeoutMilliseconds));
 
-            Trace.WriteLine(
-                string.Format(
-                    "END waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
-                    task.TaskId, taskPollingTimeoutMilliseconds, TaskPollingTimeoutMilliseconds));
-
-            return completedTask;
+            throw new TimeoutException(string.Format("Timeout exceeded while waiting for task with Id '{0}'", task.TaskId));
         }
 
         #endregion Tasks
