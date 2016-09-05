@@ -229,7 +229,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
                     virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
-            var deploymentResult = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers);
+            var deploymentResult = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers, "");
             Contract.Assert(null != deploymentResult);
 
             var link = deploymentResult.GetLinkByRel(AbiquoRelations.STATUS);
