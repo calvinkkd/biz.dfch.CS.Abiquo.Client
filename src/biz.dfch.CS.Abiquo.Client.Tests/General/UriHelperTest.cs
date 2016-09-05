@@ -189,7 +189,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             var id = UriHelper.ExtractIdAsInt("https://example/api/users/155");
 
             // Assert
-            Assert.IsTrue(155 == id);
+            Assert.AreEqual(155, id);
         }
 
         [TestMethod]
@@ -217,7 +217,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
         }
 
         [TestMethod]
-        public void ExtractLastSegmentAsStringWithValidUriSucceeds()
+        public void ExtractLastSegmentAsStringWithValidUriStringSucceeds()
         {
             // Arrange
 
@@ -225,7 +225,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             var lastSegment = UriHelper.ExtractLastSegmentAsString("https://example/api/users/fe5ddc9e-7745-4a4a-99d6-d7598682f8fd");
 
             // Assert
-            Assert.IsTrue("fe5ddc9e-7745-4a4a-99d6-d7598682f8fd" == lastSegment);
+            Assert.AreEqual("fe5ddc9e-7745-4a4a-99d6-d7598682f8fd", lastSegment);
         }
     }
 }
