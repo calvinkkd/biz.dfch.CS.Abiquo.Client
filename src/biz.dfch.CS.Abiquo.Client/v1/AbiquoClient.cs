@@ -37,24 +37,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
     {
         public const string ABIQUO_API_VERSION = "3.8";
 
-        static AbiquoClient()
-        {
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                Formatting = Formatting.None
-                ,
-                // As the Abiquo deserializer does not ignore case sensitivity
-                // the C# properties, that start with a upper case letter have to be
-                // changed to start with a lowercase letter when serialized to JSON
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-                ,
-                // Properties, that are not initialized will not be serialized
-                NullValueHandling = NullValueHandling.Ignore
-                ,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            };
-        }
-
         internal AbiquoClient()
         {
             AbiquoApiVersion = ABIQUO_API_VERSION;
@@ -226,12 +208,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine.SerializeObject());
         }
 
-        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
-            throw new NotImplementedException();
+            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false, false);
         }
 
-        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
         {
             throw new NotImplementedException();
         }
@@ -239,7 +221,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachine virtualMachine)
         {
-            throw new NotImplementedException();
+            return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine, false);
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
@@ -251,7 +233,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachineState state)
         {
-            throw new NotImplementedException();
+            return ChangeStateOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, state, false);
         }
 
         public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
@@ -262,7 +244,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
         {
-            var filter = new Dictionary<string, string>();
+            var filter = new Dictionary<string, object>();
             if (force)
             {
                 filter.Add("force", "true");
@@ -272,19 +254,25 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, 
                 virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
-            Invoke(HttpMethod.Delete, uriSuffix, filter);
+            Invoke(HttpMethod.Delete, uriSuffix, filter, null);
 
             return true;
         }
 
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
-            throw new NotImplementedException();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASKS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETASKS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID, virtualDataCenterId, virtualApplianceId, virtualMachineId);
+            return Invoke<Tasks>(uriSuffix, headers);
         }
 
         public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
         {
-            throw new NotImplementedException();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETASK_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_TASK_ID, virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
+            return Invoke<Task>(uriSuffix, headers);
         }
 
         #endregion VirtualMachines

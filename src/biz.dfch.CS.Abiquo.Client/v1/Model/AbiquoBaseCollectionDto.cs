@@ -27,7 +27,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     /// <summary>
     /// Base DTO for abiquo collections
     /// </summary>
-    /// <typeparam name="T">Type of collection entries</typeparam>
+    /// <typeparam name="T">Type of collection elements</typeparam>
     public abstract class AbiquoBaseCollectionDto<T> : BaseDto
         where T : BaseDto
     {

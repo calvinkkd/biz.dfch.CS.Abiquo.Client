@@ -29,7 +29,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class Task : AbiquoBaseDto
     {
-        public List<Jobs> Jobs { get; set; }
+        public Jobs Jobs { get; set; }
 
         [Required]
         public string OwnerId { get; set; }

@@ -44,5 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         SNAPSHOT
         ,
         REFRESH
+        ,
+        SCHEDULE
     }
 }
