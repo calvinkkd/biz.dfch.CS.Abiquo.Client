@@ -70,12 +70,36 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void InvalidBaseAbqiuoClientThatDoesNotSetVersionPropertyThrowsContractExceptionOnInstantiation()
+        public void InvalidAbqiuoClientThatDoesNotSetVersionPropertyThrowsContractExceptionOnInstantiation()
         {
             // Arrange
 
             // Act
-            new InvalidAbiquoClient();
+            new InvalidAbiquoClient(null, 42, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void InvalidAbqiuoClientThatDoesNotSetValidTaskPollingWaitTimeMillisecondsPropertyThrowsContractExceptionOnInstantiation()
+        {
+            // Arrange
+
+            // Act
+            new InvalidAbiquoClient("v1", 0, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void InvalidAbqiuoClientThatDoesNotSetValidTaskPollingTimeoutMillisecondsPropertyThrowsContractExceptionOnInstantiation()
+        {
+            // Arrange
+
+            // Act
+            new InvalidAbiquoClient("v1", 42, 0);
 
             // Assert
         }
@@ -1494,7 +1518,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         private class InvalidAbiquoClient : BaseAbiquoClient
         {
-            // AbiquoApiVersion intentionally not set in constructor for testing purposes
+            public InvalidAbiquoClient(string abiquoApiVersion, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
+            {
+                AbiquoApiVersion = abiquoApiVersion;
+                TaskPollingWaitTimeMilliseconds = taskPollingWaitTimeMilliseconds;
+                TaskPollingTimeoutMilliseconds = taskPollingTimeoutMilliseconds;
+            }
 
             public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
             {
