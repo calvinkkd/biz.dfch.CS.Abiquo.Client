@@ -1316,6 +1316,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public DummyAbiquoClient()
             {
                 AbiquoApiVersion = "Arbitrary-Version";
+                TaskPollingWaitTimeMilliseconds = 10 * 1000;
+                TaskPollingTimeoutMilliseconds = 10 * 1000;
             }
 
             public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
