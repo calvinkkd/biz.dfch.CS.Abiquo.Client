@@ -226,12 +226,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine.SerializeObject());
         }
 
-        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
-            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false);
+            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false, false);
         }
 
-        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
         {
             throw new NotImplementedException();
         }

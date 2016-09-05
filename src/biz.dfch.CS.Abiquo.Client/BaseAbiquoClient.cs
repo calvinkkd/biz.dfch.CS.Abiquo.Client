@@ -343,8 +343,9 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine gets deployed in</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="force">If true, soft limits of virtual datacenters could be surpassed</param>
         /// <returns>Task containing information about the status of the deployment</returns>
-        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
         /// Deplyoment of a specific virtual machine
@@ -353,8 +354,9 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine gets deployed in</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <param name="force">If true, soft limits of virtual datacenters could be surpassed</param>
         /// <returns>Task containing information about the status of the deployment</returns>
-        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion);
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion);
         
         /// <summary>
         /// Initiates update of a specific virtual machine

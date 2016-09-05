@@ -631,7 +631,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.DeployVirtualMachine(INVALID_ID, 42, 42);
+            abiquoClient.DeployVirtualMachine(INVALID_ID, 42, 42, false);
 
             // Assert
         }
@@ -644,7 +644,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.DeployVirtualMachine(42, INVALID_ID, 42);
+            abiquoClient.DeployVirtualMachine(42, INVALID_ID, 42, false);
 
             // Assert
         }
@@ -657,7 +657,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.DeployVirtualMachine(42, 42, INVALID_ID);
+            abiquoClient.DeployVirtualMachine(42, 42, INVALID_ID, false);
 
             // Assert
         }
@@ -670,7 +670,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.DeployVirtualMachine(INVALID_ID, 42, 42, false);
+            abiquoClient.DeployVirtualMachine(INVALID_ID, 42, 42, false, false);
 
             // Assert
         }
@@ -683,7 +683,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.DeployVirtualMachine(42, INVALID_ID, 42, false);
+            abiquoClient.DeployVirtualMachine(42, INVALID_ID, 42, false, false);
 
             // Assert
         }
@@ -696,7 +696,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.DeployVirtualMachine(42, 42, INVALID_ID, false);
+            abiquoClient.DeployVirtualMachine(42, 42, INVALID_ID, false, false);
 
             // Assert
         }
@@ -1374,12 +1374,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
-            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
             {
                 return new Task();
             }
 
-            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
             {
                 return new Task();
             }
@@ -1571,12 +1571,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
             {
                 throw new NotImplementedException();
             }
 
-            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+            public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
             {
                 throw new NotImplementedException();
             }

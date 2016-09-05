@@ -194,7 +194,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
-        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
@@ -203,7 +203,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Task);
         }
 
-        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool waitForCompletion)
+        public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
