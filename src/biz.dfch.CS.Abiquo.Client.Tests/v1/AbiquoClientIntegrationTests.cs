@@ -786,7 +786,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var deployTask = abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), false, true);
+                virtualMachine.Id.GetValueOrDefault(), false, false);
 
             var completedTask = abiquoClient.WaitForTaskCompletion(deployTask,
                 abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
@@ -796,7 +796,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
             Assert.IsTrue(0 < deployTask.Timestamp);
-            Assert.AreEqual(TaskState.PENDING, deployTask.State);
+            Assert.AreEqual(TaskState.STARTED, deployTask.State);
             Assert.AreEqual(TaskType.DEPLOY, deployTask.Type);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
