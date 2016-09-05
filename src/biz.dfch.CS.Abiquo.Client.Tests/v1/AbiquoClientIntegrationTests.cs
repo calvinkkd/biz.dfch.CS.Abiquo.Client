@@ -658,6 +658,46 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
+        public void DeleteVirtualMachineDeletesAbiquoVirtualMachine()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
+            Contract.Assert(null != virtualMachineTemplate);
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+            
+            // Act
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsTrue(deletionResult);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void GetAllTasksOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
         {
             // Arrange
@@ -1094,5 +1134,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         #endregion DataCenterRepositories
+
+
+        #region Tasks
+
+        
+
+        #endregion Tasks
     }
 }
