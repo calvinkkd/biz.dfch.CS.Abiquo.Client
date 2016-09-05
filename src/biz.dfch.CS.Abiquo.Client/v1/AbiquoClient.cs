@@ -207,7 +207,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID,
                     virtualDataCenterId, virtualApplianceId);
 
-            return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine.SerializeObject());
+            return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine);
         }
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
@@ -275,7 +275,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
                     virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
-            var updateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, filter, headers, virtualMachine.SerializeObject());
+            var updateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, filter, headers, virtualMachine);
             Contract.Assert(null != updateTask);
 
             var link = updateTask.GetLinkByRel(AbiquoRelations.STATUS);
