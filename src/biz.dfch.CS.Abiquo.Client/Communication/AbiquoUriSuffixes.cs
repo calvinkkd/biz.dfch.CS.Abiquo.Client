@@ -50,7 +50,7 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}";
         public const string DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/action/deploy";
         public const string VIRTUALMACHINETASKS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/tasks";
-        public const string VIRTUALMACHINETASK_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_TASK_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}//tasks/{3}";
+        public const string VIRTUALMACHINETASK_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_TASK_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/tasks/{3}";
         #endregion VirtualMachines
 
 
