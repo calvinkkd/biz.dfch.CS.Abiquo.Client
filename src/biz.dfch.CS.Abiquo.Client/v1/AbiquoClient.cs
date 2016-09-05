@@ -27,8 +27,6 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
