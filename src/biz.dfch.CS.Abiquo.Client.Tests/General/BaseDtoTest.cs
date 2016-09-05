@@ -19,7 +19,6 @@ using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Utilities.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.General;
-using biz.dfch.CS.Abiquo.Client.v1;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {

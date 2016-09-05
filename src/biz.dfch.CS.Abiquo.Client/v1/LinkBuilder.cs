@@ -20,7 +20,6 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using biz.dfch.CS.Abiquo.Client.Communication;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
