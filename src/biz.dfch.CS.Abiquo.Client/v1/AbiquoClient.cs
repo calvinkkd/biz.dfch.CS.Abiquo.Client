@@ -403,7 +403,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             Debug.WriteLine(
                 string.Format(
-                    "START waiting for task completion (taskId: {0}; taskPollingWaitTimeMilliseconds: {1}, taskPollingTimeoutMilliseconds: {2}",
+                    "START waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
                     task.TaskId, taskPollingTimeoutMilliseconds, TaskPollingTimeoutMilliseconds));
 
             var completedTask = new Task();
@@ -451,7 +451,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             Trace.WriteLine(
                 string.Format(
-                    "END waiting for task completion SUCCEEDED (taskId: {0}; taskPollingWaitTimeMilliseconds: {1}, taskPollingTimeoutMilliseconds: {2}",
+                    "END waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
                     task.TaskId, taskPollingTimeoutMilliseconds, TaskPollingTimeoutMilliseconds));
 
             return completedTask;

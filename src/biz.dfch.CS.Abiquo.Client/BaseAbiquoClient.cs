@@ -103,7 +103,7 @@ namespace biz.dfch.CS.Abiquo.Client
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
 
-            Trace.WriteLine(string.Format("END {0}", Method.fn()));
+            Trace.WriteLine(string.Format("END {0} SUCCEEDED", Method.fn()));
         }
 
         #region ExecuteRequest
@@ -221,7 +221,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
             var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Debug.WriteLine(string.Format("END calling invoke method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
+            Debug.WriteLine(string.Format("END calling invoke method ({0}, {1}, {2} - {3} - {4}) SUCCEEDED", httpMethod, uriSuffix, filter, headers, body));
 
             return response;
         }
