@@ -56,7 +56,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int Tag { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public NetworkType Type { get; set; }
+        public NetworkTypeEnum Type { get; set; }
         
         public bool Unmanaged { get; set; }
         

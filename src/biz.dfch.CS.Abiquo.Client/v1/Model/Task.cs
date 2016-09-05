@@ -35,7 +35,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public TaskState State { get; set; }
+        public TaskStateEnum State { get; set; }
 
         [Required]
         public string TaskId { get; set; }
@@ -46,7 +46,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public TaskType Type { get; set; }
+        public TaskTypeEnum Type { get; set; }
         
         public string UserId { get; set; }
     }

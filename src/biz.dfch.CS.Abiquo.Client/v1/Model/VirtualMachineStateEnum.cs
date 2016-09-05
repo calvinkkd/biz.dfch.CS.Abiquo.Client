@@ -23,13 +23,19 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum VirtualApplianceState
+    public enum VirtualMachineStateEnum
     {
-        DEPLOYED
+        NOT_ALLOCATED
         ,
-        NOT_DEPLOYED
+        ALLOCATED
         ,
-        NEEDS_SYNC
+        CONFIGURED
+        ,
+        ON
+        ,
+        PAUSED
+        ,
+        OFF
         ,
         LOCKED
         ,

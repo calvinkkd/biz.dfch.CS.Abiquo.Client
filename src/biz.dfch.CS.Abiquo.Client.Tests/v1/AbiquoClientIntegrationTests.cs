@@ -40,6 +40,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         private const string SAMPLE_VIRTUAL_MACHINE_PASSWORD = "SamplePw";
         private const string SAMPLE_VIRTUAL_MACHINE_NAME = "Abiquo Client TestVM";
 
+        private VirtualMachineState virtualMachineOffState = new VirtualMachineState()
+        {
+            State = VirtualMachineStateEnum.OFF
+        };
+
         #region Login
 
         [TestMethod]
@@ -695,8 +700,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             
             Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
             Assert.IsTrue(0 < deployTask.Timestamp);
-            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, deployTask.State);
-            Assert.AreEqual(TaskType.DEPLOY, deployTask.Type);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, deployTask.State);
+            Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
             
             // Cleanup
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
@@ -744,8 +749,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
             Assert.IsTrue(0 < deployTask.Timestamp);
-            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, deployTask.State);
-            Assert.AreEqual(TaskType.DEPLOY, deployTask.Type);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, deployTask.State);
+            Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
 
             // Cleanup
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
@@ -796,14 +801,14 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
             Assert.IsTrue(0 < deployTask.Timestamp);
-            Assert.AreEqual(TaskState.STARTED, deployTask.State);
-            Assert.AreEqual(TaskType.DEPLOY, deployTask.Type);
+            Assert.AreEqual(TaskStateEnum.STARTED, deployTask.State);
+            Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
             Assert.AreEqual(deployTask.TaskId, completedTask.TaskId);
             Assert.IsTrue(0 < completedTask.Timestamp);
-            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, completedTask.State);
-            Assert.AreEqual(TaskType.DEPLOY, completedTask.Type);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, completedTask.State);
+            Assert.AreEqual(TaskTypeEnum.DEPLOY, completedTask.Type);
 
             // Cleanup
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
@@ -861,8 +866,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
             Assert.IsTrue(0 < updateTask.Timestamp);
-            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, updateTask.State);
-            Assert.AreEqual(TaskType.RECONFIGURE, updateTask.Type);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, updateTask.State);
+            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
 
             Assert.IsNotNull(updatedVirtualMachine);
             Assert.IsTrue(0 < updatedVirtualMachine.Id);
@@ -926,8 +931,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
             Assert.IsTrue(0 < updateTask.Timestamp);
-            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, updateTask.State);
-            Assert.AreEqual(TaskType.RECONFIGURE, updateTask.Type);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, updateTask.State);
+            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
 
             Assert.IsNotNull(updatedVirtualMachine);
             Assert.IsTrue(0 < updatedVirtualMachine.Id);
@@ -994,14 +999,14 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
             Assert.IsTrue(0 < updateTask.Timestamp);
-            Assert.AreEqual(TaskState.STARTED, updateTask.State);
-            Assert.AreEqual(TaskType.RECONFIGURE, updateTask.Type);
+            Assert.AreEqual(TaskStateEnum.STARTED, updateTask.State);
+            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
             Assert.AreEqual(updateTask.TaskId, completedTask.TaskId);
             Assert.IsTrue(0 < completedTask.Timestamp);
-            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, completedTask.State);
-            Assert.AreEqual(TaskType.DEPLOY, completedTask.Type);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, completedTask.State);
+            Assert.AreEqual(TaskTypeEnum.DEPLOY, completedTask.Type);
 
             Assert.IsNotNull(updatedVirtualMachine);
             Assert.IsTrue(0 < updatedVirtualMachine.Id);

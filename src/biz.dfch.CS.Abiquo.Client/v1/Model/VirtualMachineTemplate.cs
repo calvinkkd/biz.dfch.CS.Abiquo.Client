@@ -45,7 +45,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Description { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public EthernetDriverType EthernetDriverType { get; set; }
+        public EthernetDriverTypeEnum EthernetDriverType { get; set; }
         
         public string IconUrl { get; set; }
 

@@ -16,7 +16,6 @@
  
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
@@ -24,11 +23,18 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachineState : AbiquoBaseDto
+    public enum HypervisorTypeEnum
     {
-        [Required]
-        public VirtualMachineStateEnum State { get; set; }
-
-        public bool GracefulShutdown { get; set; }
+        VBOX
+        ,
+        KVM
+        ,
+        XEN_3
+        ,
+        VMX_04
+        ,
+        HYPERV_301
+        ,
+        XENSERVER
     }
 }

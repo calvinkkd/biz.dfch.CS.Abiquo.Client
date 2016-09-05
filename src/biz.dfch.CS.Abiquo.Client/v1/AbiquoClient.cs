@@ -459,9 +459,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 var taskToWaitFor = Invoke<Task>(uriSuffix, headers);
                 switch (taskToWaitFor.State)
                 {
-                    case TaskState.FINISHED_SUCCESSFULLY:
-                    case TaskState.FINISHED_UNSUCCESSFULLY:
-                    case TaskState.ABORTED:
+                    case TaskStateEnum.FINISHED_SUCCESSFULLY:
+                    case TaskStateEnum.FINISHED_UNSUCCESSFULLY:
+                    case TaskStateEnum.ABORTED:
                         Trace.WriteLine(string.Format(
                             "END waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
                             task.TaskId,

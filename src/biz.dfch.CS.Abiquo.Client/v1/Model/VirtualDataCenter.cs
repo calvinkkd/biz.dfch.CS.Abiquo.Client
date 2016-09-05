@@ -46,7 +46,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public HypervisorType HypervisorType { get; set; }
+        public HypervisorTypeEnum HypervisorType { get; set; }
 
         public int Id { get; set; }
 

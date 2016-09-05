@@ -23,16 +23,28 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum NetworkType
+    public enum JobTypeEnum
     {
-        PUBLIC
+        CONFIGURE
         ,
-        INTERNAL
+        DECONFIGURE
         ,
-        EXTERNAL
+        RECONFIGURE
         ,
-        EXTERNAL_UNMANAGED
+        POWER_ON
         ,
-        UNMANAGED
+        POWER_OFF
+        ,
+        PAUSE
+        ,
+        RESUME
+        ,
+        RESET
+        ,
+        SNAPSHOT
+        ,
+        REFRESH
+        ,
+        SCHEDULE
     }
 }

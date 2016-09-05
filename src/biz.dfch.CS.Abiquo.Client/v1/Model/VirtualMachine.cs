@@ -59,7 +59,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int Ram { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public VirtualMachineState State { get; set; }
+        public VirtualMachineStateEnum State { get; set; }
         
         public string Uuid { get; set; }
         

@@ -36,10 +36,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string ParentTaskId { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public JobState RollbackState { get; set; }
+        public JobStateEnum RollbackState { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public JobState State { get; set; }
+        public JobStateEnum State { get; set; }
 
         [Required]
         [Range(1, Int64.MaxValue)]
@@ -47,6 +47,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public JobType Type { get; set; }
+        public JobTypeEnum Type { get; set; }
     }
 }
