@@ -755,7 +755,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void DeployVirtualMachineDeploysAbiquoVirtualMachineAndReturnsPendingDeployTask()
+        public void DeployVirtualMachineDeploysAbiquoVirtualMachineAndReturnsStartedDeployTask()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -943,7 +943,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void UpdateVirtualMachineUpdatesAbiquoVirtualMachineAndReturnsPendingUpdateTask()
+        public void UpdateVirtualMachineUpdatesAbiquoVirtualMachineAndReturnsStartedUpdateTask()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
