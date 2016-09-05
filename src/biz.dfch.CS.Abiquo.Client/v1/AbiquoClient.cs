@@ -469,7 +469,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 }
 
                 Thread.Sleep(currentTaskPollingWaitTime);
-                currentTaskPollingWaitTime = System.Convert.ToInt32(Math.Floor(currentTaskPollingWaitTime*1.5));
+                currentTaskPollingWaitTime = Convert.ToInt32(Math.Floor(currentTaskPollingWaitTime*1.5));
             }
 
             Trace.WriteLine(string.Format(
