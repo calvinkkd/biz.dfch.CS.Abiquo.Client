@@ -50,6 +50,9 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         public string AbiquoApiBaseUri { get; protected set; }
 
+        /// <summary>
+        /// Holds the authentication information, that get injected by the Login method 
+        /// </summary>
         public IAuthenticationInformation AuthenticationInformation { get; protected set; }
 
 
