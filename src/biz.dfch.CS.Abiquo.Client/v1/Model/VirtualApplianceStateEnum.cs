@@ -23,21 +23,15 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum JobState
+    public enum VirtualApplianceStateEnum
     {
-        PENDING
+        DEPLOYED
         ,
-        STARTED
+        NOT_DEPLOYED
         ,
-        DONE
+        NEEDS_SYNC
         ,
-        FAILED
-        ,
-        SKIPPED
-        ,
-        ROLLBACK_STARTED
-        ,
-        ROLLBACK_DONE
+        LOCKED
         ,
         UNKNOWN
     }

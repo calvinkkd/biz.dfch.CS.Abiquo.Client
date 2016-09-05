@@ -23,18 +23,16 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum HypervisorType
+    public enum TaskStateEnum
     {
-        VBOX
+        FINISHED_SUCCESSFULLY
+        ,	
+        FINISHED_UNSUCCESSFULLY
         ,
-        KVM
+        PENDING
         ,
-        XEN_3
+        STARTED
         ,
-        VMX_04
-        ,
-        HYPERV_301
-        ,
-        XENSERVER
+        ABORTED
     }
 }

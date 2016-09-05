@@ -33,6 +33,22 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
     public abstract class BaseAbiquoClient
     {
+        #region Awaiting Constants
+        /// <summary>
+        /// Default task polling wait time
+        /// </summary>
+        protected const int DEFAULT_TASK_POLLING_WAIT_TIME_MILLISECONDS = 5 * 1000;
+
+        /// <summary>
+        /// Default timoeut for task polling
+        /// </summary>
+        protected const int DEFAULT_TASK_POLLING_TIMEOUT_MILLISECONDS = 30 * 1000;
+
+        #endregion Awaiting Constants
+
+
+        #region Properties
+
         /// <summary>
         /// The Abiquo Api version the client is implemented for.
         /// Has to be set in the constructor of the derived class
@@ -50,13 +66,30 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         public string AbiquoApiBaseUri { get; protected set; }
 
+        /// <summary>
+        /// Authentication information, that get injected through the Login method 
+        /// </summary>
         public IAuthenticationInformation AuthenticationInformation { get; protected set; }
+
+        /// <summary>
+        /// Polling wait time for task handling
+        /// </summary>
+        public int TaskPollingWaitTimeMilliseconds { get; set; }
+        
+        /// <summary>
+        /// Timeout for task polling
+        /// </summary>
+        public int TaskPollingTimeoutMilliseconds { get; set; }
+        
+        #endregion Properties
 
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
             Contract.Invariant(!string.IsNullOrWhiteSpace(AbiquoApiVersion));
+            Contract.Invariant(0 < TaskPollingWaitTimeMilliseconds);
+            Contract.Invariant(0 < TaskPollingTimeoutMilliseconds);
         }
 
 
@@ -70,7 +103,7 @@ namespace biz.dfch.CS.Abiquo.Client
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
 
-            Trace.WriteLine(string.Format("END {0}", Method.fn()));
+            Trace.WriteLine(string.Format("END {0} SUCCEEDED", Method.fn()));
         }
 
         #region ExecuteRequest
@@ -98,6 +131,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
+            Debug.WriteLine(string.Format("Executing request '{0} {1}' returned '{2}'", httpMethod, requestUri, result));
             Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri));
             return result;
         }
@@ -115,10 +149,17 @@ namespace biz.dfch.CS.Abiquo.Client
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
             where T : BaseDto
         {
-            return Invoke<T>(HttpMethod.Get, uriSuffix, filter, headers, default(string));
+            return Invoke<T>(httpMethod, uriSuffix, filter, headers, default(string));
         }
 
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body) 
+            where T : BaseDto
+        {
+            var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
+            return BaseDto.DeserializeObject<T>(stringResponse);
+        }
+
+        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
             where T : BaseDto
         {
             var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
@@ -177,7 +218,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            Debug.WriteLine(string.Format("START calling invoke method({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
+            Debug.WriteLine(string.Format("START calling invoke method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
 
             if (null != filter)
             {
@@ -187,7 +228,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
             var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Trace.WriteLine(string.Format("END calling invoke method({0}, {1} - {2} - {3}) SUCCEEDED", httpMethod, uriSuffix, headers, body));
+            Debug.WriteLine(string.Format("END calling invoke method ({0}, {1}, {2} - {3} - {4}) SUCCEEDED", httpMethod, uriSuffix, filter, headers, body));
 
             return response;
         }
@@ -365,8 +406,9 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <param name="force">If true, update is forced</param>
         /// <returns>Task containing information about the status of the update</returns>
-        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachine virtualMachine);
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachine virtualMachine, bool force);
 
         /// <summary>
         /// Update a specific virtual machine
@@ -375,9 +417,10 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <param name="force">If true, update is forced</param>
         /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
         /// <returns>Task containing information about the status of the update</returns>
-        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachine virtualMachine, bool waitForCompletion);
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachine virtualMachine, bool force, bool waitForCompletion);
 
         /// <summary>
         /// Initiates state change of a specific virtual machine
@@ -406,9 +449,18 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <returns>True, if the virtual machine was deleted successfully</returns>
+        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Delete a virtual machine by Id
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <param name="force">Indicates if deletion has to be forced</param>
         /// <returns>True, if the virtual machine was deleted successfully</returns>
-        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false);
+        public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
         /// Retrieve tasks of a specific virtual machine
@@ -530,11 +582,11 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Wait for a task to complete
         /// </summary>
-        /// <param name="relativeTaskHref">Href suffix of the task</param>
-        /// <param name="basePollingWaitTimeMilliseconds">Polling wait time in milliseconds</param>
-        /// <param name="timeoutMilliseconds">timoeut in milliseconds</param>
+        /// <param name="task">Task object</param>
+        /// <param name="taskPollingWaitTimeMilliseconds">Polling wait time in milliseconds</param>
+        /// <param name="taskPollingTimeoutMilliseconds">timeout in milliseconds</param>
         /// <returns>Completed Task</returns>
-        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds);
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds);
         
         #endregion Tasks
     }

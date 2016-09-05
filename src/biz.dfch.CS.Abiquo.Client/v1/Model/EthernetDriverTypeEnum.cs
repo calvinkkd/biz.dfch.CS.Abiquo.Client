@@ -23,30 +23,12 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum TaskType
+    public enum EthernetDriverTypeEnum
     {
-        DEPLOY
-	    ,
-        UNDEPLOY
-	    ,
-        RECONFIGURE
-	    ,
-        POWER_ON
-	    ,
-        POWER_OFF
-	    ,
-        PAUSE
-	    ,
-        RESUME
-	    ,
-        RESET
-	    ,
-        SNAPSHOT
-	    ,
-        HA_DEPLOY
-	    ,
-        HA_UNDEPLOY
-	    ,
-        REFRESH
+        PCNet32
+        ,
+        VMXNET3
+        ,
+        E1000
     }
 }

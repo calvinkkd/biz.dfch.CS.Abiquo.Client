@@ -26,6 +26,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
     public abstract class AbiquoRelations
     {
         public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
+        public const string SELF = "self";
+        public const string STATUS = "status";
     }
 }
 

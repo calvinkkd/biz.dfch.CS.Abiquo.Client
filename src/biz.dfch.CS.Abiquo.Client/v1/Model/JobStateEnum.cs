@@ -23,16 +23,22 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum TaskState
+    public enum JobStateEnum
     {
-        FINISHED_SUCCESSFULLY
-        ,	
-        FINISHED_UNSUCCESSFULLY
-        ,
         PENDING
         ,
         STARTED
         ,
-        ABORTED
+        DONE
+        ,
+        FAILED
+        ,
+        SKIPPED
+        ,
+        ROLLBACK_STARTED
+        ,
+        ROLLBACK_DONE
+        ,
+        UNKNOWN
     }
 }

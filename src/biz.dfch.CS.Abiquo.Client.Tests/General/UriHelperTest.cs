@@ -146,50 +146,86 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ExtractIdFromHrefWithNullValueThrowsContractException()
+        public void ExtractIdAsIntWithNullValueThrowsContractException()
         {
             // Arrange
             
             // Act
-            UriHelper.ExtractIdFromHref(null);
+            UriHelper.ExtractIdAsInt(null);
 
             // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ExtractIdFromHrefWithInvalidUriStringThrowsContractException()
+        public void ExtractIdAsIntWithInvalidUriStringThrowsContractException()
         {
             // Arrange
 
             // Act
-            UriHelper.ExtractIdFromHref("Arbitrary");
+            UriHelper.ExtractIdAsInt("Arbitrary");
 
             // Assert
         }
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ExtractIdFromHrefWithUriNotContainigIdThrowsContractException()
+        public void ExtractIdAsIntWithUriNotContainigIdThrowsContractException()
         {
             // Arrange
 
             // Act
-            UriHelper.ExtractIdFromHref(ABIQUO_API_BASE_URI);
+            UriHelper.ExtractIdAsInt(ABIQUO_API_BASE_URI);
 
             // Assert
         }
 
         [TestMethod]
-        public void ExtractIdFromHrefWithUriContainigIdSucceeds()
+        public void ExtractIdAsIntWithUriContainigIdSucceeds()
         {
             // Arrange
 
             // Act
-            var id = UriHelper.ExtractIdFromHref("https://example/api/users/155");
+            var id = UriHelper.ExtractIdAsInt("https://example/api/users/155");
 
             // Assert
-            Assert.IsTrue(155 == id);
+            Assert.AreEqual(155, id);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ExtractLastSegmentAsStringWithNullValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractLastSegmentAsString(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ExtractLastSegmentAsStringWithInvalidUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractLastSegmentAsString("Arbitrary");
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void ExtractLastSegmentAsStringWithValidUriStringSucceeds()
+        {
+            // Arrange
+
+            // Act
+            var lastSegment = UriHelper.ExtractLastSegmentAsString("https://example/api/users/fe5ddc9e-7745-4a4a-99d6-d7598682f8fd");
+
+            // Assert
+            Assert.AreEqual("fe5ddc9e-7745-4a4a-99d6-d7598682f8fd", lastSegment);
         }
     }
 }

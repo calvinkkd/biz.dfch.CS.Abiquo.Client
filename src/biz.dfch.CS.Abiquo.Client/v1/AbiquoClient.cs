@@ -27,9 +27,8 @@ using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
+using System.Threading;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -40,6 +39,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         internal AbiquoClient()
         {
             AbiquoApiVersion = ABIQUO_API_VERSION;
+
+            TaskPollingWaitTimeMilliseconds = DEFAULT_TASK_POLLING_WAIT_TIME_MILLISECONDS;
+            TaskPollingTimeoutMilliseconds = DEFAULT_TASK_POLLING_TIMEOUT_MILLISECONDS;
         }
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
@@ -205,29 +207,88 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID,
                     virtualDataCenterId, virtualApplianceId);
 
-            return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine.SerializeObject());
+            return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine);
         }
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
-            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false, false);
+            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, force, false);
         }
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> filter = null;
+            if (force)
+            {
+                filter = new Dictionary<string, object>()
+                {
+                    {"force", "true"}
+                };
+            }
+
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST).GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            var deployTask = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers, "");
+            Contract.Assert(null != deployTask);
+
+            var link = deployTask.GetLinkByRel(AbiquoRelations.STATUS);
+            var taskId = UriHelper.ExtractLastSegmentAsString(link.Href);
+
+            var task = GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
+
+            if (waitForCompletion)
+            {
+                return WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
+            }
+
+            return task;
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachine)
+            VirtualMachine virtualMachine, bool force)
         {
-            return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine, false);
+            return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine, force, false);
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachine, bool waitForCompletion)
+            VirtualMachine virtualMachine, bool force, bool waitForCompletion)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> filter = null;
+            if (force)
+            {
+                filter = new Dictionary<string, object>()
+                {
+                    {"force", "true"}
+                };
+            }
+
+            var headers = new HeaderBuilder()
+                .BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
+                .BuildContentType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)
+                .GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            var updateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, filter, headers, virtualMachine);
+            Contract.Assert(null != updateTask);
+
+            var link = updateTask.GetLinkByRel(AbiquoRelations.STATUS);
+            var taskId = UriHelper.ExtractLastSegmentAsString(link.Href);
+
+            var task = GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
+
+            if (waitForCompletion)
+            {
+                return WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
+            }
+
+            return task;
         }
 
         public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
@@ -239,15 +300,45 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachineState state, bool waitForCompletion)
         {
-            throw new NotImplementedException();
+            var headers = new HeaderBuilder()
+                .BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
+                .BuildContentType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINESTATE)
+                .GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.CHANGE_VIRTUALMACHINE_STATE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            var changeStateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, null, headers, state.SerializeObject());
+            Contract.Assert(null != changeStateTask);
+
+            var link = changeStateTask.GetLinkByRel(AbiquoRelations.STATUS);
+            var taskId = UriHelper.ExtractLastSegmentAsString(link.Href);
+
+            var task = GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
+
+            if (waitForCompletion)
+            {
+                return WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
+            }
+
+            return task;
         }
 
-        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
-            var filter = new Dictionary<string, object>();
+            return DeleteVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false);
+        }
+
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
+        {
+            Dictionary<string, object> filter = null;
             if (force)
             {
-                filter.Add("force", "true");
+                filter = new Dictionary<string, object>()
+                {
+                    {"force", "true"}
+                };
             }
 
             var uriSuffix = 
@@ -373,50 +464,47 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region Tasks
 
-        public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+        public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine(
+                string.Format(
+                    "START waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+                    task.TaskId, taskPollingWaitTimeMilliseconds, taskPollingTimeoutMilliseconds));
 
-            /*
-            
-                        #region Contract
-            Contract.Requires(this.IsLoggedIn, "Not logged in, call method login first");
-            Contract.Requires(!string.IsNullOrEmpty(id), "No job id defined");
-            Contract.Requires(totalAttempts > 0, "TotalAttempts must be greater than 0");
-            Contract.Requires(baseWaitingMilliseconds > 0, "BaseWaitingMilliseconds must be greater than 0");
-            Contract.Requires(basePollingWaitingMilliseconds > 0, "BasePollingWaitingMilliseconds must be greater than 0");
-            Contract.Requires(timeOut > 0, "TimeOut must be greater than 0");
-            #endregion Contract
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
+            var taskSelfLink = task.GetLinkByRel(AbiquoRelations.SELF);
+            var uriSuffix = taskSelfLink.GetUriSuffix();
 
-            Trace.WriteLine(string.Format("v2.CimiClient.WaitForJobCompletion({0}, {1}, {2}, {3}, {4})", id, totalAttempts, baseWaitingMilliseconds, basePollingWaitingMilliseconds, timeOut));
+            var timeLimit = DateTime.Now.AddMilliseconds(taskPollingTimeoutMilliseconds);
+            var currentTaskPollingWaitTime = taskPollingWaitTimeMilliseconds;
 
-            DateTime timeLimit = DateTime.Now.AddMilliseconds(timeOut);
-            int currentPollingWaitingTime = basePollingWaitingMilliseconds;
             while (DateTime.Now < timeLimit)
             {
-                Model.PostModel.Job job = this.GetJob(id, totalAttempts, baseWaitingMilliseconds);
-                switch (job.State)
+                var taskToWaitFor = Invoke<Task>(uriSuffix, headers);
+                switch (taskToWaitFor.State)
                 {
-                    case Job.StateEnum.FAILED:
-                    case Job.StateEnum.STOPPED:
-                    case Job.StateEnum.SUCCESS:
-                        return job.State;
-                }
-                Thread.Sleep(currentPollingWaitingTime);
-                currentPollingWaitingTime = System.Convert.ToInt32(Math.Floor(currentPollingWaitingTime * 1.5));
-            }
-            Model.PostModel.Job jobAtEndOfTimeout = this.GetJob(id, totalAttempts, baseWaitingMilliseconds);
-            switch (jobAtEndOfTimeout.State)
-            {
-                case Job.StateEnum.FAILED:
-                case Job.StateEnum.STOPPED:
-                case Job.StateEnum.SUCCESS:
-                    return jobAtEndOfTimeout.State;
-            }
-            
-            throw new TimeoutException(string.Format("Timeout exceeded while waiting for Job with ID '{0}'", id));
+                    case TaskStateEnum.FINISHED_SUCCESSFULLY:
+                    case TaskStateEnum.FINISHED_UNSUCCESSFULLY:
+                    case TaskStateEnum.ABORTED:
+                        Trace.WriteLine(string.Format(
+                            "END waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+                            task.TaskId,
+                            taskPollingWaitTimeMilliseconds, 
+                            taskPollingTimeoutMilliseconds));
 
-            */
+                        return taskToWaitFor;
+                }
+
+                Thread.Sleep(currentTaskPollingWaitTime);
+                currentTaskPollingWaitTime = Convert.ToInt32(Math.Floor(currentTaskPollingWaitTime*1.5));
+            }
+
+            Trace.WriteLine(string.Format(
+                            "END waiting for task [{0}] completion FAILED (Timeout ['{1}'] exceeded)",
+                            task.TaskId,
+                            taskPollingTimeoutMilliseconds));
+
+            throw new TimeoutException(string.Format("Timeout exceeded while waiting for task with Id '{0}'", task.TaskId));
         }
 
         #endregion Tasks

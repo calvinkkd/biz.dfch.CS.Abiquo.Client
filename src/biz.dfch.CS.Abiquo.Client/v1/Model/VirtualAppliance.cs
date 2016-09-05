@@ -44,9 +44,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int PublicApp { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public VirtualApplianceState State { get; set; }
+        public VirtualApplianceStateEnum State { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public VirtualApplianceState SubState { get; set; }
+        public VirtualApplianceStateEnum SubState { get; set; }
     }
 }

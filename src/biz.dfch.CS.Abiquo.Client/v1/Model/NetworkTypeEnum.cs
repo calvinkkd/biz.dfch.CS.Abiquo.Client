@@ -23,12 +23,16 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum EthernetDriverType
+    public enum NetworkTypeEnum
     {
-        PCNet32
+        PUBLIC
         ,
-        VMXNET3
+        INTERNAL
         ,
-        E1000
+        EXTERNAL
+        ,
+        EXTERNAL_UNMANAGED
+        ,
+        UNMANAGED
     }
 }

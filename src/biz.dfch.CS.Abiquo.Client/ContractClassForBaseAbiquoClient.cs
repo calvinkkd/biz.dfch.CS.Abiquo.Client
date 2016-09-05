@@ -213,7 +213,7 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachine)
+            VirtualMachine virtualMachine, bool force)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
@@ -225,7 +225,7 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachine, bool waitForCompletion)
+            VirtualMachine virtualMachine, bool force, bool waitForCompletion)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
@@ -256,7 +256,16 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Task);
         }
 
-        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(bool);
+        }
+
+        public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
@@ -388,11 +397,12 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Tasks
 
-        public override Task WaitForTaskCompletion(string relativeTaskHref, int basePollingWaitTimeMilliseconds, int timeoutMilliseconds)
+        public override Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(relativeTaskHref));
-            Contract.Requires(0 < basePollingWaitTimeMilliseconds);
-            Contract.Requires(0 < timeoutMilliseconds);
+            Contract.Requires(null != task);
+            Contract.Requires(task.IsValid());
+            Contract.Requires(0 < taskPollingWaitTimeMilliseconds);
+            Contract.Requires(0 < taskPollingTimeoutMilliseconds);
 
             return default(Task);
         }

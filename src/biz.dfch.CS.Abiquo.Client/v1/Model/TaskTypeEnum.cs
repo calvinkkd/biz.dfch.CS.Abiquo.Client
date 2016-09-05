@@ -23,28 +23,30 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum JobType
+    public enum TaskTypeEnum
     {
-        CONFIGURE
-        ,
-        DECONFIGURE
-        ,
+        DEPLOY
+	    ,
+        UNDEPLOY
+	    ,
         RECONFIGURE
-        ,
+	    ,
         POWER_ON
-        ,
+	    ,
         POWER_OFF
-        ,
+	    ,
         PAUSE
-        ,
+	    ,
         RESUME
-        ,
+	    ,
         RESET
-        ,
+	    ,
         SNAPSHOT
-        ,
+	    ,
+        HA_DEPLOY
+	    ,
+        HA_UNDEPLOY
+	    ,
         REFRESH
-        ,
-        SCHEDULE
     }
 }

@@ -20,22 +20,21 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DataCenterRepository : AbiquoBaseDto
+    public enum HypervisorTypeEnum
     {
-        public string Error { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        public long RepositoryCapacityMb { get; set; }
-
-        [Required]
-        public string RepositoryLocation { get; set; }
-
-        public long RepositoryRemainingMb { get; set; }
+        VBOX
+        ,
+        KVM
+        ,
+        XEN_3
+        ,
+        VMX_04
+        ,
+        HYPERV_301
+        ,
+        XENSERVER
     }
 }

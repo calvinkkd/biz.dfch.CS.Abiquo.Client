@@ -16,6 +16,7 @@
  
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
@@ -23,22 +24,11 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum VirtualMachineState
+    public class VirtualMachineState : AbiquoBaseDto
     {
-        NOT_ALLOCATED
-        ,
-        ALLOCATED
-        ,
-        CONFIGURED
-        ,
-        ON
-        ,
-        PAUSED
-        ,
-        OFF
-        ,
-        LOCKED
-        ,
-        UNKNOWN
+        [Required]
+        public VirtualMachineStateEnum State { get; set; }
+
+        public bool GracefulShutdown { get; set; }
     }
 }
