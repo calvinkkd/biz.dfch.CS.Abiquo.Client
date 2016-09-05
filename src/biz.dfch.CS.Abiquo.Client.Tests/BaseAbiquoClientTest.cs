@@ -46,7 +46,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private readonly IAuthenticationInformation authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
         private static readonly string BEARER_TOKEN = "Bearer TESTTOKEN";
 
-        private VirtualMachine validVirtualMachine = new VirtualMachine()
+        private readonly VirtualMachine validVirtualMachine = new VirtualMachine()
         {
             Cpu = 2
             ,
@@ -55,7 +55,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Name = "Arbitrary"
         };
 
-        private Task validTask = new Task()
+        private readonly Task validTask = new Task()
         {
             OwnerId = "ArbitraryOwnerId"
             ,
