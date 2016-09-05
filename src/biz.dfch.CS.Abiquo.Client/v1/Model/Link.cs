@@ -36,5 +36,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Title { get; set; }
 
         public string Type { get; set; }
+
+        public string GetUriSuffix()
+        {
+            Contract.Requires(Uri.IsWellFormedUriString(Href, UriKind.Absolute));
+
+            var uriSuffix = Href.Substring(Href.IndexOf("/api", StringComparison.InvariantCultureIgnoreCase) + 4);
+
+            return uriSuffix;
+        }
     }
 }

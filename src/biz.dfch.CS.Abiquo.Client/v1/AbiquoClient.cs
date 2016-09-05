@@ -409,7 +409,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
             var taskSelfLink = task.GetLinkByRel(AbiquoRelations.SELF);
-            var uriSuffix = taskSelfLink.Href.Trim(AbiquoApiBaseUri.ToCharArray());
+            var uriSuffix = taskSelfLink.GetUriSuffix();
 
             var timeLimit = DateTime.Now.AddMilliseconds(taskPollingTimeoutMilliseconds);
             var currentTaskPollingWaitTime = taskPollingWaitTimeMilliseconds;
