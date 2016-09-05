@@ -149,7 +149,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
             where T : BaseDto
         {
-            return Invoke<T>(HttpMethod.Get, uriSuffix, filter, headers, default(string));
+            return Invoke<T>(httpMethod, uriSuffix, filter, headers, default(string));
         }
 
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body) 
