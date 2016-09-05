@@ -188,7 +188,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.Invoke<Enterprises>(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null, null);
+            abiquoClient.Invoke<Enterprises>(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null, default(string));
 
             // Assert
         }
