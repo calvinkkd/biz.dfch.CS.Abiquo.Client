@@ -300,7 +300,31 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachineState state, bool waitForCompletion)
         {
-            throw new NotImplementedException();
+            var headers = new HeaderBuilder()
+                .BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
+                .BuildContentType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINESTATE)
+                .GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.CHANGE_VIRTUALMACHINE_STATE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            var changeStateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, null, headers, state.SerializeObject());
+            Contract.Assert(null != changeStateTask);
+
+            var link = changeStateTask.GetLinkByRel(AbiquoRelations.STATUS);
+            var taskId = UriHelper.ExtractLastSegmentAsString(link.Href);
+
+            var task = GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
+
+            if (waitForCompletion)
+            {
+                return WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
+            }
+
+            return task;
+        }
+
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             return DeleteVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false);
