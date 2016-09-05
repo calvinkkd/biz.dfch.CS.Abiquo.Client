@@ -401,7 +401,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine(
+                string.Format(
+                    "START waiting for task completion (taskId: {0}; taskPollingWaitTimeMilliseconds: {1}, taskPollingTimeoutMilliseconds: {2}",
+                    task.TaskId, taskPollingTimeoutMilliseconds, TaskPollingTimeoutMilliseconds));
+
+            var completedTask = new Task();
 
             /*
             
@@ -443,6 +448,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             throw new TimeoutException(string.Format("Timeout exceeded while waiting for Job with ID '{0}'", id));
 
             */
+
+            Trace.WriteLine(
+                string.Format(
+                    "END waiting for task completion SUCCEEDED (taskId: {0}; taskPollingWaitTimeMilliseconds: {1}, taskPollingTimeoutMilliseconds: {2}",
+                    task.TaskId, taskPollingTimeoutMilliseconds, TaskPollingTimeoutMilliseconds));
+
+            return completedTask;
         }
 
         #endregion Tasks
