@@ -30,7 +30,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
     [TestClass]
     public class LinkTest
     {
-        private const string ABIQUO_BASE_URL = "https://192.168.1.1:443/api/";
+        private const string ABIQUO_BASE_URI = "https://192.168.1.1:443/api/";
 
         [TestMethod]
         [ExpectContractFailure]
@@ -50,7 +50,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
         {
             // Arrange
             var uriSuffix = "/admin/users/42";
-            var href = UriHelper.ConcatUri(ABIQUO_BASE_URL, uriSuffix);
+            var href = UriHelper.ConcatUri(ABIQUO_BASE_URI, uriSuffix);
             var link = new LinkBuilder().BuildHref(href).BuildRel(AbiquoRelations.SELF).GetLink();
 
             // Act
