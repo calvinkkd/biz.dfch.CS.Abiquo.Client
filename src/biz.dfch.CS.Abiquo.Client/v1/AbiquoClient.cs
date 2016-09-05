@@ -257,7 +257,38 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachine virtualMachine, bool force, bool waitForCompletion)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> filter = null;
+            if (force)
+            {
+                filter = new Dictionary<string, object>()
+                {
+                    {"force", "true"}
+                };
+            }
+
+            var headers = new HeaderBuilder()
+                .BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
+                .BuildContentType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)
+                .GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            var updateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, filter, headers, virtualMachine.SerializeObject());
+            Contract.Assert(null != updateTask);
+
+            var link = updateTask.GetLinkByRel(AbiquoRelations.STATUS);
+            var taskId = UriHelper.ExtractLastSegmentAsString(link.Href);
+
+            var task = GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
+
+            if (waitForCompletion)
+            {
+                return WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
+            }
+
+            return task;
         }
 
         public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,

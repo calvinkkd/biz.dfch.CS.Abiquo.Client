@@ -803,13 +803,219 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(deployTask.TaskId, completedTask.TaskId);
             Assert.IsTrue(0 < completedTask.Timestamp);
             Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, completedTask.State);
-            Assert.AreEqual(TaskType.DEPLOY, deployTask.Type);
+            Assert.AreEqual(TaskType.DEPLOY, completedTask.Type);
 
             // Cleanup
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault(), true);
             Assert.IsTrue(deletionResult);
         }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void UpdateVirtualMachineWithForceAndWaitForTaskCompletionUpdatesAbiquoVirtualMachineAndReturnsSuccessfullyCompletedReconfigureTask()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
+            Contract.Assert(null != virtualMachineTemplate);
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            var updatedCpuValue = virtualMachine.Cpu*2;
+            var updatedRamValue = virtualMachine.Ram*2;
+            var updatedVdrpEnabled = !virtualMachine.VdrpEnabled;
+            virtualMachine.Cpu = updatedCpuValue;
+            virtualMachine.Ram = updatedRamValue;
+            virtualMachine.VdrpEnabled = updatedVdrpEnabled;
+
+            // Act
+            var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), virtualMachine, true, true);
+
+            var updatedVirtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
+            Assert.IsTrue(0 < updateTask.Timestamp);
+            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, updateTask.State);
+            Assert.AreEqual(TaskType.RECONFIGURE, updateTask.Type);
+
+            Assert.IsNotNull(updatedVirtualMachine);
+            Assert.IsTrue(0 < updatedVirtualMachine.Id);
+            Assert.AreEqual(updatedCpuValue, updatedVirtualMachine.Cpu);
+            Assert.AreEqual(updatedRamValue, updatedVirtualMachine.Ram);
+            Assert.AreEqual(updatedVdrpEnabled, updatedVirtualMachine.VdrpEnabled);
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+            Assert.IsTrue(deletionResult);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void UpdateVirtualMachineWithWaitForCompletionUpdatesAbiquoVirtualMachineAndReturnsSuccessfullyCompletedUpdateTask()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
+            Contract.Assert(null != virtualMachineTemplate);
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            var updatedCpuValue = virtualMachine.Cpu * 2;
+            var updatedRamValue = virtualMachine.Ram * 2;
+            var updatedVdrpEnabled = !virtualMachine.VdrpEnabled;
+            virtualMachine.Cpu = updatedCpuValue;
+            virtualMachine.Ram = updatedRamValue;
+            virtualMachine.VdrpEnabled = updatedVdrpEnabled;
+
+            // Act
+            var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, true);
+
+            var updatedVirtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
+            Assert.IsTrue(0 < updateTask.Timestamp);
+            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, updateTask.State);
+            Assert.AreEqual(TaskType.RECONFIGURE, updateTask.Type);
+
+            Assert.IsNotNull(updatedVirtualMachine);
+            Assert.IsTrue(0 < updatedVirtualMachine.Id);
+            Assert.AreEqual(updatedCpuValue, updatedVirtualMachine.Cpu);
+            Assert.AreEqual(updatedRamValue, updatedVirtualMachine.Ram);
+            Assert.AreEqual(updatedVdrpEnabled, updatedVirtualMachine.VdrpEnabled);
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+            Assert.IsTrue(deletionResult);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void UpdateVirtualMachineUpdatesAbiquoVirtualMachineAndReturnsPendingUpdateTask()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
+            Contract.Assert(null != virtualMachineTemplate);
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            var updatedCpuValue = virtualMachine.Cpu * 2;
+            var updatedRamValue = virtualMachine.Ram * 2;
+            var updatedVdrpEnabled = !virtualMachine.VdrpEnabled;
+            virtualMachine.Cpu = updatedCpuValue;
+            virtualMachine.Ram = updatedRamValue;
+            virtualMachine.VdrpEnabled = updatedVdrpEnabled;
+
+            // Act
+            var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, false);
+
+            var completedTask = abiquoClient.WaitForTaskCompletion(updateTask,
+                abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
+
+            var updatedVirtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
+            Assert.IsTrue(0 < updateTask.Timestamp);
+            Assert.AreEqual(TaskState.STARTED, updateTask.State);
+            Assert.AreEqual(TaskType.RECONFIGURE, updateTask.Type);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
+            Assert.AreEqual(updateTask.TaskId, completedTask.TaskId);
+            Assert.IsTrue(0 < completedTask.Timestamp);
+            Assert.AreEqual(TaskState.FINISHED_SUCCESSFULLY, completedTask.State);
+            Assert.AreEqual(TaskType.DEPLOY, completedTask.Type);
+
+            Assert.IsNotNull(updatedVirtualMachine);
+            Assert.IsTrue(0 < updatedVirtualMachine.Id);
+            Assert.AreEqual(updatedCpuValue, updatedVirtualMachine.Cpu);
+            Assert.AreEqual(updatedRamValue, updatedVirtualMachine.Ram);
+            Assert.AreEqual(updatedVdrpEnabled, updatedVirtualMachine.VdrpEnabled);
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+            Assert.IsTrue(deletionResult);
+        }
+
+        // DFTODO - ChangeStateOfVirtualMachine
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
