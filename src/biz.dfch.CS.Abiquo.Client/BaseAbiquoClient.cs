@@ -159,6 +159,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return BaseDto.DeserializeObject<T>(stringResponse);
         }
 
+        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
+            where T : BaseDto
+        {
+            var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
+            return BaseDto.DeserializeObject<T>(stringResponse);
+        }
+
         #endregion Generic Invoke
 
 
