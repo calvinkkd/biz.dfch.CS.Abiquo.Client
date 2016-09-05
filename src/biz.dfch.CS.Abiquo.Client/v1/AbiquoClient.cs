@@ -215,7 +215,32 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
         {
-            throw new NotImplementedException();
+            var filter = new Dictionary<string, object>();
+            if (force)
+            {
+                filter.Add("force", "true");
+            }
+
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST).GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            var deployResult = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers);
+            Contract.Assert(null != deployResult);
+
+            var link = deployResult.GetLinkByRel(AbiquoRelations.STATUS);
+            var taskId = UriHelper.ExtractLastSegmentAsString(link.Href);
+
+            var task = GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
+
+            if (waitForCompletion)
+            {
+                
+            }
+
+            return task;
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
