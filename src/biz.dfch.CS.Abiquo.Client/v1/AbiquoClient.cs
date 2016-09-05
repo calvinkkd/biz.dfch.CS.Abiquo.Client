@@ -217,10 +217,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
         {
-            var filter = new Dictionary<string, object>();
+            Dictionary<string, object> filter = null;
             if (force)
             {
-                filter.Add("force", "true");
+                filter = new Dictionary<string, object>()
+                {
+                    {"force", "true"}
+                };
             }
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST).GetHeaders();
@@ -239,7 +242,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             if (waitForCompletion)
             {
-                WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
+                return WaitForTaskCompletion(task, TaskPollingWaitTimeMilliseconds, TaskPollingTimeoutMilliseconds);
             }
 
             return task;
@@ -271,10 +274,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
         {
-            var filter = new Dictionary<string, object>();
+            Dictionary<string, object> filter = null;
             if (force)
             {
-                filter.Add("force", "true");
+                filter = new Dictionary<string, object>()
+                {
+                    {"force", "true"}
+                };
             }
 
             var uriSuffix = 
