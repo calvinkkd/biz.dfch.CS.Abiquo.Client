@@ -249,13 +249,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachine)
+            VirtualMachine virtualMachine, bool force)
         {
-            return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine, false);
+            return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine, false, force);
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-            VirtualMachine virtualMachine, bool waitForCompletion)
+            VirtualMachine virtualMachine, bool force, bool waitForCompletion)
         {
             throw new NotImplementedException();
         }

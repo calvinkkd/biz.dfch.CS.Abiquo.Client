@@ -746,7 +746,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.UpdateVirtualMachine(INVALID_ID, 42, 42, validVirtualMachine);
+            abiquoClient.UpdateVirtualMachine(INVALID_ID, 42, 42, validVirtualMachine, false);
 
             // Assert
         }
@@ -759,7 +759,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.UpdateVirtualMachine(42, INVALID_ID, 42, validVirtualMachine);
+            abiquoClient.UpdateVirtualMachine(42, INVALID_ID, 42, validVirtualMachine, false);
 
             // Assert
         }
@@ -772,7 +772,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.UpdateVirtualMachine(42, 42, INVALID_ID, validVirtualMachine);
+            abiquoClient.UpdateVirtualMachine(42, 42, INVALID_ID, validVirtualMachine, false);
 
             // Assert
         }
@@ -785,7 +785,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var abiquoClient = new DummyAbiquoClient();
 
             // Act
-            abiquoClient.UpdateVirtualMachine(42, 42, 42, new VirtualMachine());
+            abiquoClient.UpdateVirtualMachine(42, 42, 42, new VirtualMachine(), false);
 
             // Assert
         }
@@ -1424,13 +1424,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachine)
+                VirtualMachine virtualMachine, bool force)
             {
                 return new Task();
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachine, bool waitForCompletion)
+                VirtualMachine virtualMachine, bool force, bool waitForCompletion)
             {
                 return new Task();
             }
@@ -1626,13 +1626,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachine)
+                VirtualMachine virtualMachine, bool force)
             {
                 throw new NotImplementedException();
             }
 
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
-                VirtualMachine virtualMachine, bool waitForCompletion)
+                VirtualMachine virtualMachine, bool force, bool waitForCompletion)
             {
                 throw new NotImplementedException();
             }
