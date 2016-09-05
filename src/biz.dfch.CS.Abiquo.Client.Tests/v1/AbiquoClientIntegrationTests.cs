@@ -857,8 +857,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault(), virtualMachine, true, true);
 
-            var updatedVirtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+            var updatedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -922,8 +922,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, true);
 
-            var updatedVirtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+            var updatedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -990,8 +990,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var completedTask = abiquoClient.WaitForTaskCompletion(updateTask,
                 abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
 
-            var updatedVirtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+            var updatedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
 
             // Assert
             Assert.IsTrue(loginSucceeded);
