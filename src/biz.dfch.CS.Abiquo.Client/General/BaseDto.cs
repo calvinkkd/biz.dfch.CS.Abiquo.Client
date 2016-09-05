@@ -15,6 +15,7 @@
  */
  
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,9 +28,29 @@ namespace biz.dfch.CS.Abiquo.Client.General
 {
     public abstract class BaseDto
     {
+        private static readonly JsonSerializerSettings jsonSerializerSettings;
+
+        static BaseDto()
+        {
+            jsonSerializerSettings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.None
+                ,
+                // As the Abiquo deserializer does not ignore case sensitivity
+                // the C# properties, that start with a upper case letter have to be
+                // changed to start with a lowercase letter when serialized to JSON
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ,
+                // Properties, that are not initialized will not be serialized
+                NullValueHandling = NullValueHandling.Ignore
+                ,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+        }
+
         public string SerializeObject()
         {
-            return JsonConvert.SerializeObject(this);
+            return JsonConvert.SerializeObject(this, jsonSerializerSettings);
         }
 
         public static object DeserializeObject(string value, Type type)
@@ -37,14 +58,14 @@ namespace biz.dfch.CS.Abiquo.Client.General
             Contract.Requires(!string.IsNullOrWhiteSpace(value));
             Contract.Requires(null != type);
 
-            return JsonConvert.DeserializeObject(value, type);
+            return JsonConvert.DeserializeObject(value, type, jsonSerializerSettings);
         }
 
         public static T DeserializeObject<T>(string value)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(value));
 
-            return JsonConvert.DeserializeObject<T>(value);
+            return JsonConvert.DeserializeObject<T>(value, jsonSerializerSettings);
         }
 
         [Pure]
