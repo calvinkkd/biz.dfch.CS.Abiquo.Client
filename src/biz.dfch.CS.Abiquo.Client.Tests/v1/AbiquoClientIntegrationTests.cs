@@ -21,7 +21,6 @@ using System.Linq;
 ﻿using System.Net.Http;
 ﻿using System.Runtime.CompilerServices;
 ﻿using System.Text;
-using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
