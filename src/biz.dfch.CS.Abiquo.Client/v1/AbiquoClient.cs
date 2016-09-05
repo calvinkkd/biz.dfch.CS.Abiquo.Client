@@ -262,7 +262,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force = false)
         {
-            var filter = new Dictionary<string, string>();
+            var filter = new Dictionary<string, object>();
             if (force)
             {
                 filter.Add("force", "true");
@@ -272,7 +272,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, 
                 virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
-            Invoke(HttpMethod.Delete, uriSuffix, filter);
+            Invoke(HttpMethod.Delete, uriSuffix, filter, null);
 
             return true;
         }
