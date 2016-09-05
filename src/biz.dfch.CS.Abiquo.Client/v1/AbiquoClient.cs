@@ -212,7 +212,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
-            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false, false);
+            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false, force);
         }
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
