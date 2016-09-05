@@ -232,10 +232,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
                     virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
-            var deploymentResult = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers, "");
-            Contract.Assert(null != deploymentResult);
+            var deployTask = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers, "");
+            Contract.Assert(null != deployTask);
 
-            var link = deploymentResult.GetLinkByRel(AbiquoRelations.STATUS);
+            var link = deployTask.GetLinkByRel(AbiquoRelations.STATUS);
             var taskId = UriHelper.ExtractLastSegmentAsString(link.Href);
 
             var task = GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
