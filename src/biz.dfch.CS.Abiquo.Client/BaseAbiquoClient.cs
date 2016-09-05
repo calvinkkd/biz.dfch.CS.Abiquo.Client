@@ -101,6 +101,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
+            Debug.WriteLine(string.Format("Executing request '{0} {1}' returned '{2}'", httpMethod, requestUri, result));
             Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri));
             return result;
         }
@@ -180,7 +181,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            Debug.WriteLine(string.Format("START calling invoke method({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
+            Debug.WriteLine(string.Format("START calling invoke method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
 
             if (null != filter)
             {
@@ -190,7 +191,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
             var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Trace.WriteLine(string.Format("END calling invoke method({0}, {1} - {2} - {3}) SUCCEEDED", httpMethod, uriSuffix, headers, body));
+            Debug.WriteLine(string.Format("END calling invoke method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
 
             return response;
         }
