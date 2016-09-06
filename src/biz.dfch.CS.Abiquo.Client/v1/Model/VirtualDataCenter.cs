@@ -29,19 +29,19 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     public class VirtualDataCenter : AbiquoBaseDto
     {
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int CpuCountHardLimit { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int CpuCountSoftLimit { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long DiskHardLimitInMb { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long DiskSoftLimitInMb { get; set; }
 
         [Required]
@@ -54,38 +54,38 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Name { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long PublicIpsHard { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long PublicIpsSoft { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int RamHardLimitInMb { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int RamSoftLimitInMb { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long StorageHardInMb { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long StorageSoftInMb { get; set; }
 
         [Required]
         public VlanNetwork Vlan { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long VlansHard { get; set; }
 
         [Required]
-        [Range(1, Int64.MaxValue)]
+        [Range(0, Int64.MaxValue)]
         public long VlansSoft { get; set; }
     }
 }
