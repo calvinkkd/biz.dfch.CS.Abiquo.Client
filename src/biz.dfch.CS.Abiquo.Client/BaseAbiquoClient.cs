@@ -265,14 +265,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve users with roles of the enterprise/tenant specified in the authentication information
         /// </summary>
-        /// <returns>Collection of Users with roles</returns>
+        /// <returns>Collection of UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
 
         /// <summary>
         /// Retrieve users with roles of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
-        /// <returns>Collection of Users with roles</returns>
+        /// <returns>Collection of UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
 
         /// <summary>
