@@ -508,5 +508,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion Tasks
+
+
+        #region Networks
+
+        
+
+        #endregion Newtorks
     }
 }

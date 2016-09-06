@@ -1355,6 +1355,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         #endregion Tasks
 
+
+        #region Networks
+
+        
+
+        #endregion Newtorks
+
         private class DummyAbiquoClient : BaseAbiquoClient
         {
             public DummyAbiquoClient()
