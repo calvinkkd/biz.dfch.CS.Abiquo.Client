@@ -50,8 +50,17 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         
         #endregion Roles
 
+
+        #region DataCentersLimits
+
+        public const string DATACENTERS_LIMITS_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/limits";
+        public const string DATACENTER_LIMITS_BY_ENTERPRISE_ID_AND_DATACENTER_LIMITS_ID = "/admin/enterprises/{0}/limits/{1}";
+
+        #endregion DataCentersLimits
+
+
         #region VirtualMachines
-        
+
         public const string VIRTUALMACHINES = "/cloud/virtualmachines";
         public const string VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines";
         public const string VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}";

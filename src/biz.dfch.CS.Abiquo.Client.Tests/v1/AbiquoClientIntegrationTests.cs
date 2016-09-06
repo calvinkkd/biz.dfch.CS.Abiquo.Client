@@ -441,6 +441,54 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #endregion Roles
 
 
+        #region DataCentersLimits
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetDataCentersLimitsOfCurrentEnterpriseReturnsAbiquoLimitsOfCurrentEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            // Act
+            var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCentersLimits);
+            Assert.IsNotNull(dataCentersLimits.Collection);
+            Assert.IsTrue(0 < dataCentersLimits.Collection.Count);
+            Assert.IsNotNull(dataCentersLimits.Links);
+            Assert.IsTrue(0 < dataCentersLimits.Links.Count);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetDataCenterLimitsOfCurrentEnterpriseReturnsAbiquoLimitOfCurrentEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
+            Contract.Assert(null != dataCentersLimits);
+            var expectedDataCenterLimit = dataCentersLimits.Collection.First();
+
+            // Act
+            var dataCenterLimits = abiquoClient.GetDataCenterLimitsOfCurrentEnterprise(expectedDataCenterLimit.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCenterLimits);
+            Assert.IsTrue(dataCenterLimits.IsValid());
+        }
+
+        #endregion DataCentersLimits
+
+
         #region VirtualMachines
 
         [TestMethod]

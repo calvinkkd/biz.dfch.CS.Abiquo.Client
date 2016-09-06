@@ -115,7 +115,39 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Role);
         }
 
-        #endregion Users
+        #endregion Roles
+
+
+        #region DataCentersLimits
+
+        public override DataCentersLimits GetDataCentersLimitsOfCurrentEnterprise()
+        {
+            return default(DataCentersLimits);
+        }
+
+        public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
+        {
+            Contract.Requires(0 < enterpriseId);
+
+            return default(DataCentersLimits);
+        }
+
+        public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
+        {
+            Contract.Requires(0 < id);
+
+            return default(DataCenterLimits);
+        }
+
+        public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < id);
+
+            return default(DataCenterLimits);
+        }
+
+        #endregion DataCentersLimits
 
 
         #region VirtualMachines

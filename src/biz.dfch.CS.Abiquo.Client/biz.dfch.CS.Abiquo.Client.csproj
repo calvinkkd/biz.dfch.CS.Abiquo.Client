@@ -210,6 +210,8 @@
     <Compile Include="v1\Model\Jobs.cs" />
     <Compile Include="v1\Model\JobStateEnum.cs" />
     <Compile Include="v1\Model\JobTypeEnum.cs" />
+    <Compile Include="v1\Model\DataCenterLimits.cs" />
+    <Compile Include="v1\Model\DataCentersLimits.cs" />
     <Compile Include="v1\Model\Link.cs" />
     <Compile Include="v1\Model\Links.cs" />
     <Compile Include="v1\Model\NetworkTypeEnum.cs" />

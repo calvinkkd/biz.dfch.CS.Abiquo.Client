@@ -311,6 +311,39 @@ namespace biz.dfch.CS.Abiquo.Client
         #endregion Roles
 
 
+        #region DataCentersLimits
+
+        /// <summary>
+        /// Retrieve datacenters limits of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <returns>Collection of DataCentersLimits</returns>
+        public abstract DataCentersLimits GetDataCentersLimitsOfCurrentEnterprise();
+
+        /// <summary>
+        /// Retrieve datacenters limits of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <returns>Collection of DataCentersLimits</returns>
+        public abstract DataCentersLimits GetDataCentersLimits(int enterpriseId);
+
+        /// <summary>
+        /// Retrieve a specific datacenter limits by id of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="id">Id of the datacenter limits</param>
+        /// <returns>DataCentersLimits</returns>
+        public abstract DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id);
+
+        /// <summary>
+        /// Retrieve a specific datacenter limits by id of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="id">Id of the datacenter limits</param>
+        /// <returns>DataCenterLimits</returns>
+        public abstract DataCenterLimits GetDataCenterLimits(int enterpriseId, int id);
+
+        #endregion DataCentersLimits
+
+
         #region VirtualMachines
 
         /// <summary>
