@@ -144,6 +144,39 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         #endregion Roles
 
 
+        #region DataCenterLimits
+
+        public override DataCentersLimits GetDataCentersLimitsOfCurrentEnterprise()
+        {
+            return GetDataCentersLimits(AuthenticationInformation.GetTenantId());
+        }
+
+        public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_LIMITS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTERS_LIMITS_BY_ENTERPRISE_ID, enterpriseId);
+
+            return Invoke<DataCentersLimits>(uriSuffix, headers);
+        }
+
+        public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
+        {
+            return GetDataCenterLimits(AuthenticationInformation.GetTenantId(), id);
+        }
+
+        public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_LIMIT).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTER_LIMITS_BY_ENTERPRISE_ID_AND_DATACENTER_LIMITS_ID, enterpriseId, id);
+
+            return Invoke<DataCenterLimits>(uriSuffix, headers);
+        }
+
+        #endregion DataCentersLimits
+
+
         #region VirtualMachines
 
         public override VirtualMachines GetAllVirtualMachines()
