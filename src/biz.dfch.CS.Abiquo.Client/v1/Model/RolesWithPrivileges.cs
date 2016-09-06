@@ -25,6 +25,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class RolesWithPrivileges : AbiquoBaseCollectionDto<RoleWithPrivileges>
     {
-        // N/A (All collection properties defined in AbiquoBaseCollectionDto
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto)
     }
 }
