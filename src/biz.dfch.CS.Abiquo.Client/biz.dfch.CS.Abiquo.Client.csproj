@@ -205,14 +205,22 @@
     <Compile Include="v1\Model\Enterprise.cs" />
     <Compile Include="v1\Model\Enterprises.cs" />
     <Compile Include="v1\Model\EthernetDriverTypeEnum.cs" />
+    <Compile Include="v1\Model\ExternalIp.cs" />
+    <Compile Include="v1\Model\ExternalIps.cs" />
     <Compile Include="v1\Model\HypervisorTypeEnum.cs" />
     <Compile Include="v1\Model\Job.cs" />
     <Compile Include="v1\Model\Jobs.cs" />
     <Compile Include="v1\Model\JobStateEnum.cs" />
     <Compile Include="v1\Model\JobTypeEnum.cs" />
+    <Compile Include="v1\Model\DataCenterLimits.cs" />
+    <Compile Include="v1\Model\DataCentersLimits.cs" />
     <Compile Include="v1\Model\Link.cs" />
     <Compile Include="v1\Model\Links.cs" />
     <Compile Include="v1\Model\NetworkTypeEnum.cs" />
+    <Compile Include="v1\Model\Nic.cs" />
+    <Compile Include="v1\Model\Nics.cs" />
+    <Compile Include="v1\Model\PrivateIp.cs" />
+    <Compile Include="v1\Model\PrivateIps.cs" />
     <Compile Include="v1\Model\Privilege.cs" />
     <Compile Include="v1\Model\Privileges.cs" />
     <Compile Include="v1\Model\Role.cs" />
@@ -240,6 +248,8 @@
     <Compile Include="v1\Model\VirtualMachineBase.cs" />
     <Compile Include="v1\Model\VlanNetwork.cs" />
     <Compile Include="v1\Model\VlanNetworks.cs" />
+    <Compile Include="v1\Model\VmNetworkConfiguration.cs" />
+    <Compile Include="v1\Model\VmNetworkConfigurations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -144,6 +144,39 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         #endregion Roles
 
 
+        #region DataCenterLimits
+
+        public override DataCentersLimits GetDataCentersLimitsOfCurrentEnterprise()
+        {
+            return GetDataCentersLimits(AuthenticationInformation.GetTenantId());
+        }
+
+        public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_LIMITS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTERS_LIMITS_BY_ENTERPRISE_ID, enterpriseId);
+
+            return Invoke<DataCentersLimits>(uriSuffix, headers);
+        }
+
+        public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
+        {
+            return GetDataCenterLimits(AuthenticationInformation.GetTenantId(), id);
+        }
+
+        public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_LIMIT).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTER_LIMITS_BY_ENTERPRISE_ID_AND_DATACENTER_LIMITS_ID, enterpriseId, id);
+
+            return Invoke<DataCenterLimits>(uriSuffix, headers);
+        }
+
+        #endregion DataCentersLimits
+
+
         #region VirtualMachines
 
         public override VirtualMachines GetAllVirtualMachines()
@@ -166,6 +199,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, virtualDataCenterId, virtualApplianceId, id);
+
             return Invoke<VirtualMachine>(uriSuffix, headers);
         }
 
@@ -350,6 +384,38 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return true;
         }
 
+        public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
+            int virtualMachineId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATIONS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.NETWORK_CONFIGURATIONS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            return Invoke<VmNetworkConfigurations>(uriSuffix, headers);
+        }
+
+        public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
+            int virtualMachineId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATION).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.NETWORK_CONFIGURATION_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_NETWORK_CONFIGURATION_ID,
+                virtualDataCenterId, virtualApplianceId, virtualMachineId, id);
+
+            return Invoke<VmNetworkConfiguration>(uriSuffix, headers);
+        }
+
+        public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_NICS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.NICS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            return Invoke<Nics>(uriSuffix, headers);
+        }
+
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASKS).GetHeaders();
@@ -508,5 +574,99 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion Tasks
+
+
+        #region Networks
+
+        public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.PRIVATE_NETWORKS_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
+
+            return Invoke<VlanNetworks>(uriSuffix, headers);
+        }
+
+        public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID, virtualDataCenterId, id);
+
+            return Invoke<VlanNetwork>(uriSuffix, headers);
+        }
+
+        public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
+        {
+            Dictionary<string, object> filter = null;
+            if (free)
+            {
+                filter = new Dictionary<string, object>()
+                {
+                    {"free", "true"}
+                };
+            }
+
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_PRIVATEIPS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.IPS_OF_PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID, virtualDataCenterId, privateNetworkId);
+
+            return Invoke<PrivateIps>(uriSuffix, filter, headers);
+        }
+
+        public override VlanNetworks GetExternalNetworksOfCurrentEnterprise(int dataCenterLimitsId)
+        {
+            return GetExternalNetworks(AuthenticationInformation.GetTenantId(), dataCenterLimitsId);
+        }
+
+        public override VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.EXTERNAL_NETWORKS_BY_ENTERPRISE_ID_AND_LIMIT_ID, enterpriseId, dataCenterLimitsId);
+
+            return Invoke<VlanNetworks>(uriSuffix, headers);
+        }
+
+        public override VlanNetwork GetExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int id)
+        {
+            return GetExternalNetwork(AuthenticationInformation.GetTenantId(), dataCenterLimitsId, id);
+        }
+
+        public override VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID, 
+                enterpriseId, dataCenterLimitsId, id);
+
+            return Invoke<VlanNetwork>(uriSuffix, headers);
+        }
+
+        public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
+        {
+            return GetIpsOfExternalNetwork(AuthenticationInformation.GetTenantId(), dataCenterLimitsId,
+                externalNetworkId, free);
+        }
+
+        public override ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int dataCenterLimitsId, int externalNetworkId, bool free)
+        {
+            Dictionary<string, object> filter = null;
+            if (free)
+            {
+                filter = new Dictionary<string, object>()
+                {
+                    {"free", "true"}
+                };
+            }
+
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_EXTERNALIPS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.IPS_OF_EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID, enterpriseId, dataCenterLimitsId, externalNetworkId);
+
+            return Invoke<ExternalIps>(uriSuffix, filter, headers);
+        }
+
+        #endregion Newtorks
     }
 }

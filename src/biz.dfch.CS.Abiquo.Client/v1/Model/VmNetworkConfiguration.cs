@@ -16,33 +16,25 @@
  
 ﻿using System;
 using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DhcpOption : AbiquoBaseDto
+    public class VmNetworkConfiguration : AbiquoBaseDto
     {
-        public int Id { get; set; }
-
-        [Required]
         public string Gateway { get; set; }
 
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int Mask { get; set; }
+        public int? Id { get; set; }
 
-        [Required]
-        public string Netmask { get; set; }
+        public string PrimaryDNS { get; set; }
 
-        [Required]
-        public string NetworkAddress { get; set; }
+        public string SecondaryDNS { get; set; }
+        
+        public string SuffixDNS { get; set; }
 
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int Option { get; set; }
+        public bool Used { get; set; }
     }
 }

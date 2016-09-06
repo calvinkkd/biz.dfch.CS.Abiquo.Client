@@ -16,33 +16,25 @@
  
 ﻿using System;
 using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DhcpOption : AbiquoBaseDto
+    public class Nic : AbiquoBaseDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
-        [Required]
-        public string Gateway { get; set; }
+        public string Ip { get; set; }
 
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int Mask { get; set; }
+        public string Mac { get; set; }
 
-        [Required]
-        public string Netmask { get; set; }
+        public int Sequence { get; set; }
 
-        [Required]
-        public string NetworkAddress { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int Option { get; set; }
+        // The following properties get delivered by the rest response, but are not mentioned in the wiki 
+        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-NicMediaType
+        public int Tag { get; set;  }
     }
 }

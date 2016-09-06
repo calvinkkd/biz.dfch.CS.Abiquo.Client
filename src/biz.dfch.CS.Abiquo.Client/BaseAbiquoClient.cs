@@ -146,6 +146,12 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke<T>(HttpMethod.Get, uriSuffix, null, headers, default(string));
         }
 
+        public T Invoke<T>(string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
+            where T : BaseDto
+        {
+            return Invoke<T>(HttpMethod.Get, uriSuffix, filter, headers, default(string));
+        }
+
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
             where T : BaseDto
         {
@@ -265,14 +271,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve users with roles of the enterprise/tenant specified in the authentication information
         /// </summary>
-        /// <returns>Collection of Users with roles</returns>
+        /// <returns>Collection of UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
 
         /// <summary>
         /// Retrieve users with roles of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
-        /// <returns>Collection of Users with roles</returns>
+        /// <returns>Collection of UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
 
         /// <summary>
@@ -309,6 +315,39 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract Role GetRole(int id);
 
         #endregion Roles
+
+
+        #region DataCentersLimits
+
+        /// <summary>
+        /// Retrieve datacenters limits of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <returns>Collection of DataCentersLimits</returns>
+        public abstract DataCentersLimits GetDataCentersLimitsOfCurrentEnterprise();
+
+        /// <summary>
+        /// Retrieve datacenters limits of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <returns>Collection of DataCentersLimits</returns>
+        public abstract DataCentersLimits GetDataCentersLimits(int enterpriseId);
+
+        /// <summary>
+        /// Retrieve a specific datacenter limits by id of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="id">Id of the datacenter limits</param>
+        /// <returns>DataCentersLimits</returns>
+        public abstract DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id);
+
+        /// <summary>
+        /// Retrieve a specific datacenter limits by id of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="id">Id of the datacenter limits</param>
+        /// <returns>DataCenterLimits</returns>
+        public abstract DataCenterLimits GetDataCenterLimits(int enterpriseId, int id);
+
+        #endregion DataCentersLimits
 
 
         #region VirtualMachines
@@ -463,6 +502,36 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
+        /// Retrieve the possible virtual machine network configurations of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <returns>VmNetworkConfigurations</returns>
+        public abstract VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId,
+            int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Retrieve a possible virtual machine network configuration by Id of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="id">Id of the virtual machine network configuration</param>
+        /// <returns>VmNetworkConfiguration</returns>
+        public abstract VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId,
+            int virtualApplianceId, int virtualMachineId, int id);
+
+        /// <summary>
+        /// Retrieve NICs attached to a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <returns>Collection of Nics</returns>
+        public abstract Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
         /// Retrieve tasks of a specific virtual machine
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
@@ -589,5 +658,85 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds);
         
         #endregion Tasks
+
+
+        #region Networks
+
+        /// <summary>
+        /// Retrieve all private networks of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
+        /// <returns>Collection of VlanNetworks</returns>
+        public abstract VlanNetworks GetPrivateNetworks(int virtualDataCenterId);
+
+        /// <summary>
+        /// Retrieve a private network by Id of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
+        /// <param name="id">Id of the private network</param>
+        /// <returns>VlanNetwork</returns>
+        public abstract VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id);
+
+        /// <summary>
+        /// Retrieve IPs of a specific private network
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
+        /// <param name="privateNetworkId">Id of the private network</param>
+        /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
+        /// <returns>Collection of PrivateIps</returns>
+        public abstract PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free);
+
+        /// <summary>
+        /// Retrieve all external networks available for a specific limit of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
+        /// <returns>Collection of VlanNetworks</returns>
+        public abstract VlanNetworks GetExternalNetworksOfCurrentEnterprise(int dataCenterLimitsId);
+
+        /// <summary>
+        /// Retrieve all external networks available for a specific limit of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
+        /// <returns>Collection of VlanNetworks</returns>
+        public abstract VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId);
+
+        /// <summary>
+        /// Retrieve an external network by Id of a specific limit of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
+        /// <param name="id">Id of the external network</param>
+        /// <returns>VlanNetwork</returns>
+        public abstract VlanNetwork GetExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int id);
+
+        /// <summary>
+        /// Retrieve an external network by Id of a specific limit of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
+        /// <param name="id">Id of the external network</param>
+        /// <returns>VlanNetwork</returns>
+        public abstract VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id);
+
+        /// <summary>
+        /// Retrieve IPs of a specific external network of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
+        /// <param name="externalNetworkId">Id of the external network</param>
+        /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
+        /// <returns>ExternalIps</returns>
+        public abstract ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free);
+
+        /// <summary>
+        /// Retrieve IPs of a specific external network
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
+        /// <param name="externalNetworkId">Id of the external network</param>
+        /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
+        /// <returns>ExternalIps</returns>
+        public abstract ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int dataCenterLimitsId, int externalNetworkId, bool free);
+
+        #endregion Newtorks
     }
 }

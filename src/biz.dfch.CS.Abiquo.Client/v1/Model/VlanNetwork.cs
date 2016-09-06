@@ -31,7 +31,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         public string Address { get; set; }
         
-        public bool DefaultNetwork { get; set; }
+        public bool? DefaultNetwork { get; set; }
         
         public DhcpOptions DhcpOptions { get; set; }
         
@@ -41,7 +41,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int Id { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int Mask { get; set; }
         
         [Required]

@@ -50,13 +50,25 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         
         #endregion Roles
 
+
+        #region DataCentersLimits
+
+        public const string DATACENTERS_LIMITS_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/limits";
+        public const string DATACENTER_LIMITS_BY_ENTERPRISE_ID_AND_DATACENTER_LIMITS_ID = "/admin/enterprises/{0}/limits/{1}";
+
+        #endregion DataCentersLimits
+
+
         #region VirtualMachines
-        
+
         public const string VIRTUALMACHINES = "/cloud/virtualmachines";
         public const string VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines";
         public const string VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}";
         public const string CHANGE_VIRTUALMACHINE_STATE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/state";
         public const string DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/action/deploy";
+        public const string NETWORK_CONFIGURATIONS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/network/configurations";
+        public const string NETWORK_CONFIGURATION_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_NETWORK_CONFIGURATION_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/network/configurations/{3}";
+        public const string NICS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/network/nics";
         public const string VIRTUALMACHINETASKS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/tasks";
         public const string VIRTUALMACHINETASK_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_TASK_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/tasks/{3}";
         
@@ -93,5 +105,18 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string DATACENTERREPOSITORIES_BY_ENTERPRISE_ID_AND_DATACENTERREPOSITORY_ID = "/admin/enterprises/{0}/datacenterrepositories/{1}";
         
         #endregion DateCenterRepositories
+
+
+        #region Networks
+
+        public const string PRIVATE_NETWORKS_BY_VIRTUALDATACENTER_ID = "/cloud/virtualdatacenters/{0}/privatenetworks";
+        public const string PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID = "/cloud/virtualdatacenters/{0}/privatenetworks/{1}";
+        public const string IPS_OF_PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID = "/cloud/virtualdatacenters/{0}/privatenetworks/{1}/ips";
+
+        public const string EXTERNAL_NETWORKS_BY_ENTERPRISE_ID_AND_LIMIT_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks";
+        public const string EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks/{2}";
+        public const string IPS_OF_EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks/{2}/ips";
+
+        #endregion Networks
     }
 }

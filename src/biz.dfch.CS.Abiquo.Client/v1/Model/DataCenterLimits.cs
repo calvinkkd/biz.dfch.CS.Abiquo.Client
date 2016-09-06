@@ -14,19 +14,17 @@
  * limitations under the License.
  */
  
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualDataCenter : AbiquoBaseDto
+    public class DataCenterLimits : AbiquoBaseDto
     {
         [Required]
         [Range(0, Int32.MaxValue)]
@@ -44,14 +42,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Range(0, Int64.MaxValue)]
         public long DiskSoftLimitInMb { get; set; }
 
-        [Required]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public HypervisorTypeEnum HypervisorType { get; set; }
-
         public int Id { get; set; }
-
-        [Required]
-        public string Name { get; set; }
 
         [Required]
         [Range(0, Int64.MaxValue)]
@@ -71,14 +62,19 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         [Range(0, Int64.MaxValue)]
+        public long RepositoryHardInMb { get; set; }
+
+        [Required]
+        [Range(0, Int64.MaxValue)]
+        public long RepositorySoftInMb { get; set; }
+
+        [Required]
+        [Range(0, Int64.MaxValue)]
         public long StorageHardInMb { get; set; }
 
         [Required]
         [Range(0, Int64.MaxValue)]
         public long StorageSoftInMb { get; set; }
-
-        [Required]
-        public VlanNetwork Vlan { get; set; }
 
         [Required]
         [Range(0, Int64.MaxValue)]
