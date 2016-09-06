@@ -383,6 +383,38 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return true;
         }
 
+        public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
+            int virtualMachineId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATIONS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.NETWORK_CONFIGURATIONS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            return Invoke<VmNetworkConfigurations>(uriSuffix, headers);
+        }
+
+        public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
+            int virtualMachineId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATION).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.NETWORK_CONFIGURATION_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_NETWORK_CONFIGURATION_ID,
+                virtualDataCenterId, virtualApplianceId, virtualMachineId, id);
+
+            return Invoke<VmNetworkConfiguration>(uriSuffix, headers);
+        }
+
+        public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_NICS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.NICS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            return Invoke<Nics>(uriSuffix, headers);
+        }
+
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASKS).GetHeaders();

@@ -496,6 +496,36 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
+        /// Retrieve the possible virtual machine network configurations of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <returns>VmNetworkConfigurations</returns>
+        public abstract VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId,
+            int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Retrieve a possible virtual machine network configuration by Id of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="id">Id of the virtual machine network configuration</param>
+        /// <returns>VmNetworkConfiguration</returns>
+        public abstract VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId,
+            int virtualApplianceId, int virtualMachineId, int id);
+
+        /// <summary>
+        /// Retrieve NICs attached to a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <returns>Collection of Nics</returns>
+        public abstract Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
         /// Retrieve tasks of a specific virtual machine
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>

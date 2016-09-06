@@ -306,6 +306,36 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(bool);
         }
 
+        public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
+            int virtualMachineId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(VmNetworkConfigurations);
+        }
+
+        public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
+            int virtualMachineId, int id)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+            Contract.Requires(0 < id);
+
+            return default(VmNetworkConfiguration);
+        }
+
+        public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < virtualApplianceId);
+            Contract.Requires(0 < virtualMachineId);
+
+            return default(Nics);
+        }
+
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             Contract.Requires(0 < virtualDataCenterId);

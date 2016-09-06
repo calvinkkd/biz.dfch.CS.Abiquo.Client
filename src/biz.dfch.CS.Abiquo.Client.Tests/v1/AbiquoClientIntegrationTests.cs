@@ -1230,6 +1230,120 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
+        public void GetNetworkConfigurationsForVmReturnsAbiquoNetworkConfigurationsForVm()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
+            var virtualMachine = virtualMachines.Collection.LastOrDefault();
+            Contract.Assert(null != virtualMachine);
+
+            // Act
+            var networkConfigurations = abiquoClient.GetNetworkConfigurationsForVm(virtualDataCenter.Id,
+                virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(networkConfigurations);
+            Assert.IsNotNull(networkConfigurations.Collection);
+            Assert.IsTrue(0 < networkConfigurations.Collection.Count);
+            Assert.IsNotNull(networkConfigurations.Links);
+
+            var networkConfiguration = networkConfigurations.Collection.First();
+            Assert.IsTrue(0 < networkConfiguration.Id);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetNetworkConfigurationForVmReturnsExpectedAbiquoNetworkConfiguration()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
+            var virtualMachine = virtualMachines.Collection.LastOrDefault();
+            Contract.Assert(null != virtualMachine);
+
+            var networkConfigurations = abiquoClient.GetNetworkConfigurationsForVm(virtualDataCenter.Id,
+                virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
+
+            var expectedNetworkConfiguration = networkConfigurations.Collection.First();
+
+            // Act
+            var networkConfiguration = abiquoClient.GetNetworkConfigurationForVm(virtualDataCenter.Id,
+                virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault(),
+                expectedNetworkConfiguration.Id.GetValueOrDefault());
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsTrue(0 < networkConfiguration.Id);
+            Assert.AreEqual(expectedNetworkConfiguration.Id, networkConfiguration.Id);
+            Assert.AreEqual(expectedNetworkConfiguration.Gateway, networkConfiguration.Gateway);
+            Assert.AreEqual(expectedNetworkConfiguration.PrimaryDNS, networkConfiguration.PrimaryDNS);
+            Assert.AreEqual(expectedNetworkConfiguration.SecondaryDNS, networkConfiguration.SecondaryDNS);
+            Assert.AreEqual(expectedNetworkConfiguration.SuffixDNS, networkConfiguration.SuffixDNS);
+            Assert.AreEqual(expectedNetworkConfiguration.Used, networkConfiguration.Used);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetNicsOfVirtualMachineReturnsAbiquoNicsOfSpecifiedVirtualMachine()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
+            var virtualMachine = virtualMachines.Collection.LastOrDefault();
+            Contract.Assert(null != virtualMachine);
+
+            // Act
+            var nics = abiquoClient.GetNicsOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(nics);
+            Assert.IsNotNull(nics.Collection);
+            Assert.IsTrue(0 < nics.Collection.Count);
+
+            var nic = nics.Collection.First();
+            Assert.IsNotNull(nic);
+            Assert.IsTrue(0 < nic.Id);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void GetAllTasksOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
         {
             // Arrange
