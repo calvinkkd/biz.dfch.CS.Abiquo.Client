@@ -1068,7 +1068,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
             Assert.IsTrue(loginSucceeded);
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(deploy.TaskId));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
             Assert.IsTrue(0 < deployTask.Timestamp);
             Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, deployTask.State);
             Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
