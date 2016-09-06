@@ -474,7 +474,77 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Networks
 
-        
+        public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+
+            return default(VlanNetworks);
+        }
+
+        public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < id);
+
+            return default(VlanNetwork);
+        }
+
+        public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < privateNetworkId);
+
+            return default(PrivateIps);
+        }
+
+        public override VlanNetworks GetExternalNetworksOfCurrentEnterprise(int dataCenterLimitsId)
+        {
+            Contract.Requires(0 < dataCenterLimitsId);
+
+            return default(VlanNetworks);
+        }
+
+        public override VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterLimitsId);
+
+            return default(VlanNetworks);
+        }
+
+        public override VlanNetwork GetExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int id)
+        {
+            Contract.Requires(0 < dataCenterLimitsId);
+            Contract.Requires(0 < id);
+
+            return default(VlanNetwork);
+        }
+
+        public override VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterLimitsId);
+            Contract.Requires(0 < id);
+
+            return default(VlanNetwork);
+        }
+
+        public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
+        {
+            Contract.Requires(0 < dataCenterLimitsId);
+            Contract.Requires(0 < externalNetworkId);
+
+            return default(ExternalIps);
+        }
+
+        public override ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int dataCenterLimitsId, int externalNetworkId, bool free)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(0 < dataCenterLimitsId);
+            Contract.Requires(0 < externalNetworkId);
+
+            return default(ExternalIps);
+        }
 
         #endregion Newtorks
     }

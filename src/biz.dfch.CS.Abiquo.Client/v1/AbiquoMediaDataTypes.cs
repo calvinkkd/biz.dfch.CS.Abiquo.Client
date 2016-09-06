@@ -67,6 +67,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public static string VND_ABIQUO_ENTERPRISESRESOURCES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.enterprisesresources", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_ERROR = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.error", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_ERRORS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.errors", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_EXTERNALIP = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.externalip", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_EXTERNALIPS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.externalips", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_FITPOLICYRULES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.fitpolicyrules", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_FITPOLICYRULE = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.fitpolicyrule", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_FSM = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.fsm", AbiquoClient.ABIQUO_API_VERSION);
@@ -99,6 +101,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public static string VND_ABIQUO_PRICINGTEMPLATES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.pricingtemplates", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_PRICINGTIER = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.pricingtier", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_PRICINGTIERS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.pricingtiers", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_PRIVATEIP = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.privateip", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_PRIVATEIPS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.privateips", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_PRIVILEGE = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.privilege", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_PRIVILEGES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.privileges", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_RACK = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.rack", AbiquoClient.ABIQUO_API_VERSION);

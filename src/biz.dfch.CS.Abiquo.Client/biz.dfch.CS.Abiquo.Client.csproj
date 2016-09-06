@@ -205,6 +205,8 @@
     <Compile Include="v1\Model\Enterprise.cs" />
     <Compile Include="v1\Model\Enterprises.cs" />
     <Compile Include="v1\Model\EthernetDriverTypeEnum.cs" />
+    <Compile Include="v1\Model\ExternalIp.cs" />
+    <Compile Include="v1\Model\ExternalIps.cs" />
     <Compile Include="v1\Model\HypervisorTypeEnum.cs" />
     <Compile Include="v1\Model\Job.cs" />
     <Compile Include="v1\Model\Jobs.cs" />
@@ -217,6 +219,8 @@
     <Compile Include="v1\Model\NetworkTypeEnum.cs" />
     <Compile Include="v1\Model\Nic.cs" />
     <Compile Include="v1\Model\Nics.cs" />
+    <Compile Include="v1\Model\PrivateIp.cs" />
+    <Compile Include="v1\Model\PrivateIps.cs" />
     <Compile Include="v1\Model\Privilege.cs" />
     <Compile Include="v1\Model\Privileges.cs" />
     <Compile Include="v1\Model\Role.cs" />

@@ -1809,7 +1809,202 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         #region Networks
 
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetPrivateNetworksReturnsAbiquoPrivateNetworks()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
 
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            // Act
+            var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(privateNetworks);
+            Assert.IsNotNull(privateNetworks.Collection);
+            Assert.IsTrue(0 < privateNetworks.Collection.Count);
+            Assert.IsNotNull(privateNetworks.Links);
+
+            var privateNetwork = privateNetworks.Collection.First();
+            Assert.IsTrue(privateNetwork.IsValid());
+            Assert.IsTrue(0 < privateNetwork.Id);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetPrivateNetworkReturnsExpectedAbiquoPrivateNetwork()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
+            var expectedPrivateNetwork = privateNetworks.Collection.First();
+            
+            // Act
+            var privateNetwork = abiquoClient.GetPrivateNetwork(virtualDataCenter.Id, expectedPrivateNetwork.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsTrue(privateNetwork.IsValid());
+            Assert.IsTrue(0 < privateNetwork.Id);
+            Assert.AreEqual(expectedPrivateNetwork.Id, privateNetwork.Id);
+            Assert.AreEqual(expectedPrivateNetwork.Address, privateNetwork.Address);
+            Assert.AreEqual(expectedPrivateNetwork.DefaultNetwork, privateNetwork.DefaultNetwork);
+            Assert.AreEqual(expectedPrivateNetwork.Gateway, privateNetwork.Gateway);
+            Assert.AreEqual(expectedPrivateNetwork.Ipv6, privateNetwork.Ipv6);
+            Assert.AreEqual(expectedPrivateNetwork.Mask, privateNetwork.Mask);
+            Assert.AreEqual(expectedPrivateNetwork.Name, privateNetwork.Name);
+            Assert.AreEqual(expectedPrivateNetwork.PrimaryDns, privateNetwork.PrimaryDns);
+            Assert.AreEqual(expectedPrivateNetwork.SecondaryDns, privateNetwork.SecondaryDns);
+            Assert.AreEqual(expectedPrivateNetwork.Strict, privateNetwork.Strict);
+            Assert.AreEqual(expectedPrivateNetwork.Tag, privateNetwork.Tag);
+            Assert.AreEqual(expectedPrivateNetwork.Type, privateNetwork.Type);
+            Assert.AreEqual(expectedPrivateNetwork.Unmanaged, privateNetwork.Unmanaged);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetIpsOfPrivateNetworkWihtFreeReturnsFreeIPsOfPrivateNetwork()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
+            var privateNetwork = privateNetworks.Collection.First();
+
+            // Act
+            var ips = abiquoClient.GetIpsOfPrivateNetwork(virtualDataCenter.Id, privateNetwork.Id, true);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(ips);
+            Assert.IsNotNull(ips.Collection);
+            Assert.IsTrue(0 < ips.Collection.Count);
+            Assert.IsNotNull(ips.Links);
+            Assert.IsTrue(0 < ips.Links.Count);
+
+            var ip = ips.Collection.First();
+            Assert.IsNotNull(ip);
+            Assert.IsTrue(0 < ip.Id);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(ip.Ip));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetExternalNetworksOfCurrentEnterpriseReturnsAbiquoExternalNetworksOfCurrentEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
+            var dataCenterLimits = dataCentersLimits.Collection.First();
+
+            // Act
+            var externalNetworks = abiquoClient.GetExternalNetworksOfCurrentEnterprise(dataCenterLimits.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(externalNetworks);
+            Assert.IsNotNull(externalNetworks.Links);
+            Assert.IsTrue(0 < externalNetworks.Links.Count);
+            Assert.IsNotNull(externalNetworks.Collection);
+            Assert.IsTrue(0 < externalNetworks.Collection.Count);
+
+            var externalNetwork = externalNetworks.Collection.First();
+            Assert.IsTrue(externalNetwork.IsValid());
+            Assert.IsTrue(0 < externalNetwork.Id);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetExternalNetworkOfCurrentEnterpriseReturnsExpectedAbiquoExternalNetworkOfCurrentEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
+            var dataCenterLimits = dataCentersLimits.Collection.First();
+
+            var externalNetworks = abiquoClient.GetExternalNetworksOfCurrentEnterprise(dataCenterLimits.Id);
+            var expectedExternalNetwork = externalNetworks.Collection.First();
+            
+            // Act
+            var externalNetwork = abiquoClient.GetExternalNetworkOfCurrentEnterprise(dataCenterLimits.Id,
+                expectedExternalNetwork.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsTrue(externalNetwork.IsValid());
+            Assert.IsTrue(0 < externalNetwork.Id);
+            Assert.AreEqual(expectedExternalNetwork.Id, externalNetwork.Id);
+            Assert.AreEqual(expectedExternalNetwork.Address, externalNetwork.Address);
+            Assert.AreEqual(expectedExternalNetwork.DefaultNetwork, externalNetwork.DefaultNetwork);
+            Assert.AreEqual(expectedExternalNetwork.Gateway, externalNetwork.Gateway);
+            Assert.AreEqual(expectedExternalNetwork.Ipv6, externalNetwork.Ipv6);
+            Assert.AreEqual(expectedExternalNetwork.Mask, externalNetwork.Mask);
+            Assert.AreEqual(expectedExternalNetwork.Name, externalNetwork.Name);
+            Assert.AreEqual(expectedExternalNetwork.PrimaryDns, externalNetwork.PrimaryDns);
+            Assert.AreEqual(expectedExternalNetwork.SecondaryDns, externalNetwork.SecondaryDns);
+            Assert.AreEqual(expectedExternalNetwork.Strict, externalNetwork.Strict);
+            Assert.AreEqual(expectedExternalNetwork.Tag, externalNetwork.Tag);
+            Assert.AreEqual(expectedExternalNetwork.Type, externalNetwork.Type);
+            Assert.AreEqual(expectedExternalNetwork.Unmanaged, externalNetwork.Unmanaged);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithFreeReturnsFreeIPsOfExternalNetworkOfCurrentEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
+            var dataCenterLimits = dataCentersLimits.Collection.First();
+
+            var externalNetworks = abiquoClient.GetExternalNetworksOfCurrentEnterprise(dataCenterLimits.Id);
+            var externalNetwork = externalNetworks.Collection.First();
+
+            // Act
+            var ips = abiquoClient.GetIpsOfExternalNetworkOfCurrentEnterprise(dataCenterLimits.Id, externalNetwork.Id, true);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(ips);
+            Assert.IsNotNull(ips.Collection);
+            Assert.IsTrue(0 < ips.Collection.Count);
+            Assert.IsNotNull(ips.Links);
+            Assert.IsTrue(0 < ips.Links.Count);
+
+            var ip = ips.Collection.First();
+            Assert.IsNotNull(ip);
+            Assert.IsTrue(0 < ip.Id);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(ip.Ip));
+        }
 
         #endregion Newtorks
     }

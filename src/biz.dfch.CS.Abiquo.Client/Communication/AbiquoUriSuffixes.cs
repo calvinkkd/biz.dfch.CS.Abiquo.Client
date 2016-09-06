@@ -105,5 +105,18 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string DATACENTERREPOSITORIES_BY_ENTERPRISE_ID_AND_DATACENTERREPOSITORY_ID = "/admin/enterprises/{0}/datacenterrepositories/{1}";
         
         #endregion DateCenterRepositories
+
+
+        #region Networks
+
+        public const string PRIVATE_NETWORKS_BY_VIRTUALDATACENTER_ID = "/cloud/virtualdatacenters/{0}/privatenetworks";
+        public const string PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID = "/cloud/virtualdatacenters/{0}/privatenetworks/{1}";
+        public const string IPS_OF_PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID = "/cloud/virtualdatacenters/{0}/privatenetworks/{1}/ips";
+
+        public const string EXTERNAL_NETWORKS_BY_ENTERPRISE_ID_AND_LIMIT_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks";
+        public const string EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks/{2}";
+        public const string IPS_OF_EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks/{2}/ips";
+
+        #endregion Networks
     }
 }

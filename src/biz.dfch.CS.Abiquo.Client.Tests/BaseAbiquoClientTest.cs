@@ -1472,7 +1472,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetExternalNetworksOfCurrentEnterpriseWithInvalidLimitIdThrowsContractException()
+        public void GetExternalNetworksOfCurrentEnterpriseWithInvalidDataCenterLimitsIdThrowsContractException()
         {
             // Arrange
 
@@ -1496,7 +1496,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetExternalNetworksWithInvalidLimitIdThrowsContractException()
+        public void GetExternalNetworksWithInvalidDataCenterLimitsIdThrowsContractException()
         {
             // Arrange
 
@@ -1508,7 +1508,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetExternalNetworkOfCurrentEnterpriseWithInvalidLimitIdThrowsContractException()
+        public void GetExternalNetworkOfCurrentEnterpriseWithInvalidDataCenterLimitsIdThrowsContractException()
         {
             // Arrange
 
@@ -1544,7 +1544,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetExternalNetworkWithInvalidLimitIdThrowsContractException()
+        public void GetExternalNetworkWithInvalidDataCenterLimitsIdThrowsContractException()
         {
             // Arrange
 
@@ -1568,6 +1568,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithInvalidDataCenterLimitsIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetIpsOfExternalNetworkOfCurrentEnterprise(INVALID_ID, 42, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetIpsOfExternalNetworkOfCurrentEnterprise(42, INVALID_ID, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetIpsOfExternalNetworkWithInvalidEnterpriseIdThrowsContractException()
         {
             // Arrange
@@ -1580,7 +1604,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetIpsOfExternalNetworkWithInvalidLimitIdThrowsContractException()
+        public void GetIpsOfExternalNetworkWithInvalidDataCenterLimitsIdThrowsContractException()
         {
             // Arrange
 
@@ -1603,6 +1627,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         #endregion Newtorks
+
 
         private class DummyAbiquoClient : BaseAbiquoClient
         {
@@ -1867,27 +1892,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new PrivateIps();
             }
 
-            public override VlanNetworks GetExternalNetworksOfCurrentEnterprise(int limitId)
+            public override VlanNetworks GetExternalNetworksOfCurrentEnterprise(int dataCenterLimitsId)
             {
                 return new VlanNetworks();
             }
 
-            public override VlanNetworks GetExternalNetworks(int enterpriseId, int limitId)
+            public override VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId)
             {
                 return new VlanNetworks();
             }
 
-            public override VlanNetwork GetExternalNetworkOfCurrentEnterprise(int limitId, int id)
+            public override VlanNetwork GetExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int id)
             {
                 return new VlanNetwork();
             }
 
-            public override VlanNetwork GetExternalNetwork(int enterpriseId, int limitId, int id)
+            public override VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id)
             {
                 return new VlanNetwork();
             }
 
-            public override ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int limitId, int externalNetworkId, bool free)
+            public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
+            {
+                return new ExternalIps();
+            }
+
+            public override ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int dataCenterLimitsId, int externalNetworkId, bool free)
             {
                 return new ExternalIps();
             }
@@ -2151,27 +2181,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override VlanNetworks GetExternalNetworksOfCurrentEnterprise(int limitId)
+            public override VlanNetworks GetExternalNetworksOfCurrentEnterprise(int dataCenterLimitsId)
             {
                 throw new NotImplementedException();
             }
 
-            public override VlanNetworks GetExternalNetworks(int enterpriseId, int limitId)
+            public override VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId)
             {
                 throw new NotImplementedException();
             }
 
-            public override VlanNetwork GetExternalNetworkOfCurrentEnterprise(int limitId, int id)
+            public override VlanNetwork GetExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int id)
             {
                 throw new NotImplementedException();
             }
 
-            public override VlanNetwork GetExternalNetwork(int enterpriseId, int limitId, int id)
+            public override VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id)
             {
                 throw new NotImplementedException();
             }
 
-            public override ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int limitId, int externalNetworkId, bool free)
+            public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int dataCenterLimitsId, int externalNetworkId, bool free)
             {
                 throw new NotImplementedException();
             }
