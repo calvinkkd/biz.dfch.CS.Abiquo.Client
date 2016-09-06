@@ -462,6 +462,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsTrue(0 < dataCentersLimits.Collection.Count);
             Assert.IsNotNull(dataCentersLimits.Links);
             Assert.IsTrue(0 < dataCentersLimits.Links.Count);
+
+            var dataCenterLimits = dataCentersLimits.Collection.First();
+            Assert.IsTrue(dataCenterLimits.IsValid());
         }
 
         [TestMethod]
@@ -484,6 +487,21 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsNotNull(dataCenterLimits);
             Assert.IsTrue(dataCenterLimits.IsValid());
+            Assert.AreEqual(expectedDataCenterLimits.Id, dataCenterLimits.Id);
+            Assert.AreEqual(expectedDataCenterLimits.CpuCountHardLimit, dataCenterLimits.CpuCountHardLimit);
+            Assert.AreEqual(expectedDataCenterLimits.CpuCountSoftLimit, dataCenterLimits.CpuCountSoftLimit);
+            Assert.AreEqual(expectedDataCenterLimits.DiskHardLimitInMb, dataCenterLimits.DiskHardLimitInMb);
+            Assert.AreEqual(expectedDataCenterLimits.DiskSoftLimitInMb, dataCenterLimits.DiskSoftLimitInMb);
+            Assert.AreEqual(expectedDataCenterLimits.PublicIpsHard, dataCenterLimits.PublicIpsHard);
+            Assert.AreEqual(expectedDataCenterLimits.PublicIpsSoft, dataCenterLimits.PublicIpsSoft);
+            Assert.AreEqual(expectedDataCenterLimits.RamHardLimitInMb, dataCenterLimits.RamHardLimitInMb);
+            Assert.AreEqual(expectedDataCenterLimits.RamSoftLimitInMb, dataCenterLimits.RamSoftLimitInMb);
+            Assert.AreEqual(expectedDataCenterLimits.RepositoryHardInMb, dataCenterLimits.RepositoryHardInMb);
+            Assert.AreEqual(expectedDataCenterLimits.RepositorySoftInMb, dataCenterLimits.RepositorySoftInMb);
+            Assert.AreEqual(expectedDataCenterLimits.StorageHardInMb, dataCenterLimits.StorageHardInMb);
+            Assert.AreEqual(expectedDataCenterLimits.StorageSoftInMb, dataCenterLimits.StorageSoftInMb);
+            Assert.AreEqual(expectedDataCenterLimits.VlansHard, dataCenterLimits.VlansHard);
+            Assert.AreEqual(expectedDataCenterLimits.VlansSoft, dataCenterLimits.VlansSoft);
         }
 
         #endregion DataCentersLimits
