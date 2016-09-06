@@ -461,7 +461,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(dataCentersLimits.Collection);
             Assert.IsTrue(0 < dataCentersLimits.Collection.Count);
             Assert.IsNotNull(dataCentersLimits.Links);
-            Assert.IsTrue(0 < dataCentersLimits.Links.Count);
 
             var dataCenterLimits = dataCentersLimits.Collection.First();
             Assert.IsTrue(dataCenterLimits.IsValid());
