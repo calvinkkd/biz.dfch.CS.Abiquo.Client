@@ -1042,6 +1042,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
 
+            var deployTask = abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), false, true);
+
+            virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
+
             var updatedCpuValue = virtualMachine.Cpu * 2;
             var updatedRamValue = virtualMachine.Ram * 2;
             var updatedVdrpEnabled = !virtualMachine.VdrpEnabled;
@@ -1061,6 +1067,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Assert
             Assert.IsTrue(loginSucceeded);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(deploy.TaskId));
+            Assert.IsTrue(0 < deployTask.Timestamp);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, deployTask.State);
+            Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
             Assert.IsTrue(0 < updateTask.Timestamp);
