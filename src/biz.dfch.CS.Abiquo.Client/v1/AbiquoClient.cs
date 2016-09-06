@@ -310,8 +310,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                     virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
             // IMPORTANT
-            // If the VM is already deployed, the update request results in http status code 202 and returns a task
-            // If the VM is not yet deployed, the update request results in http status code 204 and returns an empty body
+            //
+            // If the VirtualMachine is already deployed, the update request results in http status code 202 and returns a task
+            // If the VirtualMachine is not yet deployed, the update request results in http status code 204 and returns an empty body
             var updateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, filter, headers, virtualMachine);
             Contract.Assert(null != updateTask);
 
