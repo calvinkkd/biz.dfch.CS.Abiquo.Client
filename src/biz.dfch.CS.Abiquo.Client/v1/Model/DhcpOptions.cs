@@ -25,6 +25,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public class DhcpOptions : AbiquoBaseCollectionDto<DhcpOption>
     {
-        // N/A (All collection properties defined in AbiquoBaseCollectionDto
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto)
     }
 }
