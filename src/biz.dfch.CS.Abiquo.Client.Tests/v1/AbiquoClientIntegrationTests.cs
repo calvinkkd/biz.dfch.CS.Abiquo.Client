@@ -1005,7 +1005,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(updateTask.TaskId, completedTask.TaskId);
             Assert.IsTrue(0 < completedTask.Timestamp);
             Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, completedTask.State);
-            Assert.AreEqual(TaskTypeEnum.DEPLOY, completedTask.Type);
+            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, completedTask.Type);
 
             Assert.IsNotNull(updatedVirtualMachine);
             Assert.IsTrue(0 < updatedVirtualMachine.Id);
