@@ -32,7 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string Gateway { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int Mask { get; set; }
 
         [Required]
@@ -42,7 +42,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string NetworkAddress { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int Option { get; set; }
     }
 }
