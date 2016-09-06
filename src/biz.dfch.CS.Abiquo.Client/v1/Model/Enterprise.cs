@@ -102,8 +102,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Range(0, Int64.MaxValue)]
         public long VlansSoft { get; set; }
 
-        // The following properties get delivered by the rest response 
-        // but are not mentioned in the wiki 
+        // The following properties get delivered by the rest response, but are not mentioned in the wiki 
         // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-EnterpriseMediaType
         public bool Workflow { get; set; }
 

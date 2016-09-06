@@ -136,7 +136,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetEnterpriseReturnsAbiquoEnterprise()
+        public void GetEnterpriseReturnsExpectedAbiquoEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -306,7 +306,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetUserOfCurrentEnterpriseReturnsAbiquoUserOfCurrentEnterprise()
+        public void GetUserOfCurrentEnterpriseReturnsExpectedAbiquoUserOfCurrentEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -339,7 +339,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetUserReturnsAbiquoUser()
+        public void GetUserReturnsExpectedAbiquoUser()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -415,7 +415,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetRoleReturnsAbiquoRole()
+        public void GetRoleReturnsExpectedAbiquoRole()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -466,7 +466,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetDataCenterLimitsOfCurrentEnterpriseReturnsAbiquoLimitOfCurrentEnterprise()
+        public void GetDataCenterLimitsOfCurrentEnterpriseReturnsExpectedAbiquoDataCenterLimitsOfCurrentEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -474,10 +474,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
             Contract.Assert(null != dataCentersLimits);
-            var expectedDataCenterLimit = dataCentersLimits.Collection.First();
+            var expectedDataCenterLimits = dataCentersLimits.Collection.First();
 
             // Act
-            var dataCenterLimits = abiquoClient.GetDataCenterLimitsOfCurrentEnterprise(expectedDataCenterLimit.Id);
+            var dataCenterLimits = abiquoClient.GetDataCenterLimitsOfCurrentEnterprise(expectedDataCenterLimits.Id);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -555,7 +555,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetVirtualMachineReturnsAbiquoVirtualMachine()
+        public void GetVirtualMachineReturnsExpectedAbiquoVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1402,11 +1402,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
-            var expectedVirtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != expectedVirtualMachine);
+            var existingVirtualMachine = virtualMachines.Collection.LastOrDefault();
+            Contract.Assert(null != existingVirtualMachine);
 
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                expectedVirtualMachine.Id.GetValueOrDefault());
+                existingVirtualMachine.Id.GetValueOrDefault());
 
             var tasksOfVirtualMachine = abiquoClient.GetAllTasksOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault());
@@ -1473,7 +1473,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetVirtualMachineTemplateReturnsAbiquoVirtualMachineTemplate()
+        public void GetVirtualMachineTemplateReturnsExpectedAbiquoVirtualMachineTemplate()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1488,12 +1488,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
-            var expectedVirtualMachineTemplate = virtualMachineTemplates.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedVirtualMachineTemplate);
+            var existingVirtualMachine = virtualMachineTemplates.Collection.FirstOrDefault();
+            Contract.Assert(null != existingVirtualMachine);
 
             // Act
             var virtualMachineTemplate = abiquoClient.GetVirtualMachineTemplate(IntegrationTestEnvironment.TenantId,
-                dataCenterRepositoryId, expectedVirtualMachineTemplate.Id);
+                dataCenterRepositoryId, existingVirtualMachine.Id);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -1546,7 +1546,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetVirtualDataCenterReturnsAbiquoVirtualDataCenter()
+        public void GetVirtualDataCenterReturnsExpectedAbiquoVirtualDataCenter()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1618,7 +1618,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetVirtualApplianceReturnsAbiquoVirtualAppliance()
+        public void GetVirtualApplianceReturnsExpectedAbiquoVirtualAppliance()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1713,7 +1713,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetDataCenterRepositoryOfCurrentEnterpriseReturnsAbiquoDataCenterRepositoryOfCurrentEnterprise()
+        public void GetDataCenterRepositoryOfCurrentEnterpriseReturnsExpectedAbiquoDataCenterRepositoryOfCurrentEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1747,7 +1747,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetDataCenterRepositoryReturnsAbiquoDataCenterRepository()
+        public void GetDataCenterRepositoryReturnsExpectedAbiquoDataCenterRepository()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1784,7 +1784,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         #region Tasks
 
-        
+        // WaitForTaskCompletion gets implicitly tested by some of the other integration tests
 
         #endregion Tasks
 
