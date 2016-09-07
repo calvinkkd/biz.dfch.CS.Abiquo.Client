@@ -307,7 +307,21 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             //
             // If the VirtualMachine is already deployed, the update request results in http status code 202 and returns a task
             // If the VirtualMachine is not yet deployed, the update request results in http status code 204 and returns an empty body
-            var updateTask = Invoke<AcceptedRequest>(HttpMethod.Put, uriSuffix, filter, headers, virtualMachine);
+            var updateResultAsString = Invoke(HttpMethod.Put, uriSuffix, filter, headers, virtualMachine);
+
+            // Return fake task if updated was performed against a not yet deployed VirtualMachine
+            if (string.IsNullOrWhiteSpace(updateResultAsString))
+            {
+                return new Task()
+                {
+                    TaskId = "FakeTask",
+                    State = TaskStateEnum.FINISHED_SUCCESSFULLY,
+                    Type = TaskTypeEnum.RECONFIGURE,
+                    Timestamp = DateTimeOffset.Now.Millisecond
+                };
+            }
+
+            var updateTask = BaseDto.DeserializeObject<Task>(updateResultAsString);
             Contract.Assert(null != updateTask);
 
             var link = updateTask.GetLinkByRel(AbiquoRelations.STATUS);
