@@ -13,7 +13,7 @@
         <description>biz.dfch.CS.Abiquo.Client
 ========================
 
-C#/.NET client for Abiquo.
+C#/.NET client for [Abiquo](http://www.abiquo.com/).
 
 d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 
@@ -24,13 +24,35 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>C#/.NET client for Abiquo</summary>
-        <releaseNotes>20160701
-* Initial release
+        <releaseNotes>20160907
+Initial release of Abiquo Client
+
+# FEATURES
+* Abiquo Client v1 for Abiquo API version 3.8
+  * Support for Basic Authentication
+  * Get User/Users
+  * Get Enterprise/Enterprises
+  * Get Network/Networks
+  * Get VirtualDataCenter/VirtualDataCenters
+  * Get VirtualAppliance/VirtualAppliances
+  * Get DataCenterRepository/DataCenterRepositories
+  * Get Task/Tasks
+  * VM operations (Get, Create, Update, Deploy, Delete and change state)
 </releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>
         <dependencies>
-			
+			<dependency id="biz.dfch.CS.System.Utilities" version="2.0.1" />
+			<dependency id="biz.dfch.CS.Web.Utilities" version="1.2.0" />
+			<dependency id="EntityFramework" version="6.1.3" />
+			<dependency id="log4net" version="2.0.5" />
+			<dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+			<dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" />
+			<dependency id="Microsoft.AspNet.WebApi.OData" version="5.2.0" />
+			<dependency id="Microsoft.Data.Edm" version="5.6.4" />
+			<dependency id="Microsoft.Data.OData" version="5.6.4" />
+			<dependency id="Newtonsoft.Json" version="6.0.8" />
+			<dependency id="System.Spatial" version="5.6.4" />
         </dependencies>
     </metadata>
 	<files>

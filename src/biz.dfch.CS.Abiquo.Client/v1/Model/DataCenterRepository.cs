@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace biz.dfch.CS.Abiquo.Client.Tests
+namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    [TestClass]
-    public class SampleClassTest
+    public class DataCenterRepository : AbiquoBaseDto
     {
-        [TestMethod]
-        public void SampleTestMethod()
-        {
-        }
+        public string Error { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        public long RepositoryCapacityMb { get; set; }
+
+        [Required]
+        public string RepositoryLocation { get; set; }
+
+        public long RepositoryRemainingMb { get; set; }
     }
 }
