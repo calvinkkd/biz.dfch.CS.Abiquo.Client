@@ -49,6 +49,16 @@ namespace biz.dfch.CS.Abiquo.Client.General
             return this;
         }
 
+        public HeaderBuilder BuildCustom(string headerKey, string headerValue)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(headerKey));
+            Contract.Requires(!string.IsNullOrWhiteSpace(headerValue));
+
+            _headers.Add(headerKey, headerValue);
+
+            return this;
+        }
+
         public Dictionary<string, string> GetHeaders()
         {
             Contract.Ensures(null != Contract.Result<Dictionary<string, string>>());

@@ -56,7 +56,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
         }
 
         [TestMethod]
-        public void BuildAcceptHeaderReturnsDictionaryContainingExpectedAcceptHeader()
+        public void BuildAcceptHeaderCreatesDictionaryContainingExpectedAcceptHeader()
         {
             // Arrange
 
@@ -94,7 +94,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
         }
 
         [TestMethod]
-        public void BuildContentTypeHeaderReturnsDictionaryContainingExpectedAcceptHeader()
+        public void BuildContentTypeHeaderCreatesDictionaryContainingExpectedAcceptHeader()
         {
             // Arrange
 
@@ -105,6 +105,70 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             Assert.AreEqual(1, headers.Count);
             Assert.IsTrue(headers.ContainsKey(AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY));
             Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY]);
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildCustomWithNullHeaderKeyThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildCustom(null, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE);
+
+            // Assert
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildCustomWithEmptyHeaderKeyThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildCustom(" ", AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE);
+
+            // Assert
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildCustomWithNullHeaderValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildCustom(AbiquoHeaderKeys.ACCEPT_HEADER_KEY, null);
+
+            // Assert
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildCustomWithEmptyHeaderValueThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new HeaderBuilder().BuildCustom(AbiquoHeaderKeys.ACCEPT_HEADER_KEY, " ");
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void BuildCustomCreatesDictionaryContainingExpectedHeader()
+        {
+            // Arrange
+            var headerKey = "Arbitrary-Key";
+            var headerValue = "ArbitraryValue";
+
+            // Act
+            var headers = new HeaderBuilder().BuildCustom(headerKey, headerValue).GetHeaders();
+
+            // Assert
+            Assert.AreEqual(1, headers.Count);
+            Assert.IsTrue(headers.ContainsKey(headerKey));
+            Assert.AreEqual(headerValue, headers[headerKey]);
         }
     }
 }
