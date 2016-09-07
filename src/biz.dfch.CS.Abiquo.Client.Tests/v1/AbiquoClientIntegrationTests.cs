@@ -1012,7 +1012,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void UpdateVirtualMachineUpdatesAbiquoVirtualMachineAndReturnsStartedUpdateTask()
+        public void UpdateVirtualMachineWithWaitForCompletionForDeployedVmUpdatesAbiquoVirtualMachineAndReturnsSuccessfullyCompletedUpdateTask()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1047,19 +1047,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault());
 
-            var updatedCpuValue = virtualMachine.Cpu * 2;
-            var updatedRamValue = virtualMachine.Ram * 2;
-            var updatedVdrpEnabled = !virtualMachine.VdrpEnabled;
-            virtualMachine.Cpu = updatedCpuValue;
-            virtualMachine.Ram = updatedRamValue;
-            virtualMachine.VdrpEnabled = updatedVdrpEnabled;
+            var variableKey = "arbitraryKey";
+            var variableValue = "ArbitraryValue";
+            var updatedVariables = new Dictionary<string, string>()
+            {
+                {variableKey, variableValue}
+            };
+            var updatedDescription = "Arbitrary Description";
+            virtualMachine.Variables = updatedVariables;
+            virtualMachine.Description = updatedDescription;
 
             // Act
             var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, false);
-
-            var completedTask = abiquoClient.WaitForTaskCompletion(updateTask,
-                abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
+                virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, true);
 
             var updatedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault());
@@ -1074,20 +1074,14 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
             Assert.IsTrue(0 < updateTask.Timestamp);
-            Assert.AreEqual(TaskStateEnum.STARTED, updateTask.State);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, updateTask.State);
             Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
-
-            Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
-            Assert.AreEqual(updateTask.TaskId, completedTask.TaskId);
-            Assert.IsTrue(0 < completedTask.Timestamp);
-            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, completedTask.State);
-            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, completedTask.Type);
 
             Assert.IsNotNull(updatedVirtualMachine);
             Assert.IsTrue(0 < updatedVirtualMachine.Id);
-            Assert.AreEqual(updatedCpuValue, updatedVirtualMachine.Cpu);
-            Assert.AreEqual(updatedRamValue, updatedVirtualMachine.Ram);
-            Assert.AreEqual(updatedVdrpEnabled, updatedVirtualMachine.VdrpEnabled);
+            Assert.AreEqual(updatedDescription, updatedVirtualMachine.Description);
+            Assert.IsTrue(updatedVirtualMachine.Variables.ContainsKey(variableKey));
+            Assert.AreEqual(variableValue, updatedVirtualMachine.Variables[variableKey]);
 
             // Cleanup
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
