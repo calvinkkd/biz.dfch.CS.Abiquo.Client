@@ -197,6 +197,7 @@
     <Compile Include="BaseAbiquoClientTest.cs" />
     <Compile Include="Factory\AbiquoClientFactoryTest.cs" />
     <Compile Include="Authentication\BasicAuthenticationInformationTest.cs" />
+    <Compile Include="General\FilterBuilderTest.cs" />
     <Compile Include="General\HeaderBuilderTest.cs" />
     <Compile Include="IntegrationTestEnvironment.cs" />
     <Compile Include="General\BaseDtoTest.cs" />

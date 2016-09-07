@@ -254,10 +254,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (force)
             {
-                filter = new Dictionary<string, object>()
-                {
-                    {"force", "true"}
-                };
+                filter = new FilterBuilder().BuildFilterPart("force", "true").GetFilter();
             }
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST).GetHeaders();
@@ -294,10 +291,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (force)
             {
-                filter = new Dictionary<string, object>()
-                {
-                    {"force", "true"}
-                };
+                filter = new FilterBuilder().BuildFilterPart("force", "true").GetFilter();
             }
 
             var headers = new HeaderBuilder()
@@ -373,10 +367,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (force)
             {
-                filter = new Dictionary<string, object>()
-                {
-                    {"force", "true"}
-                };
+                filter = new FilterBuilder().BuildFilterPart("force", "true").GetFilter();
             }
 
             var uriSuffix = 
@@ -605,10 +596,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (free)
             {
-                filter = new Dictionary<string, object>()
-                {
-                    {"free", "true"}
-                };
+                filter = new FilterBuilder().BuildFilterPart("free", "true").GetFilter();
             }
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_PRIVATEIPS).GetHeaders();
@@ -658,10 +646,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (free)
             {
-                filter = new Dictionary<string, object>()
-                {
-                    {"free", "true"}
-                };
+                filter = new FilterBuilder().BuildFilterPart("free", "true").GetFilter();
             }
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_EXTERNALIPS).GetHeaders();

@@ -245,11 +245,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
             sut.Login(ABIQUO_API_BASE_URI, authenticationInformation);
 
-            var filter = new Dictionary<string, object>()
-            {
-                {"currentPage", 1},
-                {"limit", "25"}
-            };
+            var filter = new FilterBuilder()
+                .BuildFilterPart("currentPage", 1)
+                .BuildFilterPart("limit", 25)
+                .GetFilter();
 
             var expectedRequestUri = string.Format("{0}?{1}", UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES), "currentPage=1&limit=25");
 
