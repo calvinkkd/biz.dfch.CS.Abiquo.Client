@@ -855,7 +855,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var deployTask = abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), false, false);
+                virtualMachine.Id.GetValueOrDefault(), false);
 
             var completedTask = abiquoClient.WaitForTaskCompletion(deployTask,
                 abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
