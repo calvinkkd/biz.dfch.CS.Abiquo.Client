@@ -705,7 +705,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PURCHASED_PUBLIC_IP_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
-            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers);
+            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, "");
         }
 
         public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
@@ -714,7 +714,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_IP_TO_PURCHASE_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
-            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers);
+            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, "");
         }
 
         #endregion Networks
