@@ -2155,6 +2155,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(publicIpToBePurchased.Quarantine, releasedPublicIp.Quarantine);
         }
 
-        #endregion Newtorks
+        #endregion Networks
     }
 }

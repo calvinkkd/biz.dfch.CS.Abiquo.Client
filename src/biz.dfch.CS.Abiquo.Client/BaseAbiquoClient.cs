@@ -776,6 +776,6 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>PublicIp</returns>
         public abstract PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid);
 
-        #endregion Newtorks
+        #endregion Networks
     }
 }

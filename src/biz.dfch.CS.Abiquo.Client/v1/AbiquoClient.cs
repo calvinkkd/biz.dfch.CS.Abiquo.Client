@@ -717,6 +717,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers);
         }
 
-        #endregion Newtorks
+        #endregion Networks
     }
 }

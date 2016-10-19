@@ -585,6 +585,6 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(PublicIp);
         }
 
-        #endregion Newtorks
+        #endregion Networks
     }
 }

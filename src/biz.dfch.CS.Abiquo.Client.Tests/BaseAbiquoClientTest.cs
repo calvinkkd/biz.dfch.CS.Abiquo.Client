@@ -1733,7 +1733,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
-        #endregion Newtorks
+        #endregion Networks
 
 
         private class DummyAbiquoClient : BaseAbiquoClient
