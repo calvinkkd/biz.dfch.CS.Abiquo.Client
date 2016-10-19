@@ -2138,8 +2138,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(publicIpToBePurchased.Available, purchasedPublicIp.Available);
             Assert.AreEqual(publicIpToBePurchased.Id, purchasedPublicIp.Id);
             Assert.AreEqual(publicIpToBePurchased.Ip, purchasedPublicIp.Ip);
-            Assert.AreEqual(publicIpToBePurchased.Mac, purchasedPublicIp.Mac);
-            Assert.AreEqual(publicIpToBePurchased.Name, purchasedPublicIp.Name);
+            Assert.AreNotEqual(publicIpToBePurchased.Mac, purchasedPublicIp.Mac);
+            Assert.AreNotEqual(publicIpToBePurchased.Name, purchasedPublicIp.Name);
             Assert.AreEqual(publicIpToBePurchased.NetworkName, purchasedPublicIp.NetworkName);
             Assert.AreEqual(publicIpToBePurchased.Quarantine, purchasedPublicIp.Quarantine);
 
