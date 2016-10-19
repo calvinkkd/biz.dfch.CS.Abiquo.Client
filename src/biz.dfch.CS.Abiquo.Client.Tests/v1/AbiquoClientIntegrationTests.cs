@@ -2010,6 +2010,151 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsFalse(string.IsNullOrWhiteSpace(ip.Ip));
         }
 
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetPublicNetworksReturnsAbiquoPublicNetworks()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            // Act
+            var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(publicNetworks);
+            Assert.IsNotNull(publicNetworks.Collection);
+            Assert.IsTrue(0 < publicNetworks.Collection.Count);
+            Assert.IsNotNull(publicNetworks.Links);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetPublicNetworkReturnsExpectedAbiquoPublicNetwork()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
+            var expectedPublicNetwork = publicNetworks.Collection.First();
+
+            // Act
+            var publicNetwork = abiquoClient.GetPublicNetwork(virtualDataCenter.Id, expectedPublicNetwork.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(publicNetwork);
+            Assert.IsTrue(publicNetwork.IsValid());
+            Assert.IsTrue(0 < publicNetwork.Id);
+            Assert.AreEqual(expectedPublicNetwork.Id, publicNetwork.Id);
+            Assert.AreEqual(expectedPublicNetwork.Address, publicNetwork.Address);
+            Assert.AreEqual(expectedPublicNetwork.DefaultNetwork, publicNetwork.DefaultNetwork);
+            Assert.AreEqual(expectedPublicNetwork.Gateway, publicNetwork.Gateway);
+            Assert.AreEqual(expectedPublicNetwork.Ipv6, publicNetwork.Ipv6);
+            Assert.AreEqual(expectedPublicNetwork.Mask, publicNetwork.Mask);
+            Assert.AreEqual(expectedPublicNetwork.Name, publicNetwork.Name);
+            Assert.AreEqual(expectedPublicNetwork.PrimaryDns, publicNetwork.PrimaryDns);
+            Assert.AreEqual(expectedPublicNetwork.SecondaryDns, publicNetwork.SecondaryDns);
+            Assert.AreEqual(expectedPublicNetwork.Strict, publicNetwork.Strict);
+            Assert.AreEqual(expectedPublicNetwork.Tag, publicNetwork.Tag);
+            Assert.AreEqual(expectedPublicNetwork.Type, publicNetwork.Type);
+            Assert.AreEqual(expectedPublicNetwork.Unmanaged, publicNetwork.Unmanaged);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetPublicIpsToPurchaseOfPublicNetworkReturnsAbiquoPublicIpsToPurchase()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
+            var publicNetwork = publicNetworks.Collection.First();
+
+            // Act
+            var publicIpsToPurchase = abiquoClient.GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenter.Id,
+                publicNetwork.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(publicIpsToPurchase);
+            Assert.IsTrue(publicIpsToPurchase.IsValid());
+            Assert.IsNotNull(publicIpsToPurchase.Collection);
+            Assert.IsTrue(0 < publicIpsToPurchase.Collection.Count);
+
+            var publicIp = publicIpsToPurchase.Collection.First();
+            Assert.IsNotNull(publicIp);
+            Assert.IsTrue(publicIp.IsValid());
+            Assert.IsTrue(0 < publicIp.Id);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void PurchasePublicIpSucceedsAndReturnsPurchasedIp()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
+            var publicNetwork = publicNetworks.Collection.First();
+
+            var publicIpsToPurchase = abiquoClient.GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenter.Id,
+                publicNetwork.Id);
+            var publicIpToBePurchased = publicIpsToPurchase.Collection.First();
+
+            // Act
+            var purchasedPublicIp = abiquoClient.PurchasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(purchasedPublicIp);
+            Assert.IsTrue(purchasedPublicIp.IsValid());
+            Assert.IsTrue(0 < purchasedPublicIp.Id);
+
+            Assert.AreEqual(publicIpToBePurchased.Available, purchasedPublicIp.Available);
+            Assert.AreEqual(publicIpToBePurchased.Id, purchasedPublicIp.Id);
+            Assert.AreEqual(publicIpToBePurchased.Ip, purchasedPublicIp.Ip);
+            Assert.AreEqual(publicIpToBePurchased.Mac, purchasedPublicIp.Mac);
+            Assert.AreEqual(publicIpToBePurchased.Name, purchasedPublicIp.Name);
+            Assert.AreEqual(publicIpToBePurchased.NetworkName, purchasedPublicIp.NetworkName);
+            Assert.AreEqual(publicIpToBePurchased.Quarantine, purchasedPublicIp.Quarantine);
+
+            // Cleanup
+            var releasedPublicIp = abiquoClient.ReleasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
+
+            Assert.AreEqual(publicIpToBePurchased.Available, releasedPublicIp.Available);
+            Assert.AreEqual(publicIpToBePurchased.Id, releasedPublicIp.Id);
+            Assert.AreEqual(publicIpToBePurchased.Ip, releasedPublicIp.Ip);
+            Assert.AreEqual(publicIpToBePurchased.Mac, releasedPublicIp.Mac);
+            Assert.AreEqual(publicIpToBePurchased.Name, releasedPublicIp.Name);
+            Assert.AreEqual(publicIpToBePurchased.NetworkName, releasedPublicIp.NetworkName);
+            Assert.AreEqual(publicIpToBePurchased.Quarantine, releasedPublicIp.Quarantine);
+        }
+
         #endregion Newtorks
     }
 }

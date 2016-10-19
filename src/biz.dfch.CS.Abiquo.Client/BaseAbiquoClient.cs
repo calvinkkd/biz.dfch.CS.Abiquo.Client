@@ -737,6 +737,45 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>ExternalIps</returns>
         public abstract ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int dataCenterLimitsId, int externalNetworkId, bool free);
 
+        /// <summary>
+        /// Retrieve all public networks of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
+        /// <returns>Collection of VlanNetworks</returns>
+        public abstract VlanNetworks GetPublicNetworks(int virtualDataCenterId);
+
+        /// <summary>
+        /// Retrieve a public network by Id of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
+        /// <param name="id">Id of the public network</param>
+        /// <returns>VlanNetwork</returns>
+        public abstract VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id);
+
+        /// <summary>
+        /// Retrieve all public IPs of a specific public network that can be purchased
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
+        /// <param name="vlanId">Id of the public network</param>
+        /// <returns>ExternalIps</returns>
+        public abstract PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId);
+
+        /// <summary>
+        /// Purchase a public IP to be used in a virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="publicIpid">Id of the public IP to be purchased</param>
+        /// <returns>PublicIp</returns>
+        public abstract PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid);
+
+        /// <summary>
+        /// Release a public IP
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
+        /// <param name="publicIpid">Id of the public IP to be released</param>
+        /// <returns>PublicIp</returns>
+        public abstract PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid);
+
         #endregion Newtorks
     }
 }
