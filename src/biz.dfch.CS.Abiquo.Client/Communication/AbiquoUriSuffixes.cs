@@ -117,6 +117,12 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks/{2}";
         public const string IPS_OF_EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID = "/admin/enterprises/{0}/limits/{1}/externalnetworks/{2}/ips";
 
+        public const string PUBLIC_NETWORKS_BY_VIRTUALDATACENTER_ID = "/cloud/virtualdatacenters/{0}/publicvlans";
+        public const string PUBLIC_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PUBLIC_NETWORK_ID = "/cloud/virtualdatacenters/{0}/publicvlans/{1}";
+        public const string PUBLIC_IPS_TO_PURCHASE_BY_VIRTUALDATACENTER_ID = "/cloud/virtualdatacenters/{0}/publicips/topurchase";
+        public const string PURCHASED_PUBLIC_IP_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID = "/cloud/virtualdatacenters/{0}/publicips/purchased/{1}";
+        public const string PUBLIC_IP_TO_PURCHASE_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID = "/cloud/virtualdatacenters/{0}/publicips/topurchase/{1}";
+
         #endregion Networks
     }
 }

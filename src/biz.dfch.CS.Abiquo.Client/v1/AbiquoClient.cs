@@ -670,6 +670,53 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<ExternalIps>(uriSuffix, filter, headers);
         }
 
-        #endregion Newtorks
+        public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_NETWORKS_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
+
+            return Invoke<VlanNetworks>(uriSuffix, headers);
+        }
+
+        public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PUBLIC_NETWORK_ID, virtualDataCenterId, id);
+
+            return Invoke<VlanNetwork>(uriSuffix, headers);
+        }
+
+        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
+        {
+            Dictionary<string, object> filter = new FilterBuilder().BuildFilterPart("vlanId", vlanId).GetFilter();
+
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_PUBLICIPS).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_IPS_TO_PURCHASE_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
+
+            return Invoke<PublicIps>(uriSuffix, filter, headers);
+        }
+
+        public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.PURCHASED_PUBLIC_IP_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
+
+            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, "");
+        }
+
+        public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
+
+            var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_IP_TO_PURCHASE_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
+
+            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, "");
+        }
+
+        #endregion Networks
     }
 }

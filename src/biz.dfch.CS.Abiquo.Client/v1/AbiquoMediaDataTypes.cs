@@ -105,6 +105,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public static string VND_ABIQUO_PRIVATEIPS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.privateips", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_PRIVILEGE = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.privilege", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_PRIVILEGES = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.privileges", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_PUBLICIP = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.publicip", AbiquoClient.ABIQUO_API_VERSION);
+        public static string VND_ABIQUO_PUBLICIPS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.publicips", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_RACK = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.rack", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_RACKS = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.racks", AbiquoClient.ABIQUO_API_VERSION);
         public static string VND_ABIQUO_REMOTESERVICE = string.Format(VERSIONED_MEDIA_DATA_TYPE_TEMPLATE, "application/vnd.abiquo.remoteservice", AbiquoClient.ABIQUO_API_VERSION);

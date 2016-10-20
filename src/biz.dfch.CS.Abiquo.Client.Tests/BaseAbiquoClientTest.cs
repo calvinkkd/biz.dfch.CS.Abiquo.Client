@@ -44,7 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const int INVALID_ID = 0;
 
         private readonly IAuthenticationInformation authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
-        private static readonly string BEARER_TOKEN = "Bearer TESTTOKEN";
+        private const string BEARER_TOKEN = "Bearer TESTTOKEN";
 
         private BaseAbiquoClient sut = new DummyAbiquoClient();
 
@@ -1625,7 +1625,115 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
-        #endregion Newtorks
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPublicNetworksWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetworks(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPublicNetworkWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetwork(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPublicNetworkWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetwork(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPublicIpsToPurchaseOfPublicNetworkWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicIpsToPurchaseOfPublicNetwork(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPublicIpsToPurchaseOfPublicNetworkWithInvalidVlanIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicIpsToPurchaseOfPublicNetwork(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void PurchasePublicIpWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.PurchasePublicIp(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void PurchasePublicIpWithInvalidPublicIpIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.PurchasePublicIp(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ReleasePublicIpWithInvalidVirtualDataCenterIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ReleasePublicIp(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ReleasePublicIpWithInvalidPublicIpIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ReleasePublicIp(42, INVALID_ID);
+
+            // Assert
+        }
+
+        #endregion Networks
 
 
         private class DummyAbiquoClient : BaseAbiquoClient
@@ -1920,6 +2028,31 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 return new ExternalIps();
             }
+
+            public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
+            {
+                return new VlanNetworks();
+            }
+
+            public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
+            {
+                return new VlanNetwork();
+            }
+
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
+            {
+                return new PublicIps();
+            }
+
+            public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+            {
+                return new PublicIp();
+            }
+
+            public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
+            {
+                return new PublicIp();
+            }
         }
 
         private class InvalidAbiquoClient : BaseAbiquoClient
@@ -2206,6 +2339,31 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override ExternalIps GetIpsOfExternalNetwork(int enterpriseId, int dataCenterLimitsId, int externalNetworkId, bool free)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
             {
                 throw new NotImplementedException();
             }

@@ -546,6 +546,45 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(ExternalIps);
         }
 
-        #endregion Newtorks
+        public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+
+            return default(VlanNetworks);
+        }
+
+        public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < id);
+
+            return default(VlanNetwork);
+        }
+
+        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < vlanId);
+
+            return default(PublicIps);
+        }
+
+        public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < publicIpid);
+
+            return default(PublicIp);
+        }
+
+        public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
+        {
+            Contract.Requires(0 < virtualDataCenterId);
+            Contract.Requires(0 < publicIpid);
+
+            return default(PublicIp);
+        }
+
+        #endregion Networks
     }
 }

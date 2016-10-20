@@ -224,6 +224,8 @@
     <Compile Include="v1\Model\PrivateIps.cs" />
     <Compile Include="v1\Model\Privilege.cs" />
     <Compile Include="v1\Model\Privileges.cs" />
+    <Compile Include="v1\Model\PublicIp.cs" />
+    <Compile Include="v1\Model\PublicIps.cs" />
     <Compile Include="v1\Model\Role.cs" />
     <Compile Include="v1\Model\Roles.cs" />
     <Compile Include="v1\Model\RolesWithPrivileges.cs" />

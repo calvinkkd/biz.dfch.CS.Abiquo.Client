@@ -23,18 +23,8 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum VirtualApplianceStateEnum
+    public class PublicIps : AbiquoBaseCollectionDto<PublicIp>
     {
-        DEPLOYED
-        ,
-        NOT_DEPLOYED
-        ,
-        NEEDS_SYNC
-        ,
-        LOCKED
-        ,
-        UNKNOWN
-        ,
-        EMPTY
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto)
     }
 }

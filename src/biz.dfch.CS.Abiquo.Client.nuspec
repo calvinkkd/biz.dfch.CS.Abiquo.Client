@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.CS.Abiquo.Client</id>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <title>biz.dfch.CS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -24,20 +24,13 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>C#/.NET client for Abiquo</summary>
-        <releaseNotes>20160907
-Initial release of Abiquo Client
-
+        <releaseNotes>20161020
 # FEATURES
-* Abiquo Client v1 for Abiquo API version 3.8
-  * Support for Basic Authentication
-  * Get User/Users
-  * Get Enterprise/Enterprises
-  * Get Network/Networks
-  * Get VirtualDataCenter/VirtualDataCenters
-  * Get VirtualAppliance/VirtualAppliances
-  * Get DataCenterRepository/DataCenterRepositories
-  * Get Task/Tasks
-  * VM operations (Get, Create, Update, Deploy, Delete and change state)
+
+* Support for attaching public network
+  * Get public Network/Networks
+  * Get public IPs to purchase for a VDC
+  * Purchase public IP
 </releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>

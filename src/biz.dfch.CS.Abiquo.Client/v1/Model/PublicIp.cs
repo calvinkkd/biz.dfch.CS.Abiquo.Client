@@ -23,18 +23,20 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public enum VirtualApplianceStateEnum
+    public class PublicIp : AbiquoBaseDto
     {
-        DEPLOYED
-        ,
-        NOT_DEPLOYED
-        ,
-        NEEDS_SYNC
-        ,
-        LOCKED
-        ,
-        UNKNOWN
-        ,
-        EMPTY
+        public bool Available { get; set; }
+
+        public int Id { get; set; }
+
+        public string Ip { get; set; }
+
+        public string Mac { get; set; }
+        
+        public string Name { get; set; }
+
+        public string NetworkName { get; set; }
+        
+        public string Quarantine { get; set; }
     }
 }
