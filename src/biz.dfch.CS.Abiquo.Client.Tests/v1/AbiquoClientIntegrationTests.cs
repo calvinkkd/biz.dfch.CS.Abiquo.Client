@@ -44,6 +44,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             State = VirtualMachineStateEnum.OFF
         };
 
+        private VirtualMachineState virtualMachineOnState = new VirtualMachineState()
+        {
+            State = VirtualMachineStateEnum.ON
+        };
+
         #region Login
 
         [TestMethod]
@@ -2108,7 +2113,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void PurchasePublicIpSucceedsAndReturnsPurchasedIp()
+        public void PurchaseAndReleasePublicIpSucceeds()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2156,5 +2161,205 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         #endregion Networks
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void AttachNetworkToNotDeployedVirtualMachineSucceeds()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.First();
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.First();
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.First();
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.Last();
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            // Get available public networks
+            var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
+            var publicNetwork = publicNetworks.Collection.First();
+
+            // Get IP of public network
+            var publicIpsToPurchase = abiquoClient.GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenter.Id,
+                publicNetwork.Id);
+            var publicIpToBePurchased = publicIpsToPurchase.Collection.First();
+
+            // Purchase IP
+            var purchasedPublicIp = abiquoClient.PurchasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
+            Contract.Assert(null != purchasedPublicIp);
+
+            var nics = abiquoClient.GetNicsOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
+
+            var ipLinkRel = string.Format("nic{0}", nics.Collection.Count);
+            var ipLinkHref = purchasedPublicIp.GetLinkByRel(AbiquoRelations.SELF).Href;
+            var ipLink = new LinkBuilder()
+                .BuildHref(ipLinkHref)
+                .BuildRel(ipLinkRel)
+                .BuildTitle("BluenetIp")
+                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP)
+                .GetLink();
+
+            // Act
+            virtualMachine.Links.Add(ipLink);
+
+            var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, true);
+
+            var vmWithAttachedNetwork = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
+            Assert.IsTrue(0 < updateTask.Timestamp);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, updateTask.State);
+            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
+
+            Assert.IsNotNull(vmWithAttachedNetwork);
+            Assert.IsTrue(0 < vmWithAttachedNetwork.Id);
+            Assert.IsNotNull(vmWithAttachedNetwork.Links.FirstOrDefault(l => l.Href == ipLinkHref));
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+            Assert.IsTrue(deletionResult);
+
+            var releasedPublicIp = abiquoClient.ReleasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
+
+            Assert.AreEqual(publicIpToBePurchased.Available, releasedPublicIp.Available);
+            Assert.AreEqual(publicIpToBePurchased.Id, releasedPublicIp.Id);
+            Assert.AreEqual(publicIpToBePurchased.Ip, releasedPublicIp.Ip);
+            Assert.AreEqual(publicIpToBePurchased.Mac, releasedPublicIp.Mac);
+            Assert.AreEqual(publicIpToBePurchased.Name, releasedPublicIp.Name);
+            Assert.AreEqual(publicIpToBePurchased.NetworkName, releasedPublicIp.NetworkName);
+            Assert.AreEqual(publicIpToBePurchased.Quarantine, releasedPublicIp.Quarantine);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void AttachNetworkToDeployedVirtualMachineSucceeds()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.First();
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.First();
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.First();
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.Last();
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            var deployTask = abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), false, true);
+
+            virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
+
+            // Get available public networks
+            var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
+            var publicNetwork = publicNetworks.Collection.First();
+
+            // Get IP of public network
+            var publicIpsToPurchase = abiquoClient.GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenter.Id,
+                publicNetwork.Id);
+            var publicIpToBePurchased = publicIpsToPurchase.Collection.First();
+
+            // Purchase IP
+            var purchasedPublicIp = abiquoClient.PurchasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
+            Contract.Assert(null != purchasedPublicIp);
+
+            var nics = abiquoClient.GetNicsOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
+
+            var ipLinkRel = string.Format("nic{0}", nics.Collection.Count);
+            var ipLinkHref = purchasedPublicIp.GetLinkByRel(AbiquoRelations.SELF).Href;
+            var ipLink = new LinkBuilder()
+                .BuildHref(ipLinkHref)
+                .BuildRel(ipLinkRel)
+                .BuildTitle("BluenetIp")
+                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP)
+                .GetLink();
+
+            // Act
+            // Power off VM
+            var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), virtualMachineOffState, true);
+            Contract.Assert(TaskStateEnum.FINISHED_SUCCESSFULLY == changeStateTask.State);
+            virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
+
+            virtualMachine.Links.Add(ipLink);
+
+            var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, true);
+
+            // Power on VM
+            changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), virtualMachineOnState, true);
+            Contract.Assert(TaskStateEnum.FINISHED_SUCCESSFULLY == changeStateTask.State);
+
+            var vmWithAttachedNetwork = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault());
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
+            Assert.IsTrue(0 < deployTask.Timestamp);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, deployTask.State);
+            Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
+            Assert.IsTrue(0 < updateTask.Timestamp);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, updateTask.State);
+            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
+
+            Assert.IsNotNull(vmWithAttachedNetwork);
+            Assert.IsTrue(0 < vmWithAttachedNetwork.Id);
+            Assert.IsNotNull(vmWithAttachedNetwork.Links.FirstOrDefault(l => l.Href == ipLinkHref));
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), true);
+            Assert.IsTrue(deletionResult);
+
+            var releasedPublicIp = abiquoClient.ReleasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
+
+            Assert.AreEqual(publicIpToBePurchased.Available, releasedPublicIp.Available);
+            Assert.AreEqual(publicIpToBePurchased.Id, releasedPublicIp.Id);
+            Assert.AreEqual(publicIpToBePurchased.Ip, releasedPublicIp.Ip);
+            Assert.AreEqual(publicIpToBePurchased.Mac, releasedPublicIp.Mac);
+            Assert.AreEqual(publicIpToBePurchased.Name, releasedPublicIp.Name);
+            Assert.AreEqual(publicIpToBePurchased.NetworkName, releasedPublicIp.NetworkName);
+            Assert.AreEqual(publicIpToBePurchased.Quarantine, releasedPublicIp.Quarantine);
+        }
     }
 }
