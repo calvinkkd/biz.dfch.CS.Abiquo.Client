@@ -134,10 +134,20 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override User GetUserInformation(int enterpriseId, string username)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
-            var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_ID_AND_USER_ID, enterpriseId, username);
+            var filter = new FilterBuilder().BuildFilterPart("has", username).GetFilter();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USERS).GetHeaders();
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, enterpriseId);
 
-            return Invoke<User>(uriSuffix, headers);
+            var searchResult = Invoke<Users>(uriSuffix, filter, headers);
+
+            var errorMsg = string.Format("User with nick '{0}' does not exist in enterprise with Id = '{1}'", username,
+                enterpriseId);
+            Contract.Assert(null != searchResult.Collection);
+
+            var user = searchResult.Collection.FirstOrDefault(u => u.Nick == username);
+            Contract.Assert(null != user, errorMsg);
+
+            return user;
         }
 
         #endregion Users
