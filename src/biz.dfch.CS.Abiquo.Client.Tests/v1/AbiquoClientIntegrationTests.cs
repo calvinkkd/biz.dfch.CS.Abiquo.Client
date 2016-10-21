@@ -388,7 +388,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(userInformation);
-            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Name);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
             
             var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
             Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
@@ -408,7 +408,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(userInformation);
-            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Name);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
 
             var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
             Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
@@ -428,7 +428,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(userInformation);
-            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Name);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
 
             var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
             Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));

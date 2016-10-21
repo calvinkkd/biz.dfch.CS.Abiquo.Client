@@ -81,7 +81,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             Assert.IsNotNull(authHeaders);
             Assert.AreEqual(1, authHeaders.Keys.Count);
 
-            Assert.AreEqual("Bearer ArbitraryOAuth2Token", authHeaders[Constants.AUTHORIZATION_HEADER_KEY]);
+            Assert.AreEqual("Bearer ARBITRARY_OAUTH2_TOKEN", authHeaders[Constants.AUTHORIZATION_HEADER_KEY]);
         }
 
         [TestMethod]
