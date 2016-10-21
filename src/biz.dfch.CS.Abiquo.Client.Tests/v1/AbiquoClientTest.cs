@@ -30,6 +30,7 @@ using biz.dfch.CS.Web.Utilities.Rest;
 using biz.dfch.CS.Abiquo.Client.Factory;
 ﻿using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
@@ -101,11 +102,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var user = new User()
+            {
+                Nick = USERNAME
+            };
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor
                 .Invoke(HttpMethod.Get, expectedRequestUri, basicAuthInfo.GetAuthorizationHeaders(), null))
                     .IgnoreInstance()
+                    .Returns(user.SerializeObject())
                     .OccursOnce();
 
             // Act
@@ -142,17 +148,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void LogoutResetsAuthenticationInformationApiBaseUriAndSetsLoggedInToFalse()
+        public void LogoutResetsAuthenticationInformationApiBaseUriCurrentUserInformationAndSetsLoggedInToFalse()
         {
             // Arrange
             var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var user = new User()
+            {
+                Nick = USERNAME
+            };
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor
                 .Invoke(HttpMethod.Get, expectedRequestUri, basicAuthInfo.GetAuthorizationHeaders(), null))
                     .IgnoreInstance()
+                    .Returns(user.SerializeObject())
                     .OccursOnce();
 
             // Act
@@ -161,6 +172,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsTrue(loginSucceeded);
             Assert.AreEqual(true, abiquoClient.IsLoggedIn);
             Assert.AreEqual(basicAuthInfo, abiquoClient.AuthenticationInformation);
+            Assert.AreEqual(USERNAME, user.Nick);
             Assert.AreEqual(ABIQUO_API_BASE_URI, abiquoClient.AbiquoApiBaseUri);
 
             abiquoClient.Logout();
@@ -169,6 +181,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(false, abiquoClient.IsLoggedIn);
             Assert.IsNull(abiquoClient.AuthenticationInformation);
             Assert.IsNull(abiquoClient.AbiquoApiBaseUri);
+            Assert.IsNull(abiquoClient.CurrentUserInformation);
 
             Mock.Assert(restCallExecutor);
         }

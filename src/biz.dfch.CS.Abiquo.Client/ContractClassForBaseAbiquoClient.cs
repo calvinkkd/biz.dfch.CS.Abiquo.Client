@@ -35,6 +35,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(null != authenticationInformation);
             Contract.Ensures(Contract.Result<bool>() == !string.IsNullOrWhiteSpace(this.AbiquoApiBaseUri));
             Contract.Ensures(Contract.Result<bool>() == (null != this.AuthenticationInformation));
+            Contract.Ensures(Contract.Result<bool>() == (null != this.CurrentUserInformation));
 
             return default(bool);
         }
@@ -92,6 +93,28 @@ namespace biz.dfch.CS.Abiquo.Client
         {
             Contract.Requires(0 < enterpriseId);
             Contract.Requires(0 < id);
+
+            return default(User);
+        }
+
+        public override User GetUserInformation()
+        {
+            Contract.Requires(IsLoggedIn);
+
+            return default(User);
+        }
+
+        public override User GetUserInformation(string username)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(username));
+
+            return default(User);
+        }
+
+        public override User GetUserInformation(int enterpriseId, string username)
+        {
+            Contract.Requires(0 < enterpriseId);
+            Contract.Requires(!string.IsNullOrWhiteSpace(username));
 
             return default(User);
         }

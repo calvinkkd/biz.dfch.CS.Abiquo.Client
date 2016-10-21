@@ -66,7 +66,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void LoginWithInValidBasicAuthenticationInformationReturnsFalse()
+        public void LoginWithInvalidBasicAuthenticationInformationReturnsFalse()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -372,6 +372,66 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(expectedUserWithRoles.Password, userWithRoles.Password);
             Assert.AreEqual(expectedUserWithRoles.Surname, userWithRoles.Surname);
             Assert.AreEqual(expectedUserWithRoles.Locked, userWithRoles.Locked);
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetUserInformationAfterLoginReturnsUserInformationAboutCurrentlyLoggedInUser()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            // Act
+            var userInformation = abiquoClient.GetUserInformation();
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(userInformation);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
+            
+            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
+            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetUserInformationOfSpecificUserReturnsUserInformationOfSpecifiedUser()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            // Act
+            var userInformation = abiquoClient.GetUserInformation(IntegrationTestEnvironment.Username);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(userInformation);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
+
+            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
+            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetUserInformationOfSpecificUserInSpecificEnterpriseReturnsUserInformationOfSpecifiedUserInContextOfSpecifiedEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            // Act
+            var userInformation = abiquoClient.GetUserInformation(IntegrationTestEnvironment.TenantId, IntegrationTestEnvironment.Username);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(userInformation);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
+
+            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));
         }
 
         #endregion Users

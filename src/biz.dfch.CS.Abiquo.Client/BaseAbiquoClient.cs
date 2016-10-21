@@ -72,6 +72,12 @@ namespace biz.dfch.CS.Abiquo.Client
         public IAuthenticationInformation AuthenticationInformation { get; protected set; }
 
         /// <summary>
+        /// Information about the currently logged in user, 
+        /// that get injected through the login method (Contains the role of the user as link)
+        /// </summary>
+        public User CurrentUserInformation { get; protected set; }
+
+        /// <summary>
         /// Polling wait time for task handling
         /// </summary>
         public int TaskPollingWaitTimeMilliseconds { get; set; }
@@ -102,6 +108,7 @@ namespace biz.dfch.CS.Abiquo.Client
             IsLoggedIn = false;
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
+            CurrentUserInformation = null;
 
             Trace.WriteLine(string.Format("END {0} SUCCEEDED", Method.fn()));
         }
@@ -295,6 +302,27 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="id">Id of the user</param>
         /// <returns>User</returns>
         public abstract User GetUser(int enterpriseId, int id);
+
+        /// <summary>
+        /// Get information about the currently authenticated user in context of current enterprise
+        /// </summary>
+        /// <returns>Information about the current user</returns>
+        public abstract User GetUserInformation();
+
+        /// <summary>
+        /// Get information about a specific user in context of current enterprise
+        /// </summary>
+        /// <param name="username">Username</param>
+        /// <returns>Information about the specified user in context of current enterprise</returns>
+        public abstract User GetUserInformation(string username);
+
+        /// <summary>
+        /// Get information about specific user in context of a specific enterprise
+        /// </summary>
+        /// <param name="enterpriseId">Id of the enterprise/tenant</param>
+        /// <param name="username">identifier of the user</param>
+        /// <returns>Information about the specified user in context of specified enterprise</returns>
+        public abstract User GetUserInformation(int enterpriseId, string username);
 
         #endregion Users
 

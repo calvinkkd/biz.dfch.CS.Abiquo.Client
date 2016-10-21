@@ -344,6 +344,92 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserInformationBeforeLoginThrowsContractException()
+        {
+            // Arrange
+            sut.Logout();
+
+            // Act
+            sut.GetUserInformation();
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void GetUserInformationAfterLoginReturnsUserInformationAboutCurrentlyLoggedInUser()
+        {
+            // Arrange
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            // Act
+            var userInfo = sut.GetUserInformation();
+
+            // Assert
+            Assert.IsNotNull(userInfo);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserInformationOfSpecificUserWithNullUsernameThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUserInformation(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserInformationOfSpecificUserWithEmptyUsernameThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUserInformation(" ");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserInformationOfSpecificUserInSpecificEnterpriseWithInvalidEnterpriseIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUserInformation(INVALID_ID, USERNAME);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserInformationOfSpecificUserInSpecificEnterpriseWithNullUsernameThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUserInformation(42, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserInformationOfSpecificUserInSpecificEnterpriseWithEmptyUsernameThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUserInformation(42, " ");
+
+            // Assert
+        }
+
         #endregion Users
 
 
@@ -1749,6 +1835,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 AbiquoApiBaseUri = abiquoApiBaseUri;
                 AuthenticationInformation = authenticationInformation;
+                CurrentUserInformation = new User();
 
                 IsLoggedIn = true;
 
@@ -1786,6 +1873,21 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override User GetUser(int enterpriseId, int id)
+            {
+                return new User();
+            }
+
+            public override User GetUserInformation()
+            {
+                return new User();
+            }
+
+            public override User GetUserInformation(string username)
+            {
+                return new User();
+            }
+
+            public override User GetUserInformation(int enterpriseId, string username)
             {
                 return new User();
             }
@@ -2100,6 +2202,21 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override User GetUser(int enterpriseId, int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override User GetUserInformation()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override User GetUserInformation(string username)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override User GetUserInformation(int enterpriseId, string username)
             {
                 throw new NotImplementedException();
             }
