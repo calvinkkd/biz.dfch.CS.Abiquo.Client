@@ -54,7 +54,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             try
             {
-                ExecuteRequest(AbiquoUriSuffixes.LOGIN);
+                var loginResponse = ExecuteRequest(AbiquoUriSuffixes.LOGIN);
+                CurrentUserInformation = BaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
                 Trace.WriteLine("END Login SUCCEEDED");
@@ -119,6 +120,34 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_ID_AND_USER_ID, enterpriseId, id);
             
             return Invoke<User>(uriSuffix, headers);
+        }
+
+        public override User GetUserInformation()
+        {
+            return CurrentUserInformation;
+        }
+
+        public override User GetUserInformation(string username)
+        {
+            return GetUserInformation(AuthenticationInformation.GetTenantId(), username);
+        }
+
+        public override User GetUserInformation(int enterpriseId, string username)
+        {
+            var filter = new FilterBuilder().BuildFilterPart("has", username).GetFilter();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USERS).GetHeaders();
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, enterpriseId);
+
+            var searchResult = Invoke<Users>(uriSuffix, filter, headers);
+
+            var errorMsg = string.Format("User with nick '{0}' does not exist in enterprise with Id = '{1}'", username,
+                enterpriseId);
+            Contract.Assert(null != searchResult.Collection);
+
+            var user = searchResult.Collection.FirstOrDefault(u => u.Nick == username);
+            Contract.Assert(null != user, errorMsg);
+
+            return user;
         }
 
         #endregion Users
@@ -690,7 +719,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
         {
-            Dictionary<string, object> filter = new FilterBuilder().BuildFilterPart("vlanId", vlanId).GetFilter();
+            var filter = new FilterBuilder().BuildFilterPart("vlanId", vlanId).GetFilter();
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_PUBLICIPS).GetHeaders();
 

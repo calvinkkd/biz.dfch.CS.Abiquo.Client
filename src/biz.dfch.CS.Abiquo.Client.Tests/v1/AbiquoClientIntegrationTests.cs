@@ -35,7 +35,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
     [TestClass]
     public class AbiquoClientIntegrationTests
     {
-        private readonly IAuthenticationInformation BasicAuthenticationInformation = new BasicAuthenticationInformation(IntegrationTestEnvironment.Username, IntegrationTestEnvironment.Password, IntegrationTestEnvironment.TenantId);
         private const string SAMPLE_VIRTUAL_MACHINE_PASSWORD = "SamplePw";
         private const string SAMPLE_VIRTUAL_MACHINE_NAME = "Abiquo Client TestVM";
 
@@ -59,7 +58,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
 
             // Act
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -67,7 +66,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void LoginWithInValidBasicAuthenticationInformationReturnsFalse()
+        public void LoginWithInvalidBasicAuthenticationInformationReturnsFalse()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -91,7 +90,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES).GetHeaders();
 
@@ -109,7 +108,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var enterprises = abiquoClient.GetEnterprises();
@@ -128,7 +127,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var currentEnterprise = abiquoClient.GetCurrentEnterprise();
@@ -136,7 +135,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(currentEnterprise);
-            Assert.AreEqual(BasicAuthenticationInformation.GetTenantId(), currentEnterprise.Id);
+            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), currentEnterprise.Id);
         }
 
         [TestMethod]
@@ -145,15 +144,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
-            var enterprise = abiquoClient.GetEnterprise(BasicAuthenticationInformation.GetTenantId());
+            var enterprise = abiquoClient.GetEnterprise(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId());
 
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(enterprise);
-            Assert.AreEqual(BasicAuthenticationInformation.GetTenantId(), enterprise.Id);
+            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), enterprise.Id);
         }
 
         [TestMethod]
@@ -163,7 +162,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             abiquoClient.GetEnterprise(5000);
@@ -177,7 +176,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var headers = new Dictionary<string, string>()
             {
@@ -249,7 +248,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
 
@@ -269,7 +268,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var usersWithRoles = abiquoClient.GetUsersWithRolesOfCurrentEnterprise();
@@ -292,7 +291,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var usersWithRoles = abiquoClient.GetUsersWithRoles(IntegrationTestEnvironment.TenantId);
@@ -315,7 +314,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var usersWithRoles = abiquoClient.GetUsersWithRoles(IntegrationTestEnvironment.TenantId);
             var expectedUserWithRoles = usersWithRoles.Collection.FirstOrDefault();
@@ -348,7 +347,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var usersWithRoles = abiquoClient.GetUsersWithRoles(IntegrationTestEnvironment.TenantId);
             var expectedUserWithRoles = usersWithRoles.Collection.FirstOrDefault();
@@ -375,6 +374,66 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(expectedUserWithRoles.Locked, userWithRoles.Locked);
         }
 
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetUserInformationAfterLoginReturnsUserInformationAboutCurrentlyLoggedInUser()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            // Act
+            var userInformation = abiquoClient.GetUserInformation();
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(userInformation);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
+            
+            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
+            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetUserInformationOfSpecificUserReturnsUserInformationOfSpecifiedUser()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            // Act
+            var userInformation = abiquoClient.GetUserInformation(IntegrationTestEnvironment.Username);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(userInformation);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
+
+            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
+            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+        }
+
+        [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
+        public void GetUserInformationOfSpecificUserInSpecificEnterpriseReturnsUserInformationOfSpecifiedUserInContextOfSpecifiedEnterprise()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            // Act
+            var userInformation = abiquoClient.GetUserInformation(IntegrationTestEnvironment.TenantId, IntegrationTestEnvironment.Username);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(userInformation);
+            Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
+
+            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));
+        }
+
         #endregion Users
 
 
@@ -386,7 +445,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ROLES).GetHeaders();
 
@@ -404,7 +463,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var roles = abiquoClient.GetRoles();
@@ -424,7 +483,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var roles = abiquoClient.GetRoles();
             var expectedRole = roles.Collection.FirstOrDefault();
@@ -454,7 +513,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
@@ -477,7 +536,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
             Contract.Assert(null != dataCentersLimits);
@@ -519,7 +578,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var virtualMachines = abiquoClient.GetAllVirtualMachines();
@@ -546,7 +605,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -581,7 +640,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -629,7 +688,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -677,7 +736,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -735,7 +794,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -784,7 +843,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -833,7 +892,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -891,7 +950,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -956,7 +1015,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1021,7 +1080,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1100,7 +1159,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1156,7 +1215,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1221,7 +1280,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1261,7 +1320,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1297,7 +1356,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1339,7 +1398,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1375,7 +1434,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1418,7 +1477,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1469,7 +1528,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
@@ -1504,7 +1563,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
@@ -1543,7 +1602,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
@@ -1577,7 +1636,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var expectedVirtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1619,7 +1678,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
@@ -1649,7 +1708,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
@@ -1688,7 +1747,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositories(IntegrationTestEnvironment.TenantId);
@@ -1716,7 +1775,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
@@ -1744,7 +1803,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
@@ -1778,7 +1837,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
@@ -1824,7 +1883,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1852,7 +1911,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1890,7 +1949,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -1923,7 +1982,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
             var dataCenterLimits = dataCentersLimits.Collection.First();
@@ -1951,7 +2010,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
             var dataCenterLimits = dataCentersLimits.Collection.First();
@@ -1989,7 +2048,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
             var dataCenterLimits = dataCentersLimits.Collection.First();
@@ -2021,7 +2080,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -2045,7 +2104,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -2084,7 +2143,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -2117,7 +2176,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
@@ -2168,7 +2227,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.First();
@@ -2257,7 +2316,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, BasicAuthenticationInformation);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.First();

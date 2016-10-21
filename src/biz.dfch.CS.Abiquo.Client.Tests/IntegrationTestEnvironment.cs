@@ -20,6 +20,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests
 {
@@ -31,11 +32,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Username = "arbitrary";
             Password = "arbitrary";
             TenantId = 1;
+
+            AuthenticationInformation = new BasicAuthenticationInformation(Username, Password, TenantId);
         }
 
         public static string AbiquoApiBaseUri { get; set; }
         public static string Username { get; set; }
         public static string Password { get; set; }
         public static int TenantId { get; set; }
+
+        public static IAuthenticationInformation AuthenticationInformation { get; set; }
     }
 }

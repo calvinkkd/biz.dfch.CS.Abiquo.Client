@@ -180,6 +180,7 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Authentication\Constants.cs" />
+    <Compile Include="Authentication\OAuth2AuthenticationInformation.cs" />
     <Compile Include="Communication\AbiquoHeaderKeys.cs" />
     <Compile Include="Communication\AbiquoUriSuffixes.cs" />
     <Compile Include="Factory\AbiquoClientFactory.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="v1\Model\TaskStateEnum.cs" />
     <Compile Include="v1\Model\TaskTypeEnum.cs" />
     <Compile Include="v1\Model\User.cs" />
+    <Compile Include="v1\Model\Users.cs" />
     <Compile Include="v1\Model\UsersWithRoles.cs" />
     <Compile Include="v1\Model\UserWithRole.cs" />
     <Compile Include="v1\Model\VirtualAppliance.cs" />

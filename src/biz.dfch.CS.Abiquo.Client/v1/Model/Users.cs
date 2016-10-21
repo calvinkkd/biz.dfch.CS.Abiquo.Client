@@ -21,13 +21,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.Authentication
+namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public abstract class Constants
+    public class Users : AbiquoBaseCollectionDto<User>
     {
-        public const string AUTHORIZATION_HEADER_KEY = "Authorization";
-
-        public const string BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Basic {0}";
-        public const string BEARER_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Bearer {0}";
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto)
     }
 }

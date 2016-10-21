@@ -18,45 +18,35 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-﻿using System.Text;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.Authentication
 {
-    public class BasicAuthenticationInformation : IAuthenticationInformation
+    public class OAuth2AuthenticationInformation : IAuthenticationInformation
     {
-        private readonly string _username;
-        private readonly string _password;
+        private readonly string _oAuth2Token;
         private int _tenantId;
 
-        public BasicAuthenticationInformation(string username, string password, int tenantId)
+        public OAuth2AuthenticationInformation(string oAuth2Token, int tenantId)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(username));
-            Contract.Requires(!string.IsNullOrWhiteSpace(password));
+            Contract.Requires(!string.IsNullOrWhiteSpace(oAuth2Token));
             Contract.Requires(0 < tenantId);
 
-            _username = username;
-            _password = password;
+            _oAuth2Token = oAuth2Token;
             _tenantId = tenantId;
         }
 
         public IDictionary<string, string> GetAuthorizationHeaders()
         {
+            var headerValue = string.Format(Constants.BEARER_AUTHORIZATION_HEADER_VALUE_TEMPLATE, _oAuth2Token);
+
             var headers = new Dictionary<string, string>
             {
-                {Constants.AUTHORIZATION_HEADER_KEY, CreateBasicAuthorizationHeaderValue()}
+                {Constants.AUTHORIZATION_HEADER_KEY, headerValue}
             };
 
             return headers;
-        }
-
-        private string CreateBasicAuthorizationHeaderValue()
-        {
-            var plainText = string.Format("{0}:{1}", _username, _password);
-            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            var base64EncodedAuthorizationHeaderValue = Convert.ToBase64String(plainTextBytes);
-
-            return string.Format(Constants.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
         }
 
         public int GetTenantId()
