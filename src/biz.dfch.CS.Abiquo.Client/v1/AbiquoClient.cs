@@ -719,7 +719,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
         {
-            Dictionary<string, object> filter = new FilterBuilder().BuildFilterPart("vlanId", vlanId).GetFilter();
+            var filter = new FilterBuilder().BuildFilterPart("vlanId", vlanId).GetFilter();
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_PUBLICIPS).GetHeaders();
 
