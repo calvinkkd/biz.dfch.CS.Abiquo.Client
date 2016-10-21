@@ -44,7 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const int INVALID_ID = 0;
 
         private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
-        private const string BEARER_TOKEN = "Bearer TESTTOKEN";
+        private const string BEARER_TOKEN = "Bearer ARBITRARY_TOKEN";
 
         private BaseAbiquoClient sut = new DummyAbiquoClient();
 
