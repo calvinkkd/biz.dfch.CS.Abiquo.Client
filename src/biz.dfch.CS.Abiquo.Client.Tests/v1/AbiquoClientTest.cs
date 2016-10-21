@@ -142,7 +142,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void LogoutResetsAuthenticationInformationApiBaseUriAndSetsLoggedInToFalse()
+        public void LogoutResetsAuthenticationInformationApiBaseUriCurrentUserInformationAndSetsLoggedInToFalse()
         {
             // Arrange
             var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
@@ -169,6 +169,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(false, abiquoClient.IsLoggedIn);
             Assert.IsNull(abiquoClient.AuthenticationInformation);
             Assert.IsNull(abiquoClient.AbiquoApiBaseUri);
+            Assert.IsNull(abiquoClient.CurrentUserInformation);
 
             Mock.Assert(restCallExecutor);
         }

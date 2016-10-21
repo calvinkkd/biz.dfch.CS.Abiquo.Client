@@ -54,7 +54,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             try
             {
-                ExecuteRequest(AbiquoUriSuffixes.LOGIN);
+                var loginResponse = ExecuteRequest(AbiquoUriSuffixes.LOGIN);
+                CurrentUserInformation = BaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
                 Trace.WriteLine("END Login SUCCEEDED");
@@ -118,6 +119,24 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_ID_AND_USER_ID, enterpriseId, id);
             
+            return Invoke<User>(uriSuffix, headers);
+        }
+
+        public override User GetUserInformation()
+        {
+            return CurrentUserInformation;
+        }
+
+        public override User GetUserInformation(string username)
+        {
+            return GetUserInformation(AuthenticationInformation.GetTenantId(), username);
+        }
+
+        public override User GetUserInformation(int enterpriseId, string username)
+        {
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
+            var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_ID_AND_USER_ID, enterpriseId, username);
+
             return Invoke<User>(uriSuffix, headers);
         }
 
