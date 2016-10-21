@@ -194,6 +194,7 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Authentication\OAuth2AuthenticationInformationTest.cs" />
     <Compile Include="BaseAbiquoClientTest.cs" />
     <Compile Include="Factory\AbiquoClientFactoryTest.cs" />
     <Compile Include="Authentication\BasicAuthenticationInformationTest.cs" />
