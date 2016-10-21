@@ -43,7 +43,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const int TENANT_ID = 1;
         private const int INVALID_ID = 0;
 
-        private readonly IAuthenticationInformation authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+        private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
         private const string BEARER_TOKEN = "Bearer TESTTOKEN";
 
         private BaseAbiquoClient sut = new DummyAbiquoClient();
@@ -117,12 +117,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithoutAdditionalHeadersAndBodyCallsRestCallExecutor()
         {
             // Arrange
-            sut.Login(ABIQUO_API_BASE_URI, authenticationInformation);
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
             var expectedRequestUri = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES);
             
             var restCallExecutor = Mock.Create<RestCallExecutor>();
-            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, authenticationInformation.GetAuthorizationHeaders(), null))
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, _authenticationInformation.GetAuthorizationHeaders(), null))
                 .IgnoreInstance()
                 .Returns("Arbitrary-Result")
                 .OccursOnce();
@@ -140,7 +140,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void ExecuteRequestWithAdditionalHeadersMergesHeadersAndCallsRestCallExecutorWithMergedHeaders()
         {
             // Arrange
-            sut.Login(ABIQUO_API_BASE_URI, authenticationInformation);
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
             var expectedRequestUri = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES);
 
@@ -176,7 +176,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void GenericInvokeWithEmptyUriSuffixThrowsContractException()
         {
             // Arrange
-            sut.Login(ABIQUO_API_BASE_URI, authenticationInformation);
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
             // Act
             sut.Invoke<Enterprise>(null, new Dictionary<string, string>());
@@ -206,7 +206,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void InvokeWithEmptyUriSuffixThrowsContractException()
         {
             // Arrange
-            sut.Login(ABIQUO_API_BASE_URI, authenticationInformation);
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
             // Act
             sut.Invoke(HttpMethod.Get, " ", null);
@@ -219,7 +219,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void InvokeWithInvalidUriSuffixThrowsContractException()
         {
             // Arrange
-            sut.Login(ABIQUO_API_BASE_URI, authenticationInformation);
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
             // Act
             sut.Invoke(HttpMethod.Get, "http://example.com", null);
@@ -243,7 +243,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void InvokeWithFilterCallsRestCallExecutorWithRequestUriContainingFilterExpression()
         {
             // Arrange
-            sut.Login(ABIQUO_API_BASE_URI, authenticationInformation);
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
             var filter = new FilterBuilder()
                 .BuildFilterPart("currentPage", 1)
