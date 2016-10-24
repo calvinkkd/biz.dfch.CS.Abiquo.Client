@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.CS.Abiquo.Client</id>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
         <title>biz.dfch.CS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -24,14 +24,10 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>C#/.NET client for Abiquo</summary>
-        <releaseNotes>20161021
-# FEATURES
+        <releaseNotes>20161024
+# NOTES
 
-* Support OAuth2 authentication
-* Get User Information
-  * Current logged in user
-  * Specific user in context of the current enterprise
-  * Specific user in context of a specific current enterprise
+* Created enum for Abiquo OS types
 </releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>
