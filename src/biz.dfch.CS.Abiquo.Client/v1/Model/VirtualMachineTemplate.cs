@@ -59,8 +59,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         public string Name { get; set; }
-        
-        public string OsType { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public OsTypeEnum OsType { get; set; }
         
         public string OsVersion { get; set; }
 

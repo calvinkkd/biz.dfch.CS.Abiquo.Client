@@ -221,6 +221,7 @@
     <Compile Include="v1\Model\NetworkTypeEnum.cs" />
     <Compile Include="v1\Model\Nic.cs" />
     <Compile Include="v1\Model\Nics.cs" />
+    <Compile Include="v1\Model\OsTypeEnum.cs" />
     <Compile Include="v1\Model\PrivateIp.cs" />
     <Compile Include="v1\Model\PrivateIps.cs" />
     <Compile Include="v1\Model\Privilege.cs" />
