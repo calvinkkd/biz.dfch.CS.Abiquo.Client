@@ -41,6 +41,8 @@ namespace biz.dfch.CS.Abiquo.Client.General
                 // changed to start with a lowercase letter when serialized to JSON
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
                 ,
+                MissingMemberHandling = MissingMemberHandling.Error
+                ,
                 // Properties, that are not initialized will not be serialized
                 NullValueHandling = NullValueHandling.Ignore
                 ,
