@@ -677,7 +677,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(expectedVirtualMachine.Protected, virtualMachine.Protected);
             Assert.AreEqual(expectedVirtualMachine.State, virtualMachine.State);
             Assert.AreEqual(expectedVirtualMachine.Uuid, virtualMachine.Uuid);
-            Assert.AreEqual(expectedVirtualMachine.VdrpIp, virtualMachine.VdrpIp);
+            Assert.AreEqual(expectedVirtualMachine.VdrpIP, virtualMachine.VdrpIP);
             Assert.AreEqual(expectedVirtualMachine.VdrpEnabled, virtualMachine.VdrpEnabled);
             Assert.AreEqual(expectedVirtualMachine.VdrpPort, virtualMachine.VdrpPort);
         }
