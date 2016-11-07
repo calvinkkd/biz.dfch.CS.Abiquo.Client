@@ -37,6 +37,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         public string Type { get; set; }
 
+        public string Hreflang { get; set; }
+
+        public string DiskController { get; set; }
+
+        public string DiskControllerType { get; set; }
+
+        public string DiskLabel { get; set; }
+
+        public string Length { get; set; }
+
         public string GetUriSuffix()
         {
             Contract.Requires(Uri.IsWellFormedUriString(Href, UriKind.Absolute));

@@ -31,6 +31,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         public string Ip { get; set; }
 
+        public string Ipv6 { get; set; }
+
         public string Mac { get; set; }
         
         public string Name { get; set; }
