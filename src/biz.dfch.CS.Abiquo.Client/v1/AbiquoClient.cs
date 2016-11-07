@@ -350,7 +350,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 };
             }
 
-            var updateTask = BaseDto.DeserializeObject<Task>(updateResultAsString);
+            var updateTask = BaseDto.DeserializeObject<AcceptedRequest>(updateResultAsString);
             Contract.Assert(null != updateTask);
 
             var link = updateTask.GetLinkByRel(AbiquoRelations.STATUS);
