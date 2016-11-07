@@ -232,6 +232,8 @@
     <Compile Include="v1\Model\Roles.cs" />
     <Compile Include="v1\Model\RolesWithPrivileges.cs" />
     <Compile Include="v1\Model\RoleWithPrivileges.cs" />
+    <Compile Include="v1\Model\RunlistElement.cs" />
+    <Compile Include="v1\Model\RunlistElements.cs" />
     <Compile Include="v1\Model\Task.cs" />
     <Compile Include="v1\Model\Tasks.cs" />
     <Compile Include="v1\Model\TaskStateEnum.cs" />
