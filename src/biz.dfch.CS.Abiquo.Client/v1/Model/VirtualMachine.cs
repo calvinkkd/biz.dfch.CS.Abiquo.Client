@@ -63,7 +63,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         
         public string Uuid { get; set; }
         
-        public string VdrpIp { get; set; }
+        public string VdrpIP { get; set; }
 
         public int? VdrpPort { get; set; }
 
