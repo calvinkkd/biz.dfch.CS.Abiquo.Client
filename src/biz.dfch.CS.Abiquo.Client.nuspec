@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.CS.Abiquo.Client</id>
-        <version>1.2.2</version>
+        <version>1.2.3</version>
         <title>biz.dfch.CS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -27,12 +27,7 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
         <releaseNotes>20161107
 # BUGFIXES
 
-* Missing properties added to model objects
-* Deserialization of UpdateVirtualMachine result changed to AcceptedRequest instead of Task
-
-# NOTES
-
-* Newtonsoft.Json MissingMemberHandling changed to Error
+* Missing ProviderId property added to VlanNetwork
 </releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>
