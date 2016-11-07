@@ -63,5 +63,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool Ipv6 { get; set; }
         
         public bool Strict { get; set; }
+
+        public string ProviderId { get; set; }
     }
 }
