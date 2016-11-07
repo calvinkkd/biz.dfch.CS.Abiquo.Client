@@ -46,6 +46,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public long Timestamp { get; set; }
 
         [Required]
+        [Range(1, Int64.MaxValue)]
+        public long CreationTimestamp { get; set; }
+
+        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public JobTypeEnum Type { get; set; }
     }

@@ -23,18 +23,8 @@ using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class PrivateIp : AbiquoBaseDto
+    public class RunlistElements : AbiquoBaseCollectionDto<DataCenterRepository>
     {
-        public int? Id { get; set; }
-
-        public string Ip { get; set; }
-
-        public string Ipv6 { get; set; }
-
-        public string Mac { get; set; }
-
-        public string Name { get; set; }
-
-        public string NetworkName { get; set; }
+        // N/A (All collection properties defined in AbiquoBaseCollectionDto)
     }
 }

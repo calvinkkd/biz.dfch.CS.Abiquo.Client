@@ -77,8 +77,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         
         public bool Monitored { get; set; }
         
+        public string MonitoringLevel { get; set; }
+
         public Dictionary<string, string> Variables { get; set; }
         
         public bool Protected { get; set; }
+
+        public Dictionary<string, object> Metadata { get; set; }
+
+        public string ProtectedCause { get; set; }
+
+        public RunlistElements RunlistElements { get; set; }
     }
 }

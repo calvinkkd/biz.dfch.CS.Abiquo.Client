@@ -16,42 +16,25 @@
  
 ﻿using System;
 using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Task : AbiquoBaseDto
+    public class RunlistElement : AbiquoBaseDto
     {
-        public Jobs Jobs { get; set; }
+        [Required]
+        public string Name { get; set; }
+
+        public string Description { get; set; }
 
         [Required]
-        public string OwnerId { get; set; }
+        public int Priority { get; set; }
 
         [Required]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public TaskStateEnum State { get; set; }
-
-        [Required]
-        public string TaskId { get; set; }
-
-        [Required]
-        [Range(1, Int64.MaxValue)]
-        public long Timestamp { get; set; }
-
-        [Required]
-        [Range(1, Int64.MaxValue)]
-        public long CreationTimestamp { get; set; }
-
-        [Required]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public TaskTypeEnum Type { get; set; }
-        
-        public string UserId { get; set; }
+        public bool Selected { get; set; }
     }
 }
