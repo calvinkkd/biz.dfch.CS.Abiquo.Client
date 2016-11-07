@@ -1945,7 +1945,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        public void GetIpsOfPrivateNetworkWihtFreeReturnsFreeIPsOfPrivateNetwork()
+        public void GetIpsOfPrivateNetworkWithFreeReturnsFreeIPsOfPrivateNetwork()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
