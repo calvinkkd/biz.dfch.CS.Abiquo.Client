@@ -25,6 +25,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public enum JobTypeEnum
     {
+        // Virtual factory
         CONFIGURE
         ,
         DECONFIGURE
@@ -41,12 +42,75 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         ,
         RESET
         ,
-        SNAPSHOT
+        INSTANCE
         ,
         REFRESH
         ,
+        SHUTDOWN
+        ,
+        REGISTER_VM
+        ,
+
+        // Virtual image template
+        DOWNLOAD
+        ,
+        PROMOTE
+        ,
+        COPY_DISK
+        ,
+        EXPORT_TO_PRIVATE
+        ,
+        EXPORT_TO_PUBLIC
+        ,
+
+        // Conversion manager
+        DISK_CONVERSION
+        ,
+        DUMP_DISK_TO_VOLUME
+        ,
+        DUMP_VOLUME_TO_DISK,
+
+        // Scheduler
         SCHEDULE
         ,
+        FREE_RESOURCES
+        ,
         UPDATE_RESOURCES
+        ,
+
+        // Public cloud region
+        NETWORK
+        ,
+        PRIVATE_NETWORKS
+        ,
+        EXTERNAL_NETWORKS
+        ,
+        FLOATING_IPS
+        ,
+        FIREWALLS
+        ,
+        LOAD_BALANCERS
+        ,
+        VIRTUAL_MACHINES
+        ,
+
+        // Virtual Appliance Spec
+        SPEC_CHEF_VALIDATION
+        ,
+        SPEC_PRIVATE_NETWORKS
+        ,
+        SPEC_PUBLIC_NETWORKS
+        ,
+        SPEC_FIREWALLS
+        ,
+        SPEC_LOAD_BALANCER
+        ,
+        SPEC_VOLUMES
+        ,
+        SPEC_VIRTUAL_MACHINES
+        ,
+        SPEC_EXTERNAL_NETWORKS
+        ,
+        SPEC_FLOATING_IPS
     }
 }

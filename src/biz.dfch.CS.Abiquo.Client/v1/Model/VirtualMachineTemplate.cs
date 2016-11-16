@@ -85,5 +85,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool EnableNicsHotReconfigure { get; set; }
         
         public bool EnableRemoteAccessHotReconfigure { get; set; }
+
+        public int CpuMin { get; set; }
+        
+        public int CpuMax { get; set; }
+        
+        public int RamMin { get; set; }
+        
+        public int RamMax { get; set; }
     }
 }

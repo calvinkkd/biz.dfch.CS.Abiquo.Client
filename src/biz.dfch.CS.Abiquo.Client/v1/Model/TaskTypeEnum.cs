@@ -25,28 +25,65 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public enum TaskTypeEnum
     {
+        // Tarantino
         DEPLOY
-	    ,
+        ,
         UNDEPLOY
-	    ,
+        ,
         RECONFIGURE
-	    ,
+        ,
         POWER_ON
-	    ,
+        ,
         POWER_OFF
-	    ,
+        ,
         PAUSE
-	    ,
+        ,
         RESUME
-	    ,
+        ,
         RESET
-	    ,
-        SNAPSHOT
-	    ,
+        ,
+        INSTANCE
+        ,
         HA_DEPLOY
-	    ,
+        ,
         HA_UNDEPLOY
-	    ,
+        ,
         REFRESH
+        ,
+        SHUTDOWN
+        ,
+        
+        // Conversion Manager
+        MAKE_PERSISTENT
+        ,
+        CONVERT_DISK
+        ,
+        CONVERT_DISK_FROM_INSTANCE
+        ,
+        
+        // Virtual Machine Template
+        DOWNLOAD
+        ,
+        PROMOTE
+        ,
+        REFRESH_REPOSITORY
+        ,
+        COPY_DISK
+        ,
+        EXPORT_TEMPLATE_TO_PRIVATE
+        ,
+        EXPORT_TEMPLATE_TO_PUBLIC
+        ,
+
+        // Public cloud region
+        SYNC_PCR
+        ,
+        
+        // Virtual Appliance
+        MATERIALIZE_SPEC
+        ,
+
+        // Virtual machine
+        EXECUTE_VM_ACTION_PLAN
     }
 }
