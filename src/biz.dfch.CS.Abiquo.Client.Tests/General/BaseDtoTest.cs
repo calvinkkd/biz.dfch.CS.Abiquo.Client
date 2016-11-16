@@ -71,6 +71,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Assert
             Assert.IsNotNull(sampleDto);
             Assert.IsFalse(string.IsNullOrWhiteSpace(sampleDto.Name));
+
+            // Revert initial settings
+            BaseDto.SetJsonSerializerMissingMemberHandling(MissingMemberHandling.Error);
         }
 
         [TestMethod]
