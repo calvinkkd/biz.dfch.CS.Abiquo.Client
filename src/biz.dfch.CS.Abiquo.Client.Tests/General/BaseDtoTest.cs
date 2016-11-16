@@ -27,15 +27,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
     public class BaseDtoTest
     {
         private const string SAMPLE_DTO_NAME = "ArbitraryName";
-        private const string SAMPLE_DTO_JSON_REPRESENTATION = @"
-            {
-                ""Name"":""ArbitraryName""
-            }";
+        private const string SAMPLE_DTO_JSON_REPRESENTATION = @"{""name"":""ArbitraryName""}";
         private const string SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY = @"
             {
-                ""Name"":""ArbitraryName""
+                ""name"":""ArbitraryName""
                 ,
-                ""Description"":""Arbitrary Description""
+                ""description"":""Arbitrary Description""
             }";
 
         [ClassInitialize]
