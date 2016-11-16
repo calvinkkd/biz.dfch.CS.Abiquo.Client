@@ -73,7 +73,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         EXPORT_TEMPLATE_TO_PRIVATE
         ,
         EXPORT_TEMPLATE_TO_PUBLIC
-
+        ,
 
         // Public cloud region
         SYNC_PCR
