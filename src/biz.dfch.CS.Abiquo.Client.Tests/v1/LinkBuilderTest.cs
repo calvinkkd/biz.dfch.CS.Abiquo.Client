@@ -15,14 +15,10 @@
  */
  
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.v1;
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using biz.dfch.CS.Utilities.Testing;
+using biz.dfch.CS.Testing.Attributes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {

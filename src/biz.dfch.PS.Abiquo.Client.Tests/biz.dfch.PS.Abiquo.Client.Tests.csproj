@@ -123,8 +123,20 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="biz.dfch.CS.Testing, Version=1.1.0.11403, Culture=neutral, PublicKeyToken=30acc2f3d5961f2d, processorArchitecture=MSIL">
-      <HintPath>..\packages\biz.dfch.CS.Testing.1.1.0\lib\biz.dfch.CS.Testing.dll</HintPath>
+    <Reference Include="biz.dfch.CS.System.Utilities, Version=3.1.1.12435, Culture=neutral, PublicKeyToken=30acc2f3d5961f2d, processorArchitecture=MSIL">
+      <HintPath>..\packages\biz.dfch.CS.System.Utilities.3.1.1\lib\biz.dfch.CS.System.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="biz.dfch.CS.Testing, Version=1.3.0.27560, Culture=neutral, PublicKeyToken=30acc2f3d5961f2d, processorArchitecture=MSIL">
+      <HintPath>..\packages\biz.dfch.CS.Testing.1.3.0\lib\biz.dfch.CS.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -146,10 +158,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="TestSomethingTest.cs" />
+    <Compile Include="EnterServerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\biz.dfch.CS.Abiquo.Client\biz.dfch.CS.Abiquo.Client.csproj">
+      <Project>{a149c0f8-d483-4a91-a26c-95230148ee3a}</Project>
+      <Name>biz.dfch.CS.Abiquo.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\biz.dfch.PS.Abiquo.Client\biz.dfch.PS.Abiquo.Client.csproj">
       <Project>{3be99296-06c4-4909-a9f5-f8c1f0a24032}</Project>
       <Name>biz.dfch.PS.Abiquo.Client</Name>

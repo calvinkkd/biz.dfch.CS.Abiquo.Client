@@ -22,14 +22,14 @@ using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
-﻿using biz.dfch.CS.Utilities.Testing;
 ﻿using biz.dfch.CS.Web.Utilities.Rest;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
+using biz.dfch.CS.Testing.Attributes;
+using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests
 {

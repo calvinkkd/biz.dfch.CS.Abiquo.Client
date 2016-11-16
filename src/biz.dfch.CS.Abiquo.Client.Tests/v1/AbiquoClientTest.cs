@@ -23,7 +23,6 @@ using System.Linq;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
-﻿using biz.dfch.CS.Utilities.Testing;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using biz.dfch.CS.Web.Utilities.Rest;
@@ -31,6 +30,7 @@ using biz.dfch.CS.Abiquo.Client.Factory;
 ﻿using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
+using biz.dfch.CS.Testing.Attributes;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
