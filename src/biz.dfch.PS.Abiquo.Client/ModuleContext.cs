@@ -27,6 +27,7 @@ namespace biz.dfch.PS.Abiquo.Client
     public class ModuleContext
     {
         private static string _apiVersion = AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1;
+
         /// <summary>
         /// 
         /// </summary>
