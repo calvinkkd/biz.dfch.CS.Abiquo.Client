@@ -34,7 +34,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
-        public const string ABIQUO_API_VERSION = "3.8";
+        public const string ABIQUO_API_VERSION = "3.10";
 
         internal AbiquoClient()
         {
