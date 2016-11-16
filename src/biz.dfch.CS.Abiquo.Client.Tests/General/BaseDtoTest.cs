@@ -29,11 +29,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
         private const string SAMPLE_DTO_NAME = "ArbitraryName";
         private const string SAMPLE_DTO_JSON_REPRESENTATION = @"
             {
-                ""Name"":""Arbitrary Name""
+                ""Name"":""ArbitraryName""
             }";
         private const string SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY = @"
             {
-                ""Name"":""Arbitrary Name""
+                ""Name"":""ArbitraryName""
                 ,
                 ""Description"":""Arbitrary Description""
             }";
