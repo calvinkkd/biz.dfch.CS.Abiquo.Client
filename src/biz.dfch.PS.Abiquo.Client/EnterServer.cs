@@ -17,7 +17,6 @@
 using System;
 using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client.Authentication;
-using biz.dfch.CS.Abiquo.Client.Factory;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
