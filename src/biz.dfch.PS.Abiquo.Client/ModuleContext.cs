@@ -39,7 +39,7 @@ namespace biz.dfch.PS.Abiquo.Client
             }
             set
             {
-                Contract.Requires(!string.IsNullOrWhiteSpace(_apiVersion));
+                Contract.Requires(!string.IsNullOrWhiteSpace(value));
                 _apiVersion = value;
             }
         }
