@@ -50,6 +50,11 @@ namespace biz.dfch.CS.Abiquo.Client.General
             };
         }
 
+        internal static void SetJsonSerializerMissingMemberHandling(MissingMemberHandling missingMemberHandling)
+        {
+            _jsonSerializerSettings.MissingMemberHandling = missingMemberHandling;
+        }
+
         public string SerializeObject()
         {
             return JsonConvert.SerializeObject(this, _jsonSerializerSettings);

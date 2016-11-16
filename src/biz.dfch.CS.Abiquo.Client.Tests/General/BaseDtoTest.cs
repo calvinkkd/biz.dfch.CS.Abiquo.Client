@@ -19,6 +19,7 @@ using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Utilities.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.General;
+using Newtonsoft.Json;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
@@ -26,7 +27,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
     public class BaseDtoTest
     {
         private const string SAMPLE_DTO_NAME = "ArbitraryName";
-        private const string SAMPLE_DTO_JSON_REPRESENTATION = "{\"name\":\"ArbitraryName\"}";
+        private const string SAMPLE_DTO_JSON_REPRESENTATION = @"
+            {
+                ""Name"":""Arbitrary Name""
+            }";
+        private const string SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY = @"
+            {
+                ""Name"":""Arbitrary Name""
+                ,
+                ""Description"":""Arbitrary Description""
+            }";
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
@@ -35,6 +45,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // the serialization settings defined in the static constructor 
             // of the AbiquoClient get applied to the Newtonsoft JsonConverter
             AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);            
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(JsonSerializationException))]
+        public void DeserializationOfJsonWithPropertiesNotPresentOnObjectThrowsException()
+        {
+            // Arrange
+
+            // Act
+            BaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void DeserializationOfJsonWithPropertiesNotPresentOnObjectAfterSettingMemberHandlingToIgnoreSucceeds()
+        {
+            // Arrange
+            BaseDto.SetJsonSerializerMissingMemberHandling(MissingMemberHandling.Ignore);
+
+            // Act
+            var sampleDto = BaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY);
+
+            // Assert
+            Assert.IsNotNull(sampleDto);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(sampleDto.Name));
         }
 
         [TestMethod]
