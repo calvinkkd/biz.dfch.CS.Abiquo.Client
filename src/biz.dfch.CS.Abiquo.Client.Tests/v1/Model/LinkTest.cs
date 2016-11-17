@@ -22,7 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1;
-﻿using biz.dfch.CS.Utilities.Testing;
+using biz.dfch.CS.Testing.Attributes;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model

@@ -28,11 +28,11 @@ namespace biz.dfch.CS.Abiquo.Client.General
 {
     public abstract class BaseDto
     {
-        private static readonly JsonSerializerSettings jsonSerializerSettings;
+        private static readonly JsonSerializerSettings _jsonSerializerSettings;
 
         static BaseDto()
         {
-            jsonSerializerSettings = new JsonSerializerSettings
+            _jsonSerializerSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.None
                 ,
@@ -50,9 +50,14 @@ namespace biz.dfch.CS.Abiquo.Client.General
             };
         }
 
+        internal static void SetJsonSerializerMissingMemberHandling(MissingMemberHandling missingMemberHandling)
+        {
+            _jsonSerializerSettings.MissingMemberHandling = missingMemberHandling;
+        }
+
         public string SerializeObject()
         {
-            return JsonConvert.SerializeObject(this, jsonSerializerSettings);
+            return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
         }
 
         public static object DeserializeObject(string value, Type type)
@@ -60,14 +65,14 @@ namespace biz.dfch.CS.Abiquo.Client.General
             Contract.Requires(!string.IsNullOrWhiteSpace(value));
             Contract.Requires(null != type);
 
-            return JsonConvert.DeserializeObject(value, type, jsonSerializerSettings);
+            return JsonConvert.DeserializeObject(value, type, _jsonSerializerSettings);
         }
 
         public static T DeserializeObject<T>(string value)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(value));
 
-            return JsonConvert.DeserializeObject<T>(value, jsonSerializerSettings);
+            return JsonConvert.DeserializeObject<T>(value, _jsonSerializerSettings);
         }
 
         [Pure]

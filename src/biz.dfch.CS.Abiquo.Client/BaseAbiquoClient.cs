@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+﻿using Newtonsoft.Json;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
@@ -98,6 +99,10 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Invariant(0 < TaskPollingTimeoutMilliseconds);
         }
 
+        public static void SetJsonSerializerMissingMemberHandling(MissingMemberHandling missingMemberHandling)
+        {
+            BaseDto.SetJsonSerializerMissingMemberHandling(missingMemberHandling);
+        }
 
         public abstract bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation);
 

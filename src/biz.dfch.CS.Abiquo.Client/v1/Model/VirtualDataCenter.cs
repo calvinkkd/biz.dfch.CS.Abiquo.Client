@@ -87,5 +87,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         [Range(0, Int64.MaxValue)]
         public long VlansSoft { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SyncStateEnum SyncState { get; set; }
     }
 }

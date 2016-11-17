@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.CS.Abiquo.Client</id>
-        <version>1.2.4</version>
+        <version>2.0.0</version>
         <title>biz.dfch.CS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -24,16 +24,27 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>C#/.NET client for Abiquo</summary>
-        <releaseNotes>20161107
-# BUGFIXES
+        <releaseNotes>20161117
+# FEATURES
 
-* Property name fixed in VirtualMachine model
-</releaseNotes>
+* Added C# based module for PoSH module
+* Upgraded .NET runtime to 4.6 (from 4.5)
+* Upgraded dependency biz.dfch.CS.System.Utilities to version 3.1.1
+* Upgraded dependency biz.dfch.CS.Web.Utilities to version 2.0.0
+* Added dependency biz.dfch.CS.Testing
+* MissingMemberHandling setting of JsonSerializerSettings exposed via BaseAbiquoClient
+* Upgraded Abiquo API version to 3.10
+  * Added newly introduced values/properties to the following model classes
+    * JobTypeEnum
+    * TaskTypeEnum
+    * VirtualMachineTemplate
+    * VirtualDataCenter
+		</releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>
         <dependencies>
-			<dependency id="biz.dfch.CS.System.Utilities" version="2.0.1" />
-			<dependency id="biz.dfch.CS.Web.Utilities" version="1.2.0" />
+			<dependency id="biz.dfch.CS.System.Utilities" version="3.1.1" />
+			<dependency id="biz.dfch.CS.Web.Utilities" version="2.0.0" />
 			<dependency id="EntityFramework" version="6.1.3" />
 			<dependency id="log4net" version="2.0.5" />
 			<dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />

@@ -23,8 +23,8 @@ using System.Threading.Tasks;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.General;
 using biz.dfch.CS.Abiquo.Client.v1;
-﻿using biz.dfch.CS.Utilities.Testing;
 using biz.dfch.CS.Abiquo.Client.Communication;
+using biz.dfch.CS.Testing.Attributes;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
