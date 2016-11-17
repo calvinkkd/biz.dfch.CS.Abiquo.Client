@@ -21,3 +21,6 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("ef1c86d1-2bc5-4742-b963-cfbad1f7ea02")]
+
+[assembly: InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
+[assembly: InternalsVisibleTo("biz.dfch.PS.Abiquo.Client.Tests")]

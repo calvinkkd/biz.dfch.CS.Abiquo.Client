@@ -29,34 +29,43 @@ namespace biz.dfch.PS.Abiquo.Client
         private static string _apiVersion = AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1;
 
         /// <summary>
-        /// 
+        /// Specifies the API version to use
         /// </summary>
         public static string ApiVersion
         {
             get
             {
                 Contract.Ensures(!string.IsNullOrWhiteSpace(_apiVersion));
+
                 return _apiVersion;
             }
             set
             {
                 Contract.Requires(!string.IsNullOrWhiteSpace(value));
+                
                 _apiVersion = value;
             }
         }
 
         private static readonly Lazy<BaseAbiquoClient> _client = new Lazy<BaseAbiquoClient>(() =>
         {
+            Contract.Ensures(null != Contract.Result<BaseAbiquoClient>());
+            
             var client = AbiquoClientFactory.GetByVersion(ApiVersion);
             return client;
         });
 
         /// <summary>
-        /// 
+        /// Returns a reference to the underlying Abiquo client
         /// </summary>
         public BaseAbiquoClient Client
         {
-            get { return _client.Value; }
+            get
+            {
+                Contract.Ensures(null != Contract.Result<BaseAbiquoClient>());
+                
+                return _client.Value;
+            }
         }
     }
 }

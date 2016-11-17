@@ -143,10 +143,17 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorIdEnum.cs" />
     <Compile Include="ModuleContext.cs" />
     <Compile Include="ModuleConfiguration.cs" />
     <Compile Include="EnterServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PsCmdletBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\biz.dfch.CS.Abiquo.Client\biz.dfch.CS.Abiquo.Client.csproj">
@@ -168,6 +175,12 @@
     <None Include="biz.dfch.PS.Abiquo.Client.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

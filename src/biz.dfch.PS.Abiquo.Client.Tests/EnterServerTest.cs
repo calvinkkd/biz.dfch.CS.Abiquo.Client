@@ -15,16 +15,62 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Management.Automation;
+using System.Security.Authentication;
+using biz.dfch.CS.Abiquo.Client;
+using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Abiquo.Client.Factory;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Testing.Attributes;
 using biz.dfch.CS.Testing.PowerShell;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Telerik.JustMock;
 using Current = biz.dfch.CS.Abiquo.Client.v1;
+
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
     [TestClass]
     public class EnterServerTest
     {
+        public static BaseAbiquoClient Client;
+        public static User User;
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
+        {
+            User = new User()
+            {
+                Active = true,
+                AuthType = "Abiquo",
+                AvailableVirtualDatacenters = "all",
+                Description = "arbitrary-description",
+                Email = "someone@example.com",
+                FirstLogin = false,
+                Id = EnterServer.TENANT_ID_DEFAULT_VALUE,
+                Locale = "en-us",
+            };
+
+            // this must be inside ClassInitialize - otherwise the tests will only work one at a time
+            Client = Mock.Create<Current.AbiquoClient>(Behavior.CallOriginal);
+        }
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            Mock.Arrange(() => Client.CurrentUserInformation)
+                .IgnoreInstance()
+                .Returns(User);
+
+            Mock.SetupStatic(typeof(AbiquoClientFactory));
+            Mock.Arrange(() => AbiquoClientFactory.GetByVersion(Arg.IsAny<string>()))
+                .Returns(Client);
+
+            // strange - the mock inside the PSCmdlet only works when we invoke the mocked methods here first
+            // this seems to be related to the Lazy<T> we use to initialise the Abiquo client via the factory
+            var currentClient = ModuleConfiguration.Current.Client;
+        }
+            
         [TestMethod]
         [ExpectParameterBindingException(MessagePattern = @"'Uri'.+'System\.Uri'")]
         public void InvokeWithInvalidUriParameterThrowsParameterBindingException1()
@@ -37,7 +83,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         [ExpectParameterBindingException(MessagePattern = @"Credential")]
         public void InvokeWithMissingiParameterThrowsParameterBindingException()
         {
-            var parameters = @"-Uri http://localhost";
+            var parameters = @"-Uri httpS://abiquo.example.com/api/";
             var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
         }
 
@@ -45,24 +91,101 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         [ExpectParameterBindingException(MessagePattern = @"'Credential'.+.System\.String.")]
         public void InvokeWithMissingiParameterThrowsParameterBindingException2()
         {
-            var parameters = @"-Uri http://localhost -Credential arbitrary-user-as-string";
+            var parameters = @"-Uri httpS://abiquo.example.com/api/ -Credential arbitrary-user-as-string";
             var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
         }
 
-        //[TestMethod]
-        //public void InvokeWithParameterSetPlainSucceeds()
-        //{
-        //    var user = "arbitrary-user";
-        //    var password = "arbitrary-password";
-        //    var tenantId = 42;
-        //    var parameters = string.Format(@"-Uri http://localhost -User '{0}' -Password '{1}' -TenantId {2}", user, password, tenantId);
-        //    var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
-        //    Assert.IsNotNull(results);
-        //    Assert.AreEqual(1, results.Count);
-        //    var result = results[0].BaseObject.ToString();
-        //    Assert.AreEqual("tralala", result);
-        //}
+        [TestMethod]
+        public void InvokeWithParameterSetPlainSucceeds()
+        {
+            var uri = new Uri("httpS://abiquo.example.com/api/");
+            var user = "arbitrary-user";
+            var password = "arbitrary-password";
+            var parameters = string.Format(@"-Uri {0} -User '{1}' -Password '{2}'", uri, user, password);
 
+            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
+                .IgnoreInstance()
+                .Returns(true);
+
+            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(1, results.Count);
+            Assert.IsInstanceOfType(results[0].BaseObject, typeof(BaseAbiquoClient));
+            var result = (BaseAbiquoClient) results[0].BaseObject;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
+        }
+
+        [TestMethod]
+        public void InvokeWithParameterSetCredSucceeds()
+        {
+            var uri = new Uri("httpS://abiquo.example.com/api/");
+            var user = "arbitrary-user";
+            var password = "arbitrary-password";
+            var parameters = string.Format(@"-Uri {0} -Credential $([pscredential]::new('{1}', (ConvertTo-SecureString -AsPlainText -String {2} -Force)))", uri, user, password);
+
+            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
+                .IgnoreInstance()
+                .Returns(true);
+
+            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(1, results.Count);
+            Assert.IsInstanceOfType(results[0].BaseObject, typeof(BaseAbiquoClient));
+            var result = (BaseAbiquoClient) results[0].BaseObject;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
+        }
+
+        [TestMethod]
+        public void InvokeWithParameterSetOAuth2Succeeds()
+        {
+            var uri = new Uri("httpS://abiquo.example.com/api/");
+            var token = "arbitrary-token";
+            var parameters = string.Format(@"-Uri {0} -OAuth2Token '{1}'", uri, token);
+
+            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
+                .IgnoreInstance()
+                .Returns(true);
+
+            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(1, results.Count);
+            Assert.IsInstanceOfType(results[0].BaseObject, typeof(BaseAbiquoClient));
+            var result = (BaseAbiquoClient) results[0].BaseObject;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
+        }
+
+        [TestMethod]
+        public void InvokeWithInvalidTokenWritesErrorRecord()
+        {
+            Action<IList<ErrorRecord>> errorHandler = errorRecords =>
+            {
+                Assert.AreEqual(1, errorRecords.Count);
+                var errorRecord = errorRecords[0];
+                Assert.IsNotNull(errorRecord);
+                Assert.IsInstanceOfType(errorRecord.Exception, typeof(AuthenticationException));
+            };
+
+            var uri = new Uri("httpS://abiquo.example.com/api/");
+            var token = "invalid-token";
+            var parameters = string.Format(@"-Uri {0} -OAuth2Token '{1}'", uri, token);
+
+            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
+                .IgnoreInstance()
+                .Returns(false);
+
+            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters, errorHandler);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(0, results.Count);
+        }
+
+        // DFTODO - maybe this test should be a generic test inside the Testing package
         [TestMethod]
         [ExpectedException(typeof(IncompleteParseException))]
         public void InvokeWithInvalidStringThrowsIncompleteParseException()
@@ -70,7 +193,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             var user = "arbitrary-user";
             var password = "arbitrary-password";
             // missing string terminator
-            var parameters = string.Format(@"-Uri http://localhost -User '{0} -Password '{1}'", user, password);
+            var parameters = string.Format(@"-Uri httpS://abiquo.example.com/api/ -User '{0} -Password '{1}'", user, password);
             var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);

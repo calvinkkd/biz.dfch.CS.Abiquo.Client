@@ -28,7 +28,6 @@ using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using Newtonsoft.Json;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
 {
     [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
