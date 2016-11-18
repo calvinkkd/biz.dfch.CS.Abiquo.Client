@@ -70,7 +70,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             // this seems to be related to the Lazy<T> we use to initialise the Abiquo client via the factory
             var currentClient = ModuleConfiguration.Current.Client;
         }
-            
+        
         [TestMethod]
         [ExpectParameterBindingException(MessagePattern = @"'Uri'.+'System\.Uri'")]
         public void InvokeWithInvalidUriParameterThrowsParameterBindingException1()
@@ -80,16 +80,24 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectParameterBindingException(MessagePattern = @"Credential")]
-        public void InvokeWithMissingiParameterThrowsParameterBindingException()
+        [ExpectParameterBindingException(MessagePattern = @"Username.+Password")]
+        public void InvokeWithMissingParameterThrowsParameterBindingException()
         {
             var parameters = @"-Uri httpS://abiquo.example.com/api/";
             var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
         }
 
         [TestMethod]
+        [ExpectParameterBindingValidationException(MessagePattern = @"Credential")]
+        public void InvokeWithNullCredentialParameterThrowsParameterBindingValidationException()
+        {
+            var parameters = @"-Uri httpS://abiquo.example.com/api/ -Credential $null";
+            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+        }
+
+        [TestMethod]
         [ExpectParameterBindingException(MessagePattern = @"'Credential'.+.System\.String.")]
-        public void InvokeWithMissingiParameterThrowsParameterBindingException2()
+        public void InvokeWithInvalidCredentialParameterThrowsParameterBindingException()
         {
             var parameters = @"-Uri httpS://abiquo.example.com/api/ -Credential arbitrary-user-as-string";
             var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);

@@ -33,12 +33,12 @@ namespace biz.dfch.PS.Abiquo.Client
          ,
          ConfirmImpact = ConfirmImpact.Medium
          ,
-         DefaultParameterSetName = ParameterSets.CREDENTIAL
+         DefaultParameterSetName = ParameterSets.PLAIN
          ,
          SupportsShouldProcess = true
          ,
          HelpUri = "http://dfch.biz/biz/dfch/PS/Abiquo/Client/Enter-Server/"
-     )]
+    )]
     [OutputType(typeof(BaseAbiquoClient))]
     public class EnterServer : PsCmdletBase
     {
@@ -95,7 +95,7 @@ namespace biz.dfch.PS.Abiquo.Client
         public PSCredential Credential { get; set; }
 
         /// <summary>
-        /// Specifies the OAUTH2 token to login in wit
+        /// Specifies the OAUTH2 token to login in with
         /// </summary>
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSets.OAUTH2)]
         [Alias("token")]
@@ -118,8 +118,7 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             base.EndProcessing();
 
-            var shouldProcessMessage = string.Format(Messages.EnterServerShouldProcess, Uri.AbsoluteUri,
-                ParameterSetName);
+            var shouldProcessMessage = string.Format(Messages.EnterServerShouldProcess, Uri.AbsoluteUri, ParameterSetName);
             if (!ShouldProcess(shouldProcessMessage))
             {
                 return;
@@ -217,6 +216,7 @@ namespace biz.dfch.PS.Abiquo.Client
                     authInfo = new OAuth2AuthenticationInformation(OAuth2Token, TenantId);
                     break;
                 default:
+                    // ReSharper disable once NotResolvedInText
                     throw new ArgumentOutOfRangeException("ParameterSetName", ParameterSetName, string.Format(Messages.EnterServerInvalidParameterSetName, ParameterSetName));
             }
 
