@@ -34,13 +34,16 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             base.BeginProcessing();
 
+            // remove the Import-Module (shown in error due to 'ScriptsToProcess')
+            RemoveScriptsToProcessModules.Invoke(this);
+
             SetDefaultValues();
         }
 
         /// <summary>
         /// Sets all bound parameters of the current Cmdlet to its default values (if defined)
         /// </summary>
-        protected void SetDefaultValues()
+        protected virtual void SetDefaultValues()
         {
             var propertyInfos = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance)
                 .Where
