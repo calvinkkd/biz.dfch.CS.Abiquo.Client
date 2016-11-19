@@ -63,6 +63,8 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 .Returns(User);
 
             Mock.SetupStatic(typeof(AbiquoClientFactory));
+            Mock.Arrange(() => AbiquoClientFactory.GetByVersion())
+                .Returns(Client);
             Mock.Arrange(() => AbiquoClientFactory.GetByVersion(Arg.IsAny<string>()))
                 .Returns(Client);
 

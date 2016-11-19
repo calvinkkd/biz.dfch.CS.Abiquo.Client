@@ -29,6 +29,11 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
     {
         public const string ABIQUO_CLIENT_VERSION_V1 = "v1";
 
+        public static BaseAbiquoClient GetByVersion()
+        {
+            return GetByVersion(ABIQUO_CLIENT_VERSION_V1);
+        }
+
         public static BaseAbiquoClient GetByVersion(string version)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(version));

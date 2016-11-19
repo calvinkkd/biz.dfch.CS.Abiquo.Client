@@ -10,21 +10,6 @@
 # show up as loaded module, see the bug on Microsoft Connect below: 
 # https://connect.microsoft.com/PowerShell/feedback/details/903654/scripts-loaded-via-a-scriptstoprocess-attribute-in-a-module-manifest-appear-as-if-they-are-loaded-modules
 
-$settings = [biz.dfch.PS.Abiquo.Client.ModuleSettings]::new();
-$settings.Property = "tralala";
-
-if(Test-Path -Path Variable:Global:biz_dfch_PS_Abiquo_Client)
-{
-	Remove-Variable -Name biz_dfch_PS_Abiquo_Client -Scope Global -Force -ErrorAction:SilentlyContinue;
-}
-New-Variable -Name biz_dfch_PS_Abiquo_Client -Value $settings -Scope Global;
-
-$moduleInfo = Get-Module Import-Module |? Path -eq $PSCommandPath;
-if($moduleInfo)
-{
-	Remove-Module $moduleInfo -Force -ErrorAction:SilentlyContinue;
-}
-
 # 
 # Copyright 2014-2016 d-fens GmbH
 # 

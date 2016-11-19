@@ -34,9 +34,6 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             base.BeginProcessing();
 
-            // remove the Import-Module (shown in error due to 'ScriptsToProcess')
-            RemoveScriptsToProcessModules.Invoke(this);
-
             SetDefaultValues();
         }
 

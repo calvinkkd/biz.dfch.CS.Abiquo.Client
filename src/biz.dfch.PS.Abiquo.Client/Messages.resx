@@ -131,14 +131,57 @@
 1: TenantId</comment>
   </data>
   <data name="EnterServerLoginWebException" xml:space="preserve">
-    <value>Login to '{0}' FAILED with StatusCode {1} and message '{1}'</value>
+    <value>Login to '{0}' FAILED with StatusCode {1} and message '{1}'.</value>
     <comment>0: Uri
 1: exception.StatusCode
 2: exception.Message</comment>
   </data>
   <data name="EnterServerShouldProcess" xml:space="preserve">
-    <value>Uri '{0}' and ParameterSetName '{1}'</value>
+    <value>Uri '{0}' and ParameterSetName '{1}'.</value>
     <comment>0: Uri
 1: ParameterSetName</comment>
+  </data>
+  <data name="ExportConfigurationModuleVariableNotFound" xml:space="preserve">
+    <value>Module variable could not be read. Try to run Import-Configuration first.</value>
+  </data>
+  <data name="ExportConfigurationShouldProcess" xml:space="preserve">
+    <value>Export configuration to file '{0}'</value>
+    <comment>0: FileInfo.FullName</comment>
+  </data>
+  <data name="ExportConfigurationShouldProcessForce" xml:space="preserve">
+    <value>Export configuration and overwrite existing file '{0}'</value>
+    <comment>0: FileInfo.FullName</comment>
+  </data>
+  <data name="ImportConfigurationConfigurationFileMapCreateFailed" xml:space="preserve">
+    <value>{0}: Creating ConfigurationFileMap FAILED.</value>
+    <comment>0: FileInfo.FullName</comment>
+  </data>
+  <data name="ImportConfigurationConfigurationHasFile" xml:space="preserve">
+    <value>{0}: Opening Configuration FAILED due to no file.</value>
+    <comment>0: FileInfo.FullName</comment>
+  </data>
+  <data name="ImportConfigurationConfigurationOpenFailed" xml:space="preserve">
+    <value>{0}: Opening Configuration FAILED.</value>
+    <comment>0: FileInfo.FullName</comment>
+  </data>
+  <data name="ImportConfigurationDirectoryExists" xml:space="preserve">
+    <value>{0}: The configuration file specified by the Path parameter must be a file and not a directory.</value>
+    <comment>0: FileInfo.FullName</comment>
+  </data>
+  <data name="ImportConfigurationFileDoesNotExist" xml:space="preserve">
+    <value>{0}: The configuration file specified by the Path parameter does not exist.</value>
+    <comment>0: FileInfo.FullName</comment>
+  </data>
+  <data name="ImportConfigurationSaveToModuleVariableFailed" xml:space="preserve">
+    <value>Saving moduleContext to module variable FAILED.</value>
+  </data>
+  <data name="ImportConfigurationSectionOpenFailed" xml:space="preserve">
+    <value>{0}: Opening ConfigurationSection '{1}' FAILED.</value>
+    <comment>0: FileInfo.FullName
+1: ConfigSectionName</comment>
+  </data>
+  <data name="ImportConfigurationShouldProcess" xml:space="preserve">
+    <value>Import configuration from '{0}'</value>
+    <comment>0: FileInfo.FullName</comment>
   </data>
 </root>

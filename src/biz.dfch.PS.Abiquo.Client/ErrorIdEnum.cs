@@ -27,5 +27,6 @@ namespace biz.dfch.PS.Abiquo.Client
     {
         EnterServerFailed = 0
         ,
+        ImportConfigurationFailed
     }
 }

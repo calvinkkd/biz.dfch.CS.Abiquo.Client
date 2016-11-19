@@ -16,42 +16,49 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client;
 using biz.dfch.CS.Abiquo.Client.Factory;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
     /// <summary>
-    /// 
+    /// ModuleContext
     /// </summary>
     public class ModuleContext
     {
-        private static string _apiVersion = AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1;
-
         /// <summary>
         /// Specifies the API version to use
         /// </summary>
-        public static string ApiVersion
-        {
-            get
-            {
-                Contract.Ensures(!string.IsNullOrWhiteSpace(_apiVersion));
+        public string ApiVersion { get; set; }
 
-                return _apiVersion;
-            }
-            set
-            {
-                Contract.Requires(!string.IsNullOrWhiteSpace(value));
-                
-                _apiVersion = value;
-            }
-        }
+        /// <summary>
+        /// Uri of Abiquo endpoint
+        /// </summary>
+        public Uri Uri { get; set; }
+
+        /// <summary>
+        /// Credentials to use when using authentication type plain
+        /// </summary>
+        public PSCredential Credential { get; set; }
+
+        /// <summary>
+        /// Token to use when using authentication type oauth2
+        /// </summary>
+        public string OAuth2Token { get; set; }
+
+        /// <summary>
+        /// Specifies the authentication type to use
+        /// </summary>
+        public string AuthenticationType { get; set; }
 
         private static readonly Lazy<BaseAbiquoClient> _client = new Lazy<BaseAbiquoClient>(() =>
         {
             Contract.Ensures(null != Contract.Result<BaseAbiquoClient>());
-            
-            var client = AbiquoClientFactory.GetByVersion(ApiVersion);
+
+            var apiVersion = ModuleConfiguration.Current.ApiVersion;
+            var client = string.IsNullOrWhiteSpace(apiVersion) ? 
+                AbiquoClientFactory.GetByVersion() : AbiquoClientFactory.GetByVersion(apiVersion);
             return client;
         });
 

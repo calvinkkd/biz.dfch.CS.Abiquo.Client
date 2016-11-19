@@ -88,7 +88,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login to &apos;{0}&apos; FAILED with StatusCode {1} and message &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Login to &apos;{0}&apos; FAILED with StatusCode {1} and message &apos;{1}&apos;..
         /// </summary>
         public static string EnterServerLoginWebException {
             get {
@@ -97,11 +97,110 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uri &apos;{0}&apos; and ParameterSetName &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Uri &apos;{0}&apos; and ParameterSetName &apos;{1}&apos;..
         /// </summary>
         public static string EnterServerShouldProcess {
             get {
                 return ResourceManager.GetString("EnterServerShouldProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Module variable could not be read. Try to run Import-Configuration first..
+        /// </summary>
+        public static string ExportConfigurationModuleVariableNotFound {
+            get {
+                return ResourceManager.GetString("ExportConfigurationModuleVariableNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export configuration to file &apos;{0}&apos;.
+        /// </summary>
+        public static string ExportConfigurationShouldProcess {
+            get {
+                return ResourceManager.GetString("ExportConfigurationShouldProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export configuration and overwrite existing file &apos;{0}&apos;.
+        /// </summary>
+        public static string ExportConfigurationShouldProcessForce {
+            get {
+                return ResourceManager.GetString("ExportConfigurationShouldProcessForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: Creating ConfigurationFileMap FAILED..
+        /// </summary>
+        public static string ImportConfigurationConfigurationFileMapCreateFailed {
+            get {
+                return ResourceManager.GetString("ImportConfigurationConfigurationFileMapCreateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: Opening Configuration FAILED due to no file..
+        /// </summary>
+        public static string ImportConfigurationConfigurationHasFile {
+            get {
+                return ResourceManager.GetString("ImportConfigurationConfigurationHasFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: Opening Configuration FAILED..
+        /// </summary>
+        public static string ImportConfigurationConfigurationOpenFailed {
+            get {
+                return ResourceManager.GetString("ImportConfigurationConfigurationOpenFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: The configuration file specified by the Path parameter must be a file and not a directory..
+        /// </summary>
+        public static string ImportConfigurationDirectoryExists {
+            get {
+                return ResourceManager.GetString("ImportConfigurationDirectoryExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: The configuration file specified by the Path parameter does not exist..
+        /// </summary>
+        public static string ImportConfigurationFileDoesNotExist {
+            get {
+                return ResourceManager.GetString("ImportConfigurationFileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving moduleContext to module variable FAILED..
+        /// </summary>
+        public static string ImportConfigurationSaveToModuleVariableFailed {
+            get {
+                return ResourceManager.GetString("ImportConfigurationSaveToModuleVariableFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: Opening ConfigurationSection &apos;{1}&apos; FAILED..
+        /// </summary>
+        public static string ImportConfigurationSectionOpenFailed {
+            get {
+                return ResourceManager.GetString("ImportConfigurationSectionOpenFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import configuration from &apos;{0}&apos;.
+        /// </summary>
+        public static string ImportConfigurationShouldProcess {
+            get {
+                return ResourceManager.GetString("ImportConfigurationShouldProcess", resourceCulture);
             }
         }
     }
