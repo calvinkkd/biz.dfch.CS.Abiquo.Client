@@ -15,13 +15,10 @@
  */
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client.Factory;
 
 namespace biz.dfch.PS.Abiquo.Client
@@ -45,27 +42,18 @@ namespace biz.dfch.PS.Abiquo.Client
             get { return (Uri) this["uri"]; }
             set { this["uri"] = value; }
         }
+
+        /// <summary>
+        /// Specifies the credential consisting of aa comma separated string to connect with
+        /// </summary>
+        [TypeConverter(typeof(PsCredentialConverter))]
+        [ConfigurationProperty("credential", DefaultValue = "admin,xabiquo", IsRequired = false)]
+        public PSCredential Credential
+        {
+            get { return (PSCredential) this["credential"]; }
+            set { this["credential"] = value; }
+        }
         
-        /// <summary>
-        /// Specifies the username to connect with
-        /// </summary>
-        [ConfigurationProperty("username", DefaultValue = "admin", IsRequired = false)]
-        public string Username
-        {
-            get { return (string) this["username"]; }
-            set { this["username"] = value; }
-        }
-
-        /// <summary>
-        /// Specifies the password to connect with
-        /// </summary>
-        [ConfigurationProperty("password", DefaultValue = "xabiquo", IsRequired = false)]
-        public string Password
-        {
-            get { return (string) this["password"]; }
-            set { this["password"] = value; }
-        }
-
         /// <summary>
         /// Specifies the oAuth2Token to connect with
         /// </summary>

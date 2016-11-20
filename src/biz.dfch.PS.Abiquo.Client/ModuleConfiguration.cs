@@ -18,6 +18,7 @@ using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Management.Automation;
+using System.Reflection;
 using System.Security;
 
 namespace biz.dfch.PS.Abiquo.Client
@@ -111,33 +112,26 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             Contract.Requires(null != section);
 
-            switch (section.AuthenticationType)
-            {
-                case EnterServer.ParameterSets.PLAIN:
-                case EnterServer.ParameterSets.CREDENTIAL:
-                case EnterServer.ParameterSets.OAUTH2:
-                    break;
-                default:
-                    const bool isValidAuthenticationType = false;
-                    Contract.Assert(isValidAuthenticationType, section.AuthenticationType);
-                    break;
-            }
-                
-            if (!string.IsNullOrWhiteSpace(section.Username) && !string.IsNullOrWhiteSpace(section.Password))
-            {
-                var secureString = new SecureString();
-                foreach (var c in section.Password)
-                {
-                    secureString.AppendChar(c);
-                }
-                Current.Credential = new PSCredential(section.Username, secureString);
-            }
+            const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 
-            Current.OAuth2Token = section.OAuth2Token;
-            Current.ApiVersion = section.ApiVersion;
-            Current.AuthenticationType = section.AuthenticationType;
-            Current.Uri = section.Uri;
-            Current.SourceLevels = section.SourceLevels;
+            var propertyInfos = section.GetType().GetProperties(bindingFlags);
+            foreach (var propertyInfo in propertyInfos)
+            {
+                var configurationProperty = propertyInfo.GetCustomAttribute<ConfigurationPropertyAttribute>();
+                if (null == configurationProperty)
+                {
+                    continue;
+                }
+
+                var targetPropertyInfo = Current.GetType().GetProperty(propertyInfo.Name, bindingFlags);
+                if (null == targetPropertyInfo)
+                {
+                    continue;
+                }
+
+                var value = propertyInfo.GetValue(section, null);
+                targetPropertyInfo.SetValue(Current, value, null);
+            }
         }
     }
 }
