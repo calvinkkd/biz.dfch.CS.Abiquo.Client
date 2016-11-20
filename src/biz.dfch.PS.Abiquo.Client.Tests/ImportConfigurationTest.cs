@@ -72,7 +72,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         
         [TestMethod]
         [ExpectParameterBindingException(MessagePattern = "Path")]
-        public void ImportConfigurationWithEmptyPathThrowsContractException()
+        public void InvokeWithEmptyPathThrowsContractException()
         {
             var parameters = @"-Path ''";
             PsCmdletAssert.Invoke(sut, parameters);
@@ -80,7 +80,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "Directory.Exists.fileInfo.FullName.+existing-directory")]
-        public void ImportConfigurationWithExitingDirectoryAsPathThrowsContractException()
+        public void InvokeWithExitingDirectoryAsPathThrowsContractException()
         {
             Mock.SetupStatic(typeof(Directory));
             Mock.Arrange(() => Directory.Exists(Arg.IsAny<string>()))
@@ -93,7 +93,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "File.Exists.fileInfo.FullName.+invalid-configuration-file-name")]
-        public void ImportConfigurationWithInvalidPathThrowsContractException()
+        public void InvokeWithInvalidPathThrowsContractException()
         {
             var parameters = @"-Path invalid-configuration-file-name";
             PsCmdletAssert.Invoke(sut, parameters, ex => ex);
@@ -101,7 +101,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = ModuleConfiguration.CONFIGURATION_FILE_NAME)]
-        public void ImportConfigurationWithEmptyPathResolvesDefaultConfigurationFileName()
+        public void InvokeWithEmptyPathResolvesDefaultConfigurationFileName()
         {
             Mock.SetupStatic(typeof(File));
             Mock.Arrange(() => File.Exists(Arg.IsAny<string>()))
@@ -113,7 +113,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        public void ImportConfigurationWithEmptyPathSucceeds()
+        public void InvokeWithEmptyPathSucceeds()
         {
             var parameters = @";";
             var results = PsCmdletAssert.Invoke(sut, parameters);
@@ -125,7 +125,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        public void ImportConfigurationWithEmptyPathAndSaveToVariableSucceeds()
+        public void InvokeWithEmptyPathAndSaveToVariableSucceeds()
         {
             var parameters = @"-SaveToModuleVariable;";
             var results = PsCmdletAssert.Invoke(sut, parameters);

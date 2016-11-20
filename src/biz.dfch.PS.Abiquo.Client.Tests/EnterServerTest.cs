@@ -174,7 +174,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "Assertion.failed:.hasLoginSucceeded1")]
-        public void InvokeWithInvalidTokenWritesErrorRecord()
+        public void InvokeWithInvalidTokenThrowsContractException()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
             var token = "invalid-token";
