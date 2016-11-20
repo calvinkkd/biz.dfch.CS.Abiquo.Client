@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-using System;
-using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Management.Automation;
-using System.Threading;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
