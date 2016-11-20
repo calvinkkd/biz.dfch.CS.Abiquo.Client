@@ -108,6 +108,13 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        public void InvokeWithInexistentUriThrowsWebException()
+        {
+            var parameters = @"-Uri httpS://abiquo.example.com/api/ -Username admin -Password password";
+            var results = PsCmdletAssert.Invoke(sut, parameters);
+        }
+        
+        [TestMethod]
         public void InvokeWithParameterSetPlainSucceeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");

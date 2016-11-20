@@ -109,12 +109,18 @@ namespace biz.dfch.PS.Abiquo.Client
         private static void ContractFailedEventHandler(object sender, ContractFailedEventArgs args)
         {
             var declaringType = new StackFrame(0).GetMethod().DeclaringType;
-            if (null == declaringType || declaringType != typeof(ModuleContext))
+            if (declaringType != typeof(ModuleContext))
             {
                 return;
             }
 
-            _traceSource.Value.TraceEvent(TraceEventType.Error, Constants.Cmdlets.CONTRACT_EXCEPTION, Messages.ContractFailedEventHandler, Trace.CorrelationManager.ActivityId, args.Message);
+            _traceSource.Value.TraceEvent
+            (
+                TraceEventType.Error, 
+                Constants.Cmdlets.CONTRACT_EXCEPTION, 
+                Messages.ContractFailedEventHandler, Trace.CorrelationManager.ActivityId, args.Message
+            );
         }
+
     }
 }

@@ -176,7 +176,9 @@ namespace biz.dfch.PS.Abiquo.Client
             var authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
+                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} ...", Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER], Uri.AbsoluteUri);
                 var hasLoginSucceeded1 = client.Login(Uri.AbsoluteUri, authInfo);
+                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} COMPETED [{3}].", Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER], Uri.AbsoluteUri, hasLoginSucceeded1);
                 Contract.Assert(hasLoginSucceeded1, string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));
             }
             catch (AggregateException aggrex)
@@ -279,6 +281,7 @@ namespace biz.dfch.PS.Abiquo.Client
             {
                 return aggrex;
             }
+
             var errorRecord = new ErrorRecord(ex, ErrorIdEnum.EnterServerFailed.ToString(), ErrorCategory.ConnectionError, this);
             WriteError(errorRecord);
 
