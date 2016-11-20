@@ -17,9 +17,7 @@
 using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Management.Automation;
 using System.Reflection;
-using System.Security;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
