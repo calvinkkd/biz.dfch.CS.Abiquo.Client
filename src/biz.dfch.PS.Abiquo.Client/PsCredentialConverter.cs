@@ -27,6 +27,9 @@ namespace biz.dfch.PS.Abiquo.Client
     /// </summary>
     public class PsCredentialConverter : TypeConverter
     {
+        private const char DELIMITER = ',';
+        private const int SPLIT_COUNT = 2;
+
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             var result = typeof(PSCredential) == sourceType || base.CanConvertFrom(context, sourceType);
@@ -54,8 +57,8 @@ namespace biz.dfch.PS.Abiquo.Client
                 return default(PSCredential);
             }
 
-            var values = value.Split(',');
-            if (2 != values.Length)
+            var values = value.Split(DELIMITER);
+            if (SPLIT_COUNT != values.Length)
             {
                 return default(PSCredential);
             }
