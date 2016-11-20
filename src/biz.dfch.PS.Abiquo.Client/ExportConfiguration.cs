@@ -81,7 +81,7 @@ namespace biz.dfch.PS.Abiquo.Client
             var moduleContextFromVariable = this.GetVariableValue(ModuleConfiguration.MODULE_VARIABLE_NAME) as ModuleContext;
             Contract.Assert(null != moduleContextFromVariable, Messages.ExportConfigurationModuleVariableNotFound);
 
-            var moduleContextSection = ModuleConfiguration.GetModuleContextSectionFromModuleContext();
+            var moduleContextSection = ModuleConfiguration.ConvertToModuleContextSection();
             ModuleConfiguration.Save(Path, moduleContextSection);
         }
     }

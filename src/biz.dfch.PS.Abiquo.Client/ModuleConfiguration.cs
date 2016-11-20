@@ -140,7 +140,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// Creates a new ModuleContextSection from the current module's ModuleContext
         /// </summary>
         /// <returns>Converted ModuleContextSection from ModuleContext</returns>
-        public static ModuleContextSection GetModuleContextSectionFromModuleContext()
+        public static ModuleContextSection ConvertToModuleContextSection()
         {
             Contract.Ensures(null != Contract.Result<ModuleContextSection>());
             
