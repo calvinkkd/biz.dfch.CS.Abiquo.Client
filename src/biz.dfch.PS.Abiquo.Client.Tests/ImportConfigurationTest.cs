@@ -15,12 +15,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client;
 using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
