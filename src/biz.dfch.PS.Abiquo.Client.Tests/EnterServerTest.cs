@@ -36,6 +36,8 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         public static BaseAbiquoClient Client;
         public static User User;
 
+        private readonly Type sut = typeof(EnterServer);
+
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -78,7 +80,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         public void InvokeWithInvalidUriParameterThrowsParameterBindingException1()
         {
             var parameters = @"-Uri ";
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
         }
 
         [TestMethod]
@@ -86,7 +88,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         public void InvokeWithMissingParameterThrowsParameterBindingException()
         {
             var parameters = @"-Uri httpS://abiquo.example.com/api/";
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
         }
 
         [TestMethod]
@@ -94,7 +96,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         public void InvokeWithNullCredentialParameterThrowsParameterBindingValidationException()
         {
             var parameters = @"-Uri httpS://abiquo.example.com/api/ -Credential $null";
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
         }
 
         [TestMethod]
@@ -102,7 +104,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         public void InvokeWithInvalidCredentialParameterThrowsParameterBindingException()
         {
             var parameters = @"-Uri httpS://abiquo.example.com/api/ -Credential arbitrary-user-as-string";
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
         }
 
         [TestMethod]
@@ -117,7 +119,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 .IgnoreInstance()
                 .Returns(true);
 
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
             
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
@@ -139,7 +141,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 .IgnoreInstance()
                 .Returns(true);
 
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
             
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
@@ -160,7 +162,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 .IgnoreInstance()
                 .Returns(true);
 
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
             
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
@@ -189,7 +191,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 .IgnoreInstance()
                 .Returns(false);
 
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters, errorHandler);
+            var results = PsCmdletAssert.Invoke(sut, parameters, errorHandler);
             
             Assert.IsNotNull(results);
             Assert.AreEqual(0, results.Count);
@@ -204,7 +206,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             var password = "arbitrary-password";
             // missing string terminator
             var parameters = string.Format(@"-Uri httpS://abiquo.example.com/api/ -User '{0} -Password '{1}'", user, password);
-            var results = PsCmdletAssert.Invoke(typeof(EnterServer), parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters);
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
             var result = results[0].BaseObject.ToString();
