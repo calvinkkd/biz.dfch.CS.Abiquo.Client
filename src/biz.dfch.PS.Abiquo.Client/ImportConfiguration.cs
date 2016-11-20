@@ -51,16 +51,6 @@ namespace biz.dfch.PS.Abiquo.Client
         [Alias("save")]
         public SwitchParameter SaveToModuleVariable { get; set; }
 
-        private const string SCRIPT = @"
-PARAM
-(
-    [string] $VariableName
-    ,
-    [biz.dfch.PS.Abiquo.Client.ModuleContext] $ModuleContext
-)
-
-New-Variable -Name $VariableName -Value $ModuleContext -Scope Global -Force -ErrorAction:SilentlyContinue;
-";
         /// <summary>
         /// Main processing logic.
         /// </summary>
@@ -86,9 +76,6 @@ New-Variable -Name $VariableName -Value $ModuleContext -Scope Global -Force -Err
             }
 
             this.SessionState.PSVariable.Set(ModuleConfiguration.MODULE_VARIABLE_NAME, ModuleConfiguration.Current);
-
-            //var scriptBlock = this.InvokeCommand.NewScriptBlock(SCRIPT);
-            //this.InvokeCommand.InvokeScript(false, scriptBlock, null, ModuleConfiguration.MODULE_VARIABLE_NAME, ModuleConfiguration.Current);
 
             var result = this.GetVariableValue(ModuleConfiguration.MODULE_VARIABLE_NAME);
             if (null != result)
