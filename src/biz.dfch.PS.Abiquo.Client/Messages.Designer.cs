@@ -176,5 +176,23 @@ namespace biz.dfch.PS.Abiquo.Client {
                 return ResourceManager.GetString("ImportConfigurationShouldProcess", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: {1} START.
+        /// </summary>
+        public static string PsCmdletStart {
+            get {
+                return ResourceManager.GetString("PsCmdletStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: {1} STOP.
+        /// </summary>
+        public static string PsCmdletStop {
+            get {
+                return ResourceManager.GetString("PsCmdletStop", resourceCulture);
+            }
+        }
     }
 }

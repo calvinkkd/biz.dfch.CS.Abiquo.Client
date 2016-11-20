@@ -173,16 +173,9 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "Assertion.failed:.hasLoginSucceeded1")]
         public void InvokeWithInvalidTokenWritesErrorRecord()
         {
-            Action<IList<ErrorRecord>> errorHandler = errorRecords =>
-            {
-                Assert.AreEqual(1, errorRecords.Count);
-                var errorRecord = errorRecords[0];
-                Assert.IsNotNull(errorRecord);
-                Assert.IsInstanceOfType(errorRecord.Exception, typeof(AuthenticationException));
-            };
-
             var uri = new Uri("httpS://abiquo.example.com/api/");
             var token = "invalid-token";
             var parameters = string.Format(@"-Uri {0} -OAuth2Token '{1}'", uri, token);
@@ -191,7 +184,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 .IgnoreInstance()
                 .Returns(false);
 
-            var results = PsCmdletAssert.Invoke(sut, parameters, errorHandler);
+            var results = PsCmdletAssert.Invoke(sut, parameters, ex => ex);
             
             Assert.IsNotNull(results);
             Assert.AreEqual(0, results.Count);

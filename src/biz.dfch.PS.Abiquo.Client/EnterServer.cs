@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Management.Automation;
@@ -124,12 +125,19 @@ namespace biz.dfch.PS.Abiquo.Client
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.MODULE_CONTEXT)]
         public SwitchParameter UseModuleContext { get; set; }
 
-        /// <summary>
-        /// Main cmdlet logic
-        /// </summary>
-        protected override void EndProcessing()
+        protected override void BeginProcessing()
         {
-            base.EndProcessing();
+            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Start, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStart, Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER]);
+
+            base.BeginProcessing();
+        }
+
+        /// <summary>
+        /// ProcessRecord
+        /// </summary>
+        protected override void ProcessRecord()
+        {
+            base.ProcessRecord();
 
             var parameterSetName = ParameterSetName;
 
@@ -168,17 +176,8 @@ namespace biz.dfch.PS.Abiquo.Client
             var authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
-                var hasLoginSucceeded = client.Login(Uri.AbsoluteUri, authInfo);
-                if (!hasLoginSucceeded)
-                {
-                    var exception =
-                        new AuthenticationException(string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));
-                    var errorRecord = new ErrorRecord(exception, ErrorIdEnum.EnterServerFailed.ToString(),
-                        ErrorCategory.AuthenticationError, this);
-                    WriteError(errorRecord);
-
-                    return;
-                }
+                var hasLoginSucceeded1 = client.Login(Uri.AbsoluteUri, authInfo);
+                Contract.Assert(hasLoginSucceeded1, string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));
             }
             catch (AggregateException aggrex)
             {
@@ -209,15 +208,8 @@ namespace biz.dfch.PS.Abiquo.Client
             authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
-                var hasLoginSucceeded = client.Login(Uri.AbsoluteUri, authInfo);
-                if (!hasLoginSucceeded)
-                {
-                    var exception = new AuthenticationException(string.Format(Messages.EnterServerLoginFailed2, Uri.AbsoluteUri, TenantId));
-                    var errorRecord = new ErrorRecord(exception, ErrorIdEnum.EnterServerFailed.ToString(), ErrorCategory.AuthenticationError, this);
-                    WriteError(errorRecord);
-
-                    return;
-                }
+                var hasLoginSucceeded2 = client.Login(Uri.AbsoluteUri, authInfo);
+                Contract.Assert(hasLoginSucceeded2, string.Format(Messages.EnterServerLoginFailed2, Uri.AbsoluteUri));
             }
             catch (AggregateException aggrex)
             {
@@ -233,6 +225,16 @@ namespace biz.dfch.PS.Abiquo.Client
             WriteObject(client);
 
             return;
+        }
+
+        /// <summary>
+        /// EndProcessing
+        /// </summary>
+        protected override void EndProcessing()
+        {
+            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Stop, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStop, Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER]);
+
+            base.EndProcessing();
         }
 
         private IAuthenticationInformation GetAuthenticationInformation(string parameterSetName)
