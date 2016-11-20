@@ -31,7 +31,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the API version to use
         /// </summary>
-        public string ApiVersion { get; set; }
+        public string ApiVersion { get; internal set; }
 
         /// <summary>
         /// Uri of Abiquo endpoint
@@ -56,7 +56,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the source levels used for logging
         /// </summary>
-        public SourceLevels SourceLevels { get; set; }
+        public SourceLevels SourceLevels { get; internal set; }
 
         private static readonly Lazy<BaseAbiquoClient> _client = new Lazy<BaseAbiquoClient>(() =>
         {
