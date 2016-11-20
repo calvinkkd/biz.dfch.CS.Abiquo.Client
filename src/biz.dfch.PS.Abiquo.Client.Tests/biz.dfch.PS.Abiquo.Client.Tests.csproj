@@ -167,7 +167,6 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="EnterServerTest.cs" />
-    <Compile Include="ExportConfigurationTest.cs" />
     <Compile Include="ImportConfigurationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

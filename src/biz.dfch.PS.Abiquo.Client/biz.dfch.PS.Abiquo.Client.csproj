@@ -145,7 +145,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExportConfiguration.cs" />
     <Compile Include="ImportConfiguration.cs" />
     <Compile Include="ErrorIdEnum.cs" />
     <Compile Include="ModuleContext.cs" />

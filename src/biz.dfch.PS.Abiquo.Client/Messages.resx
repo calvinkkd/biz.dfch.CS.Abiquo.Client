@@ -141,17 +141,6 @@
     <comment>0: Uri
 1: ParameterSetName</comment>
   </data>
-  <data name="ExportConfigurationModuleVariableNotFound" xml:space="preserve">
-    <value>Module variable could not be read. Try to run Import-Configuration first.</value>
-  </data>
-  <data name="ExportConfigurationShouldProcess" xml:space="preserve">
-    <value>Export configuration to file '{0}'</value>
-    <comment>0: FileInfo.FullName</comment>
-  </data>
-  <data name="ExportConfigurationShouldProcessForce" xml:space="preserve">
-    <value>Export configuration and overwrite existing file '{0}'</value>
-    <comment>0: FileInfo.FullName</comment>
-  </data>
   <data name="ImportConfigurationConfigurationFileMapCreateFailed" xml:space="preserve">
     <value>{0}: Creating ConfigurationFileMap FAILED.</value>
     <comment>0: FileInfo.FullName</comment>

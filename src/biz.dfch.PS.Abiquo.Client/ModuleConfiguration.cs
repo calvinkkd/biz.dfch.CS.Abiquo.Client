@@ -82,18 +82,6 @@ namespace biz.dfch.PS.Abiquo.Client
         }
 
         /// <summary>
-        /// Gets the module context section from the default configuration file
-        /// </summary>
-        /// <returns>ModuleContextSection of current module</returns>
-        public static ModuleContextSection GetModuleContextSection()
-        {
-            Contract.Ensures(null != Contract.Result<ModuleContextSection>());
-
-            var fileInfo = ResolveConfigurationFileInfo(null);
-            return GetModuleContextSection(fileInfo);
-        }
-
-        /// <summary>
         /// Gets the module context section from the specified configuration file
         /// </summary>
         /// <param name="fileInfo">Specifies the location of the configuration file to be loaded</param>
@@ -116,67 +104,6 @@ namespace biz.dfch.PS.Abiquo.Client
             return moduleContextSection;
         }
 
-
-        /// <summary>
-        /// Saves the specified configuration section to the configuration file
-        /// </summary>
-        /// <param name="fileInfo">Configuration file name to save to</param>
-        /// <param name="section">Module context to save</param>
-        public static void Save(FileInfo fileInfo, ConfigurationSection section)
-        {
-            Contract.Requires(null != fileInfo);
-            Contract.Requires(null != section);
-
-            var configurationFileMap = new ConfigurationFileMap(fileInfo.FullName);
-            Contract.Assert(null != configurationFileMap, string.Format(Messages.ImportConfigurationConfigurationFileMapCreateFailed, fileInfo.FullName));
-
-            var configuration = ConfigurationManager.OpenMappedMachineConfiguration(configurationFileMap);
-            Contract.Assert(null != configuration, string.Format(Messages.ImportConfigurationConfigurationOpenFailed, fileInfo.FullName));
-            Contract.Assert(configuration.HasFile, string.Format(Messages.ImportConfigurationConfigurationHasFile, fileInfo.FullName));
-
-            configuration.Sections.Remove(ModuleContextSection.SECTION_NAME);
-            configuration.Save(ConfigurationSaveMode.Minimal);
-
-            configuration.Sections.Add(ModuleContextSection.SECTION_NAME, section);
-            configuration.Save(ConfigurationSaveMode.Minimal);
-        }
-
-        /// <summary>
-        /// Creates a new ModuleContextSection from the current module's ModuleContext
-        /// </summary>
-        /// <returns>Converted ModuleContextSection from ModuleContext</returns>
-        public static ModuleContextSection ConvertToModuleContextSection()
-        {
-            Contract.Ensures(null != Contract.Result<ModuleContextSection>());
-            
-            var section = new ModuleContextSection();
-            
-            switch (Current.AuthenticationType)
-            {
-                case EnterServer.ParameterSets.PLAIN:
-                case EnterServer.ParameterSets.CREDENTIAL:
-                case EnterServer.ParameterSets.OAUTH2:
-                    break;
-                default:
-                    const bool isValidAuthenticationType = false;
-                    Contract.Assert(isValidAuthenticationType, section.AuthenticationType);
-                    break;
-            }
-
-            if (null != Current.Credential)
-            {
-                section.Username = Current.Credential.UserName;
-                section.Password = Current.Credential.GetNetworkCredential().Password;
-            }
-            section.OAuth2Token = Current.OAuth2Token;
-            section.ApiVersion = Current.ApiVersion;
-            section.AuthenticationType = Current.AuthenticationType;
-            section.Uri = Current.Uri;
-            section.SourceLevels = Current.SourceLevels;
-
-            return section;
-        }
-            
         /// <summary>
         /// Sets the module context from a configuration section
         /// </summary>

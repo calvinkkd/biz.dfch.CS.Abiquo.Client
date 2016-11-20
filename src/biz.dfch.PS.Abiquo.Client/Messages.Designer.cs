@@ -106,33 +106,6 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Module variable could not be read. Try to run Import-Configuration first..
-        /// </summary>
-        public static string ExportConfigurationModuleVariableNotFound {
-            get {
-                return ResourceManager.GetString("ExportConfigurationModuleVariableNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export configuration to file &apos;{0}&apos;.
-        /// </summary>
-        public static string ExportConfigurationShouldProcess {
-            get {
-                return ResourceManager.GetString("ExportConfigurationShouldProcess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export configuration and overwrite existing file &apos;{0}&apos;.
-        /// </summary>
-        public static string ExportConfigurationShouldProcessForce {
-            get {
-                return ResourceManager.GetString("ExportConfigurationShouldProcessForce", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {0}: Creating ConfigurationFileMap FAILED..
         /// </summary>
         public static string ImportConfigurationConfigurationFileMapCreateFailed {
