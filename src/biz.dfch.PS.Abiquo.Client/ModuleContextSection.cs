@@ -49,7 +49,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the username to connect with
         /// </summary>
-        [ConfigurationProperty("username", DefaultValue = "", IsRequired = false)]
+        [ConfigurationProperty("username", DefaultValue = "admin", IsRequired = false)]
         public string Username
         {
             get { return (string) this["username"]; }
@@ -59,7 +59,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the password to connect with
         /// </summary>
-        [ConfigurationProperty("password", DefaultValue = "", IsRequired = false)]
+        [ConfigurationProperty("password", DefaultValue = "xabiquo", IsRequired = false)]
         public string Password
         {
             get { return (string) this["password"]; }
