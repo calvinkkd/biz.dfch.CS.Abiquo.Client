@@ -61,6 +61,11 @@ namespace biz.dfch.PS.Abiquo.Client
             /// ParameterSetName used when specifying an OAuth2 token
             /// </summary>
             public const string OAUTH2 = "oauth2";
+
+            /// <summary>
+            /// ParameterSetName used when using settings from ModuleContext
+            /// </summary>
+            public const string MODULE_CONTEXT = "config";
         }
 
         /// <summary>
@@ -71,7 +76,9 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the base url of the Abiquo endpoint
         /// </summary>
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSets.PLAIN)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSets.CREDENTIAL)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSets.OAUTH2)]
         [Alias("ConnectionUri")]
         public Uri Uri { get; set; }
 
@@ -112,22 +119,53 @@ namespace biz.dfch.PS.Abiquo.Client
         public int TenantId { get; set; }
 
         /// <summary>
+        /// Use settings from ModuleContext variable to log in
+        /// </summary>
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSets.MODULE_CONTEXT)]
+        public SwitchParameter UseModuleContext { get; set; }
+
+        /// <summary>
         /// Main cmdlet logic
         /// </summary>
         protected override void EndProcessing()
         {
             base.EndProcessing();
 
-            var shouldProcessMessage = string.Format(Messages.EnterServerShouldProcess, Uri.AbsoluteUri, ParameterSetName);
+            var parameterSetName = ParameterSetName;
+
+            var moduleContext = ModuleConfiguration.Current;
+            var client = moduleContext.Client;
+
+            if (ParameterSets.MODULE_CONTEXT.Equals(parameterSetName))
+            {
+                switch (moduleContext.AuthenticationType)
+                {
+                    case ParameterSets.PLAIN:
+                    case ParameterSets.CREDENTIAL:
+                        Credential = moduleContext.Credential;
+                        parameterSetName = ParameterSets.CREDENTIAL;
+                        break;
+                    case ParameterSets.OAUTH2:
+                        OAuth2Token = moduleContext.OAuth2Token;
+                        parameterSetName = ParameterSets.OAUTH2;
+                        break;
+                    default:
+                        const bool isValidAuthenticationType = false;
+                        Contract.Assert(isValidAuthenticationType, moduleContext.AuthenticationType);
+                        break;
+                }
+                Uri = moduleContext.Uri;
+                Contract.Assert(null != Uri);
+            }
+
+            var shouldProcessMessage = string.Format(Messages.EnterServerShouldProcess, Uri.AbsoluteUri, parameterSetName);
             if (!ShouldProcess(shouldProcessMessage))
             {
                 return;
             }
 
-            var client = ModuleConfiguration.Current.Client;
-
             // perform login
-            var authInfo = GetAuthenticationInformation();
+            var authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
                 var hasLoginSucceeded = client.Login(Uri.AbsoluteUri, authInfo);
@@ -168,7 +206,7 @@ namespace biz.dfch.PS.Abiquo.Client
 
             // perform 2nd login
             TenantId = currentUserInformation.Id;
-            authInfo = GetAuthenticationInformation();
+            authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
                 var hasLoginSucceeded = client.Login(Uri.AbsoluteUri, authInfo);
@@ -197,12 +235,13 @@ namespace biz.dfch.PS.Abiquo.Client
             return;
         }
 
-        private IAuthenticationInformation GetAuthenticationInformation()
+        private IAuthenticationInformation GetAuthenticationInformation(string parameterSetName)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(parameterSetName));
             Contract.Ensures(null != Contract.Result<IAuthenticationInformation>());
 
             IAuthenticationInformation authInfo;
-            switch (ParameterSetName)
+            switch (parameterSetName)
             {
                 case ParameterSets.PLAIN:
                     authInfo = new BasicAuthenticationInformation(Username, Password, TenantId);
