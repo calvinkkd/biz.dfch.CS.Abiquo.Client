@@ -15,11 +15,9 @@
  */
 
 using System;
-using System.Configuration;
-using System.Diagnostics.Contracts;
+using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
-using System.Threading;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
@@ -50,6 +48,13 @@ namespace biz.dfch.PS.Abiquo.Client
         [Parameter(Mandatory = false)]
         [Alias("save")]
         public SwitchParameter SaveToModuleVariable { get; set; }
+
+        protected override void BeginProcessing()
+        {
+            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Start, Constants.Cmdlets.IMPORT_CONFIGURATION, Messages.PsCmdletStart, Constants.CmdletNames[Constants.Cmdlets.IMPORT_CONFIGURATION]);
+
+            base.BeginProcessing();
+        }
 
         /// <summary>
         /// Main processing logic.
@@ -87,6 +92,13 @@ namespace biz.dfch.PS.Abiquo.Client
             var exception = new ArgumentException(string.Format(Messages.ImportConfigurationSaveToModuleVariableFailed), "SaveToModuleVariable");
             var errorRecord = new ErrorRecord(exception, ErrorIdEnum.ImportConfigurationFailed.ToString(), ErrorCategory.InvalidResult, this);
             WriteError(errorRecord);
+        }
+
+        protected override void EndProcessing()
+        {
+            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Stop, Constants.Cmdlets.IMPORT_CONFIGURATION, Messages.PsCmdletStop, Constants.CmdletNames[Constants.Cmdlets.IMPORT_CONFIGURATION]);
+
+            base.EndProcessing();
         }
 
 
