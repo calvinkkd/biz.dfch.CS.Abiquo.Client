@@ -49,13 +49,6 @@ namespace biz.dfch.PS.Abiquo.Client
         [Alias("save")]
         public SwitchParameter SaveToModuleVariable { get; set; }
 
-        protected override void BeginProcessing()
-        {
-            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Start, Constants.Cmdlets.IMPORT_CONFIGURATION, Messages.PsCmdletStart, Constants.CmdletNames[Constants.Cmdlets.IMPORT_CONFIGURATION]);
-
-            base.BeginProcessing();
-        }
-
         /// <summary>
         /// Main processing logic.
         /// </summary>
@@ -93,14 +86,6 @@ namespace biz.dfch.PS.Abiquo.Client
             var errorRecord = new ErrorRecord(exception, ErrorIdEnum.ImportConfigurationFailed.ToString(), ErrorCategory.InvalidResult, this);
             WriteError(errorRecord);
         }
-
-        protected override void EndProcessing()
-        {
-            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Stop, Constants.Cmdlets.IMPORT_CONFIGURATION, Messages.PsCmdletStop, Constants.CmdletNames[Constants.Cmdlets.IMPORT_CONFIGURATION]);
-
-            base.EndProcessing();
-        }
-
 
     }
 }

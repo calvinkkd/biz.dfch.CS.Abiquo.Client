@@ -61,6 +61,15 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}: {1}.
+        /// </summary>
+        public static string ContractFailedEventHandler {
+            get {
+                return ResourceManager.GetString("ContractFailedEventHandler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid ParameterSetName &apos;{0}&apos; detected..
         /// </summary>
         public static string EnterServerInvalidParameterSetName {

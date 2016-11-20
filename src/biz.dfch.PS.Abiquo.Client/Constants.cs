@@ -34,14 +34,13 @@ namespace biz.dfch.PS.Abiquo.Client
         public static class Cmdlets
         {
             /// <summary>
+            /// 
+            /// </summary>
+            public const int CONTRACT_EXCEPTION = 0;
+            /// <summary>
             /// Enter-Server
             /// </summary>
             public const int ENTER_SERVER = 1;
-
-            /// <summary>
-            /// Import-Configuratoin
-            /// </summary>
-            public const int IMPORT_CONFIGURATION = 2;
         }
 
         /// <summary>
@@ -49,9 +48,9 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         public static readonly string[] CmdletNames = new[]
         {
-            typeof(EnterServer).ToString()
+            string.Empty
             ,
-            typeof(ImportConfiguration).ToString()
+            typeof(EnterServer).ToString()
             ,
         };
     }
