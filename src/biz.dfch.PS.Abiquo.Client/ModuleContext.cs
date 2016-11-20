@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client;
@@ -52,6 +53,11 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         public string AuthenticationType { get; set; }
 
+        /// <summary>
+        /// Specifies the source levels used for logging
+        /// </summary>
+        public SourceLevels SourceLevels { get; set; }
+
         private static readonly Lazy<BaseAbiquoClient> _client = new Lazy<BaseAbiquoClient>(() =>
         {
             Contract.Ensures(null != Contract.Result<BaseAbiquoClient>());
@@ -72,6 +78,29 @@ namespace biz.dfch.PS.Abiquo.Client
                 Contract.Ensures(null != Contract.Result<BaseAbiquoClient>());
                 
                 return _client.Value;
+            }
+        }
+
+        private static readonly Lazy<TraceSource> _traceSource = new Lazy<TraceSource>(() =>
+        {
+            Contract.Ensures(null != Contract.Result<TraceSource>());
+
+            var sourceLevels = ModuleConfiguration.Current.SourceLevels;
+            var traceSource = new TraceSource(ModuleConfiguration.MODULE_NAME, sourceLevels);
+
+            return traceSource;
+        });
+
+        /// <summary>
+        /// Returns a reference to the TraceSource instance of this module
+        /// </summary>
+        public TraceSource TraceSource
+        {
+            get
+            {
+                Contract.Ensures(null != Contract.Result<TraceSource>());
+
+                return _traceSource.Value;
             }
         }
     }

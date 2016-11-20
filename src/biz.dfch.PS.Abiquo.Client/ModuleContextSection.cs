@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
@@ -41,14 +42,8 @@ namespace biz.dfch.PS.Abiquo.Client
         [ConfigurationProperty("uri", DefaultValue = "http://abiquo.example.com/api", IsRequired = false)]
         public Uri Uri
         {
-            get
-            { 
-                return (Uri) this["uri"]; 
-            }
-            set
-            { 
-                this["uri"] = value; 
-            }
+            get { return (Uri) this["uri"]; }
+            set { this["uri"] = value; }
         }
         
         /// <summary>
@@ -57,14 +52,8 @@ namespace biz.dfch.PS.Abiquo.Client
         [ConfigurationProperty("username", DefaultValue = "", IsRequired = false)]
         public string Username
         {
-            get
-            { 
-                return (string) this["username"]; 
-            }
-            set
-            { 
-                this["username"] = value; 
-            }
+            get { return (string) this["username"]; }
+            set { this["username"] = value; }
         }
 
         /// <summary>
@@ -73,14 +62,8 @@ namespace biz.dfch.PS.Abiquo.Client
         [ConfigurationProperty("password", DefaultValue = "", IsRequired = false)]
         public string Password
         {
-            get
-            { 
-                return (string) this["password"]; 
-            }
-            set
-            { 
-                this["password"] = value; 
-            }
+            get { return (string) this["password"]; }
+            set { this["password"] = value; }
         }
 
         /// <summary>
@@ -89,14 +72,8 @@ namespace biz.dfch.PS.Abiquo.Client
         [ConfigurationProperty("oAuth2Token", DefaultValue = "", IsRequired = false)]
         public string OAuth2Token
         {
-            get
-            { 
-                return (string) this["oAuth2Token"]; 
-            }
-            set
-            { 
-                this["oAuth2Token"] = value; 
-            }
+            get { return (string) this["oAuth2Token"]; }
+            set { this["oAuth2Token"] = value; }
         }
 
         /// <summary>
@@ -105,14 +82,8 @@ namespace biz.dfch.PS.Abiquo.Client
         [ConfigurationProperty("authenticationType", DefaultValue = EnterServer.ParameterSets.PLAIN, IsRequired = false)]
         public string AuthenticationType
         {
-            get
-            { 
-                return (string) this["authenticationType"]; 
-            }
-            set
-            { 
-                this["authenticationType"] = value; 
-            }
+            get { return (string) this["authenticationType"]; }
+            set { this["authenticationType"] = value; }
         }
 
         /// <summary>
@@ -121,14 +92,18 @@ namespace biz.dfch.PS.Abiquo.Client
         [ConfigurationProperty("apiVersion", DefaultValue = AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1, IsRequired = false)]
         public string ApiVersion
         {
-            get
-            { 
-                return (string) this["apiVersion"]; 
-            }
-            set
-            { 
-                this["apiVersion"] = value; 
-            }
+            get { return (string) this["apiVersion"]; }
+            set { this["apiVersion"] = value; }
+        }
+
+        /// <summary>
+        /// Specifies the source levels used for logging
+        /// </summary>
+        [ConfigurationProperty("sourceLevels", DefaultValue = SourceLevels.All, IsRequired = false)]
+        public SourceLevels SourceLevels
+        {
+            get { return (SourceLevels) this["sourceLevels"]; }
+            set { this["sourceLevels"] = value; }
         }
     }
 }

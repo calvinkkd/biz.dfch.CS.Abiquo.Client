@@ -37,6 +37,11 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         public const string MODULE_VARIABLE_NAME = "biz_dfch_PS_Abiquo_Client";
 
+        /// <summary>
+        /// The name of this module
+        /// </summary>
+        public const string MODULE_NAME = "biz.dfch.PS.Abiquo.Client";
+
         private static readonly ModuleContext _moduleContext = new ModuleContext();
 
         /// <summary>
@@ -167,6 +172,7 @@ namespace biz.dfch.PS.Abiquo.Client
             section.ApiVersion = Current.ApiVersion;
             section.AuthenticationType = Current.AuthenticationType;
             section.Uri = Current.Uri;
+            section.SourceLevels = Current.SourceLevels;
 
             return section;
         }
@@ -204,6 +210,7 @@ namespace biz.dfch.PS.Abiquo.Client
             Current.ApiVersion = section.ApiVersion;
             Current.AuthenticationType = section.AuthenticationType;
             Current.Uri = section.Uri;
+            Current.SourceLevels = section.SourceLevels;
         }
     }
 }
