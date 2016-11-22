@@ -123,6 +123,10 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="biz.dfch.CS.PowerShell.Commons, Version=1.0.1.25806, Culture=neutral, PublicKeyToken=ddc350d26de1d0d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\biz.dfch.CS.PowerShell.Commons.1.0.1\lib\biz.dfch.CS.PowerShell.Commons.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="biz.dfch.CS.System.Utilities, Version=3.1.1.12435, Culture=neutral, PublicKeyToken=30acc2f3d5961f2d, processorArchitecture=MSIL">
       <HintPath>..\packages\biz.dfch.CS.System.Utilities.3.1.1\lib\biz.dfch.CS.System.Utilities.dll</HintPath>
       <Private>True</Private>
