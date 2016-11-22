@@ -33,7 +33,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int CostCode { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int CpuRequired { get; set; }
         
         public int CoresPerSocket { get; set; }
@@ -50,7 +50,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string IconUrl { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int Id { get; set; }
         
         public string LoginPassword { get; set; }
@@ -66,7 +66,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string OsVersion { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int RamRequired { get; set; }
 
         [Required]
