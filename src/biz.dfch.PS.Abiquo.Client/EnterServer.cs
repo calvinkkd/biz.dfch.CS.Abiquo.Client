@@ -23,6 +23,7 @@ using System.Net;
 using System.Security.Authentication;
 using biz.dfch.CS.Abiquo.Client;
 using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.PowerShell.Commons;
 
 namespace biz.dfch.PS.Abiquo.Client
 {

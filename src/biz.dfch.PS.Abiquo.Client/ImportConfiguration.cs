@@ -18,6 +18,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
+using biz.dfch.CS.PowerShell.Commons;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
