@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace biz.dfch.PS.Abiquo.Client
 {
+    /// <summary>
+    /// ErrorIdEnum
+    /// </summary>
     public enum ErrorIdEnum : long
     {
+        /// <summary>
+        /// EnterServerFailed
+        /// </summary>
         EnterServerFailed = 0
         ,
+        /// <summary>
+        /// ImportConfigurationFailed
+        /// </summary>
         ImportConfigurationFailed
     }
 }
