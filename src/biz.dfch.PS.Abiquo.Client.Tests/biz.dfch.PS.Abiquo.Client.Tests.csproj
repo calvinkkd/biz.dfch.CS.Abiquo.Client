@@ -172,13 +172,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="biz.dfch.PS.Abiquo.Client.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
     <Compile Include="EnterServerTest.cs" />
     <Compile Include="ImportConfigurationTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\biz.dfch.CS.Abiquo.Client\biz.dfch.CS.Abiquo.Client.csproj">

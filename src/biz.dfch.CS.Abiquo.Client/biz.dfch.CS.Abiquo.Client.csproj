@@ -128,8 +128,8 @@
       <HintPath>..\packages\biz.dfch.CS.System.Utilities.3.1.1\lib\biz.dfch.CS.System.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="biz.dfch.CS.Web.Utilities, Version=2.0.0.25656, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\biz.dfch.CS.Web.Utilities.2.0.0\lib\biz.dfch.CS.Web.Utilities.dll</HintPath>
+    <Reference Include="biz.dfch.CS.Web.Utilities, Version=3.0.0.18225, Culture=neutral, PublicKeyToken=ddc350d26de1d0d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\biz.dfch.CS.Web.Utilities.3.0.0\lib\biz.dfch.CS.Web.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -176,6 +176,7 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Authentication\Constants.cs" />
     <Compile Include="Authentication\OAuth2AuthenticationInformation.cs" />
     <Compile Include="Communication\AbiquoHeaderKeys.cs" />
@@ -188,7 +189,6 @@
     <Compile Include="General\BaseDto.cs" />
     <Compile Include="General\FilterBuilder.cs" />
     <Compile Include="General\HeaderBuilder.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="General\UriHelper.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
     <Compile Include="v1\AbiquoMediaDataTypes.cs" />

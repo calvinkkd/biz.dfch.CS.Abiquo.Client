@@ -137,8 +137,8 @@
       <HintPath>..\packages\biz.dfch.CS.Testing.1.3.0\lib\biz.dfch.CS.Testing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="biz.dfch.CS.Web.Utilities, Version=2.0.0.25656, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\biz.dfch.CS.Web.Utilities.2.0.0\lib\biz.dfch.CS.Web.Utilities.dll</HintPath>
+    <Reference Include="biz.dfch.CS.Web.Utilities, Version=3.0.0.18225, Culture=neutral, PublicKeyToken=ddc350d26de1d0d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\biz.dfch.CS.Web.Utilities.3.0.0\lib\biz.dfch.CS.Web.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -197,6 +197,7 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Authentication\OAuth2AuthenticationInformationTest.cs" />
     <Compile Include="BaseAbiquoClientTest.cs" />
     <Compile Include="Factory\AbiquoClientFactoryTest.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="General\BaseDtoTest.cs" />
     <Compile Include="General\UriHelperTest.cs" />
     <Compile Include="v1\AbiquoClientIntegrationTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v1\AbiquoClientTest.cs" />
     <Compile Include="v1\LinkBuilderTest.cs" />
     <Compile Include="v1\Model\AbiquoBaseCollectionDtoTest.cs" />
