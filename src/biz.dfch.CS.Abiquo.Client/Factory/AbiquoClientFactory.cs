@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +14,9 @@
  * limitations under the License.
  */
  
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using biz.dfch.CS.Abiquo.Client.v1;
+ using System;
+ using System.Diagnostics.Contracts;
+ using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Utilities.Logging;
 
 namespace biz.dfch.CS.Abiquo.Client.Factory

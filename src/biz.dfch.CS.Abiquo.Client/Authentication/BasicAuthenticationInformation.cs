@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +14,10 @@
  * limitations under the License.
  */
  
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-﻿using System.Text;
-using System.Threading.Tasks;
+ using System.Text;
 
 namespace biz.dfch.CS.Abiquo.Client.Authentication
 {

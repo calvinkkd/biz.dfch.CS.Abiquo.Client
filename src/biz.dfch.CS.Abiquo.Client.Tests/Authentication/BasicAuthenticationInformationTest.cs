@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-using System;
-using System.Linq;
 using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.Testing.Attributes;
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
 {
