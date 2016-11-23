@@ -122,6 +122,12 @@
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>dfch.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="biz.dfch.CS.PowerShell.Commons, Version=1.0.1.25806, Culture=neutral, PublicKeyToken=ddc350d26de1d0d9, processorArchitecture=MSIL">
       <HintPath>..\packages\biz.dfch.CS.PowerShell.Commons.1.0.1\lib\biz.dfch.CS.PowerShell.Commons.dll</HintPath>
@@ -186,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="dfch.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>
