@@ -181,6 +181,9 @@
     <None Include="biz.dfch.PS.Abiquo.Client.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="biz.dfch.PS.Abiquo.Client.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="dfch.pfx" />
     <None Include="Import-Module.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
