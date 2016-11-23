@@ -78,9 +78,10 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             PsCmdletAssert.Invoke(sut, parameters);
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "Directory.Exists.fileInfo.FullName.+existing-directory")]
-        public void InvokeWithExitingDirectoryAsPathThrowsContractException()
+        public void InvokeWithExistingDirectoryAsPathThrowsContractException()
         {
             Mock.SetupStatic(typeof(Directory));
             Mock.Arrange(() => Directory.Exists(Arg.IsAny<string>()))
@@ -112,6 +113,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             PsCmdletAssert.Invoke(sut, parameters, ex => ex);
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void InvokeWithEmptyPathSucceeds()
         {
@@ -124,6 +126,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.IsInstanceOfType(result, typeof(ModuleContext));
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void InvokeWithEmptyPathAndSaveToVariableSucceeds()
         {
