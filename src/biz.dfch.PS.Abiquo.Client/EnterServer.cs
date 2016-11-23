@@ -20,7 +20,6 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
-using System.Security.Authentication;
 using biz.dfch.CS.Abiquo.Client;
 using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.PowerShell.Commons;
@@ -124,11 +123,15 @@ namespace biz.dfch.PS.Abiquo.Client
         /// Use settings from ModuleContext variable to log in
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.MODULE_CONTEXT)]
+        [PSDefaultValue(Value = false)]
         public SwitchParameter UseModuleContext { get; set; }
 
+        /// <summary>
+        /// BeginProcessing
+        /// </summary>
         protected override void BeginProcessing()
         {
-            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Start, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStart, Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER]);
+            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Start, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStart, Trace.CorrelationManager.ActivityId, typeof(EnterServer));
 
             base.BeginProcessing();
         }
@@ -177,9 +180,9 @@ namespace biz.dfch.PS.Abiquo.Client
             var authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
-                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} ...", Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER], Uri.AbsoluteUri);
+                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} ...", Trace.CorrelationManager.ActivityId, typeof(EnterServer), Uri.AbsoluteUri);
                 var hasLoginSucceeded1 = client.Login(Uri.AbsoluteUri, authInfo);
-                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} COMPETED [{3}].", Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER], Uri.AbsoluteUri, hasLoginSucceeded1);
+                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} COMPETED [{3}].", Trace.CorrelationManager.ActivityId, typeof(EnterServer), Uri.AbsoluteUri, hasLoginSucceeded1);
                 Contract.Assert(hasLoginSucceeded1, string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));
             }
             catch (AggregateException aggrex)
@@ -235,7 +238,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         protected override void EndProcessing()
         {
-            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Stop, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStop, Trace.CorrelationManager.ActivityId, Constants.CmdletNames[Constants.Cmdlets.ENTER_SERVER]);
+            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Stop, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStop, Trace.CorrelationManager.ActivityId, typeof(EnterServer));
 
             base.EndProcessing();
         }

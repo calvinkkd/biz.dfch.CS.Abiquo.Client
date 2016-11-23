@@ -42,16 +42,5 @@ namespace biz.dfch.PS.Abiquo.Client
             /// </summary>
             public const int ENTER_SERVER = 1;
         }
-
-        /// <summary>
-        /// Names of all cmdlets in this module
-        /// </summary>
-        public static readonly string[] CmdletNames = new[]
-        {
-            string.Empty
-            ,
-            typeof(EnterServer).ToString()
-            ,
-        };
     }
 }

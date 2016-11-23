@@ -48,6 +48,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         [Parameter(Mandatory = false)]
         [Alias("save")]
+        [PSDefaultValue(Value = false)]
         public SwitchParameter SaveToModuleVariable { get; set; }
 
         /// <summary>
