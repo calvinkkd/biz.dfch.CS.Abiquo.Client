@@ -105,14 +105,14 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public void Logout()
         {
-            Debug.WriteLine(string.Format("START {0}", Method.fn()));
+            Logger.Current.TraceEvent(TraceEventType.Start, 1, Method.fn());
 
             IsLoggedIn = false;
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
             CurrentUserInformation = null;
 
-            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "END {0} SUCCEEDED", Method.fn());
+            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "{0} SUCCEEDED", Method.fn());
         }
 
         #region ExecuteRequest
@@ -235,7 +235,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            Debug.WriteLine(string.Format("START calling invoke method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
+            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoking method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body);
 
             if (null != filter)
             {
@@ -245,7 +245,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
             var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Debug.WriteLine(string.Format("END calling invoke method ({0}, {1}, {2} - {3} - {4}) SUCCEEDED", httpMethod, uriSuffix, filter, headers, body));
+            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoke method ({0}, {1}, {2} - {3} - {4}) SUCCEEDED", httpMethod, uriSuffix, filter, headers, body);
 
             return response;
         }

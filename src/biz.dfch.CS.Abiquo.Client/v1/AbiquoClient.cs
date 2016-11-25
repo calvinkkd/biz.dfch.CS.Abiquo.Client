@@ -568,10 +568,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
         {
-            Debug.WriteLine(
-                string.Format(
-                    "START waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
-                    task.TaskId, taskPollingWaitTimeMilliseconds, taskPollingTimeoutMilliseconds));
+            Logger.Current.TraceEvent(TraceEventType.Start, 1, "START waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+                    task.TaskId, taskPollingWaitTimeMilliseconds, taskPollingTimeoutMilliseconds);
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
             var taskSelfLink = task.GetLinkByRel(AbiquoRelations.SELF);
