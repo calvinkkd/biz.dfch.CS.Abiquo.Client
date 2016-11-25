@@ -37,7 +37,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         private const int TENANT_ID = 1;
 
         [TestMethod]
-        public void AbiquoClientVersionMatchesVersion3_8()
+        public void AbiquoClientVersionMatchesSpecifiedVersion()
         {
             // Arrange
 
