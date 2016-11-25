@@ -15,9 +15,10 @@
  */
  
  using System;
+ using System.Diagnostics;
  using System.Diagnostics.Contracts;
+ using biz.dfch.CS.Abiquo.Client.General;
  using biz.dfch.CS.Abiquo.Client.v1;
-using biz.dfch.CS.Utilities.Logging;
 
 namespace biz.dfch.CS.Abiquo.Client.Factory
 {
@@ -34,7 +35,7 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(version));
 
-            Debug.WriteLine(string.Format("START Get AbiquoClient instance of version '{0}' ...", version));
+            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Getting AbiquoClient instance of version '{0}' ...", version);
 
             AbiquoClient abiquoClient;
 
@@ -44,11 +45,12 @@ namespace biz.dfch.CS.Abiquo.Client.Factory
                     abiquoClient = new AbiquoClient();
                     break;
                 default:
-                    Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' FAILED", version));
+                    Logger.Current.TraceEvent(TraceEventType.Error, 1, "Getting AbiquoClient instance of version '{0}' FAILED", version);
+
                     return null;
             }
 
-            Trace.WriteLine(string.Format("END Get AbiquoClient instance of version '{0}' [AbiquoVersion: '{1}'] SUCCEEDED", version, abiquoClient.AbiquoApiVersion));
+            Logger.Current.TraceEvent(TraceEventType.Error, 1, "Getting AbiquoClient instance of version '{0}' [AbiquoVersion: '{1}'] SUCCEEDED", version, abiquoClient.AbiquoApiVersion);
 
             return abiquoClient;
         }

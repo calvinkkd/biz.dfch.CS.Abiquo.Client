@@ -14,17 +14,17 @@
  * limitations under the License.
  */
  
- using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.Utilities.General;
-using biz.dfch.CS.Utilities.Logging;
 using biz.dfch.CS.Web.Utilities.Rest;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
- using biz.dfch.CS.Abiquo.Client.General;
+using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
@@ -112,7 +112,7 @@ namespace biz.dfch.CS.Abiquo.Client
             AuthenticationInformation = null;
             CurrentUserInformation = null;
 
-            Trace.WriteLine(string.Format("END {0} SUCCEEDED", Method.fn()));
+            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "END {0} SUCCEEDED", Method.fn());
         }
 
         #region ExecuteRequest
@@ -129,8 +129,9 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(null != AuthenticationInformation);
 
             var requestUri = UriHelper.ConcatUri(AbiquoApiBaseUri, uriSuffix);
-            Debug.WriteLine(string.Format("START Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUri, headers, body));
 
+            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUri, headers, body);
+            
             var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
             if (null != headers)
             {
@@ -140,8 +141,9 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
-            Debug.WriteLine(string.Format("Executing request '{0} {1}' returned '{2}'", httpMethod, requestUri, result));
-            Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri));
+            Logger.Current.TraceEvent(TraceEventType.Information, 1, "Executing request '{0} {1}' returned '{2}'", httpMethod, requestUri, result);
+            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri);
+
             return result;
         }
 

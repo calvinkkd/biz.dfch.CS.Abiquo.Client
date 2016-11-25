@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
- using biz.dfch.CS.Utilities.Logging;
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 ﻿using System.Net.Http;
- using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
@@ -44,7 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
-            Debug.WriteLine(string.Format("START Login (AbiquoApiBaseUri: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUri, authenticationInformation.GetTenantId()));
+            Logger.Current.TraceEvent(TraceEventType.Start, 1, "Login (AbiquoApiBaseUri: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
 
             Logout();
             AuthenticationInformation = authenticationInformation;
@@ -56,13 +56,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 CurrentUserInformation = BaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
-                Trace.WriteLine("END Login SUCCEEDED");
+                Logger.Current.TraceEvent(TraceEventType.Stop, 1, "Login SUCCEEDS");
                 return true;
             }
             catch (HttpRequestException ex)
             {
                 Logout();
-                Trace.WriteLine(string.Format("END Login FAILED ('{0}')", ex.Message));
+                Logger.Current.TraceException(ex, "Login FAILED");
                 return false;
             }
         }
@@ -588,11 +588,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                     case TaskStateEnum.FINISHED_SUCCESSFULLY:
                     case TaskStateEnum.FINISHED_UNSUCCESSFULLY:
                     case TaskStateEnum.ABORTED:
-                        Trace.WriteLine(string.Format(
-                            "END waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+                        Logger.Current.TraceEvent(TraceEventType.Information, 1, 
+                            "Waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
                             task.TaskId,
                             taskPollingWaitTimeMilliseconds, 
-                            taskPollingTimeoutMilliseconds));
+                            taskPollingTimeoutMilliseconds);
 
                         return taskToWaitFor;
                 }
@@ -601,10 +601,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 currentTaskPollingWaitTime = Convert.ToInt32(Math.Floor(currentTaskPollingWaitTime*1.5));
             }
 
-            Trace.WriteLine(string.Format(
-                            "END waiting for task [{0}] completion FAILED (Timeout ['{1}'] exceeded)",
-                            task.TaskId,
-                            taskPollingTimeoutMilliseconds));
+            Logger.Current.TraceEvent(TraceEventType.Error, 1, 
+                "Waiting for task [{0}] completion FAILED (Timeout ['{1}'] exceeded)",
+                task.TaskId,
+                taskPollingTimeoutMilliseconds);
 
             throw new TimeoutException(string.Format("Timeout exceeded while waiting for task with Id '{0}'", task.TaskId));
         }
