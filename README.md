@@ -12,3 +12,8 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * Get it on [NuGet](https://www.nuget.org/packages/biz.dfch.CS.Abiquo.Client/)
 
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
+
+
+[![TeamCity Logo](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/blob/develop/TeamCity.png)](https://www.jetbrains.com/teamcity/)
+
+Released with TeamCity
