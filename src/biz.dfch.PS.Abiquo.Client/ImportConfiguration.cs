@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Management.Automation;
 using biz.dfch.CS.PowerShell.Commons;
@@ -46,9 +47,9 @@ namespace biz.dfch.PS.Abiquo.Client
         /// Specifies whether the configuration should be saved to the module configuration variable
         /// </summary>
         [Parameter(Mandatory = false)]
-        [Alias("save")]
+        [Alias("show")]
         [PSDefaultValue(Value = false)]
-        public SwitchParameter SaveToModuleVariable { get; set; }
+        public SwitchParameter DisplayOnly { get; set; }
 
         /// <summary>
         /// Main processing logic.
@@ -69,23 +70,15 @@ namespace biz.dfch.PS.Abiquo.Client
             ModuleConfiguration.SetModuleContext(moduleContextSection);
             WriteObject(ModuleConfiguration.Current);
 
-            if (!SaveToModuleVariable)
+            if (DisplayOnly)
             {
                 return;
             }
 
             this.SessionState.PSVariable.Set(ModuleConfiguration.MODULE_VARIABLE_NAME, ModuleConfiguration.Current);
 
-            var result = this.GetVariableValue(ModuleConfiguration.MODULE_VARIABLE_NAME);
-            if (null != result)
-            {
-                return;
-            }
-
-            // ReSharper disable once NotResolvedInText
-            var exception = new ArgumentException(string.Format(Messages.ImportConfigurationSaveToModuleVariableFailed), "SaveToModuleVariable");
-            var errorRecord = new ErrorRecord(exception, ErrorIdEnum.ImportConfigurationFailed.ToString(), ErrorCategory.InvalidResult, this);
-            WriteError(errorRecord);
+            var importedModuleVariable = this.GetVariableValue(ModuleConfiguration.MODULE_VARIABLE_NAME);
+            Contract.Assert(null != importedModuleVariable, Messages.ImportConfigurationSaveToModuleVariableFailed);
         }
 
     }
