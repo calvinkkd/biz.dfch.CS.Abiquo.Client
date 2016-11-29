@@ -172,7 +172,15 @@ namespace biz.dfch.PS.Abiquo.Client
             {
                 ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} ...", Trace.CorrelationManager.ActivityId, typeof(EnterServer), Uri.AbsoluteUri);
                 var hasLoginSucceeded1 = client.Login(Uri.AbsoluteUri, authInfo);
-                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} COMPLETED [{3}].", Trace.CorrelationManager.ActivityId, typeof(EnterServer), Uri.AbsoluteUri, hasLoginSucceeded1);
+                if (hasLoginSucceeded1)
+                {
+                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} SUCCEEDED.", Trace.CorrelationManager.ActivityId, typeof(EnterServer), Uri.AbsoluteUri);
+                }
+                else
+                {
+                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Error, Constants.Cmdlets.ENTER_SERVER, "{0}: {1} Logging in to {2} FAILED with TenantId '{3}'.", Trace.CorrelationManager.ActivityId, typeof(EnterServer), Uri.AbsoluteUri, authInfo.GetTenantId());
+                }
+
                 Contract.Assert(hasLoginSucceeded1, string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));
             }
             catch (AggregateException aggrex)

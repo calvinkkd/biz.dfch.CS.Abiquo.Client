@@ -30,6 +30,8 @@ namespace biz.dfch.PS.Abiquo.Client
     /// </summary>
     public class ModuleContext
     {
+        private static readonly int _eventId = typeof(ContractFailedEventArgs).GetHashCode();
+
         /// <summary>
         /// Specifies the API version to use
         /// </summary>
@@ -107,7 +109,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 return;
             }
 
-            _traceSource.Value.TraceException(args.OriginalException, args.Message);
+            _traceSource.Value.TraceEvent(TraceEventType.Error, _eventId, args.Message);
         }
 
     }
