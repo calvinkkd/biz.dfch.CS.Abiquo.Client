@@ -2,6 +2,15 @@
 # module initialisation script goes here
 #
 
+$traceSource = [biz.dfch.CS.Commons.Diagnostics.Logger]::Get([biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::LOGGER_NAME);
+$traceSource.TraceTransfer(0, ("[{0}] Host.InstanceId" -f $PID), $Host.InstanceId);
+
+$path = [biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::ResolveConfigurationFileInfo($null)
+$moduleContextSection = [biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::GetModuleContextSection($path);
+[biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::SetModuleContext($moduleContextSection)
+
+Set-Variable -Name $([biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::MODULE_VARIABLE_NAME) -Value $([biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::Current) -Scope Global;
+
 # 
 # Copyright 2014-2016 d-fens GmbH
 # 
