@@ -175,7 +175,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
-    <Compile Include="PsCredentialConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\biz.dfch.CS.Abiquo.Client\biz.dfch.CS.Abiquo.Client.csproj">

@@ -46,7 +46,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the credential consisting of aa comma separated string to connect with
         /// </summary>
-        [TypeConverter(typeof(PsCredentialConverter))]
+        [TypeConverter(typeof(PsCredentialTypeConverter))]
         [ConfigurationProperty("credential", DefaultValue = "admin,xabiquo", IsRequired = false)]
         public PSCredential Credential
         {
