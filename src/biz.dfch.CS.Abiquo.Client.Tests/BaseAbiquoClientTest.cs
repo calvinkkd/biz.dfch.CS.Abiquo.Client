@@ -230,7 +230,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null, default(BaseDto));
+            sut.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null, default(AbiquoBaseDto));
 
             // Assert
         }

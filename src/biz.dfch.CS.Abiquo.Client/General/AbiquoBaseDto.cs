@@ -23,11 +23,11 @@ using System.Diagnostics.Contracts;
 
 namespace biz.dfch.CS.Abiquo.Client.General
 {
-    public abstract class BaseDto
+    public abstract class AbiquoBaseDto
     {
         private static readonly JsonSerializerSettings _jsonSerializerSettings;
 
-        static BaseDto()
+        static AbiquoBaseDto()
         {
             _jsonSerializerSettings = new JsonSerializerSettings
             {

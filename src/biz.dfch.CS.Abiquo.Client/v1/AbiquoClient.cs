@@ -53,7 +53,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             try
             {
                 var loginResponse = ExecuteRequest(AbiquoUriSuffixes.LOGIN);
-                CurrentUserInformation = BaseDto.DeserializeObject<User>(loginResponse);
+                CurrentUserInformation = AbiquoBaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
                 Logger.Current.TraceEvent(TraceEventType.Stop, 1, "Login SUCCEEDS");
@@ -348,7 +348,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 };
             }
 
-            var updateTask = BaseDto.DeserializeObject<AcceptedRequest>(updateResultAsString);
+            var updateTask = AbiquoBaseDto.DeserializeObject<AcceptedRequest>(updateResultAsString);
             Contract.Assert(null != updateTask);
 
             var link = updateTask.GetLinkByRel(AbiquoRelations.STATUS);

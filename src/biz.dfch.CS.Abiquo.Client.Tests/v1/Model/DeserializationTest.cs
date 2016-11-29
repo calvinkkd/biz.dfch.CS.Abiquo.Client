@@ -33,7 +33,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterpriseJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\Enterprise.json");
 
             // Act
-            var enterprise = BaseDto.DeserializeObject<Enterprise>(enterpriseJsonFileContent);
+            var enterprise = AbiquoBaseDto.DeserializeObject<Enterprise>(enterpriseJsonFileContent);
 
             // Assert
             Assert.IsNotNull(enterprise.Links);
@@ -55,7 +55,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterprisesJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\Enterprises.json");
 
             // Act
-            var enterprises = BaseDto.DeserializeObject<Enterprises>(enterprisesJsonFileContent);
+            var enterprises = AbiquoBaseDto.DeserializeObject<Enterprises>(enterprisesJsonFileContent);
 
             // Assert
             Assert.IsNotNull(enterprises.Links);
@@ -80,7 +80,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var userJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\User.json");
 
             // Act
-            var user = BaseDto.DeserializeObject<User>(userJsonFileContent);
+            var user = AbiquoBaseDto.DeserializeObject<User>(userJsonFileContent);
 
             // Assert
             Assert.IsNotNull(user);
@@ -101,7 +101,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var usersWithRolesJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\UsersWithRoles.json");
 
             // Act
-            var usersWithRoles = BaseDto.DeserializeObject<UsersWithRoles>(usersWithRolesJsonFileContent);
+            var usersWithRoles = AbiquoBaseDto.DeserializeObject<UsersWithRoles>(usersWithRolesJsonFileContent);
 
             // Assert
             Assert.IsNotNull(usersWithRoles.Links);

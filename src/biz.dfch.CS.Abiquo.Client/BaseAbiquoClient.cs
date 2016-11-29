@@ -99,7 +99,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public static void SetJsonSerializerMissingMemberHandling(MissingMemberHandling missingMemberHandling)
         {
-            BaseDto.SetJsonSerializerMissingMemberHandling(missingMemberHandling);
+            AbiquoBaseDto.SetJsonSerializerMissingMemberHandling(missingMemberHandling);
         }
 
         public abstract bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation);
@@ -153,35 +153,35 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Generic Invoke
 
-        public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : BaseDto
+        public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : AbiquoBaseDto
         {
             return Invoke<T>(HttpMethod.Get, uriSuffix, null, headers, default(string));
         }
 
         public T Invoke<T>(string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
-            where T : BaseDto
+            where T : AbiquoBaseDto
         {
             return Invoke<T>(HttpMethod.Get, uriSuffix, filter, headers, default(string));
         }
 
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
-            where T : BaseDto
+            where T : AbiquoBaseDto
         {
             return Invoke<T>(httpMethod, uriSuffix, filter, headers, default(string));
         }
 
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body) 
-            where T : BaseDto
+            where T : AbiquoBaseDto
         {
             var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
-            return BaseDto.DeserializeObject<T>(stringResponse);
+            return AbiquoBaseDto.DeserializeObject<T>(stringResponse);
         }
 
-        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
-            where T : BaseDto
+        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, AbiquoBaseDto body)
+            where T : AbiquoBaseDto
         {
             var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
-            return BaseDto.DeserializeObject<T>(stringResponse);
+            return AbiquoBaseDto.DeserializeObject<T>(stringResponse);
         }
 
         #endregion Generic Invoke
@@ -211,7 +211,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(httpMethod, uriSuffix, null, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers, BaseDto body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers, AbiquoBaseDto body)
         {
             Contract.Requires(null != body);
 
@@ -223,7 +223,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(httpMethod, uriSuffix, filter, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, AbiquoBaseDto body)
         {
             Contract.Requires(null != body);
 

@@ -152,7 +152,7 @@
     <Compile Include="Authentication\IAuthenticationInformation.cs" />
     <Compile Include="BaseAbiquoClient.cs" />
     <Compile Include="ContractClassForBaseAbiquoClient.cs" />
-    <Compile Include="General\BaseDto.cs" />
+    <Compile Include="General\AbiquoBaseDto.cs" />
     <Compile Include="General\FilterBuilder.cs" />
     <Compile Include="General\HeaderBuilder.cs" />
     <Compile Include="General\UriHelper.cs" />
