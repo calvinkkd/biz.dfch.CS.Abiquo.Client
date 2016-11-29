@@ -57,7 +57,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region Login
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void LoginWithValidBasicAuthenticationInformationReturnsTrue()
         {
             // Arrange
