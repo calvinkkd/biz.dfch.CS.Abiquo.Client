@@ -263,7 +263,7 @@
     <Compile Include="v1\Model\VmNetworkConfigurations.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="dfch.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
