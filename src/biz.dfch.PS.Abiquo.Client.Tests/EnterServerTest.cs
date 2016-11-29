@@ -113,7 +113,6 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
         
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void InvokeWithParameterSetPlainSucceeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
@@ -136,7 +135,6 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void InvokeWithParameterSetCredSucceeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
@@ -159,7 +157,6 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void InvokeWithParameterSetOAuth2Succeeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");

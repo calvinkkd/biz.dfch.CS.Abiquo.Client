@@ -70,7 +70,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void LoginWithInvalidBasicAuthenticationInformationReturnsFalse()
         {
             // Arrange
@@ -90,7 +89,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region Enterprises
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void InvokeGetEnterprisesReturnsAbiquoEnterprises()
         {
             // Arrange
@@ -108,7 +106,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetEnterprisesReturnsAbiquoEnterprises()
         {
             // Arrange
@@ -127,7 +124,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetCurrentEnterpriseReturnsCurrentAbiquoEnterprise()
         {
             // Arrange
@@ -144,7 +140,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetEnterpriseReturnsExpectedAbiquoEnterprise()
         {
             // Arrange
@@ -161,7 +156,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         [ExpectedException(typeof(HttpRequestException))]
         public void GetInexistentEnterpriseThrowsException()
         {
@@ -176,7 +170,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void InvokeNewAbiquoEnterpriseAndDeleteTheNewCreatedEnterpriseSucceeds()
         {
             // Arrange
@@ -248,7 +241,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region Users
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void InvokeGetUsersReturnsAbiquoUsersWithRoles()
         {
             // Arrange
@@ -268,7 +260,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetUsersWithRolesOfCurrentEnterpriseReturnsAbiquoUsersWithRolesOfCurrentEnterprise()
         {
             // Arrange
@@ -291,7 +282,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetUsersWithRolesReturnsAbiquoUsersWithRoles()
         {
             // Arrange
@@ -314,7 +304,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetUserOfCurrentEnterpriseReturnsExpectedAbiquoUserOfCurrentEnterprise()
         {
             // Arrange
@@ -347,7 +336,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetUserReturnsExpectedAbiquoUser()
         {
             // Arrange
@@ -380,7 +368,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetUserInformationAfterLoginReturnsUserInformationAboutCurrentlyLoggedInUser()
         {
             // Arrange
@@ -400,7 +387,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetUserInformationOfSpecificUserReturnsUserInformationOfSpecifiedUser()
         {
             // Arrange
@@ -420,7 +406,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetUserInformationOfSpecificUserInSpecificEnterpriseReturnsUserInformationOfSpecifiedUserInContextOfSpecifiedEnterprise()
         {
             // Arrange
@@ -445,7 +430,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region Roles
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void InvokeGetRolesSucceedsReturnsAbiquoRoles()
         {
             // Arrange
@@ -463,7 +447,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetRolesReturnsAbiquoRoles()
         {
             // Arrange
@@ -483,7 +466,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetRoleReturnsExpectedAbiquoRole()
         {
             // Arrange
@@ -513,7 +495,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region DataCentersLimits
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetDataCentersLimitsOfCurrentEnterpriseReturnsAbiquoLimitsOfCurrentEnterprise()
         {
             // Arrange
@@ -536,7 +517,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetDataCenterLimitsOfCurrentEnterpriseReturnsExpectedAbiquoDataCenterLimitsOfCurrentEnterprise()
         {
             // Arrange
@@ -578,7 +558,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualMachines
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetAllVirtualMachinesReturnsAllAbiquoVirtualMachinesOfUser()
         {
             // Arrange
@@ -605,7 +584,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualMachinesReturnsAbiquoVirtualMachines()
         {
             // Arrange
@@ -640,7 +618,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualMachineReturnsExpectedAbiquoVirtualMachine()
         {
             // Arrange
@@ -688,7 +665,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void CreateVirtualMachineWithoutCustomConfigurationCreatesAbiquoVirtualMachineBasedOnTemplate()
         {
             // Arrange
@@ -736,7 +712,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
         
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void CreateVirtualMachineWithCustomConfigurationCreatesAbiquoVirtualMachineBasedOnTemplateAndCustomConfiguration()
         {
             // Arrange
@@ -794,7 +769,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void DeployVirtualMachineWithForceAndWaitForCompletionDeploysAbiquoVirtualMachineAndReturnsSuccessfullyCompletedDeployTask()
         {
             // Arrange
@@ -843,7 +817,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void DeployVirtualMachineWithWaitForCompletionDeploysAbiquoVirtualMachineAndReturnsSuccessfullyCompletedDeployTask()
         {
             // Arrange
@@ -892,7 +865,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void DeployVirtualMachineDeploysAbiquoVirtualMachineAndReturnsStartedDeployTask()
         {
             // Arrange
@@ -950,7 +922,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void UpdateVirtualMachineWithForceAndWaitForTaskCompletionUpdatesAbiquoVirtualMachineAndReturnsSuccessfullyCompletedReconfigureTask()
         {
             // Arrange
@@ -1015,7 +986,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void UpdateVirtualMachineWithWaitForCompletionUpdatesAbiquoVirtualMachineAndReturnsSuccessfullyCompletedUpdateTask()
         {
             // Arrange
@@ -1080,7 +1050,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void UpdateVirtualMachineWithWaitForCompletionForDeployedVmUpdatesAbiquoVirtualMachineAndReturnsSuccessfullyCompletedUpdateTask()
         {
             // Arrange
@@ -1159,7 +1128,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void ChangeVirtualMachineStateWithWaitForCompletionChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
         {
             // Arrange
@@ -1215,7 +1183,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void ChangeVirtualMachineStateChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
         {
             // Arrange
@@ -1280,7 +1247,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void DeleteVirtualMachineDeletesAbiquoVirtualMachine()
         {
             // Arrange
@@ -1320,7 +1286,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetNetworkConfigurationsForVmReturnsAbiquoNetworkConfigurationsForVm()
         {
             // Arrange
@@ -1356,7 +1321,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetNetworkConfigurationForVmReturnsExpectedAbiquoNetworkConfiguration()
         {
             // Arrange
@@ -1398,7 +1362,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetNicsOfVirtualMachineReturnsAbiquoNicsOfSpecifiedVirtualMachine()
         {
             // Arrange
@@ -1434,7 +1397,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetAllTasksOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
         {
             // Arrange
@@ -1477,7 +1439,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetTaskOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
         {
             // Arrange
@@ -1528,7 +1489,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualMachineTemplates
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualMachineTemplatesReturnsAbiquoVirtualMachineTemplates()
         {
             // Arrange
@@ -1563,7 +1523,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualMachineTemplateReturnsExpectedAbiquoVirtualMachineTemplate()
         {
             // Arrange
@@ -1602,7 +1561,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualDataCenters
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualDataCentersReturnsAbiquoVirtualDataCenters()
         {
             // Arrange
@@ -1636,7 +1594,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualDataCenterReturnsExpectedAbiquoVirtualDataCenter()
         {
             // Arrange
@@ -1678,7 +1635,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualAppliances
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualAppliancesReturnsAbiquoVirtualAppliances()
         {
             // Arrange
@@ -1708,7 +1664,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetVirtualApplianceReturnsExpectedAbiquoVirtualAppliance()
         {
             // Arrange
@@ -1747,7 +1702,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region DataCenterRepositories
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetDataCenterRepositoriesReturnsAbiquoDataCenterRepositories()
         {
             // Arrange
@@ -1775,7 +1729,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetDataCenterRepositoriesOfCurrentEnterpriseReturnsAbiquoDataCenterRepositoriesOfCurrentEnterprise()
         {
             // Arrange
@@ -1803,7 +1756,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetDataCenterRepositoryOfCurrentEnterpriseReturnsExpectedAbiquoDataCenterRepositoryOfCurrentEnterprise()
         {
             // Arrange
@@ -1837,7 +1789,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetDataCenterRepositoryReturnsExpectedAbiquoDataCenterRepository()
         {
             // Arrange
@@ -1883,7 +1834,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region Networks
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetPrivateNetworksReturnsAbiquoPrivateNetworks()
         {
             // Arrange
@@ -1911,7 +1861,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetPrivateNetworkReturnsExpectedAbiquoPrivateNetwork()
         {
             // Arrange
@@ -1949,7 +1898,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetIpsOfPrivateNetworkWithFreeReturnsFreeIPsOfPrivateNetwork()
         {
             // Arrange
@@ -1982,7 +1930,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetExternalNetworksOfCurrentEnterpriseReturnsAbiquoExternalNetworksOfCurrentEnterprise()
         {
             // Arrange
@@ -2010,7 +1957,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetExternalNetworkOfCurrentEnterpriseReturnsExpectedAbiquoExternalNetworkOfCurrentEnterprise()
         {
             // Arrange
@@ -2048,7 +1994,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithFreeReturnsFreeIPsOfExternalNetworkOfCurrentEnterprise()
         {
             // Arrange
@@ -2080,7 +2025,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetPublicNetworksReturnsAbiquoPublicNetworks()
         {
             // Arrange
@@ -2104,7 +2048,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetPublicNetworkReturnsExpectedAbiquoPublicNetwork()
         {
             // Arrange
@@ -2143,7 +2086,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void GetPublicIpsToPurchaseOfPublicNetworkReturnsAbiquoPublicIpsToPurchase()
         {
             // Arrange
@@ -2176,7 +2118,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void PurchaseAndReleasePublicIpSucceeds()
         {
             // Arrange
@@ -2227,7 +2168,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #endregion Networks
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void AttachNetworkToNotDeployedVirtualMachineSucceeds()
         {
             // Arrange
@@ -2316,7 +2256,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [TestCategory("SkipOnTeamCity")]
         public void AttachNetworkToDeployedVirtualMachineSucceeds()
         {
             // Arrange
