@@ -27,13 +27,9 @@ namespace biz.dfch.PS.Abiquo.Client
         public static class Cmdlets
         {
             /// <summary>
-            /// 
-            /// </summary>
-            public const int CONTRACT_EXCEPTION = 0;
-            /// <summary>
             /// Enter-Server
             /// </summary>
-            public const int ENTER_SERVER = 1;
+            public const int ENTER_SERVER = 16384;
         }
     }
 }
