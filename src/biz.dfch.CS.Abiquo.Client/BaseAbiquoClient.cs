@@ -142,7 +142,6 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
-            Logger.Current.TraceEvent(TraceEventType.Information, 1, "Executing request '{0} {1}' returned '{2}'", httpMethod, requestUri, result);
             Logger.Current.TraceEvent(TraceEventType.Stop, 1, "END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri);
 
             return result;
