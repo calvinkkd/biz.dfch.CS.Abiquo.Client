@@ -26,8 +26,7 @@ using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using Newtonsoft.Json;
 using biz.dfch.CS.Abiquo.Client.General;
- using biz.dfch.CS.Abiquo.Client.Tests.General;
- using biz.dfch.CS.Abiquo.Client.v1.Model;
+﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
@@ -163,7 +162,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [TestMethod]
         [TestCategory("SkipOnTeamCity")]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(HttpRequestException))]
         public void GetInexistentEnterpriseThrowsException()
         {
             // Arrange

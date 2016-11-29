@@ -59,12 +59,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 Logger.Current.TraceEvent(TraceEventType.Stop, 1, "Login SUCCEEDS");
                 return true;
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
                 Logout();
-                
                 Logger.Current.TraceException(ex, "Login FAILED");
-                
                 return false;
             }
         }
