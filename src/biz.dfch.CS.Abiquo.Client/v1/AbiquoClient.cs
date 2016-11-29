@@ -24,9 +24,9 @@ using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
 ﻿using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 using System.Threading;
+using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {

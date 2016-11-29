@@ -27,7 +27,7 @@ using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using Newtonsoft.Json;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using HttpMethod = biz.dfch.CS.Web.Utilities.Rest.HttpMethod;
+﻿using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {

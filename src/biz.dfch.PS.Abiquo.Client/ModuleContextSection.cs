@@ -20,6 +20,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client.Factory;
+using biz.dfch.CS.PowerShell.Commons.Converters;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
@@ -28,6 +29,8 @@ namespace biz.dfch.PS.Abiquo.Client
     /// </summary>
     public class ModuleContextSection : ConfigurationSection
     {
+        public const string AUTHENTICATION_TYPE_PLAIN = "plain";
+
         /// <summary>
         /// The name of the configuration section
         /// </summary>
@@ -67,7 +70,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the authenticationType to use
         /// </summary>
-        [ConfigurationProperty("authenticationType", DefaultValue = EnterServer.ParameterSets.PLAIN, IsRequired = false)]
+        [ConfigurationProperty("authenticationType", DefaultValue = AUTHENTICATION_TYPE_PLAIN, IsRequired = false)]
         public string AuthenticationType
         {
             get { return (string) this["authenticationType"]; }

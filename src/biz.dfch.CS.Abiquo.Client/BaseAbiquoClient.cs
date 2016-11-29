@@ -15,8 +15,6 @@
  */
  
 using biz.dfch.CS.Abiquo.Client.Authentication;
-using biz.dfch.CS.Utilities.General;
-using biz.dfch.CS.Web.Utilities.Rest;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +22,10 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+using biz.dfch.CS.Commons.Diagnostics;
+using biz.dfch.CS.Commons.Rest;
 using Newtonsoft.Json;
+using Logger = biz.dfch.CS.Abiquo.Client.General.Logger;
 
 namespace biz.dfch.CS.Abiquo.Client
 {
@@ -105,14 +106,14 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public void Logout()
         {
-            Logger.Current.TraceEvent(TraceEventType.Start, 1, Method.fn());
+            Logger.Current.TraceEvent(TraceEventType.Start, 1, Method.GetName());
 
             IsLoggedIn = false;
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
             CurrentUserInformation = null;
 
-            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "{0} SUCCEEDED", Method.fn());
+            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "{0} SUCCEEDED", Method.GetName());
         }
 
         #region ExecuteRequest
