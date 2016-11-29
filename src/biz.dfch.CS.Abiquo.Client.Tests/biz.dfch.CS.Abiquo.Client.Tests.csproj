@@ -183,6 +183,7 @@
     <Compile Include="v1\Model\AbiquoLinkBaseDtoTest.cs" />
     <Compile Include="v1\Model\DeserializationTest.cs" />
     <Compile Include="v1\Model\LinkTest.cs" />
+    <Compile Include="v1\Model\UserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

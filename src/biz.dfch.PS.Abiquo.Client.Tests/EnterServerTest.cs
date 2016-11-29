@@ -25,6 +25,7 @@ using biz.dfch.CS.Testing.PowerShell;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using Current = biz.dfch.CS.Abiquo.Client.v1;
+using System.Collections.Generic;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
@@ -49,6 +50,18 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 FirstLogin = false,
                 Id = EnterServer.TENANT_ID_DEFAULT_VALUE,
                 Locale = "en-us",
+            };
+
+            var enterpriseLink =
+                new Current.LinkBuilder()
+                .BuildHref(string.Format("https://abiquo/api/admin/enterprises/{0}", EnterServer.TENANT_ID_DEFAULT_VALUE))
+                .BuildRel(Current.AbiquoRelations.ENTERPRISE)
+                .BuildTitle("Abiquo")
+                .GetLink();
+
+            User.Links = new List<Link>()
+            {
+                enterpriseLink
             };
 
             // this must be inside ClassInitialize - otherwise the tests will only work one at a time
