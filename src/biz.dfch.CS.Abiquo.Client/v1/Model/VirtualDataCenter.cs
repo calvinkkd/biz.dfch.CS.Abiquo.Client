@@ -85,5 +85,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [JsonConverter(typeof(StringEnumConverter))]
         public SyncStateEnum SyncState { get; set; }
+
+        public string ProviderId { get; set; }
     }
 }

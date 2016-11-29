@@ -199,7 +199,7 @@ namespace biz.dfch.PS.Abiquo.Client
             // we set the tenant id if not specified during login
             // and perform a second login with the correct id
             // otherwise we just return the client and return
-            if (TENANT_ID_DEFAULT_VALUE != TenantId || currentUserInformation.Id == TenantId)
+            if (TENANT_ID_DEFAULT_VALUE != TenantId || currentUserInformation.GetEnterpriseId() == TenantId)
             {
                 // return client
                 WriteObject(client);
@@ -208,12 +208,12 @@ namespace biz.dfch.PS.Abiquo.Client
             }
 
             // perform 2nd login
-            TenantId = currentUserInformation.Id;
+            TenantId = currentUserInformation.GetEnterpriseId();
             authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
                 var hasLoginSucceeded2 = client.Login(Uri.AbsoluteUri, authInfo);
-                Contract.Assert(hasLoginSucceeded2, string.Format(Messages.EnterServerLoginFailed2, Uri.AbsoluteUri));
+                Contract.Assert(hasLoginSucceeded2, string.Format(Messages.EnterServerLoginFailed2, Uri.AbsoluteUri, TenantId));
             }
             catch (AggregateException aggrex)
             {

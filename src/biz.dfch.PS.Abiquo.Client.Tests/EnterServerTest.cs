@@ -25,6 +25,7 @@ using biz.dfch.CS.Testing.PowerShell;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using Current = biz.dfch.CS.Abiquo.Client.v1;
+using System.Collections.Generic;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
@@ -49,6 +50,18 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 FirstLogin = false,
                 Id = EnterServer.TENANT_ID_DEFAULT_VALUE,
                 Locale = "en-us",
+            };
+
+            var enterpriseLink =
+                new Current.LinkBuilder()
+                .BuildHref(string.Format("https://abiquo/api/admin/enterprises/{0}", EnterServer.TENANT_ID_DEFAULT_VALUE))
+                .BuildRel(Current.AbiquoRelations.ENTERPRISE)
+                .BuildTitle("Abiquo")
+                .GetLink();
+
+            User.Links = new List<Link>()
+            {
+                enterpriseLink
             };
 
             // this must be inside ClassInitialize - otherwise the tests will only work one at a time
@@ -111,9 +124,9 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             var parameters = @"-Uri httpS://abiquo.example.com/api/ -Username admin -Password password";
             var results = PsCmdletAssert.Invoke(sut, parameters);
         }
-        
-        [TestMethod]
+
         [TestCategory("SkipOnTeamCity")]
+        [TestMethod]
         public void InvokeWithParameterSetPlainSucceeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
@@ -135,8 +148,8 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
         }
 
-        [TestMethod]
         [TestCategory("SkipOnTeamCity")]
+        [TestMethod]
         public void InvokeWithParameterSetCredSucceeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
@@ -158,8 +171,8 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
         }
 
-        [TestMethod]
         [TestCategory("SkipOnTeamCity")]
+        [TestMethod]
         public void InvokeWithParameterSetOAuth2Succeeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
