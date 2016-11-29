@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.Net.Http;
 using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
@@ -129,7 +130,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Mock.Arrange(() => restCallExecutor
                 .Invoke(HttpMethod.Get, expectedRequestUri, basicAuthInfo.GetAuthorizationHeaders(), null))
                     .IgnoreInstance()
-                    .Throws<HttpRequestException>()
+                    .Throws<Exception>()
                     .OccursOnce();
 
             // Act
