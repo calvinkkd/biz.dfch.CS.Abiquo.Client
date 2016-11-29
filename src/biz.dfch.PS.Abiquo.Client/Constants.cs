@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+using System;
+
 namespace biz.dfch.PS.Abiquo.Client
 {
     /// <summary>
@@ -24,12 +26,12 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Index for all cmdlets in this module
         /// </summary>
-        public static class Cmdlets
+        public enum EventId
         {
             /// <summary>
             /// Enter-Server
             /// </summary>
-            public const int ENTER_SERVER = 16384;
+            EnterServer = 16384
         }
     }
 }
