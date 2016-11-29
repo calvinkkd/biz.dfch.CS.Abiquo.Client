@@ -19,7 +19,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DataCenterLimits : AbiquoBaseDto
+    public class DataCenterLimits : AbiquoLinkBaseDto
     {
         [Required]
         [Range(0, Int32.MaxValue)]

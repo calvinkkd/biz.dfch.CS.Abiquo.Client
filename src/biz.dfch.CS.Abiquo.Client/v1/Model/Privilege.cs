@@ -18,7 +18,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Privilege : AbiquoBaseDto
+    public class Privilege : AbiquoLinkBaseDto
     {
         public int Id { get; set; }
 

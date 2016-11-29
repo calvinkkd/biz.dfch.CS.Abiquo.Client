@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Nic : AbiquoBaseDto
+    public class Nic : AbiquoLinkBaseDto
     {
         public int? Id { get; set; }
 

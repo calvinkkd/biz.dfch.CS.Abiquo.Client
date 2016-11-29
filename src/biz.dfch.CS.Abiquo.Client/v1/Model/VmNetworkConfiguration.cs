@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VmNetworkConfiguration : AbiquoBaseDto
+    public class VmNetworkConfiguration : AbiquoLinkBaseDto
     {
         public string Gateway { get; set; }
 

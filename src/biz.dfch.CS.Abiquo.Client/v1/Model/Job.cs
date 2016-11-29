@@ -21,7 +21,7 @@ using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Job : AbiquoBaseDto
+    public class Job : AbiquoLinkBaseDto
     {
         public string Description { get; set; }
 

@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachineBase : AbiquoBaseDto
+    public class VirtualMachineBase : AbiquoLinkBaseDto
     {
         // Intentionally left empty
     }

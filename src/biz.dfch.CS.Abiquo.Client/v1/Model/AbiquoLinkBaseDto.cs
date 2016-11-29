@@ -23,7 +23,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     /// <summary>
     /// Base DTO for Abiquo objects that contain Id, Name and Links
     /// </summary>
-    public abstract class AbiquoBaseDto : BaseDto
+    public abstract class AbiquoLinkBaseDto : BaseDto
     {
         public List<Link> Links { get; set; }
 

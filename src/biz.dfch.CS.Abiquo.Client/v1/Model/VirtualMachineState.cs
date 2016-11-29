@@ -18,7 +18,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachineState : AbiquoBaseDto
+    public class VirtualMachineState : AbiquoLinkBaseDto
     {
         [Required]
         public VirtualMachineStateEnum State { get; set; }

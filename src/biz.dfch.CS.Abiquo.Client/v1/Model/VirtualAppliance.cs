@@ -20,7 +20,7 @@ using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualAppliance : AbiquoBaseDto
+    public class VirtualAppliance : AbiquoLinkBaseDto
     {
         public int Error { get; set; }
 

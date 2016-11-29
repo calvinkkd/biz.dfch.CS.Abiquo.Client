@@ -18,7 +18,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class RunlistElement : AbiquoBaseDto
+    public class RunlistElement : AbiquoLinkBaseDto
     {
         [Required]
         public string Name { get; set; }

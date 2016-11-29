@@ -21,7 +21,7 @@ using System;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualDataCenter : AbiquoBaseDto
+    public class VirtualDataCenter : AbiquoLinkBaseDto
     {
         [Required]
         [Range(0, Int32.MaxValue)]

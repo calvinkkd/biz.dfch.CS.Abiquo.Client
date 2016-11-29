@@ -21,7 +21,7 @@ using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachineTemplate : AbiquoBaseDto
+    public class VirtualMachineTemplate : AbiquoLinkBaseDto
     {
         public bool ChefEnabled { get; set; }
         

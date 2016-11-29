@@ -18,7 +18,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DataCenterRepository : AbiquoBaseDto
+    public class DataCenterRepository : AbiquoLinkBaseDto
     {
         public string Error { get; set; }
 

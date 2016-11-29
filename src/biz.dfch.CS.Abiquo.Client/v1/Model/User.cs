@@ -18,7 +18,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class User : AbiquoBaseDto
+    public class User : AbiquoLinkBaseDto
     {
         [Required]
         public bool Active { get; set; }

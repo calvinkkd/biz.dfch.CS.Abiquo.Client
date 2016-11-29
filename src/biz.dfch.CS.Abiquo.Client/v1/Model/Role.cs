@@ -18,7 +18,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Role : AbiquoBaseDto
+    public class Role : AbiquoLinkBaseDto
     {
         public bool Blocked { get; set; }
 

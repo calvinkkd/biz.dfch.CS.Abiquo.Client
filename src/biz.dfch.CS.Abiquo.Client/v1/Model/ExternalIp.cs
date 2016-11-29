@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class ExternalIp : AbiquoBaseDto
+    public class ExternalIp : AbiquoLinkBaseDto
     {
         public bool Available { get; set; }
 

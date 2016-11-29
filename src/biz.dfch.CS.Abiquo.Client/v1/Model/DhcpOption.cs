@@ -19,7 +19,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DhcpOption : AbiquoBaseDto
+    public class DhcpOption : AbiquoLinkBaseDto
     {
         public int Id { get; set; }
 

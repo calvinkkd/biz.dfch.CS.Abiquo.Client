@@ -21,7 +21,7 @@ using System;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VlanNetwork : AbiquoBaseDto
+    public class VlanNetwork : AbiquoLinkBaseDto
     {
         [Required]
         public string Address { get; set; }

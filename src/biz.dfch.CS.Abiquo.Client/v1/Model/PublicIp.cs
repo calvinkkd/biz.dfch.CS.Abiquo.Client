@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class PublicIp : AbiquoBaseDto
+    public class PublicIp : AbiquoLinkBaseDto
     {
         public bool Available { get; set; }
 

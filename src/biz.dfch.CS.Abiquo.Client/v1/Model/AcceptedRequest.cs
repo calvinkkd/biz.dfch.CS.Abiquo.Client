@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class AcceptedRequest : AbiquoBaseDto
+    public class AcceptedRequest : AbiquoLinkBaseDto
     {
         public object Entity { get; set; }
     }

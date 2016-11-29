@@ -19,7 +19,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Enterprise : AbiquoBaseDto
+    public class Enterprise : AbiquoLinkBaseDto
     {
         public string ChefClient { get; set; }
 
