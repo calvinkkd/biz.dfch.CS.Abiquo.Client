@@ -80,6 +80,5 @@ namespace biz.dfch.PS.Abiquo.Client
             var importedModuleVariable = this.GetVariableValue(ModuleConfiguration.MODULE_VARIABLE_NAME);
             Contract.Assert(null != importedModuleVariable, Messages.ImportConfigurationSaveToModuleVariableFailed);
         }
-
     }
 }
