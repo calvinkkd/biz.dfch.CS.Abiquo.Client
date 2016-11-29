@@ -56,7 +56,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 CurrentUserInformation = AbiquoBaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
-                Logger.Current.TraceEvent(TraceEventType.Stop, 1, "Login SUCCEEDS");
+                Logger.Current.TraceEvent(TraceEventType.Information, 1, "Login SUCCEEDED");
                 return true;
             }
             catch (HttpRequestException ex)
