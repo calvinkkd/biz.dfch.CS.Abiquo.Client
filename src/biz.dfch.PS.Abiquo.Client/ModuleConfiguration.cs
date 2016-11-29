@@ -65,7 +65,7 @@ namespace biz.dfch.PS.Abiquo.Client
             if (null == fileInfo)
             {
                 var location = typeof(ImportConfiguration).Assembly.Location;
-                Contract.Assert(!String.IsNullOrWhiteSpace(location));
+                Contract.Assert(!string.IsNullOrWhiteSpace(location));
 
                 var path = Path.GetDirectoryName(location);
                 Contract.Assert(Directory.Exists(path), path);
@@ -75,8 +75,8 @@ namespace biz.dfch.PS.Abiquo.Client
                 fileInfo = new FileInfo(configFile);
             }
 
-            Contract.Assert(!Directory.Exists(fileInfo.FullName), String.Format(Messages.ImportConfigurationDirectoryExists, fileInfo.FullName));
-            Contract.Assert(File.Exists(fileInfo.FullName), String.Format(Messages.ImportConfigurationFileDoesNotExist, fileInfo.FullName));
+            Contract.Assert(!Directory.Exists(fileInfo.FullName), string.Format(Messages.ImportConfigurationDirectoryExists, fileInfo.FullName));
+            Contract.Assert(File.Exists(fileInfo.FullName), string.Format(Messages.ImportConfigurationFileDoesNotExist, fileInfo.FullName));
 
             return fileInfo;
         }
@@ -92,14 +92,14 @@ namespace biz.dfch.PS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<ModuleContextSection>());
 
             var configurationFileMap = new ConfigurationFileMap(fileInfo.FullName);
-            Contract.Assert(null != configurationFileMap, String.Format(Messages.ImportConfigurationConfigurationFileMapCreateFailed, fileInfo.FullName));
+            Contract.Assert(null != configurationFileMap, string.Format(Messages.ImportConfigurationConfigurationFileMapCreateFailed, fileInfo.FullName));
 
             var configuration = ConfigurationManager.OpenMappedMachineConfiguration(configurationFileMap);
-            Contract.Assert(null != configuration, String.Format(Messages.ImportConfigurationConfigurationOpenFailed, fileInfo.FullName));
-            Contract.Assert(configuration.HasFile, String.Format(Messages.ImportConfigurationConfigurationHasFile, fileInfo.FullName));
+            Contract.Assert(null != configuration, string.Format(Messages.ImportConfigurationConfigurationOpenFailed, fileInfo.FullName));
+            Contract.Assert(configuration.HasFile, string.Format(Messages.ImportConfigurationConfigurationHasFile, fileInfo.FullName));
 
             var moduleContextSection = configuration.GetSection(ModuleContextSection.SECTION_NAME) as ModuleContextSection;
-            Contract.Assert(null != moduleContextSection, String.Format(Messages.ImportConfigurationSectionOpenFailed, fileInfo.FullName, ModuleContextSection.SECTION_NAME));
+            Contract.Assert(null != moduleContextSection, string.Format(Messages.ImportConfigurationSectionOpenFailed, fileInfo.FullName, ModuleContextSection.SECTION_NAME));
 
             return moduleContextSection;
         }
