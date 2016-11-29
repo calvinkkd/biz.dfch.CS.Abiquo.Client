@@ -77,6 +77,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
                 Nick = USERNAME
             };
 
+            user.Links = new List<Link>();
+
             // Act
             user.GetEnterpriseId();
         }
