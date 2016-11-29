@@ -174,13 +174,13 @@
     <Compile Include="General\FilterBuilderTest.cs" />
     <Compile Include="General\HeaderBuilderTest.cs" />
     <Compile Include="IntegrationTestEnvironment.cs" />
-    <Compile Include="General\BaseDtoTest.cs" />
+    <Compile Include="General\AbiquoBaseDtoTest.cs" />
     <Compile Include="General\UriHelperTest.cs" />
     <Compile Include="v1\AbiquoClientIntegrationTests.cs" />
     <Compile Include="v1\AbiquoClientTest.cs" />
     <Compile Include="v1\LinkBuilderTest.cs" />
     <Compile Include="v1\Model\AbiquoBaseCollectionDtoTest.cs" />
-    <Compile Include="v1\Model\AbiquoBaseDtoTest.cs" />
+    <Compile Include="v1\Model\AbiquoLinkBaseDtoTest.cs" />
     <Compile Include="v1\Model\DeserializationTest.cs" />
     <Compile Include="v1\Model\LinkTest.cs" />
   </ItemGroup>

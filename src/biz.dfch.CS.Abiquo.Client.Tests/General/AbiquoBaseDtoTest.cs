@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
     [TestClass]
-    public class BaseDtoTest
+    public class AbiquoBaseDtoTest
     {
         private const string SAMPLE_DTO_NAME = "ArbitraryName";
         private const string SAMPLE_DTO_JSON_REPRESENTATION = @"{""name"":""ArbitraryName""}";

@@ -23,7 +23,7 @@ using biz.dfch.CS.Testing.Attributes;
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
 {
     [TestClass]
-    public class AbiquoBaseDtoTest
+    public class AbiquoLinkBaseDtoTest
     {
         private const string USERS_HREF = "https://abiquo/api/admin/enterprises/1/users";
         private const string PROPERTIES_HREF = "https://abiquo/api/admin/enterprises/1/properties";
