@@ -178,14 +178,4 @@
     <value>Import configuration from '{0}'</value>
     <comment>0: FileInfo.FullName</comment>
   </data>
-  <data name="PsCmdletStart" xml:space="preserve">
-    <value>{0}: {1} START</value>
-    <comment>0: ActivityId
-1: CmdletIndex</comment>
-  </data>
-  <data name="PsCmdletStop" xml:space="preserve">
-    <value>{0}: {1} STOP</value>
-    <comment>0: ActivityId
-1: CmdletIndex</comment>
-  </data>
 </root>
