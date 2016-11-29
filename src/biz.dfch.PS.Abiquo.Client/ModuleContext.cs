@@ -20,6 +20,8 @@ using System.Diagnostics.Contracts;
 using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client;
 using biz.dfch.CS.Abiquo.Client.Factory;
+using biz.dfch.CS.Commons.Diagnostics;
+using TraceSource = biz.dfch.CS.Commons.Diagnostics.TraceSource;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
@@ -53,11 +55,6 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         public string AuthenticationType { get; set; }
 
-        /// <summary>
-        /// Specifies the source levels used for logging
-        /// </summary>
-        public SourceLevels SourceLevels { get; internal set; }
-
         private static readonly Lazy<BaseAbiquoClient> _client = new Lazy<BaseAbiquoClient>(() =>
         {
             Contract.Ensures(null != Contract.Result<BaseAbiquoClient>());
@@ -85,8 +82,7 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             Contract.Ensures(null != Contract.Result<TraceSource>());
 
-            var sourceLevels = ModuleConfiguration.Current.SourceLevels;
-            var traceSource = new TraceSource(ModuleConfiguration.MODULE_NAME, sourceLevels);
+            var traceSource = Logger.Get(ModuleConfiguration.MODULE_NAME);
 
             Contract.ContractFailed += ContractFailedEventHandler;
 
@@ -100,26 +96,18 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             get
             {
-                Contract.Ensures(null != Contract.Result<TraceSource>());
-
                 return _traceSource.Value;
             }
         }
 
         private static void ContractFailedEventHandler(object sender, ContractFailedEventArgs args)
         {
-            var declaringType = new StackFrame(0).GetMethod().DeclaringType;
-            if (declaringType != typeof(ModuleContext))
+            if (typeof(ModuleContext) != new StackFrame(0).GetMethod().DeclaringType)
             {
                 return;
             }
 
-            _traceSource.Value.TraceEvent
-            (
-                TraceEventType.Error, 
-                Constants.Cmdlets.CONTRACT_EXCEPTION, 
-                Messages.ContractFailedEventHandler, Trace.CorrelationManager.ActivityId, args.Message
-            );
+            _traceSource.Value.TraceException(args.OriginalException, args.Message);
         }
 
     }
