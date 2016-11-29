@@ -56,7 +56,7 @@ namespace biz.dfch.PS.Abiquo.Client
             /// <summary>
             /// ParameterSetName used when specifying plain username and password
             /// </summary>
-            public const string PLAIN = "plain";
+            public const string PLAIN = ModuleContextSection.AUTHENTICATION_TYPE_PLAIN;
 
             /// <summary>
             /// ParameterSetName used when specifying an OAuth2 token
@@ -125,16 +125,6 @@ namespace biz.dfch.PS.Abiquo.Client
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.MODULE_CONTEXT)]
         [PSDefaultValue(Value = false)]
         public SwitchParameter UseModuleContext { get; set; }
-
-        /// <summary>
-        /// BeginProcessing
-        /// </summary>
-        protected override void BeginProcessing()
-        {
-            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Start, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStart, Trace.CorrelationManager.ActivityId, typeof(EnterServer));
-
-            base.BeginProcessing();
-        }
 
         /// <summary>
         /// ProcessRecord
@@ -231,16 +221,6 @@ namespace biz.dfch.PS.Abiquo.Client
             WriteObject(client);
 
             return;
-        }
-
-        /// <summary>
-        /// EndProcessing
-        /// </summary>
-        protected override void EndProcessing()
-        {
-            ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Stop, Constants.Cmdlets.ENTER_SERVER, Messages.PsCmdletStop, Trace.CorrelationManager.ActivityId, typeof(EnterServer));
-
-            base.EndProcessing();
         }
 
         private IAuthenticationInformation GetAuthenticationInformation(string parameterSetName)
