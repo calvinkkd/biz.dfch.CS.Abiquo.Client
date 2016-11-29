@@ -14,18 +14,44 @@
  * limitations under the License.
  */
 
+using System;
 using biz.dfch.CS.Abiquo.Client.Authentication;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests
 {
     internal class IntegrationTestEnvironment
     {
+        public const string ABIQUO_API_BASE_URI = @"https://abiquo.example.com/api/";
+        public const string ABIQUO_USERNAME = "admin";
+        public const string ABIQUO_PASSWORD = "xabiquo";
+        public const int  ABIQUO_TENANT_ID = 1;
+        
         static IntegrationTestEnvironment()
         {
-            AbiquoApiBaseUri = @"https://abiquo/api/";
-            Username = "arbitrary";
-            Password = "arbitrary";
-            TenantId = 1;
+            AbiquoApiBaseUri = Environment.GetEnvironmentVariable("ABIQUO_API_BASE_URI");
+            if (string.IsNullOrWhiteSpace(AbiquoApiBaseUri))
+            {
+                AbiquoApiBaseUri = ABIQUO_API_BASE_URI;
+            }
+
+            Username = Environment.GetEnvironmentVariable("ABIQUO_USERNAME");
+            if (string.IsNullOrWhiteSpace(Username))
+            {
+                Username = ABIQUO_USERNAME;
+            }
+
+            Password = Environment.GetEnvironmentVariable("ABIQUO_PASSWORD");
+            if (string.IsNullOrWhiteSpace(Password))
+            {
+                Password = ABIQUO_PASSWORD;
+            }
+
+            int tenantId;
+            var isDefined = int.TryParse(Environment.GetEnvironmentVariable("ABIQUO_TENANT_ID"), out tenantId);
+            if (!isDefined)
+            {
+                TenantId = ABIQUO_TENANT_ID;
+            }
 
             AuthenticationInformation = new BasicAuthenticationInformation(Username, Password, TenantId);
         }

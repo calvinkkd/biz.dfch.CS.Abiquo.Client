@@ -47,6 +47,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             State = VirtualMachineStateEnum.ON
         };
 
+        [ClassInitialize]
+        public static void ClassInitalize(TestContext testContext)
+        {
+            ServerCertificateValidationCallback.Ignore();
+        }
+
         #region Login
 
         [TestMethod]
