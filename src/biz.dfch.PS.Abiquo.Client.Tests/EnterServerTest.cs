@@ -124,7 +124,8 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             var parameters = @"-Uri httpS://abiquo.example.com/api/ -Username admin -Password password";
             var results = PsCmdletAssert.Invoke(sut, parameters);
         }
-        
+
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void InvokeWithParameterSetPlainSucceeds()
         {
@@ -147,6 +148,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void InvokeWithParameterSetCredSucceeds()
         {
@@ -169,6 +171,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
         public void InvokeWithParameterSetOAuth2Succeeds()
         {
