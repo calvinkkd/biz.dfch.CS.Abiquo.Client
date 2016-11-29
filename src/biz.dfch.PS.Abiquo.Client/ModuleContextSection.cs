@@ -29,12 +29,15 @@ namespace biz.dfch.PS.Abiquo.Client
     /// </summary>
     public class ModuleContextSection : ConfigurationSection
     {
+        /// <summary>
+        /// AUTHENTICATION_TYPE_PLAIN
+        /// </summary>
         public const string AUTHENTICATION_TYPE_PLAIN = "plain";
 
         /// <summary>
         /// The name of the configuration section
         /// </summary>
-        public const string SECTION_NAME = "ModuleContext";
+        public const string SECTION_NAME = ModuleConfiguration.MODULE_VARIABLE_NAME;
 
         /// <summary>
         /// Specifies the base uri of the Abiquo endpoint

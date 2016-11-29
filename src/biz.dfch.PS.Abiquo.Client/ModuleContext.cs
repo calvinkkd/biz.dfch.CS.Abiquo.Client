@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client;
@@ -30,8 +29,6 @@ namespace biz.dfch.PS.Abiquo.Client
     /// </summary>
     public class ModuleContext
     {
-        private static readonly int _eventId = typeof(ContractFailedEventArgs).GetHashCode();
-
         /// <summary>
         /// Specifies the API version to use
         /// </summary>
@@ -62,8 +59,9 @@ namespace biz.dfch.PS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<BaseAbiquoClient>());
 
             var apiVersion = ModuleConfiguration.Current.ApiVersion;
-            var client = string.IsNullOrWhiteSpace(apiVersion) ? 
-                AbiquoClientFactory.GetByVersion() : AbiquoClientFactory.GetByVersion(apiVersion);
+            var client = String.IsNullOrWhiteSpace(apiVersion) 
+                ? AbiquoClientFactory.GetByVersion() 
+                : AbiquoClientFactory.GetByVersion(apiVersion);
             return client;
         });
 
@@ -80,13 +78,13 @@ namespace biz.dfch.PS.Abiquo.Client
             }
         }
 
-        private static readonly Lazy<TraceSource> _traceSource = new Lazy<TraceSource>(() =>
+        internal static readonly Lazy<TraceSource> TraceSourceInternal = new Lazy<TraceSource>(() =>
         {
             Contract.Ensures(null != Contract.Result<TraceSource>());
 
-            var traceSource = Logger.Get(ModuleConfiguration.MODULE_NAME);
+            var traceSource = Logger.Get(ModuleConfiguration.LOGGER_NAME);
 
-            Contract.ContractFailed += ContractFailedEventHandler;
+            Contract.ContractFailed += ContractEventHandler.ContractFailedEventHandler;
 
             return traceSource;
         });
@@ -96,21 +94,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         public TraceSource TraceSource
         {
-            get
-            {
-                return _traceSource.Value;
-            }
+            get { return TraceSourceInternal.Value; } 
         }
-
-        private static void ContractFailedEventHandler(object sender, ContractFailedEventArgs args)
-        {
-            if (typeof(ModuleContext) != new StackFrame(0).GetMethod().DeclaringType)
-            {
-                return;
-            }
-
-            _traceSource.Value.TraceEvent(TraceEventType.Error, _eventId, args.Message);
-        }
-
     }
 }
