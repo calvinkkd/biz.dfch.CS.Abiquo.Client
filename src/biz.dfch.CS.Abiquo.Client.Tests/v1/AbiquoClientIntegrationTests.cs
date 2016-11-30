@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
- using System;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-﻿using System.Net.Http;
- using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net.Http;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.Authentication;
-﻿using biz.dfch.CS.Abiquo.Client.Communication;
-﻿using biz.dfch.CS.Abiquo.Client.Factory;
+using biz.dfch.CS.Abiquo.Client.Communication;
+using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Abiquo.Client.v1;
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using biz.dfch.CS.Abiquo.Client.General;
- using biz.dfch.CS.Abiquo.Client.Tests.General;
- using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
+using biz.dfch.CS.Abiquo.Client.Tests.General;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
+using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
+using System.Threading;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
@@ -2353,6 +2354,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault(), true);
             Assert.IsTrue(deletionResult);
+
+            Thread.Sleep(2 * 1000);
 
             var releasedPublicIp = abiquoClient.ReleasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
 
