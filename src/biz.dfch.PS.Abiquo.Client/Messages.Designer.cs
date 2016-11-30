@@ -115,6 +115,15 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ParameterSetName &apos;{0}&apos;..
+        /// </summary>
+        public static string GetMachineShouldProcess {
+            get {
+                return ResourceManager.GetString("GetMachineShouldProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}: Creating ConfigurationFileMap FAILED..
         /// </summary>
         public static string ImportConfigurationConfigurationFileMapCreateFailed {

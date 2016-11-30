@@ -146,6 +146,10 @@
     <comment>0: Uri
 1: ParameterSetName</comment>
   </data>
+  <data name="GetMachineShouldProcess" xml:space="preserve">
+    <value>ParameterSetName '{0}'.</value>
+    <comment>0: ParameterSetName</comment>
+  </data>
   <data name="ImportConfigurationConfigurationFileMapCreateFailed" xml:space="preserve">
     <value>{0}: Creating ConfigurationFileMap FAILED.</value>
     <comment>0: FileInfo.FullName</comment>
