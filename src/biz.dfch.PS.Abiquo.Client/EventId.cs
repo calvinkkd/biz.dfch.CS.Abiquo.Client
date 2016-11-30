@@ -19,7 +19,7 @@ namespace biz.dfch.PS.Abiquo.Client
     /// <summary>
     /// ErrorIdEnum
     /// </summary>
-    public enum ErrorIdEnum : long
+    public enum EventId
     {
         /// <summary>
         /// EnterServerFailed
