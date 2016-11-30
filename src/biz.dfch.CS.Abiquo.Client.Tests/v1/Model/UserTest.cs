@@ -34,7 +34,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
         private const string USERNAME = "ArbitraryUserName";
         private const string AUTH_TYPE = "Arbitrary AuthType";
         private const string LINK_TITLE = "Abiquo";
-        private const string LINK_HREF = "https://abiquo/api/admin/enterprises/42";
+        private const string LINK_HREF = "https://abiquo.example.com/api/admin/enterprises/42";
         private const int ENTERPRISE_ID = 42;
 
         [TestMethod]

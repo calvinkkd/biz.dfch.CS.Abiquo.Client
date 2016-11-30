@@ -25,7 +25,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
     [TestClass]
     public class UriHelperTest
     {
-        private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
+        private const string ABIQUO_API_BASE_URI = "https://abiquo.example.com/api/";
 
         [TestMethod]
         [ExpectContractFailure]

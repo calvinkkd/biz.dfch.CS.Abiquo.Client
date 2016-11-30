@@ -25,8 +25,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
     [TestClass]
     public class AbiquoLinkBaseDtoTest
     {
-        private const string USERS_HREF = "https://abiquo/api/admin/enterprises/1/users";
-        private const string PROPERTIES_HREF = "https://abiquo/api/admin/enterprises/1/properties";
+        private const string USERS_HREF = "https://abiquo.example.com/api/admin/enterprises/1/users";
+        private const string PROPERTIES_HREF = "https://abiquo.example.com/api/admin/enterprises/1/properties";
         private const string USERS_REL = "users";
         private const string PROPERTIES_REL = "properties";
 

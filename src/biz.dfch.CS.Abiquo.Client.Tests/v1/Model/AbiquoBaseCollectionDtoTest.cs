@@ -25,8 +25,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
     [TestClass]
     public class AbiquoBaseCollectionDtoTest
     {
-        private const string FIRST_HREF = "https://abiquo/api/admin/enterprises?limit=25&by=name";
-        private const string LAST_HREF = "https://abiquo/api/admin/enterprises?startwith=0&limit=25&by=name";
+        private const string FIRST_HREF = "https://abiquo.example.com/api/admin/enterprises?limit=25&by=name";
+        private const string LAST_HREF = "https://abiquo.example.com/api/admin/enterprises?startwith=0&limit=25&by=name";
         private const string FIRST_REL = "first";
         private const string LAST_REL = "last";
 

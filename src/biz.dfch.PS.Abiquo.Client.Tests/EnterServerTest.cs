@@ -54,7 +54,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
             var enterpriseLink =
                 new Current.LinkBuilder()
-                .BuildHref(string.Format("https://abiquo/api/admin/enterprises/{0}", EnterServer.TENANT_ID_DEFAULT_VALUE))
+                .BuildHref(string.Format("https://abiquo.example.com/api/admin/enterprises/{0}", EnterServer.TENANT_ID_DEFAULT_VALUE))
                 .BuildRel(Current.AbiquoRelations.ENTERPRISE)
                 .BuildTitle("Abiquo")
                 .GetLink();

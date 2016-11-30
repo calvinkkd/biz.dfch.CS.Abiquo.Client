@@ -32,7 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
     [TestClass]
     public class BaseAbiquoClientTest
     {
-        private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
+        private const string ABIQUO_API_BASE_URI = "https://abiquo.example.com/api/";
         private const string VIRTUALMACHINETEMPLATE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
