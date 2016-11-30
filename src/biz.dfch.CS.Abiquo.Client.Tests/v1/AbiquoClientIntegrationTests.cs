@@ -2355,7 +2355,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 virtualMachine.Id.GetValueOrDefault(), true);
             Assert.IsTrue(deletionResult);
 
-            Thread.Sleep(2 * 1000);
+            Thread.Sleep(4 * 1000);
 
             var releasedPublicIp = abiquoClient.ReleasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
 
