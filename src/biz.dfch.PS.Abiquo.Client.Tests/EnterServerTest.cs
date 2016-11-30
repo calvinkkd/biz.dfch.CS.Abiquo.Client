@@ -38,7 +38,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         private readonly Type sut = typeof(EnterServer);
 
         [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
+        public static void ClassInitialize(TestContext testContext)
         {
             User = new User()
             {
