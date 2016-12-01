@@ -169,7 +169,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot find machine for VirtualDataCenter &apos;{0}&apos;..
+        ///   Looks up a localized string similar to Cannot find machine in VirtualDataCenter &apos;{0}&apos;..
         /// </summary>
         public static string GetMachineVdcNotFound {
             get {
@@ -178,7 +178,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot find machine for VirtualDataCenter &apos;{0}&apos; and VirtualAppliance &apos;{1}&apos;..
+        ///   Looks up a localized string similar to Cannot find machine in VirtualDataCenter &apos;{0}&apos; and VirtualAppliance &apos;{1}&apos;..
         /// </summary>
         public static string GetMachineVdcVappNotFound {
             get {
