@@ -274,7 +274,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 return aggrex;
             }
 
-            var errorRecord = new ErrorRecord(ex, EventId.EnterServerFailed.ToString(), ErrorCategory.ConnectionError, this);
+            var errorRecord = new ErrorRecord(ex, Constants.EventId.EnterServerFailed.ToString(), ErrorCategory.ConnectionError, this);
             WriteError(errorRecord);
 
             return null;

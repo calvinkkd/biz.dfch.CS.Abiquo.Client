@@ -23,6 +23,8 @@ namespace biz.dfch.PS.Abiquo.Client
     /// </summary>
     public class Constants
     {
+        private const int EVENT_ID_OFFSET = 64;
+
         /// <summary>
         /// Index for all cmdlets in this module
         /// </summary>
@@ -31,7 +33,33 @@ namespace biz.dfch.PS.Abiquo.Client
             /// <summary>
             /// Enter-Server
             /// </summary>
-            EnterServer = 16384
+            EnterServer = 16384,
+            /// <summary>
+            /// Login Failed AggregateException
+            /// </summary>
+            EnterServerFailed,
+            /// <summary>
+            /// Import-Configuration
+            /// </summary>
+            ImportConfiguration = EnterServer + EVENT_ID_OFFSET,
+            /// <summary>
+            /// Get-Machine
+            /// </summary>
+            GetMachine = ImportConfiguration + EVENT_ID_OFFSET,
+
+
+            //
+            // !!! this is the last enum - no other definitions after this one !!!
+            //
+            
+            /// <summary>
+            /// ContractFailedEventHandler
+            /// </summary>
+            ContractFailedEventHandler = ushort.MaxValue
+            
+            //
+            // !!! this is the last enum - no other definitions after this one !!!
+            //
         }
     }
 }

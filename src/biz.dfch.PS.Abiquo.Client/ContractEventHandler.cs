@@ -25,7 +25,7 @@ namespace biz.dfch.PS.Abiquo.Client
     /// </summary>
     public class ContractEventHandler
     {
-        internal const int EVENT_ID = Int16.MaxValue;
+        private const int EVENT_ID = (int) Constants.EventId.ContractFailedEventHandler;
 
         internal const string CONTRACTS_RUNTIME_NAMESPACE1 = "System.Runtime.CompilerServices.ContractHelper";
         internal const string CONTRACTS_RUNTIME_NAMESPACE2 = "System.Diagnostics.Contracts.__ContractsRuntime";
