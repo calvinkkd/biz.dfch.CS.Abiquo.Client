@@ -26,6 +26,7 @@ using Current = biz.dfch.CS.Abiquo.Client.v1;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Management.Automation;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
@@ -225,13 +226,26 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
             Mock.Arrange(() => Client.GetEnterprise(Arg.IsAny<int>()))
                 .IgnoreInstance()
-                .Throws(new Exception("9990"))
+                .Throws(new Exception("baseException"))
                 .MustBeCalled();
 
             // this Id does not exist
             var parameters = @"-Id 9999";
-            
-            var results = PsCmdletAssert.Invoke(sut, parameters, er => { Assert.IsTrue(er.Single().Exception.Message.Contains("9999")); });
+
+            Action<IList<ErrorRecord>> errorHandler = er =>
+            {
+                Assert.IsNotNull(er);
+
+                Assert.AreEqual(2, er.Count);
+
+                var er0 = er[0];
+                Assert.IsTrue(er0.Exception.Message.Contains("baseException"));
+
+                var er1 = er[1];
+                Assert.IsTrue(er1.Exception.Message.Contains("9999"));
+
+            };
+            var results = PsCmdletAssert.Invoke(sut, parameters, errorHandler);
             
             Assert.IsNotNull(results);
             Assert.AreEqual(0, results.Count);
