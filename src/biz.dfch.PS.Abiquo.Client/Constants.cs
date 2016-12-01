@@ -54,6 +54,10 @@ namespace biz.dfch.PS.Abiquo.Client
             /// GetMachineNameNotFound
             /// </summary>
             GetMachineNameNotFound,
+            /// <summary>
+            /// GetMachineVdcVappNotFound
+            /// </summary>
+            GetMachineVdcVappNotFound,
 
             /// <summary>
             /// GetEnterprise

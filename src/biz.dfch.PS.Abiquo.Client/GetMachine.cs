@@ -38,7 +38,7 @@ namespace biz.dfch.PS.Abiquo.Client
          SupportsShouldProcess = true
          ,
          HelpUri = "http://dfch.biz/biz/dfch/PS/Abiquo/Client/Get-Machine/"
-    )]
+     )]
     [OutputType(typeof(VirtualMachine))]
     public class GetMachine : PsCmdletBase
     {
@@ -77,6 +77,22 @@ namespace biz.dfch.PS.Abiquo.Client
         public string Name { get; set; }
 
         /// <summary>
+        /// VirtualDataCenterId
+        /// </summary>
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSets.LIST)]
+        [ValidateRange(1, int.MaxValue)]
+        [Alias("vdc")]
+        public int VirtualDataCenterId { get; set; }
+
+        /// <summary>
+        /// VirtualApplianceId
+        /// </summary>
+        [Parameter(Mandatory = false, Position = 1, ParameterSetName = ParameterSets.LIST)]
+        [ValidateRange(1, int.MaxValue)]
+        [Alias("vapp")]
+        public int VirtualApplianceId { get; set; }
+
+        /// <summary>
         /// Retrieve all machines for the current enterprise
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.LIST)]
@@ -89,6 +105,10 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             base.ProcessRecord();
 
+            var isValidVirtualDataCenterIdAndVirtualApplianceIdCombination =
+                !(0 < VirtualApplianceId && 0 >= VirtualDataCenterId);
+            Contract.Assert(isValidVirtualDataCenterIdAndVirtualApplianceIdCombination);
+
             Contract.Assert(null != ModuleConfiguration.Current.Client);
             Contract.Assert(ModuleConfiguration.Current.Client.IsLoggedIn);
 
@@ -98,7 +118,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 return;
             }
 
-            switch(ParameterSetName)
+            switch (ParameterSetName)
             {
                 case ParameterSets.LIST:
                 {
@@ -129,14 +149,15 @@ namespace biz.dfch.PS.Abiquo.Client
         private void ProcessParameterSetId()
         {
             var collection = ModuleConfiguration.Current.Client
-                                                .GetAllVirtualMachines()
-                                                .Collection ?? new List<VirtualMachine>();
+                                 .GetAllVirtualMachines()
+                                 .Collection ?? new List<VirtualMachine>();
 
             var result = collection.FirstOrDefault(e => e.Id.HasValue && e.Id.Value == Id);
 
             if (null == result)
             {
-                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineIdNotFound, Constants.EventId.GetMachineIdNotFound.ToString(), Id));
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineIdNotFound,
+                    Constants.EventId.GetMachineIdNotFound.ToString(), Id));
                 return;
             }
 
@@ -146,13 +167,13 @@ namespace biz.dfch.PS.Abiquo.Client
         private void ProcessParameterSetName()
         {
             var collection = ModuleConfiguration.Current.Client
-                                                .GetAllVirtualMachines()
-                                                .Collection ?? new List<VirtualMachine>();
+                                 .GetAllVirtualMachines()
+                                 .Collection ?? new List<VirtualMachine>();
             var results = collection
                 .Where(e => Name.Equals(e.Name, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
 
-            if(0 == results.Count)
+            if (0 == results.Count)
             {
                 WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineNameNotFound, Constants.EventId.GetMachineNameNotFound.ToString(), Name));
                 return;
@@ -163,10 +184,41 @@ namespace biz.dfch.PS.Abiquo.Client
 
         private void ProcessParameterSetList()
         {
-            var collection = ModuleConfiguration.Current.Client
-                                                .GetAllVirtualMachines()
-                                                .Collection ?? new List<VirtualMachine>();
-            collection.ForEach(WriteObject);
+            var collection = new List<VirtualMachine>();
+
+            if (0 >= VirtualDataCenterId && 0 > VirtualApplianceId)
+            {
+                collection = ModuleConfiguration.Current.Client
+                                 .GetAllVirtualMachines()
+                                 .Collection ?? new List<VirtualMachine>();
+                collection.ForEach(WriteObject);
+                return;
+            }
+
+            try
+            {
+                var virtualAppliances = new List<VirtualAppliance>();
+                if (0 < VirtualApplianceId)
+                {
+                    virtualAppliances.Add(ModuleConfiguration.Current.Client.GetVirtualAppliance(VirtualDataCenterId, VirtualApplianceId));
+                }
+                else
+                {
+                    virtualAppliances.AddRange(ModuleConfiguration.Current.Client.GetVirtualAppliances(VirtualDataCenterId).Collection ?? new List<VirtualAppliance>());
+                }
+
+                foreach (var virtualAppliance in virtualAppliances)
+                {
+                    collection.AddRange(ModuleConfiguration.Current.Client.GetVirtualMachines(VirtualDataCenterId, virtualAppliance.Id).Collection ?? new List<VirtualMachine>());
+                }
+
+                collection.ForEach(WriteObject);
+            }
+            catch (Exception ex)
+            {
+                WriteError(ErrorRecordFactory.GetGeneric(ex));
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcVappNotFound, Constants.EventId.GetMachineVdcVappNotFound.ToString(), VirtualDataCenterId, VirtualApplianceId));
+            }
         }
     }
 }
