@@ -64,20 +64,20 @@ namespace biz.dfch.PS.Abiquo.Client
         }
 
         /// <summary>
-        /// Specifies the machine id
+        /// Specifies the entity id
         /// </summary>
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSets.ID)]
         [ValidateRange(1, int.MaxValue)]
         public int Id { get; set; }
 
         /// <summary>
-        /// Specifies the name name
+        /// Specifies the entity name
         /// </summary>
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSets.NAME)]
         public string Name { get; set; }
 
         /// <summary>
-        /// Retrieve all machines for the current enterprise
+        /// Retrieve all entities for the current enterprise
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.LIST)]
         public SwitchParameter ListAvailable { get; set; }

@@ -55,9 +55,9 @@ namespace biz.dfch.PS.Abiquo.Client
             /// </summary>
             GetMachineNameNotFound,
             /// <summary>
-            /// GetMachineVdcVappNotFound
+            /// GetMachineVirtualDataCenterOrVirtualApplianceNotFound
             /// </summary>
-            GetMachineVdcVappNotFound,
+            GetMachineVirtualDataCenterOrVirtualApplianceNotFound,
 
             /// <summary>
             /// GetEnterprise
@@ -85,18 +85,41 @@ namespace biz.dfch.PS.Abiquo.Client
             /// </summary>
             GetVirtualDataCenterNameNotFound,
 
+            /// <summary>
+            /// GetVirtualAppliance
+            /// </summary>
+            GetVirtualAppliance = GetVirtualDataCenter + EVENT_ID_OFFSET,
+            /// <summary>
+            /// GetVirtualApplianceIdNotFound
+            /// </summary>
+            GetVirtualApplianceIdNotFound,
+            /// <summary>
+            /// GetVirtualApplianceNameNotFound
+            /// </summary>
+            GetVirtualApplianceNameNotFound,
+            /// <summary>
+            /// GetVirtualApplianceVirtualDataCenterNotFound
+            /// </summary>
+            GetVirtualApplianceVirtualDataCenterNotFound,
+
+
+
+            ////////////////////////////////////////////////////////////////////////////
             //
             // !!! this is the last enum - no other definitions after this one !!!
             //
+            ////////////////////////////////////////////////////////////////////////////
             
             /// <summary>
             /// ContractFailedEventHandler
             /// </summary>
             ContractFailedEventHandler = ushort.MaxValue
             
+            ////////////////////////////////////////////////////////////////////////////
             //
             // !!! this is the last enum - no other definitions after this one !!!
             //
+            ////////////////////////////////////////////////////////////////////////////
         }
     }
 }

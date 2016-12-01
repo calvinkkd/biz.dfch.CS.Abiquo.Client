@@ -142,7 +142,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot find machine with id &apos;{0}&apos;..
+        ///   Looks up a localized string similar to Cannot find VirtualMachine with id &apos;{0}&apos;..
         /// </summary>
         public static string GetMachineIdNotFound {
             get {
@@ -151,7 +151,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot find machine with name &apos;{0}&apos;..
+        ///   Looks up a localized string similar to Cannot find VirtualMachine with name &apos;{0}&apos;..
         /// </summary>
         public static string GetMachineNameNotFound {
             get {
@@ -169,7 +169,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot find machine in VirtualDataCenter &apos;{0}&apos;..
+        ///   Looks up a localized string similar to Cannot find VirtualMachine in VirtualDataCenter &apos;{0}&apos;..
         /// </summary>
         public static string GetMachineVdcNotFound {
             get {
@@ -178,11 +178,47 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot find machine in VirtualDataCenter &apos;{0}&apos; and VirtualAppliance &apos;{1}&apos;..
+        ///   Looks up a localized string similar to Cannot find VirtualMachine in VirtualDataCenter &apos;{0}&apos; and VirtualAppliance &apos;{1}&apos;..
         /// </summary>
         public static string GetMachineVdcVappNotFound {
             get {
                 return ResourceManager.GetString("GetMachineVdcVappNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find VirtualAppliance with id &apos;{0}&apos; in VirtualDataCenter &apos;{1}&apos;..
+        /// </summary>
+        public static string GetVirtualApplianceIdNotFound {
+            get {
+                return ResourceManager.GetString("GetVirtualApplianceIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find VirtualAppliance with name &apos;{0}&apos; in VirtualDataCenter &apos;{1}&apos;..
+        /// </summary>
+        public static string GetVirtualApplianceNameNotFound {
+            get {
+                return ResourceManager.GetString("GetVirtualApplianceNameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ParameterSetName &apos;{0}&apos;..
+        /// </summary>
+        public static string GetVirtualApplianceShouldProcess {
+            get {
+                return ResourceManager.GetString("GetVirtualApplianceShouldProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find VirtualAppliance in VirtualDataCenter &apos;{0}&apos;..
+        /// </summary>
+        public static string GetVirtualApplianceVdcNotFound {
+            get {
+                return ResourceManager.GetString("GetVirtualApplianceVdcNotFound", resourceCulture);
             }
         }
         

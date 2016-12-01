@@ -290,5 +290,16 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Mock.Assert(() => CurrentClient.GetAllVirtualMachines());
         }
 
+        [TestMethod]
+        public void InvokeParameterSetListWithInvalidVdcVappCombination()
+        {
+            Mock.Arrange(() => CurrentClient.IsLoggedIn)
+                .Returns(true);
+
+            // this Id does not exist
+            var parameters = @"-VirtualApplianceId 42";
+            
+            var results = PsCmdletAssert.Invoke(sut, parameters);
+        }
     }
 }

@@ -219,11 +219,11 @@ namespace biz.dfch.PS.Abiquo.Client
                 WriteError(ErrorRecordFactory.GetGeneric(ex));
                 if (0 < VirtualApplianceId)
                 {
-                    WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcVappNotFound, Constants.EventId.GetMachineVdcVappNotFound.ToString(), VirtualDataCenterId, VirtualApplianceId));
+                    WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcVappNotFound, Constants.EventId.GetMachineVirtualDataCenterOrVirtualApplianceNotFound.ToString(), VirtualDataCenterId, VirtualApplianceId));
                 }
                 else
                 {
-                    WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcNotFound, Constants.EventId.GetMachineVdcVappNotFound.ToString(), VirtualDataCenterId));
+                    WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcNotFound, Constants.EventId.GetMachineVirtualDataCenterOrVirtualApplianceNotFound.ToString(), VirtualDataCenterId));
                 }
             }
         }

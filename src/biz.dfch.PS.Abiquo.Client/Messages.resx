@@ -159,11 +159,11 @@
     <comment>0: ParameterSetName</comment>
   </data>
   <data name="GetMachineIdNotFound" xml:space="preserve">
-    <value>Cannot find machine with id '{0}'.</value>
+    <value>Cannot find VirtualMachine with id '{0}'.</value>
     <comment>0: VirtualMachine.Id</comment>
   </data>
   <data name="GetMachineNameNotFound" xml:space="preserve">
-    <value>Cannot find machine with name '{0}'.</value>
+    <value>Cannot find VirtualMachine with name '{0}'.</value>
     <comment>0: VirtualMachine.Name</comment>
   </data>
   <data name="GetMachineShouldProcess" xml:space="preserve">
@@ -171,13 +171,31 @@
     <comment>0: ParameterSetName</comment>
   </data>
   <data name="GetMachineVdcNotFound" xml:space="preserve">
-    <value>Cannot find machine in VirtualDataCenter '{0}'.</value>
+    <value>Cannot find VirtualMachine in VirtualDataCenter '{0}'.</value>
     <comment>0: VirtualDataCenter.Id</comment>
   </data>
   <data name="GetMachineVdcVappNotFound" xml:space="preserve">
-    <value>Cannot find machine in VirtualDataCenter '{0}' and VirtualAppliance '{1}'.</value>
+    <value>Cannot find VirtualMachine in VirtualDataCenter '{0}' and VirtualAppliance '{1}'.</value>
     <comment>0: VirtualDataCenter.Id
 1: VirtualAppliance.Id</comment>
+  </data>
+  <data name="GetVirtualApplianceIdNotFound" xml:space="preserve">
+    <value>Cannot find VirtualAppliance with id '{0}' in VirtualDataCenter '{1}'.</value>
+    <comment>0:VirtualAppliance.Id
+1: VirtualDataCenter.Name</comment>
+  </data>
+  <data name="GetVirtualApplianceNameNotFound" xml:space="preserve">
+    <value>Cannot find VirtualAppliance with name '{0}' in VirtualDataCenter '{1}'.</value>
+    <comment>0:VirtualAppliance.Name
+1: VirtualDataCenter.Id</comment>
+  </data>
+  <data name="GetVirtualApplianceShouldProcess" xml:space="preserve">
+    <value>ParameterSetName '{0}'.</value>
+    <comment>0: ParameterSetName</comment>
+  </data>
+  <data name="GetVirtualApplianceVdcNotFound" xml:space="preserve">
+    <value>Cannot find VirtualAppliance in VirtualDataCenter '{0}'.</value>
+    <comment>0: VirtualDataCenter.Id</comment>
   </data>
   <data name="GetVirtualDataCenterIdNotFound" xml:space="preserve">
     <value>Cannot find VirtualDataCenter with id '{0}'.</value>

@@ -19,17 +19,16 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.PowerShell.Commons;
 
 namespace biz.dfch.PS.Abiquo.Client
 {
     /// <summary>
-    /// This class defines the GetEnterprise Cmdlet that retrieves a list of enterprises
+    /// This class defines the GetVirtualAppliance Cmdlet that retrieves a list of virtual appliances
     /// </summary>
     [Cmdlet(
-         VerbsCommon.Get, "Enterprise"
+         VerbsCommon.Get, "VirtualAppliance"
          ,
          ConfirmImpact = ConfirmImpact.Low
          ,
@@ -37,10 +36,10 @@ namespace biz.dfch.PS.Abiquo.Client
          ,
          SupportsShouldProcess = true
          ,
-         HelpUri = "http://dfch.biz/biz/dfch/PS/Abiquo/Client/Get-Enterprise/"
+         HelpUri = "http://dfch.biz/biz/dfch/PS/Abiquo/Client/Get-VirtualAppliance/"
      )]
-    [OutputType(typeof(Enterprise))]
-    public class GetEnterprise : PsCmdletBase
+    [OutputType(typeof(VirtualAppliance))]
+    public class GetVirtualAppliance : PsCmdletBase
     {
         /// <summary>
         /// Defines all valid parameter sets for this cmdlet
@@ -77,6 +76,16 @@ namespace biz.dfch.PS.Abiquo.Client
         public string Name { get; set; }
 
         /// <summary>
+        /// VirtualDataCenterId
+        /// </summary>
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSets.LIST)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSets.ID)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSets.NAME)]
+        [ValidateRange(1, int.MaxValue)]
+        [Alias("vdc")]
+        public int VirtualDataCenterId { get; set; }
+
+        /// <summary>
         /// Retrieve all entities for the current enterprise
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.LIST)]
@@ -92,7 +101,7 @@ namespace biz.dfch.PS.Abiquo.Client
             Contract.Assert(null != ModuleConfiguration.Current.Client);
             Contract.Assert(ModuleConfiguration.Current.Client.IsLoggedIn);
 
-            var shouldProcessMessage = string.Format(Messages.GetEnterpriseShouldProcess, ParameterSetName);
+            var shouldProcessMessage = string.Format(Messages.GetVirtualApplianceShouldProcess, ParameterSetName);
             if (!ShouldProcess(shouldProcessMessage))
             {
                 return;
@@ -130,28 +139,30 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             try
             {
-                var result = ModuleConfiguration.Current.Client.GetEnterprise(Id);
+                var result = ModuleConfiguration.Current.Client.GetVirtualAppliance(VirtualDataCenterId, Id);
                 WriteObject(result);
             }
             catch (Exception ex)
             {
                 WriteError(ErrorRecordFactory.GetGeneric(ex));
-                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineIdNotFound, Constants.EventId.GetEnterpriseIdNotFound.ToString(), Id), writeToTraceSource: true);
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetVirtualApplianceIdNotFound,
+                    Constants.EventId.GetVirtualApplianceIdNotFound.ToString(), Id, VirtualDataCenterId));
             }
         }
 
         private void ProcessParameterSetName()
         {
             var collection = ModuleConfiguration.Current.Client
-                                                .GetEnterprises()
-                                                .Collection ?? new List<Enterprise>();
+                                 .GetVirtualAppliances(VirtualDataCenterId)
+                                 .Collection ?? new List<VirtualAppliance>();
             var results = collection
                 .Where(e => Name.Equals(e.Name, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
 
-            if(0 == results.Count)
+            if (0 == results.Count)
             {
-                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineNameNotFound, Constants.EventId.GetMachineNameNotFound.ToString(), Name));
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetVirtualApplianceNameNotFound,
+                    Constants.EventId.GetVirtualApplianceNameNotFound.ToString(), Name, VirtualDataCenterId));
                 return;
             }
 
@@ -160,10 +171,37 @@ namespace biz.dfch.PS.Abiquo.Client
 
         private void ProcessParameterSetList()
         {
-            var collection = ModuleConfiguration.Current.Client
-                                                .GetEnterprises()
-                                                .Collection ?? new List<Enterprise>();
-            collection.ForEach(WriteObject);
+            var virtualDataCenters = new List<VirtualDataCenter>();
+
+            if (0 >= VirtualDataCenterId)
+            {
+                virtualDataCenters = ModuleConfiguration.Current.Client
+                                         .GetVirtualDataCenters()
+                                         .Collection ?? new List<VirtualDataCenter>();
+            }
+            else
+            {
+                virtualDataCenters.Add(new VirtualDataCenter() {Id = VirtualDataCenterId});
+            }
+
+            try
+            {
+                var collection = new List<VirtualAppliance>();
+                foreach (var virtualDataCenter in virtualDataCenters)
+                {
+                    collection = ModuleConfiguration.Current.Client
+                                                .GetVirtualAppliances(virtualDataCenter.Id)
+                                                .Collection ?? new List<VirtualAppliance>();
+                }
+
+                collection.ForEach(WriteObject);
+            }
+            catch (Exception ex)
+            {
+                WriteError(ErrorRecordFactory.GetGeneric(ex));
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetVirtualApplianceVdcNotFound,
+                    Constants.EventId.GetVirtualApplianceVirtualDataCenterNotFound.ToString(), VirtualDataCenterId));
+            }
         }
     }
 }
