@@ -115,6 +115,24 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find a machine with id &apos;{0}&apos;..
+        /// </summary>
+        public static string GetMachineIdNotFound {
+            get {
+                return ResourceManager.GetString("GetMachineIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find a machine with name &apos;{0}&apos;..
+        /// </summary>
+        public static string GetMachineNameNotFound {
+            get {
+                return ResourceManager.GetString("GetMachineNameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ParameterSetName &apos;{0}&apos;..
         /// </summary>
         public static string GetMachineShouldProcess {

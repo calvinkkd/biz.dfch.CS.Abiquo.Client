@@ -46,6 +46,14 @@ namespace biz.dfch.PS.Abiquo.Client
             /// Get-Machine
             /// </summary>
             GetMachine = ImportConfiguration + EVENT_ID_OFFSET,
+            /// <summary>
+            /// GetMachineIdNotFound
+            /// </summary>
+            GetMachineIdNotFound,
+            /// <summary>
+            /// GetMachineNameNotFound
+            /// </summary>
+            GetMachineNameNotFound,
 
 
             //

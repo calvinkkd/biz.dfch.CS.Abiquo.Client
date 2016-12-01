@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Management.Automation;
+using System.Text;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.PowerShell.Commons;
 
@@ -38,8 +39,7 @@ namespace biz.dfch.PS.Abiquo.Client
          ,
          HelpUri = "http://dfch.biz/biz/dfch/PS/Abiquo/Client/Get-Machine/"
     )]
-    [OutputType(typeof(ICollection<VirtualMachine>), ParameterSetName = new [] { ParameterSets.LIST, ParameterSets.NAME })]
-    [OutputType(typeof(VirtualMachine), ParameterSetName = new [] { ParameterSets.ID })]
+    [OutputType(typeof(VirtualMachine))]
     public class GetMachine : PsCmdletBase
     {
         /// <summary>
@@ -67,7 +67,8 @@ namespace biz.dfch.PS.Abiquo.Client
         /// Specifies the machine id
         /// </summary>
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSets.ID)]
-        public long Id { get; set; }
+        [ValidateRange(1, int.MaxValue)]
+        public int Id { get; set; }
 
         /// <summary>
         /// Specifies the name name
@@ -127,46 +128,46 @@ namespace biz.dfch.PS.Abiquo.Client
 
         private void ProcessParameterSetId()
         {
-            var virtualMachines = ModuleConfiguration.Current.Client.GetAllVirtualMachines();
+            var virtualMachinesCollection = ModuleConfiguration.Current.Client
+                                                .GetAllVirtualMachines()
+                                                .Collection ?? new List<VirtualMachine>();
 
-            var virtualMachine = virtualMachines.Collection.FirstOrDefault(e => e.Id.HasValue && e.Id.Value == Id);
-            
-            var virtualMachineFound = null != virtualMachine;
-            Contract.Assert(virtualMachineFound, Id.ToString());
+            var virtualMachine = virtualMachinesCollection.FirstOrDefault(e => e.Id.HasValue && e.Id.Value == Id);
+
+            if (null == virtualMachine)
+            {
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineIdNotFound, Constants.EventId.GetMachineIdNotFound.ToString(), Id));
+                return;
+            }
 
             WriteObject(virtualMachine);
         }
 
         private void ProcessParameterSetName()
         {
-            var virtualMachines = ModuleConfiguration.Current.Client
-                .GetAllVirtualMachines()
-                .Collection
+            var virtualMachinesCollection = ModuleConfiguration.Current.Client
+                                                .GetAllVirtualMachines()
+                                                .Collection ?? new List<VirtualMachine>();
+            var virtualMachines = virtualMachinesCollection
                 .Where(e => Name.Equals(e.Name, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
 
-            var virtualMachineFound = 0 != virtualMachines.Count;
-            Contract.Assert(virtualMachineFound, Name);
+            if(0 == virtualMachines.Count)
+            {
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineNameNotFound, Constants.EventId.GetMachineNameNotFound.ToString(), Name));
+                return;
+            }
 
-            if (1 == virtualMachines.Count)
-            {
-                WriteObject(virtualMachines.First());
-            }
-            else
-            {
-                WriteObject(virtualMachines);
-            }
+            virtualMachines.ForEach(WriteObject);
         }
 
         private void ProcessParameterSetList()
         {
-            var virtualMachines = ModuleConfiguration.Current.Client
-                .GetAllVirtualMachines()
-                .Collection
-                .Where(e => Name.Equals(e.Name, StringComparison.InvariantCultureIgnoreCase))
-                .ToList();
-
-            WriteObject(virtualMachines);
+            var virtualMachinesCollection = ModuleConfiguration.Current.Client
+                                                .GetAllVirtualMachines()
+                                                .Collection ?? new List<VirtualMachine>();
+            var virtualMachines = virtualMachinesCollection;
+            virtualMachines.ForEach(WriteObject);
         }
     }
 }

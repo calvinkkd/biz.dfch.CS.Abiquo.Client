@@ -26,6 +26,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using Current = biz.dfch.CS.Abiquo.Client.v1;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
@@ -35,11 +37,40 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         public static BaseAbiquoClient Client;
         public static User User;
 
-        private readonly Type sut = typeof(EnterServer);
+        public VirtualMachines VirtualMachines = new VirtualMachines()
+        {
+            Collection = new List<VirtualMachine>()
+            {
+                new VirtualMachine()
+                {
+                    Id = 42,
+                    Name = "Edgar"
+                },
+                new VirtualMachine()
+                {
+                    Id = 1,
+                    Name = "MachineWithDuplicateName"
+                },
+                new VirtualMachine()
+                {
+                    Id = 2,
+                    Name = "MachineWithDuplicateName"
+                },
+            }
+        };
+
+        private readonly Type sut = typeof(GetMachine);
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
+            Mock.SetupStatic(typeof(ContractEventHandler));
+            Mock.Arrange(
+                    () =>
+                        ContractEventHandler.ContractFailedEventHandler(Arg.IsAny<object>(),
+                            Arg.IsAny<ContractFailedEventArgs>()))
+                .DoNothing();
+
             User = new User()
             {
                 Active = true,
@@ -54,10 +85,11 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
             var enterpriseLink =
                 new Current.LinkBuilder()
-                .BuildHref(string.Format("https://abiquo.example.com/api/admin/enterprises/{0}", EnterServer.TENANT_ID_DEFAULT_VALUE))
-                .BuildRel(Current.AbiquoRelations.ENTERPRISE)
-                .BuildTitle("Abiquo")
-                .GetLink();
+                    .BuildHref(string.Format("https://abiquo.example.com/api/admin/enterprises/{0}",
+                        EnterServer.TENANT_ID_DEFAULT_VALUE))
+                    .BuildRel(Current.AbiquoRelations.ENTERPRISE)
+                    .BuildTitle("Abiquo")
+                    .GetLink();
 
             User.Links = new List<Link>()
             {
@@ -85,125 +117,50 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             // this seems to be related to the Lazy<T> we use to initialise the Abiquo client via the factory
             var currentClient = ModuleConfiguration.Current.Client;
         }
-        
+
         [TestMethod]
-        [ExpectParameterBindingException(MessagePattern = @"'Uri'.+'System\.Uri'")]
-        public void InvokeWithInvalidUriParameterThrowsParameterBindingException1()
+        [ExpectParameterBindingValidationException(MessagePattern = @"'Id'.+range")]
+        public void InvokeWithInvalidIdParameterThrowsParameterBindingValidationException1()
         {
-            var parameters = @"-Uri ";
+            var parameters = @"-Id 0";
             var results = PsCmdletAssert.Invoke(sut, parameters);
         }
 
         [TestMethod]
-        [ExpectParameterBindingException(MessagePattern = @"Username.+Password")]
-        public void InvokeWithMissingParameterThrowsParameterBindingException()
+        [ExpectParameterBindingValidationException(MessagePattern = @"'Name'.+empty")]
+        public void InvokeWithInvalidNameParameterThrowsParameterBindingValidationException1()
         {
-            var parameters = @"-Uri httpS://abiquo.example.com/api/";
+            var parameters = @"-Name ''";
             var results = PsCmdletAssert.Invoke(sut, parameters);
         }
 
         [TestMethod]
-        [ExpectParameterBindingValidationException(MessagePattern = @"Credential")]
-        public void InvokeWithNullCredentialParameterThrowsParameterBindingValidationException()
+        public void ParameterSetListHasExpectedOutputType()
         {
-            var parameters = @"-Uri httpS://abiquo.example.com/api/ -Credential $null";
-            var results = PsCmdletAssert.Invoke(sut, parameters);
+            PsCmdletAssert.HasOutputType(sut, typeof(VirtualMachine), GetMachine.ParameterSets.LIST);
         }
 
         [TestMethod]
-        [ExpectParameterBindingException(MessagePattern = @"'Credential'.+.System\.String.")]
-        public void InvokeWithInvalidCredentialParameterThrowsParameterBindingException()
+        public void ParameterSetNameHasExpectedOutputType()
         {
-            var parameters = @"-Uri httpS://abiquo.example.com/api/ -Credential arbitrary-user-as-string";
-            var results = PsCmdletAssert.Invoke(sut, parameters);
+            PsCmdletAssert.HasOutputType(sut, typeof(VirtualMachine), GetMachine.ParameterSets.NAME);
         }
 
         [TestMethod]
-        public void InvokeWithInexistentUriThrowsWebException()
+        public void ParameterSetIdHasExpectedOutputType()
         {
-            var parameters = @"-Uri httpS://abiquo.example.com/api/ -Username admin -Password password";
-            var results = PsCmdletAssert.Invoke(sut, parameters);
-        }
-
-        [TestCategory("SkipOnTeamCity")]
-        [TestMethod]
-        public void InvokeWithParameterSetPlainSucceeds()
-        {
-            var uri = new Uri("httpS://abiquo.example.com/api/");
-            var user = "arbitrary-user";
-            var password = "arbitrary-password";
-            var parameters = string.Format(@"-Uri {0} -User '{1}' -Password '{2}'", uri, user, password);
-
-            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
-                .IgnoreInstance()
-                .Returns(true);
-
-            var results = PsCmdletAssert.Invoke(sut, parameters);
-            
-            Assert.IsNotNull(results);
-            Assert.AreEqual(1, results.Count);
-            Assert.IsInstanceOfType(results[0].BaseObject, typeof(BaseAbiquoClient));
-            var result = (BaseAbiquoClient) results[0].BaseObject;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
-        }
-
-        [TestCategory("SkipOnTeamCity")]
-        [TestMethod]
-        public void InvokeWithParameterSetCredSucceeds()
-        {
-            var uri = new Uri("httpS://abiquo.example.com/api/");
-            var user = "arbitrary-user";
-            var password = "arbitrary-password";
-            var parameters = string.Format(@"-Uri {0} -Credential $([pscredential]::new('{1}', (ConvertTo-SecureString -AsPlainText -String {2} -Force)))", uri, user, password);
-
-            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
-                .IgnoreInstance()
-                .Returns(true);
-
-            var results = PsCmdletAssert.Invoke(sut, parameters);
-            
-            Assert.IsNotNull(results);
-            Assert.AreEqual(1, results.Count);
-            Assert.IsInstanceOfType(results[0].BaseObject, typeof(BaseAbiquoClient));
-            var result = (BaseAbiquoClient) results[0].BaseObject;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
-        }
-
-        [TestCategory("SkipOnTeamCity")]
-        [TestMethod]
-        public void InvokeWithParameterSetOAuth2Succeeds()
-        {
-            var uri = new Uri("httpS://abiquo.example.com/api/");
-            var token = "arbitrary-token";
-            var parameters = string.Format(@"-Uri {0} -OAuth2Token '{1}'", uri, token);
-
-            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
-                .IgnoreInstance()
-                .Returns(true);
-
-            var results = PsCmdletAssert.Invoke(sut, parameters);
-            
-            Assert.IsNotNull(results);
-            Assert.AreEqual(1, results.Count);
-            Assert.IsInstanceOfType(results[0].BaseObject, typeof(BaseAbiquoClient));
-            var result = (BaseAbiquoClient) results[0].BaseObject;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
+            PsCmdletAssert.HasOutputType(sut, typeof(VirtualMachine), GetMachine.ParameterSets.ID);
         }
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "Assertion.failed:.hasLoginSucceeded1")]
-        public void InvokeWithInvalidTokenThrowsContractException()
+        [ExpectContractFailure(MessagePattern = "ModuleConfiguration.Current.Client.IsLoggedIn")]
+        public void InvokeNotLoggedInThrowsContractException()
         {
-            var uri = new Uri("httpS://abiquo.example.com/api/");
-            var token = "invalid-token";
-            var parameters = string.Format(@"-Uri {0} -OAuth2Token '{1}'", uri, token);
-
-            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
+            Mock.Arrange(() => Client.IsLoggedIn)
                 .IgnoreInstance()
                 .Returns(false);
+
+            var parameters = @"-ListAvailable";
 
             var results = PsCmdletAssert.Invoke(sut, parameters, ex => ex);
             
@@ -211,20 +168,139 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(0, results.Count);
         }
 
-        // DFTODO - maybe this test should be a generic test inside the Testing package
         [TestMethod]
-        [ExpectedException(typeof(IncompleteParseException))]
-        public void InvokeWithInvalidStringThrowsIncompleteParseException()
+        public void InvokeParameterSetListAvailableSucceeds()
         {
-            var user = "arbitrary-user";
-            var password = "arbitrary-password";
-            // missing string terminator
-            var parameters = string.Format(@"-Uri httpS://abiquo.example.com/api/ -User '{0} -Password '{1}'", user, password);
+            Mock.Arrange(() => Client.IsLoggedIn)
+                .IgnoreInstance()
+                .Returns(true);
+
+            Mock.Arrange(() => Client.GetAllVirtualMachines())
+                .IgnoreInstance()
+                .Returns(VirtualMachines)
+                .MustBeCalled();
+
+            var parameters = @"-ListAvailable";
+            
             var results = PsCmdletAssert.Invoke(sut, parameters);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(3, results.Count);
+
+            Mock.Assert(() => Client.GetAllVirtualMachines());
+        }
+
+        [TestMethod]
+        public void InvokeParameterSetIdSucceeds()
+        {
+            Mock.Arrange(() => Client.IsLoggedIn)
+                .IgnoreInstance()
+                .Returns(true);
+
+            Mock.Arrange(() => Client.GetAllVirtualMachines())
+                .IgnoreInstance()
+                .Returns(VirtualMachines)
+                .MustBeCalled();
+
+            // this Id does not exist
+            var parameters = @"-Id 42";
+            
+            var results = PsCmdletAssert.Invoke(sut, parameters);
+            
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
-            var result = results[0].BaseObject.ToString();
-            Assert.AreEqual("tralala", result);
+
+            var result = results[0].BaseObject as VirtualMachine;
+            Assert.IsNotNull(result, results[0].BaseObject.GetType().FullName);
+            Assert.AreEqual(42, result.Id);
+            Assert.AreEqual("Edgar", result.Name);
+
+            Mock.Assert(() => Client.GetAllVirtualMachines());
         }
+
+        [TestMethod]
+        public void InvokeParameterSetIdWriterErrorRecord()
+        {
+            Mock.Arrange(() => Client.IsLoggedIn)
+                .IgnoreInstance()
+                .Returns(true);
+
+            Mock.Arrange(() => Client.GetAllVirtualMachines())
+                .IgnoreInstance()
+                .Returns(VirtualMachines)
+                .MustBeCalled();
+
+            // this Id does not exist
+            var parameters = @"-Id 9999";
+            
+            var results = PsCmdletAssert.Invoke(sut, parameters, er => { Assert.IsTrue(er.Single().Exception.Message.Contains("9999")); });
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(0, results.Count);
+
+            Mock.Assert(() => Client.GetAllVirtualMachines());
+        }
+
+        [TestMethod]
+        public void InvokeParameterSetNameSucceeds()
+        {
+            Mock.Arrange(() => Client.IsLoggedIn)
+                .IgnoreInstance()
+                .Returns(true);
+
+            Mock.Arrange(() => Client.GetAllVirtualMachines())
+                .IgnoreInstance()
+                .Returns(VirtualMachines)
+                .MustBeCalled();
+
+            // this Id does not exist
+            var parameters = @"-Name Edgar";
+            
+            var results = PsCmdletAssert.Invoke(sut, parameters);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(1, results.Count);
+
+            var result = results[0].BaseObject as VirtualMachine;
+            Assert.IsNotNull(result, results[0].BaseObject.GetType().FullName);
+            Assert.AreEqual(42, result.Id);
+            Assert.AreEqual("Edgar", result.Name);
+
+            Mock.Assert(() => Client.GetAllVirtualMachines());
+        }
+
+        [TestMethod]
+        public void InvokeParameterSetNameSucceedsAndReturnsCollection()
+        {
+            Mock.Arrange(() => Client.IsLoggedIn)
+                .IgnoreInstance()
+                .Returns(true);
+
+            Mock.Arrange(() => Client.GetAllVirtualMachines())
+                .IgnoreInstance()
+                .Returns(VirtualMachines)
+                .MustBeCalled();
+
+            // this Id does not exist
+            var parameters = @"-Name MachineWithDuplicateName";
+            
+            var results = PsCmdletAssert.Invoke(sut, parameters);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(2, results.Count);
+
+            var result0 = results[0].BaseObject as VirtualMachine;
+            Assert.IsNotNull(result0, results[0].BaseObject.GetType().FullName);
+            Assert.AreEqual("MachineWithDuplicateName", result0.Name);
+
+            var result1 = results[1].BaseObject as VirtualMachine;
+            Assert.IsNotNull(result1, results[1].BaseObject.GetType().FullName);
+            Assert.AreEqual("MachineWithDuplicateName", result1.Name);
+            
+            Assert.AreNotEqual(result0.Id, result1.Id);
+
+            Mock.Assert(() => Client.GetAllVirtualMachines());
+        }
+
     }
 }

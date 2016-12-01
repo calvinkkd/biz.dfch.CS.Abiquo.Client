@@ -146,6 +146,14 @@
     <comment>0: Uri
 1: ParameterSetName</comment>
   </data>
+  <data name="GetMachineIdNotFound" xml:space="preserve">
+    <value>Cannot find a machine with id '{0}'.</value>
+    <comment>0: VirtualMachine.Id</comment>
+  </data>
+  <data name="GetMachineNameNotFound" xml:space="preserve">
+    <value>Cannot find a machine with name '{0}'.</value>
+    <comment>0: VirtualMachine.Name</comment>
+  </data>
   <data name="GetMachineShouldProcess" xml:space="preserve">
     <value>ParameterSetName '{0}'.</value>
     <comment>0: ParameterSetName</comment>
