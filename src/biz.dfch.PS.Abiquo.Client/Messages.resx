@@ -170,6 +170,18 @@
     <value>ParameterSetName '{0}'.</value>
     <comment>0: ParameterSetName</comment>
   </data>
+  <data name="GetVirtualDataCenterIdNotFound" xml:space="preserve">
+    <value>Cannot find VirtualDataCenter with id '{0}'.</value>
+    <comment>0: VirtualDataCenter.Id</comment>
+  </data>
+  <data name="GetVirtualDataCenterNameNotFound" xml:space="preserve">
+    <value>Cannot find VirtualDataCenter with name '{0}'.</value>
+    <comment>0: VirtualDataCenter.Name</comment>
+  </data>
+  <data name="GetVirtualDataCenterShouldProcess" xml:space="preserve">
+    <value>ParameterSetName '{0}'.</value>
+    <comment>0: ParameterSetName</comment>
+  </data>
   <data name="ImportConfigurationConfigurationFileMapCreateFailed" xml:space="preserve">
     <value>{0}: Creating ConfigurationFileMap FAILED.</value>
     <comment>0: FileInfo.FullName</comment>

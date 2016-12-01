@@ -68,6 +68,18 @@ namespace biz.dfch.PS.Abiquo.Client
             /// </summary>
             GetEnterpriseNameNotFound,
 
+            /// <summary>
+            /// GetVirtualDataCenter
+            /// </summary>
+            GetVirtualDataCenter = GetEnterprise + EVENT_ID_OFFSET,
+            /// <summary>
+            /// GetVirtualDataCenterIdNotFound
+            /// </summary>
+            GetVirtualDataCenterIdNotFound,
+            /// <summary>
+            /// GetVirtualDataCenterNameNotFound
+            /// </summary>
+            GetVirtualDataCenterNameNotFound,
 
             //
             // !!! this is the last enum - no other definitions after this one !!!

@@ -169,6 +169,33 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find VirtualDataCenter with id &apos;{0}&apos;..
+        /// </summary>
+        public static string GetVirtualDataCenterIdNotFound {
+            get {
+                return ResourceManager.GetString("GetVirtualDataCenterIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find VirtualDataCenter with name &apos;{0}&apos;..
+        /// </summary>
+        public static string GetVirtualDataCenterNameNotFound {
+            get {
+                return ResourceManager.GetString("GetVirtualDataCenterNameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ParameterSetName &apos;{0}&apos;..
+        /// </summary>
+        public static string GetVirtualDataCenterShouldProcess {
+            get {
+                return ResourceManager.GetString("GetVirtualDataCenterShouldProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}: Creating ConfigurationFileMap FAILED..
         /// </summary>
         public static string ImportConfigurationConfigurationFileMapCreateFailed {
