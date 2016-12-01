@@ -173,6 +173,7 @@
     </Compile>
     <Compile Include="GetEnterpriseTest.cs" />
     <Compile Include="GetMachineTest.cs" />
+    <Compile Include="GetVirtualDataCenterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="biz.dfch.PS.Abiquo.Client.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
