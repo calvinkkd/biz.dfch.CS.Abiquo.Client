@@ -15,9 +15,7 @@
  */
 
 using System;
-using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client;
-using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Testing.Attributes;
@@ -54,7 +52,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
                 new VirtualMachine()
                 {
                     Id = 2,
-                    Name = "MachineWithDuplicateName"
+                    Name = "mACHINEwITHdUPLICATEnAME"
                 },
             }
         };
@@ -291,11 +289,11 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
             var result0 = results[0].BaseObject as VirtualMachine;
             Assert.IsNotNull(result0, results[0].BaseObject.GetType().FullName);
-            Assert.AreEqual("MachineWithDuplicateName", result0.Name);
+            Assert.AreEqual("MachineWithDuplicateName".ToLower(), result0.Name.ToLower());
 
             var result1 = results[1].BaseObject as VirtualMachine;
             Assert.IsNotNull(result1, results[1].BaseObject.GetType().FullName);
-            Assert.AreEqual("MachineWithDuplicateName", result1.Name);
+            Assert.AreEqual("MachineWithDuplicateName".ToLower(), result1.Name.ToLower());
             
             Assert.AreNotEqual(result0.Id, result1.Id);
 

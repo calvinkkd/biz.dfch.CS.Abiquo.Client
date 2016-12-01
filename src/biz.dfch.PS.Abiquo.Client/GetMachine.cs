@@ -50,12 +50,12 @@ namespace biz.dfch.PS.Abiquo.Client
             /// <summary>
             /// ParameterSetName used when specifying a credential object
             /// </summary>
-            public const string LIST = "ListAvailable";
+            public const string LIST = "list";
 
             /// <summary>
             /// ParameterSetName used when specifying a single machine by its id
             /// </summary>
-            public const string ID = "Id";
+            public const string ID = "id";
 
             /// <summary>
             /// ParameterSetName used when specifying an OAuth2 token
@@ -128,46 +128,45 @@ namespace biz.dfch.PS.Abiquo.Client
 
         private void ProcessParameterSetId()
         {
-            var virtualMachinesCollection = ModuleConfiguration.Current.Client
+            var collection = ModuleConfiguration.Current.Client
                                                 .GetAllVirtualMachines()
                                                 .Collection ?? new List<VirtualMachine>();
 
-            var virtualMachine = virtualMachinesCollection.FirstOrDefault(e => e.Id.HasValue && e.Id.Value == Id);
+            var result = collection.FirstOrDefault(e => e.Id.HasValue && e.Id.Value == Id);
 
-            if (null == virtualMachine)
+            if (null == result)
             {
                 WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineIdNotFound, Constants.EventId.GetMachineIdNotFound.ToString(), Id));
                 return;
             }
 
-            WriteObject(virtualMachine);
+            WriteObject(result);
         }
 
         private void ProcessParameterSetName()
         {
-            var virtualMachinesCollection = ModuleConfiguration.Current.Client
+            var collection = ModuleConfiguration.Current.Client
                                                 .GetAllVirtualMachines()
                                                 .Collection ?? new List<VirtualMachine>();
-            var virtualMachines = virtualMachinesCollection
+            var results = collection
                 .Where(e => Name.Equals(e.Name, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
 
-            if(0 == virtualMachines.Count)
+            if(0 == results.Count)
             {
                 WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineNameNotFound, Constants.EventId.GetMachineNameNotFound.ToString(), Name));
                 return;
             }
 
-            virtualMachines.ForEach(WriteObject);
+            results.ForEach(WriteObject);
         }
 
         private void ProcessParameterSetList()
         {
-            var virtualMachinesCollection = ModuleConfiguration.Current.Client
+            var collection = ModuleConfiguration.Current.Client
                                                 .GetAllVirtualMachines()
                                                 .Collection ?? new List<VirtualMachine>();
-            var virtualMachines = virtualMachinesCollection;
-            virtualMachines.ForEach(WriteObject);
+            collection.ForEach(WriteObject);
         }
     }
 }
