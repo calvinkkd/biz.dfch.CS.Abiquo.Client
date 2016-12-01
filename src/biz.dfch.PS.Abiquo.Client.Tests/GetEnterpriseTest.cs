@@ -34,6 +34,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
     public class GetEnterpriseTest
     {
         public static BaseAbiquoClient Client;
+        public BaseAbiquoClient CurrentClient;
         public static User User;
 
         public Enterprises Enterprises = new Enterprises()
@@ -114,7 +115,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
             // strange - the mock inside the PSCmdlet only works when we invoke the mocked methods here first
             // this seems to be related to the Lazy<T> we use to initialise the Abiquo client via the factory
-            var currentClient = ModuleConfiguration.Current.Client;
+            CurrentClient = ModuleConfiguration.Current.Client;
         }
 
         [TestMethod]
@@ -155,8 +156,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         [ExpectContractFailure(MessagePattern = "ModuleConfiguration.Current.Client.IsLoggedIn")]
         public void InvokeNotLoggedInThrowsContractException()
         {
-            Mock.Arrange(() => Client.IsLoggedIn)
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.IsLoggedIn)
                 .Returns(false);
 
             var parameters = @"-ListAvailable";
@@ -170,12 +170,10 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         [TestMethod]
         public void InvokeParameterSetListAvailableSucceeds()
         {
-            Mock.Arrange(() => Client.IsLoggedIn)
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.IsLoggedIn)
                 .Returns(true);
 
-            Mock.Arrange(() => Client.GetEnterprises())
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.GetEnterprises())
                 .Returns(Enterprises)
                 .MustBeCalled();
 
@@ -186,18 +184,16 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.IsNotNull(results);
             Assert.AreEqual(3, results.Count);
 
-            Mock.Assert(() => Client.GetEnterprises());
+            Mock.Assert(() => CurrentClient.GetEnterprises());
         }
 
         [TestMethod]
         public void InvokeParameterSetIdSucceeds()
         {
-            Mock.Arrange(() => Client.IsLoggedIn)
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.IsLoggedIn)
                 .Returns(true);
 
-            Mock.Arrange(() => Client.GetEnterprise(Arg.IsAny<int>()))
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.GetEnterprise(Arg.IsAny<int>()))
                 .Returns(Enterprises.Collection.First(e => e.Id == 42))
                 .MustBeCalled();
 
@@ -214,18 +210,16 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(42, result.Id);
             Assert.AreEqual("Edgar", result.Name);
 
-            Mock.Assert(() => Client.GetEnterprise(Arg.IsAny<int>()));
+            Mock.Assert(() => CurrentClient.GetEnterprise(Arg.IsAny<int>()));
         }
 
         [TestMethod]
         public void InvokeParameterSetIdWriterErrorRecord()
         {
-            Mock.Arrange(() => Client.IsLoggedIn)
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.IsLoggedIn)
                 .Returns(true);
 
-            Mock.Arrange(() => Client.GetEnterprise(Arg.IsAny<int>()))
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.GetEnterprise(Arg.IsAny<int>()))
                 .Throws(new Exception("baseException"))
                 .MustBeCalled();
 
@@ -250,18 +244,16 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.IsNotNull(results);
             Assert.AreEqual(0, results.Count);
 
-            Mock.Assert(() => Client.GetEnterprise(Arg.IsAny<int>()));
+            Mock.Assert(() => CurrentClient.GetEnterprise(Arg.IsAny<int>()));
         }
 
         [TestMethod]
         public void InvokeParameterSetNameSucceeds()
         {
-            Mock.Arrange(() => Client.IsLoggedIn)
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.IsLoggedIn)
                 .Returns(true);
 
-            Mock.Arrange(() => Client.GetEnterprises())
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.GetEnterprises())
                 .Returns(Enterprises)
                 .MustBeCalled();
 
@@ -278,18 +270,16 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(42, result.Id);
             Assert.AreEqual("Edgar", result.Name);
 
-            Mock.Assert(() => Client.GetEnterprises());
+            Mock.Assert(() => CurrentClient.GetEnterprises());
         }
 
         [TestMethod]
         public void InvokeParameterSetNameSucceedsAndReturnsCollection()
         {
-            Mock.Arrange(() => Client.IsLoggedIn)
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.IsLoggedIn)
                 .Returns(true);
 
-            Mock.Arrange(() => Client.GetEnterprises())
-                .IgnoreInstance()
+            Mock.Arrange(() => CurrentClient.GetEnterprises())
                 .Returns(Enterprises)
                 .MustBeCalled();
 
@@ -311,7 +301,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             
             Assert.AreNotEqual(result0.Id, result1.Id);
 
-            Mock.Assert(() => Client.GetEnterprises());
+            Mock.Assert(() => CurrentClient.GetEnterprises());
         }
 
     }
