@@ -128,15 +128,35 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
         [TestCategory("SkipOnTeamCity")]
         [TestMethod]
-        public void InvokeWithEmptyPathAndSaveToVariableSucceeds()
+        public void InvokeWithEmptyPathAndDisplayOnlyTrueSucceeds()
         {
-            var parameters = @"-SaveToModuleVariable;";
+            var parameters = @"-DisplayOnly:$true; Get-Variable biz_dfch_PS_Abiquo_Client -ValueOnly -ErrorAction:SilentlyContinue;";
             var results = PsCmdletAssert.Invoke(sut, parameters);
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
             var result = results[0].BaseObject;
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ModuleContext));
+        }
+
+        [TestCategory("SkipOnTeamCity")]
+        [TestMethod]
+        public void InvokeWithEmptyPathAndDisplayOnlyFalseSucceeds()
+        {
+            var parameters = @"-DisplayOnly:$false; Get-Variable biz_dfch_PS_Abiquo_Client -ValueOnly;";
+            var results = PsCmdletAssert.Invoke(sut, parameters);
+            Assert.IsNotNull(results);
+            Assert.AreEqual(2, results.Count);
+            
+            var moduleContext = results[0].BaseObject;
+            Assert.IsNotNull(moduleContext);
+            Assert.IsInstanceOfType(moduleContext, typeof(ModuleContext));
+
+            var variable = results[1].BaseObject;
+            Assert.IsNotNull(variable);
+            Assert.IsInstanceOfType(variable, typeof(ModuleContext));
+
+            Assert.AreEqual(variable, moduleContext);
         }
     }
 }
