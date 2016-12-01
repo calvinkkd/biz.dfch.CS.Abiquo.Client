@@ -170,6 +170,10 @@
     <value>ParameterSetName '{0}'.</value>
     <comment>0: ParameterSetName</comment>
   </data>
+  <data name="GetMachineVdcNotFound" xml:space="preserve">
+    <value>Cannot find machine for VirtualDataCenter '{0}'.</value>
+    <comment>0: VirtualDataCenter.Id</comment>
+  </data>
   <data name="GetMachineVdcVappNotFound" xml:space="preserve">
     <value>Cannot find machine for VirtualDataCenter '{0}' and VirtualAppliance '{1}'.</value>
     <comment>0: VirtualDataCenter.Id

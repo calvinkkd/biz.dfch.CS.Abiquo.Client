@@ -169,6 +169,15 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find machine for VirtualDataCenter &apos;{0}&apos;..
+        /// </summary>
+        public static string GetMachineVdcNotFound {
+            get {
+                return ResourceManager.GetString("GetMachineVdcNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot find machine for VirtualDataCenter &apos;{0}&apos; and VirtualAppliance &apos;{1}&apos;..
         /// </summary>
         public static string GetMachineVdcVappNotFound {
