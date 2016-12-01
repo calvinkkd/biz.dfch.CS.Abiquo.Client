@@ -55,6 +55,19 @@ namespace biz.dfch.PS.Abiquo.Client
             /// </summary>
             GetMachineNameNotFound,
 
+            /// <summary>
+            /// GetEnterprise
+            /// </summary>
+            GetEnterprise = GetMachine + EVENT_ID_OFFSET,
+            /// <summary>
+            /// GetEnterpriseIdNotFound
+            /// </summary>
+            GetEnterpriseIdNotFound,
+            /// <summary>
+            /// GetEnterpriseNameNotFound
+            /// </summary>
+            GetEnterpriseNameNotFound,
+
 
             //
             // !!! this is the last enum - no other definitions after this one !!!

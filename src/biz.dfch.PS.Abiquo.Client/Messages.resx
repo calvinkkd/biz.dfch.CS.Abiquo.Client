@@ -146,12 +146,24 @@
     <comment>0: Uri
 1: ParameterSetName</comment>
   </data>
+  <data name="GetEnterpriseIdNotFound" xml:space="preserve">
+    <value>Cannot find enterprise with id '{0}'.</value>
+    <comment>0: Enterprise.Id</comment>
+  </data>
+  <data name="GetEnterpriseNameNotFound" xml:space="preserve">
+    <value>Cannot find enterprise with name '{0}'.</value>
+    <comment>0: Enterprise.Name</comment>
+  </data>
+  <data name="GetEnterpriseShouldProcess" xml:space="preserve">
+    <value>ParameterSetName '{0}'.</value>
+    <comment>0: ParameterSetName</comment>
+  </data>
   <data name="GetMachineIdNotFound" xml:space="preserve">
-    <value>Cannot find a machine with id '{0}'.</value>
+    <value>Cannot find machine with id '{0}'.</value>
     <comment>0: VirtualMachine.Id</comment>
   </data>
   <data name="GetMachineNameNotFound" xml:space="preserve">
-    <value>Cannot find a machine with name '{0}'.</value>
+    <value>Cannot find machine with name '{0}'.</value>
     <comment>0: VirtualMachine.Name</comment>
   </data>
   <data name="GetMachineShouldProcess" xml:space="preserve">
