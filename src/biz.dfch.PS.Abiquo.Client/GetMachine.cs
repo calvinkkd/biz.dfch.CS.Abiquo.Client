@@ -156,8 +156,7 @@ namespace biz.dfch.PS.Abiquo.Client
 
             if (null == result)
             {
-                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineIdNotFound,
-                    Constants.EventId.GetMachineIdNotFound.ToString(), Id));
+                WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineIdNotFound, Constants.EventId.GetMachineIdNotFound.ToString(), Id));
                 return;
             }
 
