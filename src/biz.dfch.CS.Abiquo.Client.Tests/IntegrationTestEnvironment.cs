@@ -15,43 +15,47 @@
  */
 
 using System;
+using System.ComponentModel;
 using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Commons.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests
 {
-    internal class IntegrationTestEnvironment
+    public class AbiquoSettings : EnvironmentVariableBaseDto
     {
         public const string ABIQUO_API_BASE_URI = @"https://abiquo.example.com/api/";
         public const string ABIQUO_USERNAME = "admin";
         public const string ABIQUO_PASSWORD = "xabiquo";
         public const int  ABIQUO_TENANT_ID = 1;
         
+        [EnvironmentVariable("ABIQUO_API_BASE_URI")]
+        [DefaultValue(ABIQUO_API_BASE_URI)]
+        public string AbiquoApiBaseUri { get; set; }
+        
+        [EnvironmentVariable("ABIQUO_USERNAME")]
+        [DefaultValue(ABIQUO_USERNAME)]
+        public string Username { get; set; }
+        
+        [EnvironmentVariable("ABIQUO_PASSWORD")]
+        [DefaultValue(ABIQUO_PASSWORD)]
+        public string Password { get; set; }
+        
+        [EnvironmentVariable("ABIQUO_TENANT_ID")]
+        [DefaultValue(ABIQUO_TENANT_ID)]
+        public int TenantId { get; set; }
+    }
+        
+    internal class IntegrationTestEnvironment
+    {
         static IntegrationTestEnvironment()
         {
-            AbiquoApiBaseUri = Environment.GetEnvironmentVariable("ABIQUO_API_BASE_URI");
-            if (string.IsNullOrWhiteSpace(AbiquoApiBaseUri))
-            {
-                AbiquoApiBaseUri = ABIQUO_API_BASE_URI;
-            }
+            var settings = new AbiquoSettings();
+            settings.Import();
 
-            Username = Environment.GetEnvironmentVariable("ABIQUO_USERNAME");
-            if (string.IsNullOrWhiteSpace(Username))
-            {
-                Username = ABIQUO_USERNAME;
-            }
-
-            Password = Environment.GetEnvironmentVariable("ABIQUO_PASSWORD");
-            if (string.IsNullOrWhiteSpace(Password))
-            {
-                Password = ABIQUO_PASSWORD;
-            }
-
-            int tenantId;
-            var isDefined = int.TryParse(Environment.GetEnvironmentVariable("ABIQUO_TENANT_ID"), out tenantId);
-            if (!isDefined)
-            {
-                TenantId = ABIQUO_TENANT_ID;
-            }
+            AbiquoApiBaseUri = settings.AbiquoApiBaseUri;
+            Username = settings.Username;
+            Password = settings.Password;
+            TenantId = settings.TenantId;
 
             AuthenticationInformation = new BasicAuthenticationInformation(Username, Password, TenantId);
         }
