@@ -200,7 +200,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 var virtualAppliances = new List<VirtualAppliance>();
                 if (0 < VirtualApplianceId)
                 {
-                    virtualAppliances.Add(ModuleConfiguration.Current.Client.GetVirtualAppliance(VirtualDataCenterId, VirtualApplianceId));
+                    virtualAppliances.Add(new VirtualAppliance() { Id = VirtualApplianceId });
                 }
                 else
                 {
