@@ -170,15 +170,15 @@ namespace biz.dfch.PS.Abiquo.Client
             var authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
-                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.EnterServer, "Logging in to '{0}' ...", Uri.AbsoluteUri);
+                ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.EnterServer, Messages.EnterServerLogin, Uri.AbsoluteUri);
                 var hasLoginSucceeded1 = client.Login(Uri.AbsoluteUri, authInfo);
                 if (hasLoginSucceeded1)
                 {
-                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Information, (int) Constants.EventId.EnterServer, "Logging in to '{0}' SUCCEEDED.", Uri.AbsoluteUri);
+                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Information, (int) Constants.EventId.EnterServer, Messages.EnterServerLoginSucceeded, Uri.AbsoluteUri);
                 }
                 else
                 {
-                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Error, (int) Constants.EventId.EnterServer, "Logging in to '{0}' FAILED with TenantId '{1}'.", Uri.AbsoluteUri, authInfo.GetTenantId());
+                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Error, (int) Constants.EventId.EnterServer, Messages.EnterServerLoginFailed0, Uri.AbsoluteUri, authInfo.GetTenantId());
                 }
 
                 Contract.Assert(hasLoginSucceeded1, string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));

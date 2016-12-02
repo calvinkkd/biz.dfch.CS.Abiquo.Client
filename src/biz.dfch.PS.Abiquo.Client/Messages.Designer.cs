@@ -79,6 +79,24 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; ....
+        /// </summary>
+        public static string EnterServerLogin {
+            get {
+                return ResourceManager.GetString("EnterServerLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; FAILED with TenantId &apos;{1}&apos;..
+        /// </summary>
+        public static string EnterServerLoginFailed0 {
+            get {
+                return ResourceManager.GetString("EnterServerLoginFailed0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login to &apos;{0}&apos; FAILED..
         /// </summary>
         public static string EnterServerLoginFailed1 {
@@ -93,6 +111,15 @@ namespace biz.dfch.PS.Abiquo.Client {
         public static string EnterServerLoginFailed2 {
             get {
                 return ResourceManager.GetString("EnterServerLoginFailed2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; SUCCEEDED..
+        /// </summary>
+        public static string EnterServerLoginSucceeded {
+            get {
+                return ResourceManager.GetString("EnterServerLoginSucceeded", resourceCulture);
             }
         }
         

@@ -126,6 +126,15 @@
     <value>Invalid ParameterSetName '{0}' detected.</value>
     <comment>0: ParameterSetName</comment>
   </data>
+  <data name="EnterServerLogin" xml:space="preserve">
+    <value>Logging in to '{0}' ...</value>
+    <comment>0: Uri.AbsoluteUri</comment>
+  </data>
+  <data name="EnterServerLoginFailed0" xml:space="preserve">
+    <value>Logging in to '{0}' FAILED with TenantId '{1}'.</value>
+    <comment>0: Uri.AbsoluteUri
+1: authInfo.GetTenantId()</comment>
+  </data>
   <data name="EnterServerLoginFailed1" xml:space="preserve">
     <value>Login to '{0}' FAILED.</value>
     <comment>0: Uri</comment>
@@ -134,6 +143,10 @@
     <value>Login to '{0}' FAILED with tenant id {1} at second attempt.</value>
     <comment>0: Uri
 1: TenantId</comment>
+  </data>
+  <data name="EnterServerLoginSucceeded" xml:space="preserve">
+    <value>Logging in to '{0}' SUCCEEDED.</value>
+    <comment>0: Uri.AbsoluteUri</comment>
   </data>
   <data name="EnterServerLoginWebException" xml:space="preserve">
     <value>Login to '{0}' FAILED with StatusCode {1} and message '{1}'.</value>
