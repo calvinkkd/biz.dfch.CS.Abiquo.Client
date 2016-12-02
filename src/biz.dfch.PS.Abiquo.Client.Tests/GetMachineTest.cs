@@ -291,6 +291,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "Assertion.+isValidVirtualDataCenterIdAndVirtualApplianceIdCombination")]
         public void InvokeParameterSetListWithInvalidVdcVappCombination()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -299,7 +300,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             // this Id does not exist
             var parameters = @"-VirtualApplianceId 42";
             
-            var results = PsCmdletAssert.Invoke(sut, parameters);
+            var results = PsCmdletAssert.Invoke(sut, parameters, ex => ex);
         }
     }
 }

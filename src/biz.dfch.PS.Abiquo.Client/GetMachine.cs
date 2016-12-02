@@ -186,7 +186,7 @@ namespace biz.dfch.PS.Abiquo.Client
         {
             var collection = new List<VirtualMachine>();
 
-            if (0 >= VirtualDataCenterId && 0 > VirtualApplianceId)
+            if (0 >= VirtualDataCenterId && 0 >= VirtualApplianceId)
             {
                 collection = ModuleConfiguration.Current.Client
                                  .GetAllVirtualMachines()
