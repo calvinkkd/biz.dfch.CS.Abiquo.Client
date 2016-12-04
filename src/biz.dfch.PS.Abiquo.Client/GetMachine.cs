@@ -79,7 +79,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// VirtualDataCenterId
         /// </summary>
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSets.LIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSets.LIST)]
         [ValidateRange(1, int.MaxValue)]
         [Alias("vdc")]
         public int VirtualDataCenterId { get; set; }
@@ -87,7 +87,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// VirtualApplianceId
         /// </summary>
-        [Parameter(Mandatory = false, Position = 1, ParameterSetName = ParameterSets.LIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSets.LIST)]
         [ValidateRange(1, int.MaxValue)]
         [Alias("vapp")]
         public int VirtualApplianceId { get; set; }
