@@ -20,6 +20,7 @@ using System.Management.Automation;
 using biz.dfch.CS.Abiquo.Client;
 using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Commons.Diagnostics;
+using biz.dfch.CS.PowerShell.Commons;
 using TraceSource = biz.dfch.CS.Commons.Diagnostics.TraceSource;
 
 namespace biz.dfch.PS.Abiquo.Client
@@ -78,7 +79,7 @@ namespace biz.dfch.PS.Abiquo.Client
             }
         }
 
-        internal static readonly Lazy<TraceSource> TraceSourceInternal = new Lazy<TraceSource>(() =>
+        private static readonly Lazy<TraceSource> _traceSource = new Lazy<TraceSource>(() =>
         {
             Contract.Ensures(null != Contract.Result<TraceSource>());
 
@@ -94,7 +95,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// </summary>
         public TraceSource TraceSource
         {
-            get { return TraceSourceInternal.Value; } 
+            get { return _traceSource.Value; } 
         }
     }
 }
