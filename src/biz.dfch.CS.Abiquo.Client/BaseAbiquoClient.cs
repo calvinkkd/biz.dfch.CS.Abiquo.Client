@@ -23,9 +23,11 @@ using System.Linq;
 using System.Text;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+using biz.dfch.CS.Commons;
 using biz.dfch.CS.Commons.Diagnostics;
 using biz.dfch.CS.Commons.Rest;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Logger = biz.dfch.CS.Abiquo.Client.General.Logger;
 
 namespace biz.dfch.CS.Abiquo.Client
@@ -270,6 +272,62 @@ namespace biz.dfch.CS.Abiquo.Client
             Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, fullRequestUri);
 
             return response;
+        }
+
+        //public List<DictionaryParameters> Invoke(ICollection<Link> links, string type, int maxCount)
+        //{
+        //    Contract.Requires(null != links);
+        //    Contract.Requires(!string.IsNullOrWhiteSpace(type));
+        //    Contract.Requires(0 <= maxCount);
+        //    Contract.Ensures(null != Contract.Result<List<DictionaryParameters>>());
+
+        //    maxCount = 0 == maxCount ? int.MaxValue : maxCount;
+            
+        //    var result = new List<DictionaryParameters>();
+        //    foreach (var link in links.Where(e => type.Equals(e.Type)))
+        //    {
+        //        var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+
+        //        if (maxCount >= result.Count)
+        //        {
+        //            break;
+        //        }
+
+        //        result.Add(new DictionaryParameters(response));
+        //    }
+
+        //    return result;
+        //}
+
+        public DictionaryParameters Invoke(ICollection<Link> links, string rel)
+        {
+            Contract.Requires(null != links);
+            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
+
+            var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
+            Contract.Assert(null != link, string.Format("rel '{0}'", rel));
+
+            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+
+            var result = new DictionaryParameters(response);
+            return result;
+        }
+
+        public DictionaryParameters Invoke(ICollection<Link> links, string rel, string title)
+        {
+            Contract.Requires(null != links);
+            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
+            Contract.Requires(!string.IsNullOrWhiteSpace(title));
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
+
+            var link = links.FirstOrDefault(e => rel.Equals(e.Rel) && title.Equals(e.Title));
+            Contract.Assert(null != link, string.Format("rel '{0}', title '{1}'", rel, title));
+
+            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+
+            var result = new DictionaryParameters(response);
+            return result;
         }
 
         #endregion Invoke
