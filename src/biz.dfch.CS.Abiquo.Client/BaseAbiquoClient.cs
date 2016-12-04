@@ -107,14 +107,14 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public void Logout()
         {
-            Logger.Current.TraceEvent(TraceEventType.Start, 1, Method.GetName());
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Logout, Method.GetName());
 
             IsLoggedIn = false;
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
             CurrentUserInformation = null;
 
-            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "{0} SUCCEEDED", Method.GetName());
+            Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.LogoutSucceeded, "{0} SUCCEEDED", Method.GetName());
         }
 
         #region ExecuteRequest
@@ -147,7 +147,7 @@ namespace biz.dfch.CS.Abiquo.Client
                     headersKeyCount = headers.Count;
                 }
                 var bodyLength = null != body ? body.Length : 0;
-                Logger.Current.TraceEvent(TraceEventType.Start, 1, "Executing {0} {1} ...\r\nHeaders [{2}]:{3}Body [{4}]: {5}", httpMethod, requestUri, headersKeyCount, headersString, bodyLength, body);
+                Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.ExecuteRequest, "Executing {0} {1} ...\r\nHeaders [{2}]:{3}Body [{4}]: {5}", httpMethod, requestUri, headersKeyCount, headersString, bodyLength, body);
             }
             
             var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
@@ -159,7 +159,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
-            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "Executing {0} {1} COMPLETED.", httpMethod, requestUri);
+            Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.ExecuteRequest, "Executing {0} {1} COMPLETED.", httpMethod, requestUri);
 
             return result;
         }
@@ -263,11 +263,11 @@ namespace biz.dfch.CS.Abiquo.Client
                 uri = new Uri(uriSuffix);
             }
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoking {0} {1} ...", httpMethod, uri.AbsoluteUri);
+            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.Login, "Invoking {0} {1} ...", httpMethod, uri.AbsoluteUri);
 
             var response = ExecuteRequest(httpMethod, uri.AbsoluteUri, headers, body);
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoking {0} {1} COMPLETED.", httpMethod, uri.AbsoluteUri);
+            Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, uri.AbsoluteUri);
 
             return response;
         }

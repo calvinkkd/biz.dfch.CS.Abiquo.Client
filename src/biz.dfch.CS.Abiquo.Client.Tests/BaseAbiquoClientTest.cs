@@ -142,7 +142,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var headers = new Dictionary<string, string>()
             {
-                { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                { Client.Authentication.Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
                 ,
                 { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
@@ -250,7 +250,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var headers = new Dictionary<string, string>()
             {
-                { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                { Client.Authentication.Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
                 ,
                 { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };

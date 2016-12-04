@@ -100,7 +100,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             Assert.IsNotNull(authHeaders);
             Assert.AreEqual(1, authHeaders.Keys.Count);
 
-            Assert.AreEqual("Basic QXJiaXRyYXJ5VXNlcm5hbWU6QXJiaXRyYXJ5UGFzc3dvcmQ=", authHeaders[Constants.AUTHORIZATION_HEADER_KEY]);
+            Assert.AreEqual("Basic QXJiaXRyYXJ5VXNlcm5hbWU6QXJiaXRyYXJ5UGFzc3dvcmQ=", authHeaders[Client.Authentication.Constants.AUTHORIZATION_HEADER_KEY]);
         }
 
         [TestMethod]

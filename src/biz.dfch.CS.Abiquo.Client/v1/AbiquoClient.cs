@@ -44,7 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
-            Logger.Current.TraceEvent(TraceEventType.Start, 1, "Login (AbiquoApiBaseUri: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Login (AbiquoApiBaseUri: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
 
             Logout();
             AuthenticationInformation = authenticationInformation;
@@ -56,13 +56,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 CurrentUserInformation = AbiquoBaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
-                Logger.Current.TraceEvent(TraceEventType.Information, 1, "Login SUCCEEDED");
+                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Login SUCCEEDED");
                 return true;
             }
             catch (HttpRequestException ex)
             {
                 Logout();
-                Logger.Current.TraceException(ex, "Login FAILED");
+                Logger.Current.TraceException(ex, (int) Constants.EventId.LoginFailed, "Login FAILED");
                 return false;
             }
         }
@@ -568,7 +568,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
         {
-            Logger.Current.TraceEvent(TraceEventType.Start, 1, "Waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.WaitForTaskCompletion, "Waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
                     task.TaskId, taskPollingWaitTimeMilliseconds, taskPollingTimeoutMilliseconds);
 
             var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
@@ -586,7 +586,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                     case TaskStateEnum.FINISHED_SUCCESSFULLY:
                     case TaskStateEnum.FINISHED_UNSUCCESSFULLY:
                     case TaskStateEnum.ABORTED:
-                        Logger.Current.TraceEvent(TraceEventType.Information, 1, 
+                        Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.WaitForTaskCompletion, 
                             "Waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
                             task.TaskId,
                             taskPollingWaitTimeMilliseconds, 
@@ -599,7 +599,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 currentTaskPollingWaitTime = Convert.ToInt32(Math.Floor(currentTaskPollingWaitTime*1.5));
             }
 
-            Logger.Current.TraceEvent(TraceEventType.Error, 1, 
+            Logger.Current.TraceEvent(TraceEventType.Error, (int) Constants.EventId.WaitForTaskCompletion, 
                 "Waiting for task [{0}] completion FAILED (Timeout ['{1}'] exceeded)",
                 task.TaskId,
                 taskPollingTimeoutMilliseconds);
