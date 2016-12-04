@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Text;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Commons.Diagnostics;
@@ -131,7 +132,23 @@ namespace biz.dfch.CS.Abiquo.Client
 
             var requestUri = UriHelper.ConcatUri(AbiquoApiBaseUri, uriSuffix);
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUri, headers, body);
+            if (Logger.Current.Switch.ShouldTrace(TraceEventType.Start))
+            {
+                var headersString = new StringBuilder();
+                headersString.AppendLine();
+                var headersKeyCount = 0;
+                if (null != headers && 0 < headers.Count)
+                {
+                    foreach (var header in headers)
+                    {
+                        headersString.AppendFormat("{0}: {1}", header.Key, header.Value);
+                        headersString.AppendLine();
+                    }
+                    headersKeyCount = headers.Count;
+                }
+                var bodyLength = null != body ? body.Length : 0;
+                Logger.Current.TraceEvent(TraceEventType.Start, 1, "Executing {0} {1} ...\r\nHeaders [{2}]:{3}Body [{4}]: {5}", httpMethod, requestUri, headersKeyCount, headersString, bodyLength, body);
+            }
             
             var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
             if (null != headers)
@@ -142,7 +159,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
-            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri);
+            Logger.Current.TraceEvent(TraceEventType.Stop, 1, "Executing {0} {1} COMPLETED.", httpMethod, requestUri);
 
             return result;
         }
@@ -235,17 +252,22 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoking method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body);
-
+            var uri = default(Uri);
             if (null != filter)
             {
                 var filterString = UriHelper.CreateFilterString(filter);
-                uriSuffix = string.Format("{0}?{1}", uriSuffix, filterString);
+                uri = new Uri(string.Format("{0}?{1}", uriSuffix, filterString));
+            }
+            else
+            {
+                uri = new Uri(uriSuffix);
             }
 
-            var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
+            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoking {0} {1} ...", httpMethod, uri.AbsoluteUri);
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoke method ({0}, {1}, {2} - {3} - {4}) SUCCEEDED", httpMethod, uriSuffix, filter, headers, body);
+            var response = ExecuteRequest(httpMethod, uri.AbsoluteUri, headers, body);
+
+            Logger.Current.TraceEvent(TraceEventType.Verbose, 1, "Invoking {0} {1} COMPLETED.", httpMethod, uri.AbsoluteUri);
 
             return response;
         }
