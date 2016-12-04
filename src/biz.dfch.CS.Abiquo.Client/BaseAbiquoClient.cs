@@ -252,22 +252,22 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            var uri = default(Uri);
+            string fullRequestUri = default(string);
             if (null != filter)
             {
                 var filterString = UriHelper.CreateFilterString(filter);
-                uri = new Uri(string.Format("{0}?{1}", uriSuffix, filterString));
+                fullRequestUri = new Uri(string.Format("{0}?{1}", uriSuffix, filterString)).AbsoluteUri;
             }
             else
             {
-                uri = new Uri(uriSuffix);
+                fullRequestUri = uriSuffix;
             }
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.Login, "Invoking {0} {1} ...", httpMethod, uri.AbsoluteUri);
+            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.Login, "Invoking {0} {1} ...", httpMethod, fullRequestUri);
 
-            var response = ExecuteRequest(httpMethod, uri.AbsoluteUri, headers, body);
+            var response = ExecuteRequest(httpMethod, fullRequestUri, headers, body);
 
-            Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, uri.AbsoluteUri);
+            Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, fullRequestUri);
 
             return response;
         }
