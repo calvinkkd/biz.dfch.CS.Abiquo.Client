@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Management.Automation;
+using biz.dfch.CS.PowerShell.Commons;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
@@ -64,12 +65,12 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            Mock.SetupStatic(typeof(ContractEventHandler));
-            Mock.Arrange(
-                    () =>
-                        ContractEventHandler.ContractFailedEventHandler(Arg.IsAny<object>(),
-                            Arg.IsAny<ContractFailedEventArgs>()))
-                .DoNothing();
+            //Mock.SetupStatic(typeof(ContractFailedEventHandler));
+            //Mock.Arrange(
+            //        () =>
+            //            ContractFailedEventHandler.EventHandler(Arg.IsAny<object>(),
+            //                Arg.IsAny<ContractFailedEventArgs>()))
+            //    .DoNothing();
 
             User = new User()
             {

@@ -84,7 +84,7 @@ namespace biz.dfch.PS.Abiquo.Client
 
             var traceSource = Logger.Get(ModuleConfiguration.LOGGER_NAME);
 
-            Contract.ContractFailed += ContractEventHandler.ContractFailedEventHandler;
+            ContractFailedEventHandler.RegisterTraceSource(traceSource);
 
             return traceSource;
         });

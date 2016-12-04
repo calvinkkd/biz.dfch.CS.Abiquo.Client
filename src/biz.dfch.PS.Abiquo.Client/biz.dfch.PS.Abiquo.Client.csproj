@@ -154,7 +154,6 @@
     <Compile Include="GetVirtualDataCenter.cs" />
     <Compile Include="GetEnterprise.cs" />
     <Compile Include="GetMachine.cs" />
-    <Compile Include="ContractFailedEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ImportConfiguration.cs" />
