@@ -193,8 +193,9 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
             Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
         }
 
+        [TestCategory("SkipOnTeamCity")]
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "Assertion.failed:.hasLoginSucceeded1")]
+        [ExpectContractFailure(MessagePattern = "Assertion.+hasLoginSucceeded1")]
         public void InvokeWithInvalidTokenThrowsContractException()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
