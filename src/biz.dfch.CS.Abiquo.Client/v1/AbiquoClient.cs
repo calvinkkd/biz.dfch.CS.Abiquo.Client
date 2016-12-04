@@ -44,7 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
-            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Login (AbiquoApiBaseUri: '{0}'; TenantId: '{1}') ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
 
             Logout();
             AuthenticationInformation = authenticationInformation;
@@ -56,13 +56,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 CurrentUserInformation = AbiquoBaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
-                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Login SUCCEEDED");
+                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", abiquoApiBaseUri, authenticationInformation.GetTenantId());
                 return true;
             }
             catch (HttpRequestException ex)
             {
+                var message = string.Format("Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", abiquoApiBaseUri, authenticationInformation.GetTenantId());
+                Logger.Current.TraceException(ex, (int) Constants.EventId.LoginFailed, message);
+
                 Logout();
-                Logger.Current.TraceException(ex, (int) Constants.EventId.LoginFailed, "Login FAILED");
+                
                 return false;
             }
         }
