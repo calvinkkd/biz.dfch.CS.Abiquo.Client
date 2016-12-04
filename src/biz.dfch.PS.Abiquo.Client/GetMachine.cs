@@ -216,14 +216,13 @@ namespace biz.dfch.PS.Abiquo.Client
             catch (Exception ex)
             {
                 WriteError(ErrorRecordFactory.GetGeneric(ex));
-                if (0 < VirtualApplianceId)
-                {
-                    WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcVappNotFound, Constants.EventId.GetMachineVirtualDataCenterOrVirtualApplianceNotFound.ToString(), VirtualDataCenterId, VirtualApplianceId));
-                }
-                else
-                {
-                    WriteError(ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcNotFound, Constants.EventId.GetMachineVirtualDataCenterOrVirtualApplianceNotFound.ToString(), VirtualDataCenterId));
-                }
+                WriteError(0 < VirtualApplianceId
+                    ? ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcVappNotFound,
+                        Constants.EventId.GetMachineVirtualDataCenterOrVirtualApplianceNotFound.ToString(),
+                        VirtualDataCenterId, VirtualApplianceId)
+                    : ErrorRecordFactory.GetNotFound(Messages.GetMachineVdcNotFound,
+                        Constants.EventId.GetMachineVirtualDataCenterOrVirtualApplianceNotFound.ToString(),
+                        VirtualDataCenterId));
             }
         }
     }
