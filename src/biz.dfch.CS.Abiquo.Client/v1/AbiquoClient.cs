@@ -155,6 +155,41 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return user;
         }
 
+        public override void SwitchEnterprise(Enterprise enterprise)
+        {
+            var editLink = enterprise.GetLinkByRel(AbiquoRelations.EDIT);
+            var enterpriseId = UriHelper.ExtractIdAsInt(editLink.Href);
+            
+            SwitchEnterprise(enterpriseId);
+        }
+
+        public override void SwitchEnterprise(int id)
+        {
+            // load enterprise to switch to
+            var enterpriseToSwitchTo = GetEnterprise(id);
+            Contract.Assert(null != enterpriseToSwitchTo);
+            var hrefOfEnterpriseToSwitchTo = enterpriseToSwitchTo.GetLinkByRel(AbiquoRelations.EDIT).Href;
+
+            var currentUser = GetUserOfCurrentEnterprise(CurrentUserInformation.Id);
+            Contract.Assert(null != currentUser);
+
+            // replace enterprise link on current user with link to enterprise to switch to
+            var oldEnterpriseLink = currentUser.GetLinkByRel(AbiquoRelations.ENTERPRISE);
+            Contract.Assert(currentUser.Links.Remove(oldEnterpriseLink));
+
+            var enterpriseToSwitchToLink = new LinkBuilder().BuildRel(AbiquoRelations.ENTERPRISE).BuildHref(hrefOfEnterpriseToSwitchTo).GetLink();
+            currentUser.Links.Add(enterpriseToSwitchToLink);
+
+            // update user
+            var uriSuffix = string.Format(AbiquoUriSuffixes.SWITCH_ENTERPRISE_BY_USER_ID, currentUser.Id);
+            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
+
+            var updatedUser = Invoke<User>(HttpMethod.Put, uriSuffix, null, headers, currentUser);
+            Contract.Assert(null != updatedUser);
+
+            CurrentUserInformation = updatedUser;
+        }
+
         #endregion Users
 
 

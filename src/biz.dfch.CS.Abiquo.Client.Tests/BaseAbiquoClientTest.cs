@@ -555,6 +555,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        [TestMethod]
+        [ExpectContractFailure]
+        public void SwitchEnterpriseWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.SwitchEnterprise(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void SwitchEnterpriseWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.SwitchEnterprise(INVALID_ID);
+
+            // Assert
+        }
+
         #endregion Users
 
 
@@ -2017,6 +2041,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new User();
             }
 
+            public override void SwitchEnterprise(Enterprise enterprise)
+            {
+                // Intentionally do nothing
+            }
+
+            public override void SwitchEnterprise(int id)
+            {
+                // Intentionally do nothing
+            }
+
             public override Roles GetRoles()
             {
                 return new Roles();
@@ -2342,6 +2376,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override User GetUserInformation(int enterpriseId, string username)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SwitchEnterprise(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SwitchEnterprise(int id)
             {
                 throw new NotImplementedException();
             }

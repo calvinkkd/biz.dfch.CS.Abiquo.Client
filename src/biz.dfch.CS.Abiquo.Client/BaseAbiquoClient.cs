@@ -27,7 +27,6 @@ using biz.dfch.CS.Commons;
 using biz.dfch.CS.Commons.Diagnostics;
 using biz.dfch.CS.Commons.Rest;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Logger = biz.dfch.CS.Abiquo.Client.General.Logger;
 
 namespace biz.dfch.CS.Abiquo.Client
@@ -88,9 +87,11 @@ namespace biz.dfch.CS.Abiquo.Client
         /// Timeout for task polling
         /// </summary>
         public int TaskPollingTimeoutMilliseconds { get; set; }
-        
+
         #endregion Properties
 
+
+        #region Contracts
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
@@ -100,10 +101,20 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Invariant(0 < TaskPollingTimeoutMilliseconds);
         }
 
+        #endregion Contracts
+
+
+        #region SerializationSettings
+
         public static void SetJsonSerializerMissingMemberHandling(MissingMemberHandling missingMemberHandling)
         {
             AbiquoBaseDto.SetJsonSerializerMissingMemberHandling(missingMemberHandling);
         }
+
+        #endregion SerializationSettings
+
+
+        #region Login/Logout
 
         public abstract bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation);
 
@@ -118,6 +129,9 @@ namespace biz.dfch.CS.Abiquo.Client
 
             Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.LogoutSucceeded, "{0} SUCCEEDED", Method.GetName());
         }
+
+        #endregion Login/Logout
+
 
         #region ExecuteRequest
 
@@ -345,7 +359,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="id">Id of the enterprise/tenant</param>
         /// <returns>Enterprise</returns>
         public abstract Enterprise GetEnterprise(int id);
-        
+
         #endregion Enterprises
 
 
@@ -399,6 +413,26 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="username">identifier of the user</param>
         /// <returns>Information about the specified user in context of specified enterprise</returns>
         public abstract User GetUserInformation(int enterpriseId, string username);
+
+        /// <summary>
+        /// Switch to the specified enterprise/tenant
+        /// 
+        /// This functionality is only available to the 
+        /// cloud administrator and other users with the privileges
+        /// to "List all enterprises within scope" and "Allow user to switch enterprise"
+        /// </summary>
+        /// <param name="enterprise"></param>
+        public abstract void SwitchEnterprise(Enterprise enterprise);
+
+        /// <summary>
+        /// Switch to the specified enterprise/tenant
+        /// 
+        /// This functionality is only available to the 
+        /// cloud administrator and other users with the privileges
+        /// to "List all enterprises within scope" and "Allow user to switch enterprise"
+        /// </summary>
+        /// <param name="id"></param>
+        public abstract void SwitchEnterprise(int id);
 
         #endregion Users
 
