@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.Diagnostics.Contracts;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 
@@ -41,6 +42,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Contract.Requires(!string.IsNullOrWhiteSpace(href));
 
             _link.Href = href;
+            return this;
+        }
+        
+        public LinkBuilder BuildHref(Uri uri)
+        {
+            Contract.Requires(null != uri);
+
+            _link.Href = uri.AbsoluteUri;
             return this;
         }
 

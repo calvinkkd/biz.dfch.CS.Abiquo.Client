@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Testing.Attributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,12 +29,35 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [ExpectContractFailure]
         [TestMethod]
-        public void BuildHrefWithNullValueThrowsContractException()
+        public void BuildHrefWithNullStringThrowsContractException()
         {
             // Arrange
 
             // Act
-            new LinkBuilder().BuildHref(null);
+            new LinkBuilder().BuildHref(href: null);
+
+            // Assert
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildHrefWithNullUriThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new LinkBuilder().BuildHref(uri: null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void BuildHrefWithValidUriSucceeds()
+        {
+            // Arrange
+
+            // Act
+            new LinkBuilder().BuildHref(new Uri(HREF));
 
             // Assert
         }
