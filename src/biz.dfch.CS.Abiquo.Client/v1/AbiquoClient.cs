@@ -46,11 +46,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             // sanitise Uri (and removed extra information such as port numbers etc)
             abiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
-            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
+            AbiquoApiBaseUri = abiquoApiBaseUri;
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' ...", AbiquoApiBaseUri, authenticationInformation.GetTenantId());
 
             Logout();
             AuthenticationInformation = authenticationInformation;
-            AbiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
 
             try
             {
