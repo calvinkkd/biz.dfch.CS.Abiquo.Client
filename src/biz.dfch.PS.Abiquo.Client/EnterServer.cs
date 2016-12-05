@@ -193,13 +193,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 throw;
             }
 
-            // extract tenant id from current user information
-            var currentUserInformation = client.CurrentUserInformation;
-
-            // we set the tenant id if not specified during login
-            // and perform a second login with the correct id
-            // otherwise we just return the client and return
-            if (TENANT_ID_DEFAULT_VALUE != TenantId || client.TenantId == TenantId)
+            if (!MyInvocation.BoundParameters.ContainsKey("TenantId"))
             {
                 // return client
                 WriteObject(client);
@@ -207,13 +201,10 @@ namespace biz.dfch.PS.Abiquo.Client
                 return;
             }
 
-            // perform 2nd login
-            TenantId = client.TenantId;
-            authInfo = GetAuthenticationInformation(parameterSetName);
+            // switch to specified tenant
             try
             {
-                var hasLoginSucceeded2 = client.Login(Uri.AbsoluteUri, authInfo);
-                Contract.Assert(hasLoginSucceeded2, string.Format(Messages.EnterServerLoginFailed2, Uri.AbsoluteUri, TenantId));
+                client.SwitchEnterprise(TenantId);
             }
             catch (AggregateException aggrex)
             {
@@ -227,8 +218,6 @@ namespace biz.dfch.PS.Abiquo.Client
 
             // return client
             WriteObject(client);
-
-            return;
         }
 
         private IAuthenticationInformation GetAuthenticationInformation(string parameterSetName)

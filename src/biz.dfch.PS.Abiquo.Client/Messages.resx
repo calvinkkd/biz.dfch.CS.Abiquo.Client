@@ -117,11 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ContractFailedEventHandler" xml:space="preserve">
-    <value>{0}: {1}</value>
-    <comment>0: ActivityId
-1: message</comment>
-  </data>
   <data name="EnterServerInvalidParameterSetName" xml:space="preserve">
     <value>Invalid ParameterSetName '{0}' detected.</value>
     <comment>0: ParameterSetName</comment>
@@ -138,33 +133,14 @@
     <value>Login to '{0}' FAILED.</value>
     <comment>0: Uri</comment>
   </data>
-  <data name="EnterServerLoginFailed2" xml:space="preserve">
-    <value>Login to '{0}' FAILED with tenant id {1} at second attempt.</value>
-    <comment>0: Uri
-1: TenantId</comment>
-  </data>
   <data name="EnterServerLoginSucceeded" xml:space="preserve">
     <value>Logging in to '{0}' SUCCEEDED.</value>
     <comment>0: Uri.AbsoluteUri</comment>
-  </data>
-  <data name="EnterServerLoginWebException" xml:space="preserve">
-    <value>Login to '{0}' FAILED with StatusCode {1} and message '{1}'.</value>
-    <comment>0: Uri
-1: exception.StatusCode
-2: exception.Message</comment>
   </data>
   <data name="EnterServerShouldProcess" xml:space="preserve">
     <value>Uri '{0}' and ParameterSetName '{1}'.</value>
     <comment>0: Uri
 1: ParameterSetName</comment>
-  </data>
-  <data name="GetEnterpriseIdNotFound" xml:space="preserve">
-    <value>Cannot find enterprise with id '{0}'.</value>
-    <comment>0: Enterprise.Id</comment>
-  </data>
-  <data name="GetEnterpriseNameNotFound" xml:space="preserve">
-    <value>Cannot find enterprise with name '{0}'.</value>
-    <comment>0: Enterprise.Name</comment>
   </data>
   <data name="GetEnterpriseShouldProcess" xml:space="preserve">
     <value>ParameterSetName '{0}'.</value>
