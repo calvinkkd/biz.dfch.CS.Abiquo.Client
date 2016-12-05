@@ -24,24 +24,35 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>PowerShell Client for Abiquo</summary>
-        <releaseNotes>20161129
-# BUGFIXES
-
+        <releaseNotes>20161205
 # FEATURES
 
 * initial release
+
+* added Cmdlets
+	* Enter-AbqServer
+	* Get-AbqEnterprise
+	* Get-AbqMachine
+	* Get-AbqVirtualAppliance
+	* Get-AbqVirtualDataCenter
+	* Import-AbqConfiguration
 		</releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client PowerShell</tags>
         <dependencies>
-          <dependency id="biz.dfch.CS.PowerShell.Commons" version="1.3.2" />
-          <dependency id="biz.dfch.CS.Commons" version="1.6.0" />
-			    <dependency id="Microsoft.PowerShell.5.ReferenceAssemblies" version="1.0.0" />
-			    <dependency id="Newtonsoft.Json" version="9.0.1" />
+          <dependency id="biz.dfch.CS.PowerShell.Commons" version="1.6.0" />
+          <dependency id="biz.dfch.CS.Commons" version="1.7.1" />
+          <dependency id="Microsoft.PowerShell.5.ReferenceAssemblies" version="1.0.0" />
+          <dependency id="Newtonsoft.Json" version="9.0.1" />
         </dependencies>
     </metadata>
 	<files>
+    <file src="Install.ps1" target="Install.ps1" />
+    <file src="..\LICENSE" target="tools\LICENSE" />
+    <file src="..\NOTICE" target="tools\NOTICE" />
+    <file src="..\README.md" target="tools\README.md" />
     <file src="biz.dfch.CS.Abiquo.Client\bin\Release\biz.dfch.PS.Abiquo.Client.dll" target="tools\" />
+    <file src="biz.dfch.CS.Abiquo.Client\bin\Release\biz.dfch.CS.Abiquo.Client.dll" target="tools\" />
     <file src="biz.dfch.CS.Abiquo.Client\bin\Release\biz.dfch.CS.PowerShell.Commons.dll" target="tools\" />
     <file src="biz.dfch.CS.Abiquo.Client\bin\Release\biz.dfch.CS.Commons.dll" target="tools\" />
     <file src="biz.dfch.CS.Abiquo.Client\bin\Release\Newtonsoft.Json.dll" target="tools\" />
