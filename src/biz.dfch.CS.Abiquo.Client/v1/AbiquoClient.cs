@@ -182,7 +182,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             // update user
             var uriSuffix = string.Format(AbiquoUriSuffixes.SWITCH_ENTERPRISE_BY_USER_ID, currentUser.Id);
-            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
+            var headers = new Dictionary<string, string>()
+            {
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_USER }
+                ,
+                { AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_USER }
+            };
 
             var updatedUser = Invoke<User>(HttpMethod.Put, uriSuffix, null, headers, currentUser);
             Contract.Assert(null != updatedUser);
