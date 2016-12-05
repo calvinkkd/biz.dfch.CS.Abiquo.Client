@@ -21,7 +21,7 @@ using System.Diagnostics.Contracts;
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     /// <summary>
-    /// Base DTO for Abiquo objects that contain Id, Name and Links
+    /// Base DTO for Abiquo objects that contains Id, Name and Links
     /// </summary>
     public abstract class AbiquoLinkBaseDto : AbiquoBaseDto
     {
@@ -33,6 +33,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
             Contract.Ensures(null != Contract.Result<Link>());
 
             return Links.Find(l => l.Rel == rel);
+        }
+
+        public ICollection<Link> GetLinksByType(string type)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(type));
+            Contract.Ensures(null != Contract.Result<ICollection<Link>>());
+
+            return Links.FindAll(l => l.Type == type);
         }
     }
 }

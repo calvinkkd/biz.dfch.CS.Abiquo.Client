@@ -27,24 +27,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
     {
         private const string USERS_HREF = "https://abiquo.example.com/api/admin/enterprises/1/users";
         private const string PROPERTIES_HREF = "https://abiquo.example.com/api/admin/enterprises/1/properties";
-        private const string USERS_REL = "users";
-        private const string PROPERTIES_REL = "properties";
 
         [TestMethod]
-        public void GetLinkByRelWithExistingRelReturnsExpectedLink()
+        [ExpectContractFailure]
+        public void GetLinkByRelWithNullRelThrowsContractException()
         {
             // Arrange
             var enterprise = CreateEnterpriseWithLinks();
 
             // Act
-            var usersLink = enterprise.GetLinkByRel(USERS_REL);
+            enterprise.GetLinkByRel(null);
 
             // Assert
-            Assert.IsNotNull(usersLink);
-            Assert.AreEqual(USERS_REL, usersLink.Rel);
-            Assert.AreEqual(USERS_HREF, usersLink.Href);
-            Assert.AreEqual(USERS_REL, usersLink.Title);
-            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_USERS, usersLink.Type);
         }
 
         [TestMethod]
@@ -61,31 +55,85 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
         }
 
         [TestMethod]
-        [ExpectContractFailure]
-        public void GetLinkByRelWithNullRelThrowsContractException()
+        public void GetLinkByRelWithExistingRelReturnsExpectedLink()
         {
             // Arrange
             var enterprise = CreateEnterpriseWithLinks();
 
             // Act
-            enterprise.GetLinkByRel(null);
+            var usersLink = enterprise.GetLinkByRel(AbiquoRelations.USERS);
+
+            // Assert
+            Assert.IsNotNull(usersLink);
+            Assert.AreEqual(AbiquoRelations.USERS, usersLink.Rel);
+            Assert.AreEqual(USERS_HREF, usersLink.Href);
+            Assert.AreEqual(AbiquoRelations.USERS, usersLink.Title);
+            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_USERS, usersLink.Type);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetLinksByTypeWithNullTypeThrowsContractException()
+        {
+            // Arrange
+            var enterprise = CreateEnterpriseWithLinks();
+
+            // Act
+            enterprise.GetLinksByType(null);
 
             // Assert
         }
 
+        [TestMethod]
+        public void GetLinksByTypeWithInexistentTypeReturnsEmptyLinkCollection()
+        {
+            // Arrange
+            var enterprise = CreateEnterpriseWithLinks();
+
+            // Act
+            var links = enterprise.GetLinksByType(AbiquoMediaDataTypes.VND_ABIQUO_BACKUP);
+
+            // Assert
+            Assert.IsNotNull(links);
+            Assert.IsTrue(0 == links.Count);
+        }
+
+        [TestMethod]
+        public void GetLinksByTypeReturnsLinkCollectionContainingLinksOfSpecifiedType()
+        {
+            // Arrange
+            var enterprise = CreateEnterpriseWithLinks();
+
+            // Act
+            var links = enterprise.GetLinksByType(AbiquoMediaDataTypes.VND_ABIQUO_USERS);
+
+            // Assert
+            Assert.IsNotNull(links);
+            Assert.IsTrue(1 == links.Count);
+        }
+
+        [TestMethod]
+        public void GetLinksByTypeReturnsLinkCollectionContainingLinksOfSpecifiedType2()
+        {
+            // Arrange
+            var enterprise = CreateEnterpriseWithLinks();
+            enterprise.Links.Add(CreateUsersLink());
+
+            // Act
+            var links = enterprise.GetLinksByType(AbiquoMediaDataTypes.VND_ABIQUO_USERS);
+
+            // Assert
+            Assert.IsNotNull(links);
+            Assert.IsTrue(2 == links.Count);
+        }
+
         private Enterprise CreateEnterpriseWithLinks()
         {
-            var usersLink = new LinkBuilder()
-                .BuildRel(USERS_REL)
-                .BuildHref(USERS_HREF)
-                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_USERS)
-                .BuildTitle(USERS_REL).GetLink();
-
             var propertiesLink = new LinkBuilder()
-                .BuildRel(PROPERTIES_REL)
+                .BuildRel(AbiquoRelations.PROPERTEIS)
                 .BuildHref(PROPERTIES_HREF)
                 .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISEPROPERTIES)
-                .BuildTitle(PROPERTIES_REL)
+                .BuildTitle(AbiquoRelations.PROPERTEIS)
                 .GetLink();
 
             var enterprise = new Enterprise()
@@ -94,10 +142,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
                 ,
                 Name = "Arbitrary Enterprise"
                 ,
-                Links = new List<Link>() { usersLink, propertiesLink }
+                Links = new List<Link>() { CreateUsersLink(), propertiesLink }
             };
 
             return enterprise;
+        }
+
+        private Link CreateUsersLink()
+        {
+            return new LinkBuilder()
+                .BuildRel(AbiquoRelations.USERS)
+                .BuildHref(USERS_HREF)
+                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_USERS)
+                .BuildTitle(AbiquoRelations.USERS).GetLink();
         }
     }
 }

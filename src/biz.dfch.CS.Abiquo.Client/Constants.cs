@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client
 {
-    public abstract class Constants
+    public static class Constants
     {
         public enum EventId : int
         {

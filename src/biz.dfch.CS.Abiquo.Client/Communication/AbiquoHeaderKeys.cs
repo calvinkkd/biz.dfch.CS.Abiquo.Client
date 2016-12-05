@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    public class AbiquoHeaderKeys
+    public static class AbiquoHeaderKeys
     {
         public const string ACCEPT_HEADER_KEY = "Accept";
         public const string CONTENT_TYPE_HEADER_KEY = "Content-Type";
