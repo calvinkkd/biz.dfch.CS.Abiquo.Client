@@ -24,5 +24,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public const string SELF = "self";
         public const string STATUS = "status";
         public const string EDIT = "edit";
+        public const string FIRST = "first";
+        public const string LAST = "last";
     }
 }
