@@ -343,6 +343,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             {
                 { "expected-key", "expected-value" }
             };
+
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
                 .IgnoreInstance()
@@ -352,6 +353,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
             var result = sut.Invoke(links, rel);
+
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
             Assert.AreEqual(1, result.Count);
