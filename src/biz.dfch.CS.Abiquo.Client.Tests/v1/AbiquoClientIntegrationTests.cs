@@ -2168,6 +2168,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         #endregion Networks
 
+
+        #region AttachNetwork
+
         [TestMethod]
         public void AttachNetworkToNotDeployedVirtualMachineSucceeds()
         {
@@ -2367,5 +2370,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(publicIpToBePurchased.NetworkName, releasedPublicIp.NetworkName);
             Assert.AreEqual(publicIpToBePurchased.Quarantine, releasedPublicIp.Quarantine);
         }
+
+        #endregion AttachNetwork
     }
 }
