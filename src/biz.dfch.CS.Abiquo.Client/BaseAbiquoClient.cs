@@ -311,6 +311,17 @@ namespace biz.dfch.CS.Abiquo.Client
             return result;
         }
 
+        public DictionaryParameters Invoke(Uri absoluteUri)
+        {
+            Contract.Requires(null != absoluteUri);
+            Contract.Requires(absoluteUri.IsAbsoluteUri);
+
+            var response = ExecuteRequest(absoluteUri.AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+
+            var result = new DictionaryParameters(response);
+            return result;
+        }
+
         #endregion Invoke
 
 

@@ -363,6 +363,42 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Mock.Assert(restCallExecutor);
         }
 
+        [TestMethod]
+        public void InvokeWithAbsoluteUriSucceeds()
+        {
+            var rel = "disk1";
+            var href = "cloud/virtualdatacenters/1/disks/42";
+            var link = new LinkBuilder()
+                .BuildRel(rel)
+                .BuildHref(ABIQUO_API_BASE_URI + href)
+                .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                .BuildType("application/vnd.abiquo.harddisk+json")
+                .GetLink();
+
+            var dicionaryParameers = new DictionaryParameters()
+            {
+                { "expected-key", "expected-value" }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
+                .IgnoreInstance()
+                .Returns(dicionaryParameers.SerializeObject())
+                .OccursOnce();
+            
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(new Uri(link.Href));
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result.ContainsKey("expected-key"));
+            Assert.IsTrue(result.ContainsValue("expected-value"));
+
+            Mock.Assert(restCallExecutor);
+        }
+
         #endregion Invoke
 
 
