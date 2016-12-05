@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    public abstract class AbiquoUriSuffixes
+    public static class AbiquoUriSuffixes
     {
         public const string LOGIN = "/login";
 
