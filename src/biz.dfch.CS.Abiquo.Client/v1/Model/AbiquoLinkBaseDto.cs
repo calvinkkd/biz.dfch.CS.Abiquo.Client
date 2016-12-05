@@ -21,7 +21,7 @@ using System.Diagnostics.Contracts;
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     /// <summary>
-    /// Base DTO for Abiquo objects that contain Id, Name and Links
+    /// Base DTO for Abiquo objects that contains Id, Name and Links
     /// </summary>
     public abstract class AbiquoLinkBaseDto : AbiquoBaseDto
     {
