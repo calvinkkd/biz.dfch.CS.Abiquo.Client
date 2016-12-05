@@ -34,5 +34,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
             return Links.Find(l => l.Rel == rel);
         }
+
+        public ICollection<Link> GetLinksByType(string type)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(type));
+            Contract.Ensures(null != Contract.Result<ICollection<Link>>());
+
+            return Links.FindAll(l => l.Type == type);
+        }
     }
 }

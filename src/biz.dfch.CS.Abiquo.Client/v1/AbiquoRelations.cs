@@ -26,5 +26,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public const string EDIT = "edit";
         public const string FIRST = "first";
         public const string LAST = "last";
+        public const string USERS = "users";
+        public const string PROPERTEIS = "properties";
     }
 }
