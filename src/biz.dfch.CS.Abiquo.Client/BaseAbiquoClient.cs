@@ -254,50 +254,31 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            string fullRequestUri = default(string);
             if (null != filter)
             {
                 var filterString = UriHelper.CreateFilterString(filter);
-                fullRequestUri = new Uri(string.Format("{0}?{1}", uriSuffix, filterString)).AbsoluteUri;
-            }
-            else
-            {
-                fullRequestUri = uriSuffix;
+                uriSuffix = string.Format("{0}?{1}", uriSuffix, filterString);
             }
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.Login, "Invoking {0} {1} ...", httpMethod, fullRequestUri);
+            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.Login, "Invoking {0} {1} ...", httpMethod, uriSuffix);
 
-            var response = ExecuteRequest(httpMethod, fullRequestUri, headers, body);
+            var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, fullRequestUri);
+            Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, uriSuffix);
 
             return response;
         }
 
-        //public List<DictionaryParameters> Invoke(ICollection<Link> links, string type, int maxCount)
-        //{
-        //    Contract.Requires(null != links);
-        //    Contract.Requires(!string.IsNullOrWhiteSpace(type));
-        //    Contract.Requires(0 <= maxCount);
-        //    Contract.Ensures(null != Contract.Result<List<DictionaryParameters>>());
+        public DictionaryParameters Invoke(Link link)
+        {
+            Contract.Requires(null != link);
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
 
-        //    maxCount = 0 == maxCount ? int.MaxValue : maxCount;
-            
-        //    var result = new List<DictionaryParameters>();
-        //    foreach (var link in links.Where(e => type.Equals(e.Type)))
-        //    {
-        //        var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
 
-        //        if (maxCount >= result.Count)
-        //        {
-        //            break;
-        //        }
-
-        //        result.Add(new DictionaryParameters(response));
-        //    }
-
-        //    return result;
-        //}
+            var result = new DictionaryParameters(response);
+            return result;
+        }
 
         public DictionaryParameters Invoke(ICollection<Link> links, string rel)
         {
@@ -308,7 +289,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
             Contract.Assert(null != link, string.Format("rel '{0}'", rel));
 
-            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+            var response = Invoke(link);
 
             var result = new DictionaryParameters(response);
             return result;
@@ -324,7 +305,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var link = links.FirstOrDefault(e => rel.Equals(e.Rel) && title.Equals(e.Title));
             Contract.Assert(null != link, string.Format("rel '{0}', title '{1}'", rel, title));
 
-            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+            var response = Invoke(link);
 
             var result = new DictionaryParameters(response);
             return result;

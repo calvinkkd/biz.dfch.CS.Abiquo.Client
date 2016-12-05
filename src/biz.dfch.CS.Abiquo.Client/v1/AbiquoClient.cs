@@ -44,11 +44,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
+            // sanitise Uri (and removed extra information such as port numbers etc)
+            abiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
             Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
 
             Logout();
             AuthenticationInformation = authenticationInformation;
-            AbiquoApiBaseUri = abiquoApiBaseUri;
+            AbiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
 
             try
             {
@@ -56,12 +58,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 CurrentUserInformation = AbiquoBaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
-                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", abiquoApiBaseUri, authenticationInformation.GetTenantId());
+                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", AbiquoApiBaseUri, authenticationInformation.GetTenantId());
                 return true;
             }
             catch (HttpRequestException ex)
             {
-                var message = string.Format("Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", abiquoApiBaseUri, authenticationInformation.GetTenantId());
+                var message = string.Format("Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", AbiquoApiBaseUri, authenticationInformation.GetTenantId());
                 Logger.Current.TraceException(ex, (int) Constants.EventId.LoginFailed, message);
 
                 Logout();

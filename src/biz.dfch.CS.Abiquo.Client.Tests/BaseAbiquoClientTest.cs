@@ -23,6 +23,7 @@ using Telerik.JustMock;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+ using biz.dfch.CS.Commons;
  using biz.dfch.CS.Commons.Rest;
  using biz.dfch.CS.Testing.Attributes;
 using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
@@ -266,6 +267,96 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
             Assert.AreEqual("Arbitrary-Result", result);
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "links")]
+        public void InvokeOnNullLinksThrowsContractException()
+        {
+            var rel = "disk0";
+            var links = default(ICollection<Link>);
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "rel")]
+        public void InvokeOnNullRelThrowsContractException()
+        {
+            var rel = "   ";
+            var links = new List<Link>()
+            {
+                new LinkBuilder()
+                    .BuildRel(rel)
+                    .BuildHref("https://abiquo.example.com:443/api/cloud/virtualdatacenters/1/disks/42")
+                    .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                    .BuildType("application/vnd.abiquo.harddisk+json")
+                    .GetLink()
+            };
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "null.+link.+rel.+disk1")]
+        public void InvokeOnInexistingRelThrowsContractException()
+        {
+            var rel = "disk1";
+            var links = new List<Link>()
+            {
+                new LinkBuilder()
+                    .BuildRel("inexistent-rel")
+                    .BuildHref("https://abiquo.example.com:443/api/cloud/virtualdatacenters/1/disks/42")
+                    .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                    .BuildType("application/vnd.abiquo.harddisk+json")
+                    .GetLink()
+            };
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+        }
+
+        [TestMethod]
+        public void InvokeOnExistingRelSucceeds()
+        {
+            var rel = "disk1";
+            var href = "cloud/virtualdatacenters/1/disks/42";
+            var link = new LinkBuilder()
+                .BuildRel(rel)
+                .BuildHref(ABIQUO_API_BASE_URI + href)
+                .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                .BuildType("application/vnd.abiquo.harddisk+json")
+                .GetLink();
+            var links = new List<Link>()
+            {
+                link
+            };
+
+            var dicionaryParameers = new DictionaryParameters()
+            {
+                { "expected-key", "expected-value" }
+            };
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
+                .IgnoreInstance()
+                .Returns(dicionaryParameers.SerializeObject())
+                .OccursOnce();
+            
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result.ContainsKey("expected-key"));
+            Assert.IsTrue(result.ContainsValue("expected-value"));
 
             Mock.Assert(restCallExecutor);
         }
@@ -1829,7 +1920,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
             {
-                AbiquoApiBaseUri = abiquoApiBaseUri;
+                AbiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
                 AuthenticationInformation = authenticationInformation;
                 CurrentUserInformation = new User();
 
