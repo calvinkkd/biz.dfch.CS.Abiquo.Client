@@ -42,7 +42,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
         {
             var headers = new Dictionary<string, string>
             {
-                {Constants.AUTHORIZATION_HEADER_KEY, CreateBasicAuthorizationHeaderValue()}
+                {Constants.Authentication.AUTHORIZATION_HEADER_KEY, CreateBasicAuthorizationHeaderValue()}
             };
 
             return headers;
@@ -54,7 +54,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             var base64EncodedAuthorizationHeaderValue = Convert.ToBase64String(plainTextBytes);
 
-            return string.Format(Constants.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
+            return string.Format(Constants.Authentication.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
         }
 
         public int GetTenantId()

@@ -144,7 +144,6 @@
     <Compile Include="Constants.cs" />
     <Compile Include="General\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Authentication\Constants.cs" />
     <Compile Include="Authentication\OAuth2AuthenticationInformation.cs" />
     <Compile Include="Communication\AbiquoHeaderKeys.cs" />
     <Compile Include="Communication\AbiquoUriSuffixes.cs" />

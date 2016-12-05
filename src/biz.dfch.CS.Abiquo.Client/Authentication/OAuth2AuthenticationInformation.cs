@@ -35,11 +35,11 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
 
         public IDictionary<string, string> GetAuthorizationHeaders()
         {
-            var headerValue = string.Format(Constants.BEARER_AUTHORIZATION_HEADER_VALUE_TEMPLATE, _oAuth2Token);
+            var headerValue = string.Format(Constants.Authentication.BEARER_AUTHORIZATION_HEADER_VALUE_TEMPLATE, _oAuth2Token);
 
             var headers = new Dictionary<string, string>
             {
-                {Constants.AUTHORIZATION_HEADER_KEY, headerValue}
+                {Constants.Authentication.AUTHORIZATION_HEADER_KEY, headerValue}
             };
 
             return headers;
