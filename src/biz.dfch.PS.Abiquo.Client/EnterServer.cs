@@ -178,7 +178,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 }
                 else
                 {
-                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Error, (int) Constants.EventId.EnterServer, Messages.EnterServerLoginFailed0, Uri.AbsoluteUri, authInfo.GetTenantId());
+                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Error, (int) Constants.EventId.EnterServer, Messages.EnterServerLoginFailed0, Uri.AbsoluteUri);
                 }
 
                 Contract.Assert(hasLoginSucceeded1, string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));
@@ -199,7 +199,7 @@ namespace biz.dfch.PS.Abiquo.Client
             // we set the tenant id if not specified during login
             // and perform a second login with the correct id
             // otherwise we just return the client and return
-            if (TENANT_ID_DEFAULT_VALUE != TenantId || currentUserInformation.GetEnterpriseId() == TenantId)
+            if (TENANT_ID_DEFAULT_VALUE != TenantId || client.TenantId == TenantId)
             {
                 // return client
                 WriteObject(client);
@@ -208,7 +208,7 @@ namespace biz.dfch.PS.Abiquo.Client
             }
 
             // perform 2nd login
-            TenantId = currentUserInformation.GetEnterpriseId();
+            TenantId = client.TenantId;
             authInfo = GetAuthenticationInformation(parameterSetName);
             try
             {
@@ -240,15 +240,15 @@ namespace biz.dfch.PS.Abiquo.Client
             switch (parameterSetName)
             {
                 case ParameterSets.PLAIN:
-                    authInfo = new BasicAuthenticationInformation(Username, Password, TenantId);
+                    authInfo = new BasicAuthenticationInformation(Username, Password);
                     break;
                 case ParameterSets.CREDENTIAL:
                     Username = Credential.UserName;
                     Password = Credential.GetNetworkCredential().Password;
-                    authInfo = new BasicAuthenticationInformation(Username, Password, TenantId);
+                    authInfo = new BasicAuthenticationInformation(Username, Password);
                     break;
                 case ParameterSets.OAUTH2:
-                    authInfo = new OAuth2AuthenticationInformation(OAuth2Token, TenantId);
+                    authInfo = new OAuth2AuthenticationInformation(OAuth2Token);
                     break;
                 default:
                     // ReSharper disable once NotResolvedInText

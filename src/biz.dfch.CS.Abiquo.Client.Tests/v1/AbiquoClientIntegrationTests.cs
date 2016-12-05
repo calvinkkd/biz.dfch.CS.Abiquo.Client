@@ -56,11 +56,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
 
-        #region Invoke for Links
-
-        #endregion Invoke for Links
-
-
         #region Login
 
         [TestMethod]
@@ -81,7 +76,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var basicAuthInfo = new BasicAuthenticationInformation("invalid-username", "invalid-password", IntegrationTestEnvironment.TenantId);
+            var basicAuthInfo = new BasicAuthenticationInformation("invalid-username", "invalid-password");
 
             // Act
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthInfo);
@@ -143,7 +138,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(currentEnterprise);
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), currentEnterprise.Id);
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, currentEnterprise.Id);
         }
 
         [TestMethod]
@@ -154,12 +149,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
-            var enterprise = abiquoClient.GetEnterprise(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId());
+            var enterprise = abiquoClient.GetEnterprise(IntegrationTestEnvironment.TenantId);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(enterprise);
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), enterprise.Id);
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, enterprise.Id);
         }
 
         [TestMethod]
@@ -390,7 +385,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
             
             var enterpriseHref = userInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href;
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));
         }
 
         [TestMethod]
@@ -409,7 +404,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
 
             var enterpriseHref = userInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href;
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));
         }
 
         [TestMethod]
@@ -432,7 +427,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void SwitchEnterpriseSwitchesToSpecifiedEnterpriseUpdatesCurrentUserInformationAndUpdatesTenantIdInAuthenticationInformation()
+        public void SwitchEnterpriseSwitchesToSpecifiedEnterpriseAndUpdatesCurrentUserInformation()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -456,7 +451,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var enterpriseHrefOfCurrentUserInformation = abiquoClient.CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href;
             Assert.AreEqual(enterpriseToSwitchTo.Id, UriHelper.ExtractIdAsInt(enterpriseHrefOfCurrentUserInformation));
-            Assert.AreEqual(enterpriseToSwitchTo.Id, abiquoClient.AuthenticationInformation.GetTenantId());
             Assert.AreEqual(enterpriseToSwitchTo.Id, UriHelper.ExtractIdAsInt(currentUser.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href));
 
             // Cleanup

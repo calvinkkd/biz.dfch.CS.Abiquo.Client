@@ -24,7 +24,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
     public class OAuth2AuthenticationInformationTest
     {
         private const string OAUTH2_TOKEN = "ARBITRARY_OAUTH2_TOKEN";
-        private const int TENANT_ID = 1;
 
         [TestMethod]
         [ExpectContractFailure]
@@ -33,7 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             // Arrange
 
             // Act
-            new OAuth2AuthenticationInformation(null, TENANT_ID);
+            new OAuth2AuthenticationInformation(null);
 
             // Assert
         }
@@ -45,19 +44,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             // Arrange
 
             // Act
-            new OAuth2AuthenticationInformation(" ", TENANT_ID);
-
-            // Assert
-        }
-
-        [TestMethod]
-        [ExpectContractFailure]
-        public void CreateOAuth2AuthenticationInformationWithInvalidTenantIdThrowsContractException()
-        {
-            // Arrange
-
-            // Act
-            new OAuth2AuthenticationInformation(OAUTH2_TOKEN, 0);
+            new OAuth2AuthenticationInformation(" ");
 
             // Assert
         }
@@ -66,7 +53,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         public void GetAuthenticationHeadersReturnsOAuth2AuthenticationHeader()
         {
             // Arrange
-            var oAuth2AuthInfo = new OAuth2AuthenticationInformation(OAUTH2_TOKEN, TENANT_ID);
+            var oAuth2AuthInfo = new OAuth2AuthenticationInformation(OAUTH2_TOKEN);
 
             // Act
             var authHeaders = oAuth2AuthInfo.GetAuthorizationHeaders();
@@ -76,19 +63,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             Assert.AreEqual(1, authHeaders.Keys.Count);
 
             Assert.AreEqual("Bearer ARBITRARY_OAUTH2_TOKEN", authHeaders[Client.Constants.Authentication.AUTHORIZATION_HEADER_KEY]);
-        }
-
-        [TestMethod]
-        public void GetTenantIdReturnsTenantId()
-        {
-            // Arrange
-            var oAuth2AuthInfo = new OAuth2AuthenticationInformation(OAUTH2_TOKEN, TENANT_ID);
-
-            // Act
-            var tenantId = oAuth2AuthInfo.GetTenantId();
-
-            // Assert
-            Assert.AreEqual(TENANT_ID, tenantId);
         }
     }
 }

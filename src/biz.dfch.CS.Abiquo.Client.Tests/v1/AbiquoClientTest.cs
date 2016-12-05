@@ -34,7 +34,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         private const string ABIQUO_API_BASE_URI = "https://abiquo.example.com/api/";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
-        private const int TENANT_ID = 1;
 
         [TestMethod]
         public void AbiquoClientVersionMatchesSpecifiedVersion()
@@ -67,7 +66,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD);
 
             // Act
             abiquoClient.Login(null, basicAuthInfo);
@@ -81,7 +80,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD);
 
             // Act
             abiquoClient.Login(" ", basicAuthInfo);
@@ -95,7 +94,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Arrange
             var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD);
             var user = new User()
             {
                 Nick = USERNAME
@@ -123,7 +122,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Arrange
             var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD);
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor
@@ -147,7 +146,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Arrange
             var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD);
             var user = new User()
             {
                 Nick = USERNAME

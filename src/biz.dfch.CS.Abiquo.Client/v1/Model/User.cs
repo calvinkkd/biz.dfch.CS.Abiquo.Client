@@ -53,11 +53,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool Locked { get; set; }
 
         public bool FirstLogin { get; set; }
-
-        public int GetEnterpriseId()
-        {
-            var enterpriseLink = this.GetLinkByRel(AbiquoRelations.ENTERPRISE);
-            return UriHelper.ExtractIdAsInt(enterpriseLink.Href);
-        }
     }
 }

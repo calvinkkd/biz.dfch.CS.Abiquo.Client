@@ -46,7 +46,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             // sanitise Uri (and removed extra information such as port numbers etc)
             abiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
-            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Logging in to abiquoApiBaseUri '{0}' with TenantId '{1}' ...", abiquoApiBaseUri, authenticationInformation.GetTenantId());
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Logging in to abiquoApiBaseUri '{0}' ...", abiquoApiBaseUri);
 
             // clear base properties
             Logout();
@@ -60,12 +60,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 CurrentUserInformation = AbiquoBaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
-                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", AbiquoApiBaseUri, authenticationInformation.GetTenantId());
+                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Logging in to AbiquoApiBaseUri '{0}' SUCCEEDED.", AbiquoApiBaseUri);
                 return true;
             }
             catch (HttpRequestException ex)
             {
-                var message = string.Format("Logging in to AbiquoApiBaseUri '{0}' with TenantId '{1}' SUCCEEDED.", AbiquoApiBaseUri, authenticationInformation.GetTenantId());
+                var message = string.Format("Logging in to AbiquoApiBaseUri '{0}' SUCCEEDED.", AbiquoApiBaseUri);
                 Logger.Current.TraceException(ex, (int) Constants.EventId.LoginFailed, message);
 
                 Logout();
@@ -85,7 +85,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Enterprise GetCurrentEnterprise()
         {
-            return GetEnterprise(AuthenticationInformation.GetTenantId());
+            return GetEnterprise(TenantId);
         }
 
         public override Enterprise GetEnterprise(int id)
@@ -103,7 +103,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
         {
-            return GetUsersWithRoles(AuthenticationInformation.GetTenantId());
+            return GetUsersWithRoles(TenantId);
         }
 
         public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
@@ -116,7 +116,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override User GetUserOfCurrentEnterprise(int id)
         {
-            return GetUser(AuthenticationInformation.GetTenantId(), id);
+            return GetUser(TenantId, id);
         }
 
         public override User GetUser(int enterpriseId, int id)
@@ -134,7 +134,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override User GetUserInformation(string username)
         {
-            return GetUserInformation(AuthenticationInformation.GetTenantId(), username);
+            return GetUserInformation(TenantId, username);
         }
 
         public override User GetUserInformation(int enterpriseId, string username)
@@ -187,6 +187,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var updatedUser = Invoke<User>(HttpMethod.Put, uriSuffix, null, headers, currentUser);
             Contract.Assert(null != updatedUser);
 
+            // update current user information
             CurrentUserInformation = updatedUser;
         }
 
@@ -217,7 +218,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCentersLimits GetDataCentersLimitsOfCurrentEnterprise()
         {
-            return GetDataCentersLimits(AuthenticationInformation.GetTenantId());
+            return GetDataCentersLimits(TenantId);
         }
 
         public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
@@ -231,7 +232,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
         {
-            return GetDataCenterLimits(AuthenticationInformation.GetTenantId(), id);
+            return GetDataCenterLimits(TenantId, id);
         }
 
         public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
@@ -579,7 +580,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise()
         {
-            return GetDataCenterRepositories(AuthenticationInformation.GetTenantId());
+            return GetDataCenterRepositories(TenantId);
         }
 
         public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
@@ -592,7 +593,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
         {
-            return GetDataCenterRepository(AuthenticationInformation.GetTenantId(), id);
+            return GetDataCenterRepository(TenantId, id);
         }
 
         public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
@@ -689,7 +690,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetworks GetExternalNetworksOfCurrentEnterprise(int dataCenterLimitsId)
         {
-            return GetExternalNetworks(AuthenticationInformation.GetTenantId(), dataCenterLimitsId);
+            return GetExternalNetworks(TenantId, dataCenterLimitsId);
         }
 
         public override VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId)
@@ -703,7 +704,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetwork GetExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int id)
         {
-            return GetExternalNetwork(AuthenticationInformation.GetTenantId(), dataCenterLimitsId, id);
+            return GetExternalNetwork(TenantId, dataCenterLimitsId, id);
         }
 
         public override VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id)
@@ -718,7 +719,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
         {
-            return GetIpsOfExternalNetwork(AuthenticationInformation.GetTenantId(), dataCenterLimitsId,
+            return GetIpsOfExternalNetwork(TenantId, dataCenterLimitsId,
                 externalNetworkId, free);
         }
 

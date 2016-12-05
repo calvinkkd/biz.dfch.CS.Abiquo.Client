@@ -88,7 +88,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; FAILED with TenantId &apos;{1}&apos;..
+        ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; FAILED..
         /// </summary>
         public static string EnterServerLoginFailed0 {
             get {

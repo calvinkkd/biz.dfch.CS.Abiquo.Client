@@ -131,9 +131,8 @@
     <comment>0: Uri.AbsoluteUri</comment>
   </data>
   <data name="EnterServerLoginFailed0" xml:space="preserve">
-    <value>Logging in to '{0}' FAILED with TenantId '{1}'.</value>
-    <comment>0: Uri.AbsoluteUri
-1: authInfo.GetTenantId()</comment>
+    <value>Logging in to '{0}' FAILED.</value>
+    <comment>0: Uri.AbsoluteUri</comment>
   </data>
   <data name="EnterServerLoginFailed1" xml:space="preserve">
     <value>Login to '{0}' FAILED.</value>
