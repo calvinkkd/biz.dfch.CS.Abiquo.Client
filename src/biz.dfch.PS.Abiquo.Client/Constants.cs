@@ -21,7 +21,7 @@ namespace biz.dfch.PS.Abiquo.Client
     /// <summary>
     /// Public constants used by this module
     /// </summary>
-    public class Constants
+    public static class Constants
     {
         private const int EVENT_ID_OFFSET = 64;
 
@@ -102,24 +102,6 @@ namespace biz.dfch.PS.Abiquo.Client
             /// </summary>
             GetVirtualApplianceVirtualDataCenterNotFound,
 
-
-
-            ////////////////////////////////////////////////////////////////////////////
-            //
-            // !!! this is the last enum - no other definitions after this one !!!
-            //
-            ////////////////////////////////////////////////////////////////////////////
-            
-            /// <summary>
-            /// ContractFailedEventHandler
-            /// </summary>
-            ContractFailedEventHandler = ushort.MaxValue
-            
-            ////////////////////////////////////////////////////////////////////////////
-            //
-            // !!! this is the last enum - no other definitions after this one !!!
-            //
-            ////////////////////////////////////////////////////////////////////////////
         }
     }
 }
