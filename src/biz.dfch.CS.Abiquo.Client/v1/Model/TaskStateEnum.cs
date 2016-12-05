@@ -22,10 +22,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         ,	
         FINISHED_UNSUCCESSFULLY
         ,
+        QUEUEING
+        ,
         PENDING
         ,
         STARTED
         ,
         ABORTED
+        ,
+        CANCELLED
+        ,
+        ACK_ERROR
     }
 }

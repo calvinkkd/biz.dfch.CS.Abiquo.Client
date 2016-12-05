@@ -105,5 +105,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         SPEC_EXTERNAL_NETWORKS
         ,
         SPEC_FLOATING_IPS
+        ,
+
+        // Virtual machine action plan
+        SEND_EMAIL
     }
 }

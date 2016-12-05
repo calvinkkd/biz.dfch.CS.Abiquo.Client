@@ -88,5 +88,18 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int RamMin { get; set; }
         
         public int RamMax { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DiskControllerTypeEnum DiskControllerType { get; set; }
+
+        public string DiskController { get; set; }
+
+        public long DiskFileSize{ get; set; }
+
+        public string DiskFormatType { get; set; }
+
+        public long HdRequired { get; set; }
+
+        public string Path { get; set; }
     }
 }

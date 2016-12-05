@@ -40,8 +40,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public long DiskSoftLimitInMb { get; set; }
 
         [Required]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public HypervisorTypeEnum HypervisorType { get; set; }
+        public string HypervisorType { get; set; }
 
         public int Id { get; set; }
 

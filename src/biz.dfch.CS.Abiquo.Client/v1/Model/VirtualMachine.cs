@@ -67,7 +67,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-VirtualMachineMediaType
         public bool VdrpEnabled { get; set; }
         
-        public string Type { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public VirtualMachineTypeEnum Type { get; set; }
         
         public string Label { get; set; }
         

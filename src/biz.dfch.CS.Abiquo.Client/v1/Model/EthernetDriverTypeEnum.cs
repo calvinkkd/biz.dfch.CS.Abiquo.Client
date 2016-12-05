@@ -23,5 +23,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         VMXNET3
         ,
         E1000
+        ,
+        VIRTIO
     }
 }

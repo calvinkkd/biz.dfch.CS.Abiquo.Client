@@ -78,5 +78,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         [Range(0, Int64.MaxValue)]
         public long VlansSoft { get; set; }
+
+        //extended
+        [Range(0, Int64.MaxValue)]
+        public long HdSoftLimitInMb { get; set; }
+
+        [Range(0, Int64.MaxValue)]
+        public long HdHardLimitInMb { get; set; }
     }
 }
