@@ -53,7 +53,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         public bool FirstLogin { get; set; }
 
-        public Privileges Expands { get; set; }
+        public Privileges Privileges { get; set; }
+
+        public string PublicSshKey { get; set; }
 
         public int GetEnterpriseId()
         {
