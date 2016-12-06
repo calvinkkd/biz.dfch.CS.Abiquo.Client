@@ -73,6 +73,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         ,
         SYNC_PCR_NO_VPC
         ,
+
         // Virtual Appliance
         MATERIALIZE_SPEC
         ,
