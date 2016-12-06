@@ -36,7 +36,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string NodeConnections {get; set; }
         
         public int PublicApp { get; set; }
-        
+
         [JsonConverter(typeof(StringEnumConverter))]
         public VirtualApplianceStateEnum State { get; set; }
         

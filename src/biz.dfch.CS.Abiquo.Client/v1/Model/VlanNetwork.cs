@@ -60,5 +60,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool Strict { get; set; }
 
         public string ProviderId { get; set; }
+
+        public string GlobalNetworkProviderId { get; set; }
     }
 }

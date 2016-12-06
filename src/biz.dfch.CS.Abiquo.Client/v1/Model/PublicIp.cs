@@ -33,5 +33,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string NetworkName { get; set; }
         
         public string Quarantine { get; set; }
+
+        public string ProviderId { get; set; }
     }
 }

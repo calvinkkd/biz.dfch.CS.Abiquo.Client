@@ -86,6 +86,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         ,
         VIRTUAL_MACHINES
         ,
+        CHECK_DEPENDENCIES
+        ,
 
         // Virtual Appliance Spec
         SPEC_CHEF_VALIDATION
@@ -105,5 +107,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         SPEC_EXTERNAL_NETWORKS
         ,
         SPEC_FLOATING_IPS
+        ,
+
+        // Virtual machine action plan
+        SEND_EMAIL
     }
 }

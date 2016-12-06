@@ -31,5 +31,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string RepositoryLocation { get; set; }
 
         public long RepositoryRemainingMb { get; set; }
+
+        public Task LastTask { get; set; }
     }
 }

@@ -71,12 +71,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         // Public cloud region
         SYNC_PCR
         ,
-        
+        SYNC_PCR_NO_VPC
+        ,
+
         // Virtual Appliance
         MATERIALIZE_SPEC
         ,
 
         // Virtual machine
         EXECUTE_VM_ACTION_PLAN
+        ,
+        SEND_EMAIL
     }
 }

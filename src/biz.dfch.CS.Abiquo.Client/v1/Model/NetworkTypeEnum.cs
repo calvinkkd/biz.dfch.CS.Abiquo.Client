@@ -24,8 +24,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         ,
         EXTERNAL
         ,
-        EXTERNAL_UNMANAGED
-        ,
         UNMANAGED
     }
 }

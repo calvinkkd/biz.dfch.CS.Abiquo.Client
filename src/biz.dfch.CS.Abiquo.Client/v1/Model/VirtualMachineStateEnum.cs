@@ -18,20 +18,44 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public enum VirtualMachineStateEnum
     {
+        /// <summary>
+        /// The virtual machine only exists in Abiquo and has not yet a physical machine assigned.
+        /// </summary>
         NOT_ALLOCATED
         ,
+        /// <summary>
+        /// The virtual machine does not exists in the hypervisor but has physical machine assigned.
+        /// </summary>
         ALLOCATED
         ,
+        /// <summary>
+        /// The virtual machine exists in the hypervisor.
+        /// </summary>
         CONFIGURED
         ,
+        /// <summary>
+        /// The virtual machine exists in the hypervisor and is ON.
+        /// </summary>
         ON
         ,
+        /// <summary>
+        /// The virtual machine exists in the hypervisor and is SUSPENDED.
+        /// </summary>
         PAUSED
         ,
+        /// <summary>
+        /// The virtual machine exists in the hypervisor and is OFF.
+        /// </summary>
         OFF
         ,
+        /// <summary>
+        /// Some operation is being performed on the virtual machine.
+        /// </summary>
         LOCKED
         ,
+        /// <summary>
+        /// Abiquo does know the actual state of the virtual machine. But it exists in the hypervisor.
+        /// </summary>
         UNKNOWN
     }
 }

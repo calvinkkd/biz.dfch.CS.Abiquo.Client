@@ -63,11 +63,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         public int? VdrpPort { get; set; }
 
-        // The following properties get delivered by the rest response, but are not mentioned in the wiki 
-        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-VirtualMachineMediaType
         public bool VdrpEnabled { get; set; }
         
-        public string Type { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public VirtualMachineTypeEnum Type { get; set; }
         
         public string Label { get; set; }
         
