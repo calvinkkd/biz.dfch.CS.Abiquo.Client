@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.PS.Abiquo.Client</id>
-        <version>2.0.0</version>
+        <version>3.0.0</version>
         <title>biz.dfch.PS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -24,18 +24,17 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>PowerShell Client for Abiquo</summary>
-        <releaseNotes>20161205
+        <releaseNotes>20161206
 # FEATURES
 
-* initial release
-
-* added Cmdlets
-	* Enter-AbqServer
-	* Get-AbqEnterprise
-	* Get-AbqMachine
-	* Get-AbqVirtualAppliance
-	* Get-AbqVirtualDataCenter
-	* Import-AbqConfiguration
+* Initial release
+* Signed assembly with strong name key
+* Added DefaultTraceListener to TraceSource
+* Enter-Server Cmdlet
+* Get-Machine Cmdlet
+* Get-Enterprise Cmdlet
+* Get-VirtualDataCenter Cmdlet
+* Get-VirtualAppliance Cmdlet
 		</releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client PowerShell</tags>
