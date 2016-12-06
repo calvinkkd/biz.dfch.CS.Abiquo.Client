@@ -57,7 +57,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Password = settings.Password;
             TenantId = settings.TenantId;
 
-            AuthenticationInformation = new BasicAuthenticationInformation(Username, Password, TenantId);
+            AuthenticationInformation = new BasicAuthenticationInformation(Username, Password);
         }
 
         public static string AbiquoApiBaseUri { get; set; }

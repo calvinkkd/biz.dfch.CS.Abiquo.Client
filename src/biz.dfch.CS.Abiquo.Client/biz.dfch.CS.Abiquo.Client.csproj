@@ -223,6 +223,7 @@
     <Compile Include="v1\Model\VlanNetworks.cs" />
     <Compile Include="v1\Model\VmNetworkConfiguration.cs" />
     <Compile Include="v1\Model\VmNetworkConfigurations.cs" />
+    <Compile Include="v1\VirtualMachineExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

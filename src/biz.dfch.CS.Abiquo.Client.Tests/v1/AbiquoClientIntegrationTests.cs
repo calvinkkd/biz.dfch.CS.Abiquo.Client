@@ -55,6 +55,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             ServerCertificateValidationCallback.Ignore();
         }
 
+
         #region Login
 
         [TestMethod]
@@ -75,7 +76,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var basicAuthInfo = new BasicAuthenticationInformation("invalid-username", "invalid-password", IntegrationTestEnvironment.TenantId);
+            var basicAuthInfo = new BasicAuthenticationInformation("invalid-username", "invalid-password");
 
             // Act
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, basicAuthInfo);
@@ -137,7 +138,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(currentEnterprise);
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), currentEnterprise.Id);
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, currentEnterprise.Id);
         }
 
         [TestMethod]
@@ -148,12 +149,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             // Act
-            var enterprise = abiquoClient.GetEnterprise(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId());
+            var enterprise = abiquoClient.GetEnterprise(IntegrationTestEnvironment.TenantId);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
             Assert.IsNotNull(enterprise);
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), enterprise.Id);
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, enterprise.Id);
         }
 
         [TestMethod]
@@ -383,8 +384,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(userInformation);
             Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
             
-            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+            var enterpriseHref = userInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href;
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));
         }
 
         [TestMethod]
@@ -402,8 +403,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(userInformation);
             Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
 
-            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
-            Assert.AreEqual(IntegrationTestEnvironment.AuthenticationInformation.GetTenantId(), UriHelper.ExtractIdAsInt(enterpriseHref));
+            var enterpriseHref = userInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href;
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));
         }
 
         [TestMethod]
@@ -421,8 +422,39 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(userInformation);
             Assert.AreEqual(IntegrationTestEnvironment.Username, userInformation.Nick);
 
-            var enterpriseHref = userInformation.GetLinkByRel("enterprise").Href;
+            var enterpriseHref = userInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href;
             Assert.AreEqual(IntegrationTestEnvironment.TenantId, UriHelper.ExtractIdAsInt(enterpriseHref));
+        }
+
+        [TestMethod]
+        public void SwitchEnterpriseSwitchesToSpecifiedEnterpriseAndUpdatesCurrentUserInformation()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var enterprises = abiquoClient.GetEnterprises();
+            Contract.Assert(null != enterprises);
+            Contract.Assert(1 < enterprises.Collection.Count);
+
+            var enterpriseToSwitchTo =
+                enterprises.Collection.FirstOrDefault(e => e.Id != IntegrationTestEnvironment.TenantId);
+            Contract.Assert(null != enterpriseToSwitchTo);
+
+            // Act
+            abiquoClient.SwitchEnterprise(enterpriseToSwitchTo);
+
+            // Assert
+            var currentUser = abiquoClient.GetUserInformation();
+
+            Assert.IsTrue(loginSucceeded);
+
+            var enterpriseHrefOfCurrentUserInformation = abiquoClient.CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href;
+            Assert.AreEqual(enterpriseToSwitchTo.Id, UriHelper.ExtractIdAsInt(enterpriseHrefOfCurrentUserInformation));
+            Assert.AreEqual(enterpriseToSwitchTo.Id, UriHelper.ExtractIdAsInt(currentUser.GetLinkByRel(AbiquoRelations.ENTERPRISE).Href));
+
+            // Cleanup
+            abiquoClient.SwitchEnterprise(IntegrationTestEnvironment.TenantId);
         }
 
         #endregion Users
@@ -2168,6 +2200,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         #endregion Networks
 
+
+        #region AttachNetwork
+
         [TestMethod]
         public void AttachNetworkToNotDeployedVirtualMachineSucceeds()
         {
@@ -2367,5 +2402,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(publicIpToBePurchased.NetworkName, releasedPublicIp.NetworkName);
             Assert.AreEqual(publicIpToBePurchased.Quarantine, releasedPublicIp.Quarantine);
         }
+
+        #endregion AttachNetwork
     }
 }

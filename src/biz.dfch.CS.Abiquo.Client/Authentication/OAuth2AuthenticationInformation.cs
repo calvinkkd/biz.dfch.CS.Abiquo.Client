@@ -22,15 +22,12 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
     public class OAuth2AuthenticationInformation : IAuthenticationInformation
     {
         private readonly string _oAuth2Token;
-        private int _tenantId;
 
-        public OAuth2AuthenticationInformation(string oAuth2Token, int tenantId)
+        public OAuth2AuthenticationInformation(string oAuth2Token)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(oAuth2Token));
-            Contract.Requires(0 < tenantId);
 
             _oAuth2Token = oAuth2Token;
-            _tenantId = tenantId;
         }
 
         public IDictionary<string, string> GetAuthorizationHeaders()
@@ -43,11 +40,6 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             };
 
             return headers;
-        }
-
-        public int GetTenantId()
-        {
-            return _tenantId;
         }
     }
 }

@@ -37,10 +37,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const string VIRTUALMACHINETEMPLATE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
-        private const int TENANT_ID = 1;
         private const int INVALID_ID = 0;
 
-        private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+        private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD);
         private const string BEARER_TOKEN = "Bearer ARBITRARY_TOKEN";
 
         private BaseAbiquoClient sut = new DummyAbiquoClient();
@@ -67,10 +66,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Type = TaskTypeEnum.DEPLOY
         };
 
-        private readonly VirtualMachineState virtualMachineState = new VirtualMachineState()
+        private readonly VirtualMachineState _virtualMachineState = new VirtualMachineState()
         {
             State = VirtualMachineStateEnum.ON
         };
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTenantIdBeforeLoginThrowsContractException()
+        {
+            // Arrange
+            sut.Logout();
+
+            // Act
+            var tenantId = sut.TenantId;
+
+            // Assert
+        }
 
         [TestMethod]
         [ExpectContractFailure]
@@ -551,6 +563,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetUserInformation(42, " ");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void SwitchEnterpriseWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.SwitchEnterprise(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void SwitchEnterpriseWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.SwitchEnterprise(INVALID_ID);
 
             // Assert
         }
@@ -1057,7 +1093,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, virtualMachineState);
+            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, _virtualMachineState);
 
             // Assert
         }
@@ -1069,7 +1105,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, virtualMachineState);
+            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, _virtualMachineState);
 
             // Assert
         }
@@ -1081,7 +1117,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, virtualMachineState);
+            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, _virtualMachineState);
 
             // Assert
         }
@@ -1093,7 +1129,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, virtualMachineState, true);
+            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, _virtualMachineState, true);
 
             // Assert
         }
@@ -1105,7 +1141,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, virtualMachineState, true);
+            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, _virtualMachineState, true);
 
             // Assert
         }
@@ -1117,7 +1153,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, virtualMachineState, true);
+            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, _virtualMachineState, true);
 
             // Assert
         }
@@ -2017,6 +2053,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new User();
             }
 
+            public override void SwitchEnterprise(Enterprise enterprise)
+            {
+                // Intentionally do nothing
+            }
+
+            public override void SwitchEnterprise(int id)
+            {
+                // Intentionally do nothing
+            }
+
             public override Roles GetRoles()
             {
                 return new Roles();
@@ -2342,6 +2388,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override User GetUserInformation(int enterpriseId, string username)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SwitchEnterprise(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SwitchEnterprise(int id)
             {
                 throw new NotImplementedException();
             }

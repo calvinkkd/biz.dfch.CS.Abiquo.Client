@@ -32,6 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         
         public const string USERSWITHROLES_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
         public const string USER_BY_ENTERPRISE_ID_AND_USER_ID = "/admin/enterprises/{0}/users/{1}";
+        public const string SWITCH_ENTERPRISE_BY_USER_ID = "/admin/enterprises/_/users/{0}";
        
         #endregion Users
 

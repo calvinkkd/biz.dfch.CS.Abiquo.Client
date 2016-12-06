@@ -61,15 +61,6 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}: {1}.
-        /// </summary>
-        public static string ContractFailedEventHandler {
-            get {
-                return ResourceManager.GetString("ContractFailedEventHandler", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Invalid ParameterSetName &apos;{0}&apos; detected..
         /// </summary>
         public static string EnterServerInvalidParameterSetName {
@@ -88,7 +79,7 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; FAILED with TenantId &apos;{1}&apos;..
+        ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; FAILED..
         /// </summary>
         public static string EnterServerLoginFailed0 {
             get {
@@ -106,15 +97,6 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login to &apos;{0}&apos; FAILED with tenant id {1} at second attempt..
-        /// </summary>
-        public static string EnterServerLoginFailed2 {
-            get {
-                return ResourceManager.GetString("EnterServerLoginFailed2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Logging in to &apos;{0}&apos; SUCCEEDED..
         /// </summary>
         public static string EnterServerLoginSucceeded {
@@ -124,38 +106,11 @@ namespace biz.dfch.PS.Abiquo.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login to &apos;{0}&apos; FAILED with StatusCode {1} and message &apos;{1}&apos;..
-        /// </summary>
-        public static string EnterServerLoginWebException {
-            get {
-                return ResourceManager.GetString("EnterServerLoginWebException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Uri &apos;{0}&apos; and ParameterSetName &apos;{1}&apos;..
         /// </summary>
         public static string EnterServerShouldProcess {
             get {
                 return ResourceManager.GetString("EnterServerShouldProcess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot find enterprise with id &apos;{0}&apos;..
-        /// </summary>
-        public static string GetEnterpriseIdNotFound {
-            get {
-                return ResourceManager.GetString("GetEnterpriseIdNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot find enterprise with name &apos;{0}&apos;..
-        /// </summary>
-        public static string GetEnterpriseNameNotFound {
-            get {
-                return ResourceManager.GetString("GetEnterpriseNameNotFound", resourceCulture);
             }
         }
         

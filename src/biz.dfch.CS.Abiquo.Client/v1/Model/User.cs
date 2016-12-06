@@ -56,11 +56,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public Privileges Privileges { get; set; }
 
         public string PublicSshKey { get; set; }
-
-        public int GetEnterpriseId()
-        {
-            var enterpriseLink = this.GetLinkByRel(AbiquoRelations.ENTERPRISE);
-            return UriHelper.ExtractIdAsInt(enterpriseLink.Href);
-        }
     }
 }

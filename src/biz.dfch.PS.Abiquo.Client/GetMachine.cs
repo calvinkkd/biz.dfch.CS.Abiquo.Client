@@ -80,6 +80,8 @@ namespace biz.dfch.PS.Abiquo.Client
         /// VirtualDataCenterId
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.LIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSets.ID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSets.NAME)]
         [ValidateRange(1, int.MaxValue)]
         [Alias("vdc")]
         public int VirtualDataCenterId { get; set; }
@@ -88,6 +90,8 @@ namespace biz.dfch.PS.Abiquo.Client
         /// VirtualApplianceId
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.LIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSets.ID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSets.NAME)]
         [ValidateRange(1, int.MaxValue)]
         [Alias("vapp")]
         public int VirtualApplianceId { get; set; }
@@ -148,11 +152,29 @@ namespace biz.dfch.PS.Abiquo.Client
 
         private void ProcessParameterSetId()
         {
-            var collection = ModuleConfiguration.Current.Client
-                                 .GetAllVirtualMachines()
-                                 .Collection ?? new List<VirtualMachine>();
+            var result = default(VirtualMachine);
 
-            var result = collection.FirstOrDefault(e => e.Id.HasValue && e.Id.Value == Id);
+            if (MyInvocation.BoundParameters.ContainsKey("VirtualDataCenterId") ||
+                MyInvocation.BoundParameters.ContainsKey("VirtualApplianceId"))
+            {
+                try
+                {
+                    result = ModuleConfiguration.Current.Client.GetVirtualMachine(VirtualDataCenterId, VirtualApplianceId, Id);
+                }
+                catch (Exception ex)
+                {
+                    WriteError(ErrorRecordFactory.GetGeneric(ex));
+                }
+            }
+            else
+            {
+                var collection = ModuleConfiguration.Current.Client
+                                     .GetAllVirtualMachines()
+                                     .Collection ?? new List<VirtualMachine>();
+
+                result = collection.FirstOrDefault(e => e.Id.HasValue && e.Id.Value == Id);
+                
+            }
 
             if (null == result)
             {

@@ -25,17 +25,14 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
     {
         private readonly string _username;
         private readonly string _password;
-        private int _tenantId;
 
-        public BasicAuthenticationInformation(string username, string password, int tenantId)
+        public BasicAuthenticationInformation(string username, string password)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(username));
             Contract.Requires(!string.IsNullOrWhiteSpace(password));
-            Contract.Requires(0 < tenantId);
 
             _username = username;
             _password = password;
-            _tenantId = tenantId;
         }
 
         public IDictionary<string, string> GetAuthorizationHeaders()
@@ -55,11 +52,6 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             var base64EncodedAuthorizationHeaderValue = Convert.ToBase64String(plainTextBytes);
 
             return string.Format(Constants.Authentication.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
-        }
-
-        public int GetTenantId()
-        {
-            return _tenantId;
         }
     }
 }

@@ -25,11 +25,5 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
         /// </summary>
         /// <returns>Authorization headers</returns>
         IDictionary<string, string> GetAuthorizationHeaders(); 
-
-        /// <summary>
-        /// The Abiquo enterprise Id
-        /// </summary>
-        /// <returns>Current tenant Id</returns>
-        int GetTenantId();
     }
 }

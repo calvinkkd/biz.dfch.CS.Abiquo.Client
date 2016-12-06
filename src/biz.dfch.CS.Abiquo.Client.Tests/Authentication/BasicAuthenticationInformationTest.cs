@@ -25,7 +25,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
     {
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
-        private const int TENANT_ID = 1;
 
         [TestMethod]
         [ExpectContractFailure]
@@ -34,7 +33,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             // Arrange
             
             // Act
-            new BasicAuthenticationInformation(null, PASSWORD, TENANT_ID);
+            new BasicAuthenticationInformation(null, PASSWORD);
 
             // Assert
         }
@@ -46,7 +45,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             // Arrange
             
             // Act
-            new BasicAuthenticationInformation(" ", PASSWORD, TENANT_ID);
+            new BasicAuthenticationInformation(" ", PASSWORD);
 
             // Assert
         }
@@ -58,7 +57,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             // Arrange
             
             // Act
-            new BasicAuthenticationInformation(USERNAME, null, TENANT_ID);
+            new BasicAuthenticationInformation(USERNAME, null);
 
             // Assert
         }
@@ -70,19 +69,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             // Arrange
             
             // Act
-            new BasicAuthenticationInformation(USERNAME, " ", TENANT_ID);
-
-            // Assert
-        }
-
-        [TestMethod]
-        [ExpectContractFailure]
-        public void CreateBasicAuthenticationInformationWithInvalidTenantIdThrowsContractException()
-        {
-            // Arrange
-            
-            // Act
-            new BasicAuthenticationInformation(USERNAME, PASSWORD, 0);
+            new BasicAuthenticationInformation(USERNAME, " ");
 
             // Assert
         }
@@ -91,7 +78,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
         public void GetAuthenticationHeadersReturnsBasicAuthenticationHeader()
         {
             // Arrange
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD);
 
             // Act
             var authHeaders = basicAuthInfo.GetAuthorizationHeaders();
@@ -101,19 +88,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
             Assert.AreEqual(1, authHeaders.Keys.Count);
 
             Assert.AreEqual("Basic QXJiaXRyYXJ5VXNlcm5hbWU6QXJiaXRyYXJ5UGFzc3dvcmQ=", authHeaders[Client.Constants.Authentication.AUTHORIZATION_HEADER_KEY]);
-        }
-
-        [TestMethod]
-        public void GetTenantIdReturnsTenantId()
-        {
-            // Arrange
-            var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
-            
-            // Act
-            var tenantId = basicAuthInfo.GetTenantId();
-
-            // Assert
-            Assert.AreEqual(TENANT_ID, tenantId);
         }
     }
 }

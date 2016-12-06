@@ -25,6 +25,8 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
+        #region Login/Logout
+
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUri));
@@ -35,6 +37,8 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(bool);
         }
+
+        #endregion Login/Logout
 
 
         #region Enterprises
@@ -113,6 +117,16 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(!string.IsNullOrWhiteSpace(username));
 
             return default(User);
+        }
+
+        public override void SwitchEnterprise(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+        }
+
+        public override void SwitchEnterprise(int id)
+        {
+            Contract.Requires(0 < id);
         }
 
         #endregion Users

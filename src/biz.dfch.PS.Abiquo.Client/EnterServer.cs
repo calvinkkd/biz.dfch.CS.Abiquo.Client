@@ -112,8 +112,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the tenant id for the user to log in with. If you do not specify this parameter it will be retrieved at runtime
         /// </summary>
-        [Parameter(Mandatory = false, Position = 3, ParameterSetName = ParameterSets.PLAIN)]
-        [Parameter(Mandatory = false, Position = 2, ParameterSetName = ParameterSets.CREDENTIAL)]
+        [Parameter(Mandatory = false)]
         [Alias("tid")]
         [ValidateRange(TENANT_ID_DEFAULT_VALUE, int.MaxValue)]
         [PSDefaultValue(Value = TENANT_ID_DEFAULT_VALUE)]
@@ -123,6 +122,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// Use settings from ModuleContext variable to log in
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.MODULE_CONTEXT)]
+        [Alias("ctx", "context")]
         [PSDefaultValue(Value = false)]
         public SwitchParameter UseModuleContext { get; set; }
 
@@ -178,7 +178,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 }
                 else
                 {
-                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Error, (int) Constants.EventId.EnterServer, Messages.EnterServerLoginFailed0, Uri.AbsoluteUri, authInfo.GetTenantId());
+                    ModuleConfiguration.Current.TraceSource.TraceEvent(TraceEventType.Error, (int) Constants.EventId.EnterServer, Messages.EnterServerLoginFailed0, Uri.AbsoluteUri);
                 }
 
                 Contract.Assert(hasLoginSucceeded1, string.Format(Messages.EnterServerLoginFailed1, Uri.AbsoluteUri));
@@ -193,13 +193,7 @@ namespace biz.dfch.PS.Abiquo.Client
                 throw;
             }
 
-            // extract tenant id from current user information
-            var currentUserInformation = client.CurrentUserInformation;
-
-            // we set the tenant id if not specified during login
-            // and perform a second login with the correct id
-            // otherwise we just return the client and return
-            if (TENANT_ID_DEFAULT_VALUE != TenantId || currentUserInformation.GetEnterpriseId() == TenantId)
+            if (!MyInvocation.BoundParameters.ContainsKey("TenantId"))
             {
                 // return client
                 WriteObject(client);
@@ -207,13 +201,10 @@ namespace biz.dfch.PS.Abiquo.Client
                 return;
             }
 
-            // perform 2nd login
-            TenantId = currentUserInformation.GetEnterpriseId();
-            authInfo = GetAuthenticationInformation(parameterSetName);
+            // switch to specified tenant
             try
             {
-                var hasLoginSucceeded2 = client.Login(Uri.AbsoluteUri, authInfo);
-                Contract.Assert(hasLoginSucceeded2, string.Format(Messages.EnterServerLoginFailed2, Uri.AbsoluteUri, TenantId));
+                client.SwitchEnterprise(TenantId);
             }
             catch (AggregateException aggrex)
             {
@@ -227,8 +218,6 @@ namespace biz.dfch.PS.Abiquo.Client
 
             // return client
             WriteObject(client);
-
-            return;
         }
 
         private IAuthenticationInformation GetAuthenticationInformation(string parameterSetName)
@@ -240,15 +229,15 @@ namespace biz.dfch.PS.Abiquo.Client
             switch (parameterSetName)
             {
                 case ParameterSets.PLAIN:
-                    authInfo = new BasicAuthenticationInformation(Username, Password, TenantId);
+                    authInfo = new BasicAuthenticationInformation(Username, Password);
                     break;
                 case ParameterSets.CREDENTIAL:
                     Username = Credential.UserName;
                     Password = Credential.GetNetworkCredential().Password;
-                    authInfo = new BasicAuthenticationInformation(Username, Password, TenantId);
+                    authInfo = new BasicAuthenticationInformation(Username, Password);
                     break;
                 case ParameterSets.OAUTH2:
-                    authInfo = new OAuth2AuthenticationInformation(OAuth2Token, TenantId);
+                    authInfo = new OAuth2AuthenticationInformation(OAuth2Token);
                     break;
                 default:
                     // ReSharper disable once NotResolvedInText

@@ -150,6 +150,38 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
         [TestCategory("SkipOnTeamCity")]
         [TestMethod]
+        public void InvokeWithParameterSetPlainWithValidTenantSucceeds()
+        {
+            var uri = new Uri("httpS://abiquo.example.com/api/");
+            var user = "arbitrary-user";
+            var password = "arbitrary-password";
+            var tenantId = 42;
+            var parameters = string.Format(@"-Uri {0} -User '{1}' -Password '{2}' -TenantId {3}", uri, user, password, tenantId);
+
+            Mock.Arrange(() => Client.Login(Arg.IsAny<string>(), Arg.IsAny<IAuthenticationInformation>()))
+                .IgnoreInstance()
+                .Returns(true)
+                .MustBeCalled();
+            
+            Mock.Arrange(() => Client.SwitchEnterprise(tenantId))
+                .IgnoreInstance()
+                .DoNothing()
+                .MustBeCalled();
+
+            var results = PsCmdletAssert.Invoke(sut, parameters);
+            
+            Assert.IsNotNull(results);
+            Assert.AreEqual(1, results.Count);
+            Assert.IsInstanceOfType(results[0].BaseObject, typeof(BaseAbiquoClient));
+            var result = (BaseAbiquoClient) results[0].BaseObject;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(User.Id, result.CurrentUserInformation.Id);
+
+            Mock.Assert(Client);
+        }
+
+        [TestCategory("SkipOnTeamCity")]
+        [TestMethod]
         public void InvokeWithParameterSetCredSucceeds()
         {
             var uri = new Uri("httpS://abiquo.example.com/api/");
