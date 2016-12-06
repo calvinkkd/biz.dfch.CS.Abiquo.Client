@@ -112,8 +112,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// <summary>
         /// Specifies the tenant id for the user to log in with. If you do not specify this parameter it will be retrieved at runtime
         /// </summary>
-        [Parameter(Mandatory = false, Position = 3, ParameterSetName = ParameterSets.PLAIN)]
-        [Parameter(Mandatory = false, Position = 2, ParameterSetName = ParameterSets.CREDENTIAL)]
+        [Parameter(Mandatory = false)]
         [Alias("tid")]
         [ValidateRange(TENANT_ID_DEFAULT_VALUE, int.MaxValue)]
         [PSDefaultValue(Value = TENANT_ID_DEFAULT_VALUE)]
@@ -123,6 +122,7 @@ namespace biz.dfch.PS.Abiquo.Client
         /// Use settings from ModuleContext variable to log in
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSets.MODULE_CONTEXT)]
+        [Alias("ctx", "context")]
         [PSDefaultValue(Value = false)]
         public SwitchParameter UseModuleContext { get; set; }
 
