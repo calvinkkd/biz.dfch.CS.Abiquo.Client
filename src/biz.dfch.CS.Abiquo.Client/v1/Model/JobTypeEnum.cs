@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
@@ -93,6 +86,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         ,
         VIRTUAL_MACHINES
         ,
+        CHECK_DEPENDENCIES
+        ,
 
         // Virtual Appliance Spec
         SPEC_CHEF_VALIDATION
@@ -112,5 +107,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         SPEC_EXTERNAL_NETWORKS
         ,
         SPEC_FLOATING_IPS
+        ,
+
+        // Virtual machine action plan
+        SEND_EMAIL
     }
 }

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,21 +14,18 @@
  * limitations under the License.
  */
  
-﻿using System;
+ using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+ using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
-﻿using biz.dfch.CS.Web.Utilities.Rest;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Abiquo.Client.General;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-using biz.dfch.CS.Testing.Attributes;
+ using biz.dfch.CS.Commons;
+ using biz.dfch.CS.Commons.Rest;
+ using biz.dfch.CS.Testing.Attributes;
 using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests
@@ -36,14 +33,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
     [TestClass]
     public class BaseAbiquoClientTest
     {
-        private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
+        private const string ABIQUO_API_BASE_URI = "https://abiquo.example.com/api/";
         private const string VIRTUALMACHINETEMPLATE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
-        private const int TENANT_ID = 1;
         private const int INVALID_ID = 0;
 
-        private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD, TENANT_ID);
+        private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD);
         private const string BEARER_TOKEN = "Bearer ARBITRARY_TOKEN";
 
         private BaseAbiquoClient sut = new DummyAbiquoClient();
@@ -70,10 +66,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Type = TaskTypeEnum.DEPLOY
         };
 
-        private readonly VirtualMachineState virtualMachineState = new VirtualMachineState()
+        private readonly VirtualMachineState _virtualMachineState = new VirtualMachineState()
         {
             State = VirtualMachineStateEnum.ON
         };
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTenantIdBeforeLoginThrowsContractException()
+        {
+            // Arrange
+            sut.Logout();
+
+            // Act
+            var tenantId = sut.TenantId;
+
+            // Assert
+        }
 
         [TestMethod]
         [ExpectContractFailure]
@@ -146,9 +155,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var headers = new Dictionary<string, string>()
             {
-                { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                { Client.Constants.Authentication.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
                 ,
-                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
@@ -234,7 +243,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null, default(BaseDto));
+            sut.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, null, default(AbiquoBaseDto));
 
             // Assert
         }
@@ -254,9 +263,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var headers = new Dictionary<string, string>()
             {
-                { Constants.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                { Client.Constants.Authentication.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
                 ,
-                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
@@ -270,6 +279,134 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
             Assert.AreEqual("Arbitrary-Result", result);
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "links")]
+        public void InvokeOnNullLinksThrowsContractException()
+        {
+            var rel = "disk0";
+            var links = default(ICollection<Link>);
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "rel")]
+        public void InvokeOnNullRelThrowsContractException()
+        {
+            var rel = "   ";
+            var links = new List<Link>()
+            {
+                new LinkBuilder()
+                    .BuildRel(rel)
+                    .BuildHref("https://abiquo.example.com:443/api/cloud/virtualdatacenters/1/disks/42")
+                    .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                    .BuildType("application/vnd.abiquo.harddisk+json")
+                    .GetLink()
+            };
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "null.+link.+rel.+disk1")]
+        public void InvokeOnInexistingRelThrowsContractException()
+        {
+            var rel = "disk1";
+            var links = new List<Link>()
+            {
+                new LinkBuilder()
+                    .BuildRel("inexistent-rel")
+                    .BuildHref("https://abiquo.example.com:443/api/cloud/virtualdatacenters/1/disks/42")
+                    .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                    .BuildType("application/vnd.abiquo.harddisk+json")
+                    .GetLink()
+            };
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+        }
+
+        [TestMethod]
+        public void InvokeOnExistingRelSucceeds()
+        {
+            var rel = "disk1";
+            var href = "cloud/virtualdatacenters/1/disks/42";
+            var link = new LinkBuilder()
+                .BuildRel(rel)
+                .BuildHref(ABIQUO_API_BASE_URI + href)
+                .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                .BuildType("application/vnd.abiquo.harddisk+json")
+                .GetLink();
+            var links = new List<Link>()
+            {
+                link
+            };
+
+            var dicionaryParameers = new DictionaryParameters()
+            {
+                { "expected-key", "expected-value" }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
+                .IgnoreInstance()
+                .Returns(dicionaryParameers.SerializeObject())
+                .OccursOnce();
+            
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(links, rel);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result.ContainsKey("expected-key"));
+            Assert.IsTrue(result.ContainsValue("expected-value"));
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        public void InvokeWithAbsoluteUriSucceeds()
+        {
+            var rel = "disk1";
+            var href = "cloud/virtualdatacenters/1/disks/42";
+            var link = new LinkBuilder()
+                .BuildRel(rel)
+                .BuildHref(ABIQUO_API_BASE_URI + href)
+                .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                .BuildType("application/vnd.abiquo.harddisk+json")
+                .GetLink();
+
+            var dicionaryParameers = new DictionaryParameters()
+            {
+                { "expected-key", "expected-value" }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
+                .IgnoreInstance()
+                .Returns(dicionaryParameers.SerializeObject())
+                .OccursOnce();
+            
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(new Uri(link.Href));
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result.ContainsKey("expected-key"));
+            Assert.IsTrue(result.ContainsValue("expected-value"));
 
             Mock.Assert(restCallExecutor);
         }
@@ -426,6 +563,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetUserInformation(42, " ");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void SwitchEnterpriseWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.SwitchEnterprise(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void SwitchEnterpriseWithInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.SwitchEnterprise(INVALID_ID);
 
             // Assert
         }
@@ -932,7 +1093,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, virtualMachineState);
+            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, _virtualMachineState);
 
             // Assert
         }
@@ -944,7 +1105,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, virtualMachineState);
+            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, _virtualMachineState);
 
             // Assert
         }
@@ -956,7 +1117,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, virtualMachineState);
+            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, _virtualMachineState);
 
             // Assert
         }
@@ -968,7 +1129,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, virtualMachineState, true);
+            sut.ChangeStateOfVirtualMachine(INVALID_ID, 42, 42, _virtualMachineState, true);
 
             // Assert
         }
@@ -980,7 +1141,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, virtualMachineState, true);
+            sut.ChangeStateOfVirtualMachine(42, INVALID_ID, 42, _virtualMachineState, true);
 
             // Assert
         }
@@ -992,7 +1153,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, virtualMachineState, true);
+            sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, _virtualMachineState, true);
 
             // Assert
         }
@@ -1833,7 +1994,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
             {
-                AbiquoApiBaseUri = abiquoApiBaseUri;
+                AbiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
                 AuthenticationInformation = authenticationInformation;
                 CurrentUserInformation = new User();
 
@@ -1890,6 +2051,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public override User GetUserInformation(int enterpriseId, string username)
             {
                 return new User();
+            }
+
+            public override void SwitchEnterprise(Enterprise enterprise)
+            {
+                // Intentionally do nothing
+            }
+
+            public override void SwitchEnterprise(int id)
+            {
+                // Intentionally do nothing
             }
 
             public override Roles GetRoles()
@@ -2217,6 +2388,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override User GetUserInformation(int enterpriseId, string username)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SwitchEnterprise(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SwitchEnterprise(int id)
             {
                 throw new NotImplementedException();
             }

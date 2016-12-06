@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using System.IO;
 using biz.dfch.CS.Abiquo.Client.General;
@@ -38,7 +33,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterpriseJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\Enterprise.json");
 
             // Act
-            var enterprise = BaseDto.DeserializeObject<Enterprise>(enterpriseJsonFileContent);
+            var enterprise = AbiquoBaseDto.DeserializeObject<Enterprise>(enterpriseJsonFileContent);
 
             // Assert
             Assert.IsNotNull(enterprise.Links);
@@ -60,7 +55,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterprisesJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\Enterprises.json");
 
             // Act
-            var enterprises = BaseDto.DeserializeObject<Enterprises>(enterprisesJsonFileContent);
+            var enterprises = AbiquoBaseDto.DeserializeObject<Enterprises>(enterprisesJsonFileContent);
 
             // Assert
             Assert.IsNotNull(enterprises.Links);
@@ -85,7 +80,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var userJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\User.json");
 
             // Act
-            var user = BaseDto.DeserializeObject<User>(userJsonFileContent);
+            var user = AbiquoBaseDto.DeserializeObject<User>(userJsonFileContent);
 
             // Assert
             Assert.IsNotNull(user);
@@ -106,7 +101,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var usersWithRolesJsonFileContent = File.ReadAllText(@"..\..\JsonSamples\UsersWithRoles.json");
 
             // Act
-            var usersWithRoles = BaseDto.DeserializeObject<UsersWithRoles>(usersWithRolesJsonFileContent);
+            var usersWithRoles = AbiquoBaseDto.DeserializeObject<UsersWithRoles>(usersWithRolesJsonFileContent);
 
             // Assert
             Assert.IsNotNull(usersWithRoles.Links);

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,23 +14,21 @@
  * limitations under the License.
  */
  
-﻿using Newtonsoft.Json;
+ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+ using biz.dfch.CS.Commons;
 
 namespace biz.dfch.CS.Abiquo.Client.General
 {
-    public abstract class BaseDto
+    public abstract class AbiquoBaseDto : BaseDto
     {
         private static readonly JsonSerializerSettings _jsonSerializerSettings;
 
-        static BaseDto()
+        static AbiquoBaseDto()
         {
             _jsonSerializerSettings = new JsonSerializerSettings
             {
@@ -55,12 +53,12 @@ namespace biz.dfch.CS.Abiquo.Client.General
             _jsonSerializerSettings.MissingMemberHandling = missingMemberHandling;
         }
 
-        public string SerializeObject()
+        public override string SerializeObject()
         {
             return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
         }
 
-        public static object DeserializeObject(string value, Type type)
+        public new static object DeserializeObject(string value, Type type)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(value));
             Contract.Requires(null != type);
@@ -68,51 +66,11 @@ namespace biz.dfch.CS.Abiquo.Client.General
             return JsonConvert.DeserializeObject(value, type, _jsonSerializerSettings);
         }
 
-        public static T DeserializeObject<T>(string value)
+        public new static T DeserializeObject<T>(string value)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(value));
 
             return JsonConvert.DeserializeObject<T>(value, _jsonSerializerSettings);
-        }
-
-        [Pure]
-        public virtual bool IsValid()
-        {
-            if (0 < TryValidate().Count)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public virtual List<ValidationResult> GetValidationResults()
-        {
-            return TryValidate();
-        }
-
-        private List<ValidationResult> TryValidate()
-        {
-            var context = new ValidationContext(this, serviceProvider: null, items: null);
-            var results = new List<ValidationResult>();
-            Validator.TryValidateObject(this, context, results, true);
-            return results;
-        }
-
-
-        public virtual void Validate()
-        {
-            var results = TryValidate();
-            var isValid = 0 >= results.Count;
-
-            if (isValid)
-            {
-                return;
-            }
-
-            foreach (var result in results)
-            {
-                Contract.Assert(isValid, result.ErrorMessage);
-            }
         }
     }
 }

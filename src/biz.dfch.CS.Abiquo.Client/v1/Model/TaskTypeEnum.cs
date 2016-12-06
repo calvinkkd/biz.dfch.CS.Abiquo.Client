@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
@@ -78,12 +71,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         // Public cloud region
         SYNC_PCR
         ,
-        
+        SYNC_PCR_NO_VPC
+        ,
+
         // Virtual Appliance
         MATERIALIZE_SPEC
         ,
 
         // Virtual machine
         EXECUTE_VM_ACTION_PLAN
+        ,
+        SEND_EMAIL
     }
 }

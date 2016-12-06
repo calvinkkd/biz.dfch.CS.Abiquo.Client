@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +14,8 @@
  * limitations under the License.
  */
  
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-﻿using biz.dfch.CS.Abiquo.Client.v1;
+ using System;
+ using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Testing.Attributes;

@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
     [TestClass]
-    public class BaseDtoTest
+    public class AbiquoBaseDtoTest
     {
         private const string SAMPLE_DTO_NAME = "ArbitraryName";
         private const string SAMPLE_DTO_JSON_REPRESENTATION = @"{""name"":""ArbitraryName""}";
@@ -51,7 +51,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            BaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY);
+            AbiquoBaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY);
 
             // Assert
         }
@@ -60,17 +60,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
         public void DeserializationOfJsonWithPropertiesNotPresentOnObjectAfterSettingMemberHandlingToIgnoreSucceeds()
         {
             // Arrange
-            BaseDto.SetJsonSerializerMissingMemberHandling(MissingMemberHandling.Ignore);
+            AbiquoBaseDto.SetJsonSerializerMissingMemberHandling(MissingMemberHandling.Ignore);
 
             // Act
-            var sampleDto = BaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY);
+            var sampleDto = AbiquoBaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION_WITH_ADDITIONAL_PROPERTY);
 
             // Assert
             Assert.IsNotNull(sampleDto);
             Assert.IsFalse(string.IsNullOrWhiteSpace(sampleDto.Name));
 
             // Revert initial settings
-            BaseDto.SetJsonSerializerMissingMemberHandling(MissingMemberHandling.Error);
+            AbiquoBaseDto.SetJsonSerializerMissingMemberHandling(MissingMemberHandling.Error);
         }
 
         [TestMethod]
@@ -93,7 +93,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            BaseDto.DeserializeObject(null, typeof(SampleDto));
+            AbiquoBaseDto.DeserializeObject(null, typeof(SampleDto));
 
             // Assert
         }
@@ -104,7 +104,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            BaseDto.DeserializeObject(" ", typeof(SampleDto));
+            AbiquoBaseDto.DeserializeObject(" ", typeof(SampleDto));
 
             // Assert
         }
@@ -116,7 +116,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            BaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, null);
+            AbiquoBaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, null);
 
             // Assert
         }
@@ -127,7 +127,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            var sampleDto = BaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, typeof(SampleDto));
+            var sampleDto = AbiquoBaseDto.DeserializeObject(SAMPLE_DTO_JSON_REPRESENTATION, typeof(SampleDto));
 
             // Assert
             Assert.IsTrue(typeof(SampleDto) == sampleDto.GetType());
@@ -140,7 +140,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            var sampleDto = BaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION);
+            var sampleDto = AbiquoBaseDto.DeserializeObject<SampleDto>(SAMPLE_DTO_JSON_REPRESENTATION);
 
             // Assert
             Assert.IsTrue(typeof(SampleDto) == sampleDto.GetType());
@@ -224,7 +224,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
         }
 
-        private class SampleDto : BaseDto
+        private class SampleDto : AbiquoBaseDto
         {
             [Required(AllowEmptyStrings = false)]
             public string Name { get; set; }

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +14,14 @@
  * limitations under the License.
  */
  
-﻿using Newtonsoft.Json;
+ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VlanNetwork : AbiquoBaseDto
+    public class VlanNetwork : AbiquoLinkBaseDto
     {
         [Required]
         public string Address { get; set; }
@@ -65,5 +60,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool Strict { get; set; }
 
         public string ProviderId { get; set; }
+
+        public string GlobalNetworkProviderId { get; set; }
     }
 }

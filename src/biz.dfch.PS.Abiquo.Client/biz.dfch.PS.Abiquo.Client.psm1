@@ -1,52 +1,18 @@
-$fn = $MyInvocation.MyCommand.Name;
+#
+# module initialisation script goes here
+#
 
-trap { Log-Exception $_; break; }
+$traceSource = [biz.dfch.CS.Commons.Diagnostics.Logger]::Get([biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::LOGGER_NAME);
+$traceSource.TraceTransfer(0, ("[{0}] Host.InstanceId" -f $PID), $Host.InstanceId);
 
-Set-Variable gotoSuccess -Option 'Constant' -Value 'biz.dfch.System.Exception.gotoSuccess';
-Set-Variable gotoError -Option 'Constant' -Value 'biz.dfch.System.Exception.gotoError';
-Set-Variable gotoFailure -Option 'Constant' -Value 'biz.dfch.System.Exception.gotoFailure';
-Set-Variable gotoNotFound -Option 'Constant' -Value 'biz.dfch.System.Exception.gotoNotFound';
+$path = [biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::ResolveConfigurationFileInfo($null)
+$moduleContextSection = [biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::GetModuleContextSection($path);
+[biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::SetModuleContext($moduleContextSection)
 
-[string] $ModuleConfigFile = '{0}.xml' -f (Get-Item $PSCommandPath).BaseName;
-[string] $ModuleConfigurationPathAndFile = Join-Path -Path $PSScriptRoot -ChildPath $ModuleConfigFile;
-$mvar = $ModuleConfigFile.Replace('.xml', '').Replace('.', '_');
-if($true -eq (Test-Path -Path $ModuleConfigurationPathAndFile)) 
-{
-	if($true -ne (Test-Path variable:$($mvar))) 
-	{
-		Log-Debug $fn ("Loading module configuration file from: '{0}' ..." -f $ModuleConfigurationPathAndFile);
-		Set-Variable -Name $mvar -Value (Import-Clixml -Path $ModuleConfigurationPathAndFile);
-	}
-}
-
-if($true -ne (Test-Path variable:$($mvar))) 
-{
-	Write-Error "Could not find module configuration file '$ModuleConfigFile' in 'ENV:PSModulePath'.`nAborting module import...";
-	# Aborts loading module.
-	break;
-}
-
-Export-ModuleMember -Variable $mvar;
-
-[string] $ManifestFile = '{0}.psd1' -f (Get-Item $PSCommandPath).BaseName;
-$ManifestPathAndFile = Join-Path -Path $PSScriptRoot -ChildPath $ManifestFile;
-if(Test-Path -Path $ManifestPathAndFile)
-{
-	$Manifest = (Get-Content -raw $ManifestPathAndFile) | iex;
-	foreach( $ScriptToProcess in $Manifest.ScriptsToProcess) 
-	{ 
-		$ModuleToRemove = (Get-Item (Join-Path -Path $PSScriptRoot -ChildPath $ScriptToProcess)).BaseName;
-		if(Get-Module $ModuleToRemove)
-		{ 
-			Remove-Module $ModuleToRemove -ErrorAction:SilentlyContinue;
-		}
-	}
-}
-
-(Get-Variable -Name $mvar).Value.Credential = [System.Net.CredentialCache]::DefaultCredentials;
+Set-Variable -Name $([biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::MODULE_VARIABLE_NAME) -Value $([biz.dfch.PS.Abiquo.Client.ModuleConfiguration]::Current) -Scope Global;
 
 # 
-# Copyright 2014-2016 Ronald Rink, d-fens GmbH
+# Copyright 2014-2016 d-fens GmbH
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

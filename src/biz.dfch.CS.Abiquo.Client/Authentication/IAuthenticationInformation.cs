@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.Authentication
 {
@@ -29,11 +25,5 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
         /// </summary>
         /// <returns>Authorization headers</returns>
         IDictionary<string, string> GetAuthorizationHeaders(); 
-
-        /// <summary>
-        /// The Abiquo enterprise Id
-        /// </summary>
-        /// <returns>Current tenant Id</returns>
-        int GetTenantId();
     }
 }

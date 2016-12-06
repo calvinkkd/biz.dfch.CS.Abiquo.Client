@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
+
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-﻿using biz.dfch.CS.Abiquo.Client.Communication;
+using biz.dfch.CS.Abiquo.Client.Communication;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.General;
 using biz.dfch.CS.Testing.Attributes;
@@ -30,7 +25,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
     [TestClass]
     public class UriHelperTest
     {
-        private const string ABIQUO_API_BASE_URI = "https://abiquo/api/";
+        private const string ABIQUO_API_BASE_URI = "https://abiquo.example.com/api/";
 
         [TestMethod]
         [ExpectContractFailure]

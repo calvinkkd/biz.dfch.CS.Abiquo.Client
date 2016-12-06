@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,51 +14,14 @@
  * limitations under the License.
  */
  
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+ using System;
+ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DataCenterLimits : AbiquoBaseDto
+    public class DataCenterLimits : LimitsBaseDto
     {
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int CpuCountHardLimit { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int CpuCountSoftLimit { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long DiskHardLimitInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long DiskSoftLimitInMb { get; set; }
-
         public int Id { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long PublicIpsHard { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long PublicIpsSoft { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int RamHardLimitInMb { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int RamSoftLimitInMb { get; set; }
 
         [Required]
         [Range(0, Int64.MaxValue)]
@@ -67,21 +30,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         [Required]
         [Range(0, Int64.MaxValue)]
         public long RepositorySoftInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long StorageHardInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long StorageSoftInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long VlansHard { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long VlansSoft { get; set; }
     }
 }

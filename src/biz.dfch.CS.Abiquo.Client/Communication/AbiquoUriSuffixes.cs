@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.Communication
 {
-    public abstract class AbiquoUriSuffixes
+    public static class AbiquoUriSuffixes
     {
         public const string LOGIN = "/login";
 
@@ -39,6 +32,7 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         
         public const string USERSWITHROLES_BY_ENTERPRISE_ID = "/admin/enterprises/{0}/users";
         public const string USER_BY_ENTERPRISE_ID_AND_USER_ID = "/admin/enterprises/{0}/users/{1}";
+        public const string SWITCH_ENTERPRISE_BY_USER_ID = "/admin/enterprises/_/users/{0}";
        
         #endregion Users
 

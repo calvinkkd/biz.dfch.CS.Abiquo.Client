@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Linq;
-﻿using biz.dfch.CS.Abiquo.Client.v1;
+
+using System;
+using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Testing.Attributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -30,12 +29,35 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
         [ExpectContractFailure]
         [TestMethod]
-        public void BuildHrefWithNullValueThrowsContractException()
+        public void BuildHrefWithNullStringThrowsContractException()
         {
             // Arrange
 
             // Act
-            new LinkBuilder().BuildHref(null);
+            new LinkBuilder().BuildHref(href: null);
+
+            // Assert
+        }
+
+        [ExpectContractFailure]
+        [TestMethod]
+        public void BuildHrefWithNullUriThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            new LinkBuilder().BuildHref(uri: null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void BuildHrefWithValidUriSucceeds()
+        {
+            // Arrange
+
+            // Act
+            new LinkBuilder().BuildHref(new Uri(HREF));
 
             // Assert
         }
@@ -126,7 +148,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 .BuildHref(HREF)
                 .BuildRel(AbiquoRelations.VIRTUALMACHINETEMPLATE)
                 .BuildTitle(TITLE)
-                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_USER)
+                .BuildType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USER)
                 .GetLink();
 
             // Assert
@@ -134,7 +156,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(HREF, link.Href);
             Assert.AreEqual(AbiquoRelations.VIRTUALMACHINETEMPLATE, link.Rel);
             Assert.AreEqual(TITLE, link.Title);
-            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_USER, link.Type);
+            Assert.AreEqual(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USER, link.Type);
         }
     }
 }

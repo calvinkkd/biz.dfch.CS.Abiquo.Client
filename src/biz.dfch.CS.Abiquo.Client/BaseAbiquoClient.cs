@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,21 +14,22 @@
  * limitations under the License.
  */
  
-﻿using biz.dfch.CS.Abiquo.Client.Authentication;
-using biz.dfch.CS.Utilities.General;
-using biz.dfch.CS.Utilities.Logging;
-using biz.dfch.CS.Web.Utilities.Rest;
+using biz.dfch.CS.Abiquo.Client.Authentication;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.General;
-﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using Newtonsoft.Json;
+using biz.dfch.CS.Abiquo.Client.v1;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
+using biz.dfch.CS.Commons;
+using biz.dfch.CS.Commons.Diagnostics;
+using biz.dfch.CS.Commons.Rest;
+using Newtonsoft.Json;
+using Logger = biz.dfch.CS.Abiquo.Client.General.Logger;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("biz.dfch.CS.Abiquo.Client.Tests")]
 namespace biz.dfch.CS.Abiquo.Client
 {
     [ContractClass(typeof(ContractClassForBaseAbiquoClient))]
@@ -79,6 +80,24 @@ namespace biz.dfch.CS.Abiquo.Client
         public User CurrentUserInformation { get; protected set; }
 
         /// <summary>
+        /// Returns the Id of the enterprise/tenant based on the current user information,
+        /// which gets injected through the login method.
+        /// </summary>
+        public int TenantId
+        {
+            get
+            {
+                Contract.Requires(IsLoggedIn);
+                Contract.Requires(null != CurrentUserInformation);
+
+                var enterpriseLink = CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
+                Contract.Assert(null != enterpriseLink);
+
+                return UriHelper.ExtractIdAsInt(enterpriseLink.Href);
+            }
+        }
+
+        /// <summary>
         /// Polling wait time for task handling
         /// </summary>
         public int TaskPollingWaitTimeMilliseconds { get; set; }
@@ -87,9 +106,11 @@ namespace biz.dfch.CS.Abiquo.Client
         /// Timeout for task polling
         /// </summary>
         public int TaskPollingTimeoutMilliseconds { get; set; }
-        
+
         #endregion Properties
 
+
+        #region Contracts
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
@@ -99,24 +120,37 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Invariant(0 < TaskPollingTimeoutMilliseconds);
         }
 
+        #endregion Contracts
+
+
+        #region SerializationSettings
+
         public static void SetJsonSerializerMissingMemberHandling(MissingMemberHandling missingMemberHandling)
         {
-            BaseDto.SetJsonSerializerMissingMemberHandling(missingMemberHandling);
+            AbiquoBaseDto.SetJsonSerializerMissingMemberHandling(missingMemberHandling);
         }
+
+        #endregion SerializationSettings
+
+
+        #region Login
 
         public abstract bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation);
 
         public void Logout()
         {
-            Debug.WriteLine(string.Format("START {0}", Method.fn()));
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Logout, Method.GetName());
 
             IsLoggedIn = false;
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
             CurrentUserInformation = null;
 
-            Trace.WriteLine(string.Format("END {0} SUCCEEDED", Method.fn()));
+            Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.LogoutSucceeded, "{0} SUCCEEDED", Method.GetName());
         }
+
+        #endregion Login
+
 
         #region ExecuteRequest
 
@@ -132,8 +166,25 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(null != AuthenticationInformation);
 
             var requestUri = UriHelper.ConcatUri(AbiquoApiBaseUri, uriSuffix);
-            Debug.WriteLine(string.Format("START Executing request '{0} {1} - {2} - {3}' ...", httpMethod, requestUri, headers, body));
 
+            if (Logger.Current.Switch.ShouldTrace(TraceEventType.Start))
+            {
+                var headersString = new StringBuilder();
+                headersString.AppendLine();
+                var headersKeyCount = 0;
+                if (null != headers && 0 < headers.Count)
+                {
+                    foreach (var header in headers)
+                    {
+                        headersString.AppendFormat("{0}: {1}", header.Key, header.Value);
+                        headersString.AppendLine();
+                    }
+                    headersKeyCount = headers.Count;
+                }
+                var bodyLength = null != body ? body.Length : 0;
+                Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.ExecuteRequest, "Executing {0} {1} ...\r\nHeaders [{2}]:{3}Body [{4}]: {5}", httpMethod, requestUri, headersKeyCount, headersString, bodyLength, body);
+            }
+            
             var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
             if (null != headers)
             {
@@ -143,8 +194,8 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
-            Debug.WriteLine(string.Format("Executing request '{0} {1}' returned '{2}'", httpMethod, requestUri, result));
-            Trace.WriteLine(string.Format("END Executing request '{0} {1}' SUCCEEDED", httpMethod, requestUri));
+            Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.ExecuteRequest, "Executing {0} {1} COMPLETED.", httpMethod, requestUri);
+
             return result;
         }
 
@@ -153,35 +204,35 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Generic Invoke
 
-        public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : BaseDto
+        public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : AbiquoBaseDto
         {
             return Invoke<T>(HttpMethod.Get, uriSuffix, null, headers, default(string));
         }
 
         public T Invoke<T>(string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
-            where T : BaseDto
+            where T : AbiquoBaseDto
         {
             return Invoke<T>(HttpMethod.Get, uriSuffix, filter, headers, default(string));
         }
 
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers)
-            where T : BaseDto
+            where T : AbiquoBaseDto
         {
             return Invoke<T>(httpMethod, uriSuffix, filter, headers, default(string));
         }
 
         public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, string body) 
-            where T : BaseDto
+            where T : AbiquoBaseDto
         {
             var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
-            return BaseDto.DeserializeObject<T>(stringResponse);
+            return AbiquoBaseDto.DeserializeObject<T>(stringResponse);
         }
 
-        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
-            where T : BaseDto
+        public T Invoke<T>(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, AbiquoBaseDto body)
+            where T : AbiquoBaseDto
         {
             var stringResponse = Invoke(httpMethod, uriSuffix, filter, headers, body);
-            return BaseDto.DeserializeObject<T>(stringResponse);
+            return AbiquoBaseDto.DeserializeObject<T>(stringResponse);
         }
 
         #endregion Generic Invoke
@@ -211,7 +262,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(httpMethod, uriSuffix, null, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers, BaseDto body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, string> headers, AbiquoBaseDto body)
         {
             Contract.Requires(null != body);
 
@@ -223,7 +274,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return Invoke(httpMethod, uriSuffix, filter, headers, default(string));
         }
 
-        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, BaseDto body)
+        public string Invoke(HttpMethod httpMethod, string uriSuffix, IDictionary<string, object> filter, IDictionary<string, string> headers, AbiquoBaseDto body)
         {
             Contract.Requires(null != body);
 
@@ -236,19 +287,72 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(Uri.IsWellFormedUriString(uriSuffix, UriKind.Relative), "Invalid relative URI");
             Contract.Requires(IsLoggedIn, "Not logged in, call method login first");
 
-            Debug.WriteLine(string.Format("START calling invoke method ({0}, {1}, {2} - {3} - {4}) ...", httpMethod, uriSuffix, filter, headers, body));
-
             if (null != filter)
             {
                 var filterString = UriHelper.CreateFilterString(filter);
                 uriSuffix = string.Format("{0}?{1}", uriSuffix, filterString);
             }
 
+            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.Login, "Invoking {0} {1} ...", httpMethod, uriSuffix);
+
             var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Debug.WriteLine(string.Format("END calling invoke method ({0}, {1}, {2} - {3} - {4}) SUCCEEDED", httpMethod, uriSuffix, filter, headers, body));
+            Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, uriSuffix);
 
             return response;
+        }
+
+        public DictionaryParameters Invoke(Link link)
+        {
+            Contract.Requires(null != link);
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
+
+            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+
+            var result = new DictionaryParameters(response);
+            return result;
+        }
+
+        public DictionaryParameters Invoke(ICollection<Link> links, string rel)
+        {
+            Contract.Requires(null != links);
+            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
+
+            var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
+            Contract.Assert(null != link, string.Format("rel '{0}'", rel));
+
+            var response = Invoke(link);
+
+            var result = new DictionaryParameters(response);
+            return result;
+        }
+
+        public DictionaryParameters Invoke(ICollection<Link> links, string rel, string title)
+        {
+            Contract.Requires(null != links);
+            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
+            Contract.Requires(!string.IsNullOrWhiteSpace(title));
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
+
+            var link = links.FirstOrDefault(e => rel.Equals(e.Rel) && title.Equals(e.Title));
+            Contract.Assert(null != link, string.Format("rel '{0}', title '{1}'", rel, title));
+
+            var response = Invoke(link);
+
+            var result = new DictionaryParameters(response);
+            return result;
+        }
+
+        public DictionaryParameters Invoke(Uri absoluteUri)
+        {
+            Contract.Requires(null != absoluteUri);
+            Contract.Requires(absoluteUri.IsAbsoluteUri);
+
+            var response = ExecuteRequest(absoluteUri.AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+
+            var result = new DictionaryParameters(response);
+            return result;
         }
 
         #endregion Invoke
@@ -274,7 +378,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="id">Id of the enterprise/tenant</param>
         /// <returns>Enterprise</returns>
         public abstract Enterprise GetEnterprise(int id);
-        
+
         #endregion Enterprises
 
 
@@ -328,6 +432,26 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="username">identifier of the user</param>
         /// <returns>Information about the specified user in context of specified enterprise</returns>
         public abstract User GetUserInformation(int enterpriseId, string username);
+
+        /// <summary>
+        /// Switch to the specified enterprise/tenant
+        /// 
+        /// This functionality is only available to the 
+        /// cloud administrator and other users with the privileges
+        /// to "List all enterprises within scope" and "Allow user to switch enterprise"
+        /// </summary>
+        /// <param name="enterprise"></param>
+        public abstract void SwitchEnterprise(Enterprise enterprise);
+
+        /// <summary>
+        /// Switch to the specified enterprise/tenant
+        /// 
+        /// This functionality is only available to the 
+        /// cloud administrator and other users with the privileges
+        /// to "List all enterprises within scope" and "Allow user to switch enterprise"
+        /// </summary>
+        /// <param name="id"></param>
+        public abstract void SwitchEnterprise(int id);
 
         #endregion Users
 

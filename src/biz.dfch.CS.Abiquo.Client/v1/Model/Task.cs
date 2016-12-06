@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +14,14 @@
  * limitations under the License.
  */
  
-﻿using System;
-using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+ using System;
+ using System.ComponentModel.DataAnnotations;
+ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Task : AbiquoBaseDto
+    public class Task : AbiquoLinkBaseDto
     {
         public Jobs Jobs { get; set; }
 

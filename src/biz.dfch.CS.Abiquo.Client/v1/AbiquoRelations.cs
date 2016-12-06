@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
-    public abstract class AbiquoRelations
+    public static class AbiquoRelations
     {
+        public const string ENTERPRISE = "enterprise";
+        public const string USERS = "users";
         public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
+
+        public const string EDIT = "edit";
+        public const string FIRST = "first";
+        public const string LAST = "last";
+        public const string PROPERTEIS = "properties";
         public const string SELF = "self";
         public const string STATUS = "status";
-        public const string EDIT = "edit";
     }
 }

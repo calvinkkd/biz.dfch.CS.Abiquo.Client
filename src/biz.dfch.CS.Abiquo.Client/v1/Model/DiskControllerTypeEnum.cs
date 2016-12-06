@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,30 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using biz.dfch.CS.Abiquo.Client.General;
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    /// <summary>
-    /// Base DTO for Abiquo objects that contain Id, Name and Links
-    /// </summary>
-    public abstract class AbiquoBaseDto : BaseDto
+    public enum DiskControllerTypeEnum
     {
-        public List<Link> Links { get; set; }
-
-        public Link GetLinkByRel(string rel)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
-            Contract.Ensures(null != Contract.Result<Link>());
-
-            return Links.Find(l => l.Rel == rel);
-        }
+        IDE
+        ,
+        SCSI
+        ,
+        VIRTIO
     }
 }

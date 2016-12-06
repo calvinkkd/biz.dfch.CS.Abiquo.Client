@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
+
+using System;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
@@ -46,6 +42,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Contract.Requires(!string.IsNullOrWhiteSpace(href));
 
             _link.Href = href;
+            return this;
+        }
+        
+        public LinkBuilder BuildHref(Uri uri)
+        {
+            Contract.Requires(null != uri);
+
+            _link.Href = uri.AbsoluteUri;
             return this;
         }
 

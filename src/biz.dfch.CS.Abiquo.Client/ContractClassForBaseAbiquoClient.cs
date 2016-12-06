@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +14,9 @@
  * limitations under the License.
  */
  
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-﻿using biz.dfch.CS.Abiquo.Client.Authentication;
+ using System;
+ using System.Diagnostics.Contracts;
+ using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
@@ -29,6 +25,8 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
+        #region Login
+
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(abiquoApiBaseUri));
@@ -39,6 +37,8 @@ namespace biz.dfch.CS.Abiquo.Client
 
             return default(bool);
         }
+
+        #endregion Login
 
 
         #region Enterprises
@@ -117,6 +117,16 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(!string.IsNullOrWhiteSpace(username));
 
             return default(User);
+        }
+
+        public override void SwitchEnterprise(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+        }
+
+        public override void SwitchEnterprise(int id)
+        {
+            Contract.Requires(0 < id);
         }
 
         #endregion Users

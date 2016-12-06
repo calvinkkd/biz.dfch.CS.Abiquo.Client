@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
+
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Testing.Attributes;
@@ -30,10 +25,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
     [TestClass]
     public class AbiquoBaseCollectionDtoTest
     {
-        private const string FIRST_HREF = "https://abiquo/api/admin/enterprises?limit=25&by=name";
-        private const string LAST_HREF = "https://abiquo/api/admin/enterprises?startwith=0&limit=25&by=name";
-        private const string FIRST_REL = "first";
-        private const string LAST_REL = "last";
+        private const string FIRST_HREF = "https://abiquo.example.com/api/admin/enterprises?limit=25&by=name";
+        private const string LAST_HREF = "https://abiquo.example.com/api/admin/enterprises?startwith=0&limit=25&by=name";
 
         [TestMethod]
         public void GetLinkByRelWithExistingRelReturnsExpectedLink()
@@ -42,11 +35,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterprises = CreateEnterprisesWithLinks();
 
             // Act
-            var firstLink = enterprises.GetLinkByRel(FIRST_REL);
+            var firstLink = enterprises.GetLinkByRel(AbiquoRelations.FIRST);
 
             // Assert
             Assert.IsNotNull(firstLink);
-            Assert.AreEqual(FIRST_REL, firstLink.Rel);
+            Assert.AreEqual(AbiquoRelations.FIRST, firstLink.Rel);
             Assert.AreEqual(FIRST_HREF, firstLink.Href);
         }
 
@@ -58,7 +51,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterprises = CreateEnterprisesWithLinks();
 
             // Act
-            enterprises.GetLinkByRel("Arbitrary");
+            enterprises.GetLinkByRel("NonExistingRel");
 
             // Assert
         }
@@ -78,8 +71,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
 
         private Enterprises CreateEnterprisesWithLinks()
         {
-            var firstLink = new LinkBuilder().BuildRel(FIRST_REL).BuildHref(FIRST_HREF).GetLink();
-            var lastLink = new LinkBuilder().BuildRel(LAST_REL).BuildHref(LAST_HREF).GetLink();
+            var firstLink = new LinkBuilder().BuildRel(AbiquoRelations.FIRST).BuildHref(FIRST_HREF).GetLink();
+            var lastLink = new LinkBuilder().BuildRel(AbiquoRelations.LAST).BuildHref(LAST_HREF).GetLink();
 
             var enterprises = new Enterprises()
             {

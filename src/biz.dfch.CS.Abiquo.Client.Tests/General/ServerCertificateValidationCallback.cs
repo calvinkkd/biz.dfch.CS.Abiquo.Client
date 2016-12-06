@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace biz.dfch.CS.Abiquo.Client.Authentication
+using System.Net;
+
+namespace biz.dfch.CS.Abiquo.Client.Tests.General
 {
-    public abstract class Constants
+    public class ServerCertificateValidationCallback
     {
-        public const string AUTHORIZATION_HEADER_KEY = "Authorization";
-
-        public const string BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Basic {0}";
-        public const string BEARER_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Bearer {0}";
+        public static void Ignore()
+        {
+            ServicePointManager.ServerCertificateValidationCallback += 
+                delegate { return true; };
+        }
     }
 }

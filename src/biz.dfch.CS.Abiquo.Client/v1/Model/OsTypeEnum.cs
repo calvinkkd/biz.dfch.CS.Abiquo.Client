@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,114 +13,121 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
     public enum OsTypeEnum
     {
-        SUSE_64
-        ,
-        RHEL_64
-        ,
-        NOT_APPLICABLE
-        ,
-        SUSE
-        ,
-        OPENBSD
-        ,
-        SOLARIS_64
-        ,
-        WINDOWS_SERVER_2012
-        ,
-        MANDRIVA_64
-        ,
-        LINUX_2_4_64
-        ,
-        ESXI
-        ,
-        WINDOWS_SERVER_2003_64
-        ,
-        OTHER_64
-        ,
-        ORACLE_ENTERPRISE_LINUX
-        ,
-        SOLARIS
-        ,
-        UBUNTU_64
-        ,
-        WINDOWS_7
-        ,
-        NETBSD
-        ,
-        WINDOWS_SERVER_2008
-        ,
-        FREEBSD_64
-        ,
-        UNRECOGNIZED
-        ,
-        WINDOWS_SERVER_2011
-        ,
-        CENTOS_64
-        ,
-        WINDOWS
-        ,
-        TURBOLINUX
-        ,
-        LINUX_2_4
-        ,
-        WINDOWS_8
-        ,
-        WINDOWS_SERVER_2008_R2
-        ,
-        LINUX_64
-        ,
-        DEBIAN_64
-        ,
-        CENTOS
-        ,
-        WINDOWS_SERVER_2003
-        ,
-        ORACLE_ENTERPRISE_LINUX_64
-        ,
-        SLES_64
-        ,
-        RHEL
-        ,
-        WINDOWS_8_64
-        ,
-        NOVELL_OES
-        ,
-        WINDOWS_SERVER_2008_64
+        OTHER
         ,
         MACOS
         ,
-        FREEBSD
-        ,
-        SLES
-        ,
-        MANDRIVA
+
+
+        SOLARIS
         ,
         LINUX
         ,
+
+
+        FREEBSD
+        ,
+        NETBSD
+        ,
+
+
+        OPENBSD
+        ,
+        NOT_APPLICABLE
+        ,
+        WINDOWS
+        ,
+
+
+        WINDOWS_SERVER_2003
+        ,
+        WINDOWS_SERVER_2003_64
+        ,
+
+
+        WINDOWS_SERVER_2008
+        ,
+        WINDOWS_SERVER_2008_64
+        ,
+        FREEBSD_64
+        ,
+        RHEL
+        ,
+        RHEL_64
+        ,
+        SOLARIS_64
+        ,
+        SUSE
+        ,
+        SUSE_64
+        ,
+        SLES
+        ,
+        SLES_64
+        ,
+        NOVELL_OES
+        ,
+        
+
+        MANDRIVA
+        ,
+        MANDRIVA_64
+        ,
+        TURBOLINUX
+        ,
+        TURBOLINUX_64
+        ,
         UBUNTU
         ,
-        LINUX_2_6_64
-        ,
-        ECOMSTATION_32
-        ,
-        OTHER
-        ,
-        LINUX_2_6
+        UBUNTU_64
         ,
         DEBIAN
         ,
-        TURBOLINUX_64
+        DEBIAN_64
+        ,
+        LINUX_2_4
+        ,
+        LINUX_2_4_64
+        ,
+        LINUX_2_6
+        ,
+        LINUX_2_6_64
+        ,
+        LINUX_64
+        ,
+        OTHER_64
+        ,
+        WINDOWS_SERVER_2008_R2
+        ,
+        ESXI
+        ,
+        WINDOWS_7
+        ,
+        CENTOS
+        ,
+        CENTOS_64
+        ,
+        ORACLE_ENTERPRISE_LINUX
+        ,
+        ORACLE_ENTERPRISE_LINUX_64
+        ,
+        ECOMSTATION_32
+        ,
+        WINDOWS_SERVER_2011
+        ,
+
+
+        WINDOWS_SERVER_2012
+        ,
+        WINDOWS_8
+        ,
+        WINDOWS_8_64
+        ,
+        UNRECOGNIZED
     }
 }

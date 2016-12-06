@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{A9F53BA3-25C7-495C-826B-25615158AF98}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyVersion.cs = AssemblyVersion.cs
+		biz.dfch.CS.Abiquo.Client.nuspec = biz.dfch.CS.Abiquo.Client.nuspec
+		biz.dfch.PS.Abiquo.Client.nuspec = biz.dfch.PS.Abiquo.Client.nuspec
+		biz.dfch.PS.Abiquo.Client\biz.dfch.PS.Abiquo.Client.psd1 = biz.dfch.PS.Abiquo.Client\biz.dfch.PS.Abiquo.Client.psd1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biz.dfch.PS.Abiquo.Client.Tests", "biz.dfch.PS.Abiquo.Client.Tests\biz.dfch.PS.Abiquo.Client.Tests.csproj", "{E0584583-9FEC-404B-9561-172BA74ED233}"

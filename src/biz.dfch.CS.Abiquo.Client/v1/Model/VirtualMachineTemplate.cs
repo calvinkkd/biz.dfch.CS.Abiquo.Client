@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,26 +14,21 @@
  * limitations under the License.
  */
  
-﻿using Newtonsoft.Json;
+ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
+ using System.Collections.Generic;
 ﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class VirtualMachineTemplate : AbiquoBaseDto
+    public class VirtualMachineTemplate : AbiquoLinkBaseDto
     {
         public bool ChefEnabled { get; set; }
         
         public int CostCode { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int CpuRequired { get; set; }
         
         public int CoresPerSocket { get; set; }
@@ -50,7 +45,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string IconUrl { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int Id { get; set; }
         
         public string LoginPassword { get; set; }
@@ -66,7 +61,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string OsVersion { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int RamRequired { get; set; }
 
         [Required]
@@ -93,5 +88,18 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public int RamMin { get; set; }
         
         public int RamMax { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DiskControllerTypeEnum DiskControllerType { get; set; }
+
+        public string DiskController { get; set; }
+
+        public long DiskFileSize{ get; set; }
+
+        public string DiskFormatType { get; set; }
+
+        public long HdRequired { get; set; }
+
+        public string Path { get; set; }
     }
 }

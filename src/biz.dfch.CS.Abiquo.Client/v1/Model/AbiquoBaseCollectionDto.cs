@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
+
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
@@ -28,8 +24,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     /// Base DTO for abiquo collections
     /// </summary>
     /// <typeparam name="T">Type of collection elements</typeparam>
-    public abstract class AbiquoBaseCollectionDto<T> : BaseDto
-        where T : BaseDto
+    public abstract class AbiquoBaseCollectionDto<T> : AbiquoBaseDto
+        where T : AbiquoBaseDto
     {
         public List<Link> Links { get; set; }
 

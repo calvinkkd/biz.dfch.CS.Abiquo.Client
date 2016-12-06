@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +14,10 @@
  * limitations under the License.
  */
  
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-﻿using System.Text;
-using System.Threading.Tasks;
+ using System.Text;
 
 namespace biz.dfch.CS.Abiquo.Client.Authentication
 {
@@ -27,24 +25,21 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
     {
         private readonly string _username;
         private readonly string _password;
-        private int _tenantId;
 
-        public BasicAuthenticationInformation(string username, string password, int tenantId)
+        public BasicAuthenticationInformation(string username, string password)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(username));
             Contract.Requires(!string.IsNullOrWhiteSpace(password));
-            Contract.Requires(0 < tenantId);
 
             _username = username;
             _password = password;
-            _tenantId = tenantId;
         }
 
         public IDictionary<string, string> GetAuthorizationHeaders()
         {
             var headers = new Dictionary<string, string>
             {
-                {Constants.AUTHORIZATION_HEADER_KEY, CreateBasicAuthorizationHeaderValue()}
+                {Constants.Authentication.AUTHORIZATION_HEADER_KEY, CreateBasicAuthorizationHeaderValue()}
             };
 
             return headers;
@@ -56,12 +51,7 @@ namespace biz.dfch.CS.Abiquo.Client.Authentication
             var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             var base64EncodedAuthorizationHeaderValue = Convert.ToBase64String(plainTextBytes);
 
-            return string.Format(Constants.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
-        }
-
-        public int GetTenantId()
-        {
-            return _tenantId;
+            return string.Format(Constants.Authentication.BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE, base64EncodedAuthorizationHeaderValue);
         }
     }
 }

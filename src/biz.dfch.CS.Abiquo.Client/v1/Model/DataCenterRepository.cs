@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class DataCenterRepository : AbiquoBaseDto
+    public class DataCenterRepository : AbiquoLinkBaseDto
     {
         public string Error { get; set; }
 
@@ -37,5 +31,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string RepositoryLocation { get; set; }
 
         public long RepositoryRemainingMb { get; set; }
+
+        public Task LastTask { get; set; }
     }
 }

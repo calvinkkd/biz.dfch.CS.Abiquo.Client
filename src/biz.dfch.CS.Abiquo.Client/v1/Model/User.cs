@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2016 d-fens GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-﻿using System;
-using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-﻿using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using System.ComponentModel.DataAnnotations;
+using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class User : AbiquoBaseDto
+    public class User : AbiquoLinkBaseDto
     {
         [Required]
         public bool Active { get; set; }
@@ -52,11 +47,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         
         public string Surname { get; set; }
 
-        // The following properties get delivered by the rest response 
-        // but are not mentioned in the wiki
-        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-UserMediaType
+        public string OldPassword { get; set; }
+
         public bool Locked { get; set; }
 
         public bool FirstLogin { get; set; }
+
+        public Privileges Privileges { get; set; }
+
+        public string PublicSshKey { get; set; }
     }
 }
