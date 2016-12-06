@@ -83,7 +83,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// Returns the Id of the enterprise/tenant based on the current user information,
         /// which gets injected through the login method.
         /// </summary>
-        public int TenantId {
+        public int TenantId
+        {
             get
             {
                 Contract.Requires(IsLoggedIn);
