@@ -20,7 +20,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
     {
         public bool Available { get; set; }
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string Ip { get; set; }
 
