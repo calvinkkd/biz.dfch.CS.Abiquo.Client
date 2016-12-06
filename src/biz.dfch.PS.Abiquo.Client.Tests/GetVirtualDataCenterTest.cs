@@ -24,10 +24,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using Current = biz.dfch.CS.Abiquo.Client.v1;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Management.Automation;
-using biz.dfch.CS.PowerShell.Commons;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
