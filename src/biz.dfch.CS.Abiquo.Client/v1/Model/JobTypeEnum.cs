@@ -86,6 +86,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         ,
         VIRTUAL_MACHINES
         ,
+        CHECK_DEPENDENCIES
+        ,
 
         // Virtual Appliance Spec
         SPEC_CHEF_VALIDATION
