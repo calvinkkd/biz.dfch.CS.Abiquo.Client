@@ -16,7 +16,7 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
-    public static class AbiquoMediaDataTypes
+    public static class AbiquoVersionedMediaDataTypes
     {
         private const string VERSIONED_MEDIA_DATA_TYPE_TEMPLATE = "{0}+json; version={1}";
 

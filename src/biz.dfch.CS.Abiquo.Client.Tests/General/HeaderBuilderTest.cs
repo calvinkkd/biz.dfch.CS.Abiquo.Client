@@ -55,12 +55,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            var headers = new HeaderBuilder().BuildAccept(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
 
             // Assert
             Assert.AreEqual(1, headers.Count);
             Assert.IsTrue(headers.ContainsKey(AbiquoHeaderKeys.ACCEPT_HEADER_KEY));
-            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[AbiquoHeaderKeys.ACCEPT_HEADER_KEY]);
+            Assert.AreEqual(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[AbiquoHeaderKeys.ACCEPT_HEADER_KEY]);
         }
 
         [ExpectContractFailure]
@@ -93,12 +93,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            var headers = new HeaderBuilder().BuildContentType(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
+            var headers = new HeaderBuilder().BuildContentType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
 
             // Assert
             Assert.AreEqual(1, headers.Count);
             Assert.IsTrue(headers.ContainsKey(AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY));
-            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY]);
+            Assert.AreEqual(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE, headers[AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY]);
         }
 
         [ExpectContractFailure]
@@ -108,7 +108,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            new HeaderBuilder().BuildCustom(null, AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE);
+            new HeaderBuilder().BuildCustom(null, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE);
 
             // Assert
         }
@@ -120,7 +120,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            new HeaderBuilder().BuildCustom(" ", AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE);
+            new HeaderBuilder().BuildCustom(" ", VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE);
 
             // Assert
         }

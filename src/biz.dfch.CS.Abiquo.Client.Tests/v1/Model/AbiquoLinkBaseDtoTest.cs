@@ -68,7 +68,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             Assert.AreEqual(AbiquoRelations.USERS, usersLink.Rel);
             Assert.AreEqual(USERS_HREF, usersLink.Href);
             Assert.AreEqual(AbiquoRelations.USERS, usersLink.Title);
-            Assert.AreEqual(AbiquoMediaDataTypes.VND_ABIQUO_USERS, usersLink.Type);
+            Assert.AreEqual(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERS, usersLink.Type);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterprise = CreateEnterpriseWithLinks();
 
             // Act
-            var links = enterprise.GetLinksByType(AbiquoMediaDataTypes.VND_ABIQUO_BACKUP);
+            var links = enterprise.GetLinksByType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_BACKUP);
 
             // Assert
             Assert.IsNotNull(links);
@@ -105,7 +105,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var enterprise = CreateEnterpriseWithLinks();
 
             // Act
-            var links = enterprise.GetLinksByType(AbiquoMediaDataTypes.VND_ABIQUO_USERS);
+            var links = enterprise.GetLinksByType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERS);
 
             // Assert
             Assert.IsNotNull(links);
@@ -120,7 +120,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             enterprise.Links.Add(CreateUsersLink());
 
             // Act
-            var links = enterprise.GetLinksByType(AbiquoMediaDataTypes.VND_ABIQUO_USERS);
+            var links = enterprise.GetLinksByType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERS);
 
             // Assert
             Assert.IsNotNull(links);
@@ -132,7 +132,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             var propertiesLink = new LinkBuilder()
                 .BuildRel(AbiquoRelations.PROPERTEIS)
                 .BuildHref(PROPERTIES_HREF)
-                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISEPROPERTIES)
+                .BuildType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISEPROPERTIES)
                 .BuildTitle(AbiquoRelations.PROPERTEIS)
                 .GetLink();
 
@@ -153,7 +153,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
             return new LinkBuilder()
                 .BuildRel(AbiquoRelations.USERS)
                 .BuildHref(USERS_HREF)
-                .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_USERS)
+                .BuildType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERS)
                 .BuildTitle(AbiquoRelations.USERS).GetLink();
         }
     }
