@@ -16,18 +16,8 @@
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class PrivateIp : AbiquoLinkBaseDto
+    public class PrivateIp : IpBaseDto
     {
-        public int Id { get; set; }
 
-        public string Ip { get; set; }
-
-        public string Ipv6 { get; set; }
-
-        public string Mac { get; set; }
-
-        public string Name { get; set; }
-
-        public string NetworkName { get; set; }
     }
 }

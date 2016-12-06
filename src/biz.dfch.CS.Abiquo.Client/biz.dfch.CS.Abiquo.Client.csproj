@@ -173,6 +173,7 @@
     <Compile Include="v1\Model\EthernetDriverTypeEnum.cs" />
     <Compile Include="v1\Model\ExternalIp.cs" />
     <Compile Include="v1\Model\ExternalIps.cs" />
+    <Compile Include="v1\Model\IpBaseDto.cs" />
     <Compile Include="v1\Model\Job.cs" />
     <Compile Include="v1\Model\Jobs.cs" />
     <Compile Include="v1\Model\JobStateEnum.cs" />

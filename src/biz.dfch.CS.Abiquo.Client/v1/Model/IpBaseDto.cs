@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class PublicIp : IpBaseDto
+    public class IpBaseDto : AbiquoLinkBaseDto
     {
-        public bool Available { get; set; }
+        public int Id { get; set; }
 
-        public string Quarantine { get; set; }
+        public string Ip { get; set; }
 
-        public string ProviderId { get; set; }
+        public string Ipv6 { get; set; }
+
+        public string Mac { get; set; }
+
+        public string Name { get; set; }
+
+        public string NetworkName { get; set; }
     }
 }
