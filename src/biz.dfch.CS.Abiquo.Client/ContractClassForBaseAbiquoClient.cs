@@ -25,7 +25,7 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
-        #region Login/Logout
+        #region Login
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
@@ -38,7 +38,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(bool);
         }
 
-        #endregion Login/Logout
+        #endregion Login
 
 
         #region Enterprises

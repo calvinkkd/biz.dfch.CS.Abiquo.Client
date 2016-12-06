@@ -132,7 +132,7 @@ namespace biz.dfch.CS.Abiquo.Client
         #endregion SerializationSettings
 
 
-        #region Login/Logout
+        #region Login
 
         public abstract bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation);
 
@@ -148,7 +148,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.LogoutSucceeded, "{0} SUCCEEDED", Method.GetName());
         }
 
-        #endregion Login/Logout
+        #endregion Login
 
 
         #region ExecuteRequest

@@ -42,6 +42,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             TaskPollingTimeoutMilliseconds = DEFAULT_TASK_POLLING_TIMEOUT_MILLISECONDS;
         }
 
+
+        #region Login
+
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
         {
             // sanitise Uri (and removed extra information such as port numbers etc)
@@ -73,6 +76,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 return false;
             }
         }
+
+        #endregion Login
+
 
         #region Enterprises
 
