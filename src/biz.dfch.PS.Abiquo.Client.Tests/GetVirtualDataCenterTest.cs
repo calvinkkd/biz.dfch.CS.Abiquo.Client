@@ -63,13 +63,6 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            //Mock.SetupStatic(typeof(ContractFailedEventHandler));
-            //Mock.Arrange(
-            //        () =>
-            //            ContractFailedEventHandler.EventHandler(Arg.IsAny<object>(),
-            //                Arg.IsAny<ContractFailedEventArgs>()))
-            //    .DoNothing();
-
             User = new User()
             {
                 Active = true,
