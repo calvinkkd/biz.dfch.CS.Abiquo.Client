@@ -24,10 +24,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using Current = biz.dfch.CS.Abiquo.Client.v1;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Management.Automation;
-using biz.dfch.CS.PowerShell.Commons;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
@@ -65,13 +63,6 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            //Mock.SetupStatic(typeof(ContractFailedEventHandler));
-            //Mock.Arrange(
-            //        () =>
-            //            ContractFailedEventHandler.EventHandler(Arg.IsAny<object>(),
-            //                Arg.IsAny<ContractFailedEventArgs>()))
-            //    .DoNothing();
-
             User = new User()
             {
                 Active = true,
