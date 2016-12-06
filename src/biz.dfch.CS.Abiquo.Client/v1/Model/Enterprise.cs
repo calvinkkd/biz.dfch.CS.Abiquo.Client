@@ -19,7 +19,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Enterprise : AbiquoLinkBaseDto
+    public class Enterprise : LimitsBaseDto
     {
         public string ChefClient { get; set; }
 
@@ -30,22 +30,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public string ChefValidator { get; set; }
 
         public string ChefValidatorCertificate { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int CpuCountHardLimit { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int CpuCountSoftLimit { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long DiskHardLimitInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long DiskSoftLimitInMb { get; set; }
 
         public int Id { get; set; }
 
@@ -58,43 +42,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         [Required]
         [Range(0, Int64.MaxValue)]
-        public long PublicIpsHard { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long PublicIpsSoft { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int RamHardLimitInMb { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
-        public int RamSoftLimitInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
         public long RepositoryHardInMb { get; set; }
 
         [Required]
         [Range(0, Int64.MaxValue)]
         public long RepositorySoftInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long StorageHardInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long StorageSoftInMb { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long VlansHard { get; set; }
-
-        [Required]
-        [Range(0, Int64.MaxValue)]
-        public long VlansSoft { get; set; }
 
         public bool Workflow { get; set; }
 
