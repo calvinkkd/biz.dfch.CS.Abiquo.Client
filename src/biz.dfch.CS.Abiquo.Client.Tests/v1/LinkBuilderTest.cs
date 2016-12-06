@@ -148,7 +148,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 .BuildHref(HREF)
                 .BuildRel(AbiquoRelations.VIRTUALMACHINETEMPLATE)
                 .BuildTitle(TITLE)
-                .BuildType(AbiquoVersionedMediaDataTypes.VND_ABIQUO_USER)
+                .BuildType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USER)
                 .GetLink();
 
             // Assert
@@ -156,7 +156,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(HREF, link.Href);
             Assert.AreEqual(AbiquoRelations.VIRTUALMACHINETEMPLATE, link.Rel);
             Assert.AreEqual(TITLE, link.Title);
-            Assert.AreEqual(AbiquoVersionedMediaDataTypes.VND_ABIQUO_USER, link.Type);
+            Assert.AreEqual(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USER, link.Type);
         }
     }
 }

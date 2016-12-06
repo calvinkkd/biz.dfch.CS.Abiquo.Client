@@ -78,7 +78,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Enterprises GetEnterprises()
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ENTERPRISES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES).GetHeaders();
 
             return Invoke<Enterprises>(AbiquoUriSuffixes.ENTERPRISES, headers);
         }
@@ -90,7 +90,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Enterprise GetEnterprise(int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.ENTERPRISE_BY_ID, id);
 
             return Invoke<Enterprise>(uriSuffix, headers);
@@ -108,7 +108,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, enterpriseId);
             return Invoke<UsersWithRoles>(uriSuffix, headers);
@@ -121,7 +121,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override User GetUser(int enterpriseId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USER).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.USER_BY_ENTERPRISE_ID_AND_USER_ID, enterpriseId, id);
             
             return Invoke<User>(uriSuffix, headers);
@@ -140,7 +140,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override User GetUserInformation(int enterpriseId, string username)
         {
             var filter = new FilterBuilder().BuildFilterPart("has", username).GetFilter();
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_USERS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERS).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, enterpriseId);
 
             var searchResult = Invoke<Users>(uriSuffix, filter, headers);
@@ -184,9 +184,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.SWITCH_ENTERPRISE_BY_USER_ID, currentUser.Id);
             var headers = new Dictionary<string, string>()
             {
-                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoVersionedMediaDataTypes.VND_ABIQUO_USER }
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_USER }
                 ,
-                { AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY, AbiquoVersionedMediaDataTypes.VND_ABIQUO_USER }
+                { AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_USER }
             };
 
             var updatedUser = Invoke<User>(HttpMethod.Put, uriSuffix, null, headers, currentUser);
@@ -203,14 +203,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Roles GetRoles()
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ROLES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ROLES).GetHeaders();
 
             return Invoke<Roles>(AbiquoUriSuffixes.ROLES, headers);
         }
 
         public override Role GetRole(int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ROLE).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ROLE).GetHeaders();
             
             var uriSuffix = string.Format(AbiquoUriSuffixes.ROLE_BY_ID, id);
             return Invoke<Role>(uriSuffix, headers);
@@ -228,7 +228,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_LIMITS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_LIMITS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTERS_LIMITS_BY_ENTERPRISE_ID, enterpriseId);
 
@@ -242,7 +242,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_LIMIT).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_LIMIT).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTER_LIMITS_BY_ENTERPRISE_ID_AND_DATACENTER_LIMITS_ID, enterpriseId, id);
 
@@ -256,14 +256,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualMachines GetAllVirtualMachines()
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
 
             return Invoke<VirtualMachines>(AbiquoUriSuffixes.VIRTUALMACHINES, headers);
         }
 
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID, virtualDataCenterId, virtualApplianceId);
             return Invoke<VirtualMachines>(uriSuffix, headers);
@@ -271,7 +271,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, virtualDataCenterId, virtualApplianceId, id);
 
@@ -309,8 +309,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             virtualMachine.Links = new List<Link>() { virtualMachineLink };
             
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)
-                .BuildContentType(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)
+                .BuildContentType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE).GetHeaders();
 
             var uriSuffix =
                 string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID,
@@ -332,7 +332,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 filter = new FilterBuilder().BuildFilterPart("force", "true").GetFilter();
             }
 
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST).GetHeaders();
 
             var uriSuffix =
                 string.Format(AbiquoUriSuffixes.DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
@@ -370,8 +370,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             }
 
             var headers = new HeaderBuilder()
-                .BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
-                .BuildContentType(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)
+                .BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
+                .BuildContentType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINE)
                 .GetHeaders();
 
             var uriSuffix =
@@ -422,8 +422,8 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             VirtualMachineState state, bool waitForCompletion)
         {
             var headers = new HeaderBuilder()
-                .BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
-                .BuildContentType(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINESTATE)
+                .BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST)
+                .BuildContentType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINESTATE)
                 .GetHeaders();
 
             var uriSuffix =
@@ -471,7 +471,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
             int virtualMachineId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATIONS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATIONS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.NETWORK_CONFIGURATIONS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID,
                 virtualDataCenterId, virtualApplianceId, virtualMachineId);
@@ -482,7 +482,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
             int virtualMachineId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATION).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINENETWORKCONFIGURATION).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.NETWORK_CONFIGURATION_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_NETWORK_CONFIGURATION_ID,
                 virtualDataCenterId, virtualApplianceId, virtualMachineId, id);
@@ -492,7 +492,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_NICS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_NICS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.NICS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID,
                 virtualDataCenterId, virtualApplianceId, virtualMachineId);
@@ -502,7 +502,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_TASKS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_TASKS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETASKS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID, virtualDataCenterId, virtualApplianceId, virtualMachineId);
             return Invoke<Tasks>(uriSuffix, headers);
@@ -510,7 +510,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETASK_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_TASK_ID, virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
             return Invoke<Task>(uriSuffix, headers);
@@ -523,7 +523,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATES_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID, enterpriseId, dataCenterRepositoryId);
             return Invoke<VirtualMachineTemplates>(uriSuffix, headers);
@@ -531,7 +531,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATE_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID_AND_VIRTUALMACHINETEMPLATE_ID, enterpriseId, dataCenterRepositoryId, id);
             return Invoke<VirtualMachineTemplate>(uriSuffix, headers);
@@ -544,14 +544,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualDataCenters GetVirtualDataCenters()
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALDATACENTERS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALDATACENTERS).GetHeaders();
 
             return Invoke<VirtualDataCenters>(AbiquoUriSuffixes.VIRTUALDATACENTERS, headers);
         }
 
         public override VirtualDataCenter GetVirtualDataCenter(int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALDATACENTER).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALDATACENTER).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALDATACENTER_BY_ID, id);
             return Invoke<VirtualDataCenter>(uriSuffix, headers);
@@ -564,7 +564,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCES_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
             return Invoke<VirtualAppliances>(uriSuffix, headers);
@@ -572,7 +572,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCE).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCE).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID, virtualDataCenterId, id);
             return Invoke<VirtualAppliance>(uriSuffix, headers);
@@ -590,7 +590,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORIES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORIES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTERREPOSITORIES_BY_ENTERPRISE_ID, enterpriseId);
             return Invoke<DataCenterRepositories>(uriSuffix, headers);
@@ -603,7 +603,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORY).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORY).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.DATACENTERREPOSITORIES_BY_ENTERPRISE_ID_AND_DATACENTERREPOSITORY_ID, enterpriseId, id);
             return Invoke<DataCenterRepository>(uriSuffix, headers);
@@ -619,7 +619,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.WaitForTaskCompletion, "Waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
                     task.TaskId, taskPollingWaitTimeMilliseconds, taskPollingTimeoutMilliseconds);
 
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
             var taskSelfLink = task.GetLinkByRel(AbiquoRelations.SELF);
             var uriSuffix = taskSelfLink.GetUriSuffix();
 
@@ -662,7 +662,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PRIVATE_NETWORKS_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
 
@@ -671,7 +671,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID, virtualDataCenterId, id);
 
@@ -686,7 +686,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 filter = new FilterBuilder().BuildFilterPart("free", "true").GetFilter();
             }
 
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_PRIVATEIPS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PRIVATEIPS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.IPS_OF_PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID, virtualDataCenterId, privateNetworkId);
 
@@ -700,7 +700,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.EXTERNAL_NETWORKS_BY_ENTERPRISE_ID_AND_LIMIT_ID, enterpriseId, dataCenterLimitsId);
 
@@ -714,7 +714,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID, 
                 enterpriseId, dataCenterLimitsId, id);
@@ -736,7 +736,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 filter = new FilterBuilder().BuildFilterPart("free", "true").GetFilter();
             }
 
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_EXTERNALIPS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_EXTERNALIPS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.IPS_OF_EXTERNAL_NETWORK_BY_ENTERPRISE_ID_AND_LIMIT_ID_AND_EXTERNAL_NETWORK_ID, enterpriseId, dataCenterLimitsId, externalNetworkId);
 
@@ -745,7 +745,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_NETWORKS_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
 
@@ -754,7 +754,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PUBLIC_NETWORK_ID, virtualDataCenterId, id);
 
@@ -765,7 +765,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             var filter = new FilterBuilder().BuildFilterPart("vlanId", vlanId).GetFilter();
 
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_PUBLICIPS).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIPS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_IPS_TO_PURCHASE_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
 
@@ -774,7 +774,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PURCHASED_PUBLIC_IP_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
@@ -783,7 +783,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
         {
-            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_IP_TO_PURCHASE_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
