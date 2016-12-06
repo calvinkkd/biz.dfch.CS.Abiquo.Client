@@ -411,6 +411,53 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Mock.Assert(restCallExecutor);
         }
 
+        [TestMethod]
+        public void InvokeForLinksByTypeWithLinksAndLinkTypeSucceeds()
+        {
+            var type = AbiquoMediaDataTypes.VND_ABIQUO_ROLE;
+            var href = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, string.Format(AbiquoUriSuffixes.ROLE_BY_ID, 42));
+            var link = new LinkBuilder()
+                .BuildHref(href)
+                .BuildRel(AbiquoRelations.ROLE)
+                .BuildTitle("CLOUD_ADMIN")
+                .BuildType(type)
+                .GetLink();
+
+            var links = new List<Link>()
+            {
+                link, link
+            };
+
+            var role = new Role()
+            {
+                Name = "ArbitraryRole",
+                Id = 42
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
+                .IgnoreInstance()
+                .Returns(role.SerializeObject());
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.InvokeForLinksByType(links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ICollection<DictionaryParameters>));
+            Assert.AreEqual(2, result.Count);
+
+            foreach (var dictionaryParameters in result)
+            {
+                Assert.IsTrue(dictionaryParameters.ContainsKey("name"));
+                Assert.AreEqual("ArbitraryRole", dictionaryParameters["name"]);
+                Assert.IsTrue(dictionaryParameters.ContainsKey("id"));
+                Assert.AreEqual(42L, dictionaryParameters["id"]);
+            }
+
+            Mock.Assert(restCallExecutor);
+        }
+
         #endregion Invoke
 
 
