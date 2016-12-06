@@ -24,9 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using Current = biz.dfch.CS.Abiquo.Client.v1;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
-using biz.dfch.CS.PowerShell.Commons;
 
 namespace biz.dfch.PS.Abiquo.Client.Tests
 {
@@ -168,6 +166,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetListAvailableSucceeds()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -188,6 +187,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetIdSucceeds()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -214,6 +214,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetIdWriterErrorRecord()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -235,6 +236,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetNameSucceeds()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -261,6 +263,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetNameSucceedsAndReturnsCollection()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
