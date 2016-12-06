@@ -157,7 +157,7 @@
     <Compile Include="General\HeaderBuilder.cs" />
     <Compile Include="General\UriHelper.cs" />
     <Compile Include="v1\AbiquoClient.cs" />
-    <Compile Include="v1\VersionedAbiquoMediaDataTypes.cs" />
+    <Compile Include="v1\AbiquoVersionedMediaDataTypes.cs" />
     <Compile Include="v1\AbiquoRelations.cs" />
     <Compile Include="v1\LinkBuilder.cs" />
     <Compile Include="v1\Model\LimitsBaseDto.cs" />

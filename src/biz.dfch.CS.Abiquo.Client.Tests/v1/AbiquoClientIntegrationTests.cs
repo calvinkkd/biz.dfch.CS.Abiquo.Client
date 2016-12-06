@@ -97,7 +97,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
-            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ENTERPRISES).GetHeaders();
 
             // Act
             var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, null, headers);
@@ -180,9 +180,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var headers = new Dictionary<string, string>()
             {
-                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE }
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, AbiquoVersionedMediaDataTypes.VND_ABIQUO_ENTERPRISE }
                 ,
-                { AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISE }
+                { AbiquoHeaderKeys.CONTENT_TYPE_HEADER_KEY, AbiquoVersionedMediaDataTypes.VND_ABIQUO_ENTERPRISE }
             };
 
             var enterpriseName = Guid.NewGuid().ToString();
@@ -249,7 +249,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
-            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
 
             // Act
             var requestUriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, IntegrationTestEnvironment.TenantId);
@@ -469,7 +469,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
-            var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ROLES).GetHeaders();
+            var headers = new HeaderBuilder().BuildAccept(AbiquoVersionedMediaDataTypes.VND_ABIQUO_ROLES).GetHeaders();
 
             // Act
             var result = abiquoClient.Invoke(HttpMethod.Get, AbiquoUriSuffixes.ROLES, null, headers);
@@ -2251,7 +2251,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 .BuildHref(ipLinkHref)
                 .BuildRel(ipLinkRel)
                 .BuildTitle("BluenetIp")
-                .BuildType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP)
+                .BuildType(AbiquoVersionedMediaDataTypes.VND_ABIQUO_PUBLICIP)
                 .GetLink();
 
             // Act
@@ -2345,7 +2345,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 .BuildHref(ipLinkHref)
                 .BuildRel(ipLinkRel)
                 .BuildTitle("BluenetIp")
-                .BuildType(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP)
+                .BuildType(AbiquoVersionedMediaDataTypes.VND_ABIQUO_PUBLICIP)
                 .GetLink();
 
             // Act
