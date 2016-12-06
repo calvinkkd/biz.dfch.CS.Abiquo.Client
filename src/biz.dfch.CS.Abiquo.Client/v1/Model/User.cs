@@ -49,9 +49,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
 
         public string OldPassword { get; set; }
 
-        // The following properties get delivered by the rest response 
-        // but are not mentioned in the wiki
-        // http://wiki.abiquo.com/display/ABI38/Abiquo+Data+Media+Types#AbiquoDataMediaTypes-UserMediaType
         public bool Locked { get; set; }
 
         public bool FirstLogin { get; set; }
