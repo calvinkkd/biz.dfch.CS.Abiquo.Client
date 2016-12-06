@@ -414,12 +414,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         [TestMethod]
         public void InvokeForLinksByTypeWithLinksAndLinkTypeSucceeds()
         {
+            var roleId = 42;
+            var roleName = "CLOUD_ADMIN";
+
             var type = AbiquoMediaDataTypes.VND_ABIQUO_ROLE;
-            var href = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, string.Format(AbiquoUriSuffixes.ROLE_BY_ID, 42));
+            var href = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, string.Format(AbiquoUriSuffixes.ROLE_BY_ID, roleId));
             var link = new LinkBuilder()
                 .BuildHref(href)
                 .BuildRel(AbiquoRelations.ROLE)
-                .BuildTitle("CLOUD_ADMIN")
+                .BuildTitle(roleName)
                 .BuildType(type)
                 .GetLink();
 
@@ -430,8 +433,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var role = new Role()
             {
-                Name = "ArbitraryRole",
-                Id = 42
+                Name = roleName,
+                Id = roleId
             };
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
@@ -450,7 +453,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             foreach (var dictionaryParameters in result)
             {
                 Assert.IsTrue(dictionaryParameters.ContainsKey("name"));
-                Assert.AreEqual("ArbitraryRole", dictionaryParameters["name"]);
+                Assert.AreEqual(roleName, dictionaryParameters["name"]);
                 Assert.IsTrue(dictionaryParameters.ContainsKey("id"));
                 Assert.AreEqual(42L, dictionaryParameters["id"]);
             }
