@@ -435,6 +435,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetUserWithNullEnterpriseAndUserIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUser(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetUsersWithRolesWithInvalidEnterpriseIdThrowsContractException()
         {
             // Arrange
@@ -445,6 +457,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         } 
         
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUsersWithRolesWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUsersWithRoles(null);
+
+            // Assert
+        }
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetUserOfCurrentEnterpriseWithInvalidIdThrowsContractException()
@@ -465,6 +489,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetUser(INVALID_ID, 15);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetUserWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUser(null, 0);
 
             // Assert
         }
@@ -613,6 +649,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         #region DataCentersLimits
 
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetDataCentersLimitsWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCentersLimits(null);
+
+            // Assert
+        }
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetDataCentersLimitsWithInvalidEnterpriseIdThrowsContractException()
@@ -639,12 +688,36 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetDataCenterLimitsWithNullEnterpriseAndIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterLimits(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetDataCenterLimitsWithInvalidEnterpriseIdThrowsContractException()
         {
             // Arrange
 
             // Act
             sut.GetDataCenterLimits(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetDataCenterLimitsWithNullDataCenterLimitsAndIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterLimits(null, 42);
 
             // Assert
         }
@@ -674,6 +747,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetVirtualMachines(INVALID_ID, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachinesWithNullVirtualApplianceIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachines(null);
 
             // Assert
         }
@@ -2023,12 +2108,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new UsersWithRoles();
             }
 
+            public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+            {
+                return new UsersWithRoles();
+            }
+
             public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
             {
                 return new UsersWithRoles();
             }
 
             public override User GetUserOfCurrentEnterprise(int id)
+            {
+                return new User();
+            }
+
+            public override User GetUser(Enterprise enterprise, int id)
             {
                 return new User();
             }
@@ -2078,6 +2173,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new DataCentersLimits();
             }
 
+            public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+            {
+                return new DataCentersLimits();
+            }
+
             public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
             {
                 return new DataCentersLimits();
@@ -2088,12 +2188,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new DataCenterLimits();
             }
 
+            public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
+            {
+                return new DataCenterLimits();
+            }
+
             public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
             {
                 return new DataCenterLimits();
             }
 
             public override VirtualMachines GetAllVirtualMachines()
+            {
+                return new VirtualMachines();
+            }
+
+            public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
             {
                 return new VirtualMachines();
             }
@@ -2362,12 +2472,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
             public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
             {
                 throw new NotImplementedException();
             }
 
             public override User GetUserOfCurrentEnterprise(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override User GetUser(Enterprise enterprise, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2417,6 +2537,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
             public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
             {
                 throw new NotImplementedException();
@@ -2427,12 +2552,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
+            {
+                throw new NotImplementedException();
+            }
+
             public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
             {
                 throw new NotImplementedException();
             }
 
             public override VirtualMachines GetAllVirtualMachines()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
             {
                 throw new NotImplementedException();
             }
