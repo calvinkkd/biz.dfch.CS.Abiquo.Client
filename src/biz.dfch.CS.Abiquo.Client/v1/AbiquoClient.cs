@@ -297,6 +297,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetVirtualMachines(virtualDatacenterId, virtualApplianceId);
         }
 
+        public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance, int id)
+        {
+            return GetVirtualMachines(id, virtualAppliance.Id);
+        }
+
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
