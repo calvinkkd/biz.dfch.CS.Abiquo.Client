@@ -56,6 +56,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
 
+        #region Invoke
+
+        [TestMethod]
+        public void InvokeForLinksByTypeWithCollectionOfLinksAndATypeSucceeds()
+        {
+            // Arrange
+            var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+            var user = sut.GetUserInformation();
+            var roleLink = user.GetLinkByRel(AbiquoRelations.ROLE);
+            
+            // Act
+            var result = sut.InvokeForLinksByType(user.Links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
+            
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            var dictionaryParameters = result.FirstOrDefault();
+            Assert.IsTrue(dictionaryParameters.ContainsKey("name"));
+            Assert.AreEqual(roleLink.Title, dictionaryParameters["name"]);
+        }
+
+        #endregion Invoke
+
+
         #region Login
 
         [TestMethod]
