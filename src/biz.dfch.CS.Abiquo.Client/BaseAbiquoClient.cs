@@ -453,6 +453,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="id"></param>
         public abstract void SwitchEnterprise(int id);
 
+
         #endregion Users
 
 

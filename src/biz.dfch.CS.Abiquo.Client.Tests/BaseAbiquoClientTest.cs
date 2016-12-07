@@ -443,7 +443,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             sut.GetUsersWithRoles(INVALID_ID);
 
             // Assert
-        }        
+        } 
         
         [TestMethod]
         [ExpectContractFailure]

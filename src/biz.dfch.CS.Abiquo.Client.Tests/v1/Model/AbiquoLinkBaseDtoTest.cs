@@ -130,10 +130,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1.Model
         private Enterprise CreateEnterpriseWithLinks()
         {
             var propertiesLink = new LinkBuilder()
-                .BuildRel(AbiquoRelations.PROPERTEIS)
+                .BuildRel(AbiquoRelations.PROPERTIES)
                 .BuildHref(PROPERTIES_HREF)
                 .BuildType(AbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISEPROPERTIES)
-                .BuildTitle(AbiquoRelations.PROPERTEIS)
+                .BuildTitle(AbiquoRelations.PROPERTIES)
                 .GetLink();
 
             var enterprise = new Enterprise()
