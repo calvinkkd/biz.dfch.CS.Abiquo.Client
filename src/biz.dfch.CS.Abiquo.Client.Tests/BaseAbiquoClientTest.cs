@@ -753,12 +753,24 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetVirtualMachinesWithNullVirtualApplianceIdThrowsContractException()
+        public void GetVirtualMachinesWithNullVirtualApplianceThrowsContractException()
         {
             // Arrange
 
             // Act
             sut.GetVirtualMachines(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetVirtualMachinesWithNullVirtualApplianceAndIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachines(null, 42);
 
             // Assert
         }
@@ -2208,6 +2220,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachines();
             }
 
+            public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance, int id)
+            {
+                return new VirtualMachines();
+            }
+
             public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
             {
                 return new VirtualMachines();
@@ -2568,6 +2585,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance, int id)
             {
                 throw new NotImplementedException();
             }
