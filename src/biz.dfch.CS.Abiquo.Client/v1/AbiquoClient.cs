@@ -112,6 +112,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetUsersWithRoles(TenantId);
         }
 
+        public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+        {
+            return GetUsersWithRoles(enterprise.Id);
+        }
+
         public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
@@ -123,6 +128,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override User GetUserOfCurrentEnterprise(int id)
         {
             return GetUser(TenantId, id);
+        }
+
+        public override User GetUser(Enterprise enterprise, int id)
+        {
+            return GetUser(enterprise.Id, id);
         }
 
         public override User GetUser(int enterpriseId, int id)
@@ -232,6 +242,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetDataCentersLimits(TenantId);
         }
 
+        public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+        {
+            return GetDataCentersLimits(enterprise.Id);
+        }
+
         public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_LIMITS).GetHeaders();
@@ -244,6 +259,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
         {
             return GetDataCenterLimits(TenantId, id);
+        }
+
+        public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
+        {
+            return GetDataCenterLimits(enterprise.Id, id);
         }
 
         public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
@@ -265,6 +285,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
 
             return Invoke<VirtualMachines>(AbiquoUriSuffixes.VIRTUALMACHINES, headers);
+        }
+
+        public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
+        {
+            var virtualApplianceId = virtualAppliance.Id;
+
+            var virtualDataCenterLink = virtualAppliance.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDatacenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            return GetVirtualMachines(virtualDatacenterId, virtualApplianceId);
         }
 
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
