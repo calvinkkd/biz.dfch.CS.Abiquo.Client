@@ -393,6 +393,13 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve users with roles of a specific enterprise/tenant
         /// </summary>
+        /// <param name="enterprise">enterprise/tenant</param>
+        /// <returns>Collection of UsersWithRoles</returns>
+        public abstract UsersWithRoles GetUsersWithRoles(Enterprise enterprise);
+
+        /// <summary>
+        /// Retrieve users with roles of a specific enterprise/tenant
+        /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
         /// <returns>Collection of UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
@@ -403,6 +410,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="id">Id of the user</param>
         /// <returns>User</returns>
         public abstract User GetUserOfCurrentEnterprise(int id);
+
+        /// <summary>
+        /// Retrieve a specific user by a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterprise">enterprise/tenant</param>
+        /// <param name="id">Id of the user</param>
+        /// <returns>User</returns>
+        public abstract User GetUser(Enterprise enterprise, int id);
 
         /// <summary>
         /// Retrieve a specific user by id of a specific enterprise/tenant
@@ -486,6 +501,13 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve datacenters limits of a specific enterprise/tenant
         /// </summary>
+        /// <param name="enterprise">enterprise/tenant</param>
+        /// <returns>Collection of DataCentersLimits</returns>
+        public abstract DataCentersLimits GetDataCentersLimits(Enterprise enterprise);
+
+        /// <summary>
+        /// Retrieve datacenters limits of a specific enterprise/tenant
+        /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
         /// <returns>Collection of DataCentersLimits</returns>
         public abstract DataCentersLimits GetDataCentersLimits(int enterpriseId);
@@ -496,6 +518,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="id">Id of the datacenter limits</param>
         /// <returns>DataCentersLimits</returns>
         public abstract DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id);
+
+        /// <summary>
+        /// Retrieve a specific datacenter limits by a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterprise">enterprise/tenant</param>
+        /// <param name="id">Id of the datacenter limits</param>
+        /// <returns>DataCenterLimits</returns>
+        public abstract DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id);
 
         /// <summary>
         /// Retrieve a specific datacenter limits by id of a specific enterprise/tenant
@@ -515,6 +545,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <returns>Collection of VirtualMachines</returns>
         public abstract VirtualMachines GetAllVirtualMachines();
+
+
+        /// <summary>
+        /// Retrieve all virtual machines of a specific virtual appliance
+        /// </summary>
+        /// <param name="virtualAppliance"></param>
+        /// <returns>Collection of VirtualMachines</returns>
+        public abstract VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance);
 
         /// <summary>
         /// Retrieve all virtual machines of a specific virtual appliance of a specific virtual datacenter
