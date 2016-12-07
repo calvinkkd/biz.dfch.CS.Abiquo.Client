@@ -736,6 +736,40 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
+        public void GetVirtualMachinesWithVirtualApplianceAndIdReturnsAbiquoVirtualMachines()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualAppliance);
+
+            // Act
+            var virtualMachines = abiquoClient.GetVirtualMachines(virtualAppliance, virtualDataCenter.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualMachines);
+            Assert.IsNotNull(virtualMachines.Collection);
+            Assert.IsTrue(0 < virtualMachines.TotalSize);
+            Assert.IsTrue(0 < virtualMachines.Links.Count);
+
+            var virtualMachine = virtualMachines.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualMachine);
+            Assert.IsTrue(0 < virtualMachine.Id);
+            Assert.IsNotNull(virtualMachine.Name);
+            Assert.IsTrue(0 < virtualMachine.Cpu);
+            Assert.IsTrue(0 < virtualMachine.Ram);
+        }
+
+        [TestMethod]
         public void GetVirtualMachinesWithVirtualApplianceReturnsAbiquoVirtualMachines()
         {
             // Arrange
