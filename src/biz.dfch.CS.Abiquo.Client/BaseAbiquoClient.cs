@@ -302,7 +302,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return response;
         }
 
-        public List<DictionaryParameters> InvokeForLinksByType(ICollection<Link> links, string type)
+        public List<DictionaryParameters> InvokeLinksByType(ICollection<Link> links, string type)
         {
             Contract.Requires(null != links);
             Contract.Requires(!string.IsNullOrWhiteSpace(type));
