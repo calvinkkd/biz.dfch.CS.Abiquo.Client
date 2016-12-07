@@ -59,7 +59,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region Invoke
 
         [TestMethod]
-        public void InvokeForLinksByTypeWithCollectionOfLinksAndATypeSucceeds()
+        public void InvokeLinksByTypeWithCollectionOfLinksAndATypeSucceeds()
         {
             // Arrange
             var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -68,7 +68,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var roleLink = user.GetLinkByRel(AbiquoRelations.ROLE);
             
             // Act
-            var result = sut.InvokeForLinksByType(user.Links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
+            var result = sut.InvokeLinksByType(user.Links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
             
             // Assert
             Assert.IsTrue(loginSucceeded);

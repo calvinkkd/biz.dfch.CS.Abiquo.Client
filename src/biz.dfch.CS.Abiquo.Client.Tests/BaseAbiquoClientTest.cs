@@ -412,7 +412,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        public void InvokeForLinksByTypeWithLinksAndLinkTypeSucceeds()
+        public void InvokeLinksByTypeWithLinksAndLinkTypeSucceeds()
         {
             var roleId = 42;
             var roleName = "CLOUD_ADMIN";
@@ -444,7 +444,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
-            var result = sut.InvokeForLinksByType(links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
+            var result = sut.InvokeLinksByType(links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ICollection<DictionaryParameters>));
