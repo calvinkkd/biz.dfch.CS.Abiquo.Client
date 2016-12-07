@@ -74,6 +74,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(UsersWithRoles);
         }
 
+        public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+
+            return default(UsersWithRoles);
+        }
+
         public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -85,6 +92,13 @@ namespace biz.dfch.CS.Abiquo.Client
         public override User GetUserOfCurrentEnterprise(int id)
         {
             Contract.Requires(0 < id);
+
+            return default(User);
+        }
+
+        public override User GetUser(Enterprise enterprise, int id)
+        {
+            Contract.Requires(null != enterprise);
 
             return default(User);
         }
@@ -158,6 +172,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(DataCentersLimits);
         }
 
+        public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+
+            return default(DataCentersLimits);
+        }
+
         public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -168,6 +189,13 @@ namespace biz.dfch.CS.Abiquo.Client
         public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
         {
             Contract.Requires(0 < id);
+
+            return default(DataCenterLimits);
+        }
+
+        public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
+        {
+            Contract.Requires(null != enterprise);
 
             return default(DataCenterLimits);
         }
@@ -188,6 +216,13 @@ namespace biz.dfch.CS.Abiquo.Client
         public override VirtualMachines GetAllVirtualMachines()
         {
             Contract.Ensures(null != Contract.Result<VirtualMachines>());
+
+            return default(VirtualMachines);
+        }
+
+        public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
+        {
+            Contract.Requires(null != virtualAppliance);
 
             return default(VirtualMachines);
         }
