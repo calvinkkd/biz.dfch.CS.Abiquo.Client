@@ -227,6 +227,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachines);
         }
 
+        public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance, int id)
+        {
+            Contract.Requires(null != virtualAppliance);
+
+            return default(VirtualMachines);
+        }
+
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
         {
             Contract.Requires(0 < virtualDataCenterId);
