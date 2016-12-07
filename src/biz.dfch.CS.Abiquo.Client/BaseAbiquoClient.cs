@@ -302,6 +302,26 @@ namespace biz.dfch.CS.Abiquo.Client
             return response;
         }
 
+        public List<DictionaryParameters> InvokeLinksByType(ICollection<Link> links, string type)
+        {
+            Contract.Requires(null != links);
+            Contract.Requires(!string.IsNullOrWhiteSpace(type));
+            Contract.Ensures(null != Contract.Result<ICollection<DictionaryParameters>>());
+
+            var selectedLinks = links.Where(e => type.Equals(e.Type));
+            Contract.Assert(null != selectedLinks, string.Format("type '{0}'", type));
+
+            var dictionaryParametersList = new List<DictionaryParameters>();
+            foreach (var selectedLink in selectedLinks)
+            {
+                var response = Invoke(selectedLink);
+                var result = new DictionaryParameters(response);
+                dictionaryParametersList.Add(result);
+            }
+
+            return dictionaryParametersList;
+        }
+
         public DictionaryParameters Invoke(Link link)
         {
             Contract.Requires(null != link);

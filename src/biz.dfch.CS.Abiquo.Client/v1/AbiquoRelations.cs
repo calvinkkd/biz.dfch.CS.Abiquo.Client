@@ -19,6 +19,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
     public static class AbiquoRelations
     {
         public const string ENTERPRISE = "enterprise";
+        public const string ROLE = "role";
         public const string USERS = "users";
         public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
 
