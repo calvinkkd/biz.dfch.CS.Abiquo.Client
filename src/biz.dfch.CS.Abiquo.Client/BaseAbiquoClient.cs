@@ -546,7 +546,6 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>Collection of VirtualMachines</returns>
         public abstract VirtualMachines GetAllVirtualMachines();
 
-
         /// <summary>
         /// Retrieve all virtual machines of a specific virtual appliance
         /// </summary>
@@ -622,6 +621,15 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template and custom configuration
         /// </summary>
+        /// <param name="virtualAppliance">Virtual Appliance</param>
+        /// <param name="virtualMachineTemplate">Virtual Machine Template</param>
+        /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate, VirtualMachine virtualMachine);
+
+        /// <summary>
+        /// Create a virtual machine based on a virtual machine template and custom configuration
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
@@ -689,6 +697,15 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Update a specific virtual machine
         /// </summary>
+        /// <param name="virtualMachine">Virtual machine configuration</param>
+        /// <param name="force">If true, update is forced</param>
+        /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <returns>Task containing information about the status of the update</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion);
+
+        /// <summary>
+        /// Update a specific virtual machine
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
@@ -701,12 +718,37 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Initiates state change of a specific virtual machine
         /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        /// <param name="state">Target state</param>
+        /// <returns></returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state);
+
+        /// <summary>
+        /// Initiates state change of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        /// <param name="state">Target state</param>
+        /// <returns>Task containing information about the status of the state change</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state);
+
+        /// <summary>
+        /// Initiates state change of a specific virtual machine
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <param name="state">Target state</param>
         /// <returns>Task containing information about the status of the state change</returns>
         public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachineState state);
+
+        /// <summary>
+        /// Initiates state change of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        /// <param name="state">Target state</param>
+        /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <returns>Task containing information about the status of the state change</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion);
         
         /// <summary>
         /// Changes state of a specific virtual machine
