@@ -293,11 +293,11 @@ namespace biz.dfch.CS.Abiquo.Client
                 uriSuffix = string.Format("{0}?{1}", uriSuffix, filterString);
             }
 
-            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.Login, "Invoking {0} {1} ...", httpMethod, uriSuffix);
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Invoke, Messages.BaseAbiquoClientInvokeStart, httpMethod, uriSuffix);
 
             var response = ExecuteRequest(httpMethod, uriSuffix, headers, body);
 
-            Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Invoking {0} {1} COMPLETED.", httpMethod, uriSuffix);
+            Logger.Current.TraceEvent(TraceEventType.Verbose, (int) Constants.EventId.InvokeCompleted, Messages.BaseAbiquoClientInvokeCompleted, httpMethod, uriSuffix);
 
             return response;
         }
@@ -309,7 +309,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<ICollection<DictionaryParameters>>());
 
             var selectedLinks = links.Where(e => type.Equals(e.Type));
-            Contract.Assert(null != selectedLinks, string.Format("type '{0}'", type));
+            Contract.Assert(null != selectedLinks, string.Format(Messages.BaseAbiquoClientInvokeLinksByType, type));
 
             var dictionaryParametersList = new List<DictionaryParameters>();
             foreach (var selectedLink in selectedLinks)
@@ -340,7 +340,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<DictionaryParameters>());
 
             var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
-            Contract.Assert(null != link, string.Format("rel '{0}'", rel));
+            Contract.Assert(null != link, string.Format(Messages.BaseAbiquoClientInvokeRel, rel));
 
             var response = Invoke(link);
 
@@ -356,7 +356,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<DictionaryParameters>());
 
             var link = links.FirstOrDefault(e => rel.Equals(e.Rel) && title.Equals(e.Title));
-            Contract.Assert(null != link, string.Format("rel '{0}', title '{1}'", rel, title));
+            Contract.Assert(null != link, string.Format(Messages.BaseAbiquoClientInvokeRelTitle, rel, title));
 
             var response = Invoke(link);
 

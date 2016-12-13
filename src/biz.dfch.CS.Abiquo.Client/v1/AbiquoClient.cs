@@ -49,7 +49,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             // sanitise Uri (and removed extra information such as port numbers etc)
             abiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
-            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, "Logging in to abiquoApiBaseUri '{0}' ...", abiquoApiBaseUri);
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.Login, Messages.AbiquoClientLoginStart, abiquoApiBaseUri);
 
             // clear base properties
             Logout();
@@ -63,12 +63,12 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 CurrentUserInformation = AbiquoBaseDto.DeserializeObject<User>(loginResponse);
 
                 IsLoggedIn = true;
-                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, "Logging in to AbiquoApiBaseUri '{0}' SUCCEEDED.", AbiquoApiBaseUri);
+                Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.LoginSucceeded, Messages.AbiquoClientLoginSucceeded, AbiquoApiBaseUri);
                 return true;
             }
             catch (HttpRequestException ex)
             {
-                var message = string.Format("Logging in to AbiquoApiBaseUri '{0}' SUCCEEDED.", AbiquoApiBaseUri);
+                var message = string.Format(Messages.AbiquoClientLoginFailed, AbiquoApiBaseUri);
                 Logger.Current.TraceException(ex, (int) Constants.EventId.LoginFailed, message);
 
                 Logout();
@@ -106,6 +106,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
 
         #region Users
+        private const string FILTER_KEY_HAS = "has";
 
         public override UsersWithRoles GetUsersWithRolesOfCurrentEnterprise()
         {
@@ -145,13 +146,13 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override User GetUserInformation(int enterpriseId, string username)
         {
-            var filter = new FilterBuilder().BuildFilterPart("has", username).GetFilter();
+            var filter = new FilterBuilder().BuildFilterPart(FILTER_KEY_HAS, username).GetFilter();
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERS).GetHeaders();
             var uriSuffix = string.Format(AbiquoUriSuffixes.USERSWITHROLES_BY_ENTERPRISE_ID, enterpriseId);
 
             var searchResult = Invoke<Users>(uriSuffix, filter, headers);
 
-            var errorMsg = string.Format("User with nick '{0}' does not exist in enterprise with Id = '{1}'", username,
+            var errorMsg = string.Format(Messages.AbiquoClientGetUserInformationNotFound, username,
                 enterpriseId);
             Contract.Assert(null != searchResult.Collection);
 
@@ -260,6 +261,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualMachines
 
+        private const string FILTER_KEY_FORCE = "force";
+        private const string FILTER_VALUE_FORCE = "true";
+        private const string FAKE_TASK_NAME = "FakeTask";
+
         public override VirtualMachines GetAllVirtualMachines()
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
@@ -335,7 +340,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (force)
             {
-                filter = new FilterBuilder().BuildFilterPart("force", "true").GetFilter();
+                filter = new FilterBuilder().BuildFilterPart(FILTER_KEY_FORCE, FILTER_VALUE_FORCE).GetFilter();
             }
 
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_ACCEPTEDREQUEST).GetHeaders();
@@ -344,7 +349,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 string.Format(AbiquoUriSuffixes.DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
                     virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
-            var deployTask = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers, "");
+            var deployTask = Invoke<AcceptedRequest>(HttpMethod.Post, uriSuffix, filter, headers, string.Empty);
             Contract.Assert(null != deployTask);
 
             var link = deployTask.GetLinkByRel(AbiquoRelations.STATUS);
@@ -372,7 +377,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (force)
             {
-                filter = new FilterBuilder().BuildFilterPart("force", "true").GetFilter();
+                filter = new FilterBuilder().BuildFilterPart(FILTER_KEY_FORCE, FILTER_VALUE_FORCE).GetFilter();
             }
 
             var headers = new HeaderBuilder()
@@ -395,7 +400,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             {
                 return new Task()
                 {
-                    TaskId = "FakeTask",
+                    TaskId = FAKE_TASK_NAME,
                     State = TaskStateEnum.FINISHED_SUCCESSFULLY,
                     Type = TaskTypeEnum.RECONFIGURE,
                     Timestamp = DateTimeOffset.Now.Millisecond
@@ -462,7 +467,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (force)
             {
-                filter = new FilterBuilder().BuildFilterPart("force", "true").GetFilter();
+                filter = new FilterBuilder().BuildFilterPart(FILTER_KEY_FORCE, FILTER_VALUE_FORCE).GetFilter();
             }
 
             var uriSuffix = 
@@ -622,7 +627,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override Task WaitForTaskCompletion(Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
         {
-            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.WaitForTaskCompletion, "Waiting for task completion (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+            Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.WaitForTaskCompletion, Messages.AbiquoClientWaitForTaskStart,
                     task.TaskId, taskPollingWaitTimeMilliseconds, taskPollingTimeoutMilliseconds);
 
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_TASK).GetHeaders();
@@ -641,7 +646,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                     case TaskStateEnum.FINISHED_UNSUCCESSFULLY:
                     case TaskStateEnum.ABORTED:
                         Logger.Current.TraceEvent(TraceEventType.Information, (int) Constants.EventId.WaitForTaskCompletion, 
-                            "Waiting for task completion SUCCEEDED (taskId: '{0}'; taskPollingWaitTimeMilliseconds: '{1}', taskPollingTimeoutMilliseconds: '{2}'",
+                            Messages.AbiquoClientWaitForTaskCompletionCompleted,
                             task.TaskId,
                             taskPollingWaitTimeMilliseconds, 
                             taskPollingTimeoutMilliseconds);
@@ -654,17 +659,21 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             }
 
             Logger.Current.TraceEvent(TraceEventType.Error, (int) Constants.EventId.WaitForTaskCompletion, 
-                "Waiting for task [{0}] completion FAILED (Timeout ['{1}'] exceeded)",
+                Messages.AbiquoClientWaitForTaskCompletionExceeded,
                 task.TaskId,
                 taskPollingTimeoutMilliseconds);
 
-            throw new TimeoutException(string.Format("Timeout exceeded while waiting for task with Id '{0}'", task.TaskId));
+            throw new TimeoutException(string.Format(Messages.AbiquoClientWaitForTaskCompletionTimeout, task.TaskId));
         }
 
         #endregion Tasks
 
 
         #region Networks
+
+        private const string FILTER_KEY_FREE = "free";
+        private const string FILTER_VALUE_FREE = "true";
+        private const string FILTER_KEY_VLANID = "vlanId";
 
         public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
         {
@@ -689,7 +698,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (free)
             {
-                filter = new FilterBuilder().BuildFilterPart("free", "true").GetFilter();
+                filter = new FilterBuilder().BuildFilterPart(FILTER_KEY_FREE, FILTER_VALUE_FREE).GetFilter();
             }
 
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PRIVATEIPS).GetHeaders();
@@ -739,7 +748,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Dictionary<string, object> filter = null;
             if (free)
             {
-                filter = new FilterBuilder().BuildFilterPart("free", "true").GetFilter();
+                filter = new FilterBuilder().BuildFilterPart(FILTER_KEY_FREE, FILTER_VALUE_FREE).GetFilter();
             }
 
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_EXTERNALIPS).GetHeaders();
@@ -769,7 +778,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
         {
-            var filter = new FilterBuilder().BuildFilterPart("vlanId", vlanId).GetFilter();
+            var filter = new FilterBuilder().BuildFilterPart(FILTER_KEY_VLANID, vlanId).GetFilter();
 
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIPS).GetHeaders();
 
@@ -784,7 +793,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PURCHASED_PUBLIC_IP_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
-            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, "");
+            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, string.Empty);
         }
 
         public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
@@ -793,7 +802,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_IP_TO_PURCHASE_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
-            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, "");
+            return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, string.Empty);
         }
 
         #endregion Networks
