@@ -264,6 +264,14 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+        {
+            Contract.Requires(null != virtualAppliance);
+            Contract.Requires(null != virtualMachineTemplate);
+
+            return default(VirtualMachine);
+        }
+
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -301,6 +309,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -310,11 +325,25 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Task);
         }
 
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
+
+            return default(Task);
+        }
+
+        public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            Contract.Requires(null != virtualMachine);
 
             return default(Task);
         }
