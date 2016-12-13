@@ -593,6 +593,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Create a virtual machine based on a virtual machine template
         /// </summary>
+        /// <param name="virtualAppliance">Virtual appliance to create the virtual machine in</param>
+        /// <param name="virtualMachineTemplate">Template based of the virtual machine</param>
+        /// <returns>VirtualMachine</returns>
+        public abstract VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate);
+
+        /// <summary>
+        /// Create a virtual machine based on a virtual machine template
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance to create the virtual machine in</param>
         /// <param name="virtualMachineTemplateHref">Href of the virtual machine template the template belongs to</param>
@@ -624,6 +632,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Initiates deplyoment of a specific virtual machine
         /// </summary>
+        /// <param name="virtualMachine">the virtual machine</param>
+        /// <param name="force">If true, soft limits of virtual datacenters could be surpassed</param>
+        /// <returns>Task containing information about the status of the deployment</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force);
+
+        /// <summary>
+        /// Initiates deplyoment of a specific virtual machine
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine gets deployed in</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
@@ -632,7 +648,16 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
-        /// Deplyoment of a specific virtual machine
+        /// Deployment of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">VirtualMachine to deploy</param>
+        /// <param name="force">If true, soft limits of virtual datacenters could be surpassed</param>
+        /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <returns>Task containing information about the status of the deployment</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion);
+
+        /// <summary>
+        /// Deployment of a specific virtual machine
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine gets deployed in</param>
@@ -641,7 +666,15 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="force">If true, soft limits of virtual datacenters could be surpassed</param>
         /// <returns>Task containing information about the status of the deployment</returns>
         public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion);
-        
+
+        /// <summary>
+        /// Initiates update of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Virtual machine configuration and machine to update</param>
+        /// <param name="force">If true, update is forced</param>
+        /// <returns></returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force);
+
         /// <summary>
         /// Initiates update of a specific virtual machine
         /// </summary>
