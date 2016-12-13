@@ -282,6 +282,15 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate, VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualAppliance);
+            Contract.Requires(null != virtualMachineTemplate);
+            Contract.Requires(null != virtualMachine);
+
+            return default(VirtualMachine);
+        }
+
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int enterpriseId, int dataCenterRepositoryId,
             int virtualMachineTemplateId, VirtualMachineBase virtualMachine)
         {
@@ -360,6 +369,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Task);
         }
 
+        public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachine virtualMachine, bool force, bool waitForCompletion)
         {
@@ -378,6 +394,29 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(0 != state);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(null != state);
 
             return default(Task);
         }
