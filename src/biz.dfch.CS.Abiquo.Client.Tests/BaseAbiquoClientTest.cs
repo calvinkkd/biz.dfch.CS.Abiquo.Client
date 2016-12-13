@@ -933,6 +933,42 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void CreateVirtualMachineWithNullApplianceThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(null, new VirtualMachineTemplate(), validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithNullTemplateThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(new VirtualAppliance(), null, validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void CreateVirtualMachineWithNullVirtualMachine2ThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(new VirtualAppliance(), new VirtualMachineTemplate(), null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void CreateVirtualMachineWithInvalidVirtualMachineTemplateIdThrowsContractException()
         {
             // Arrange
@@ -1221,6 +1257,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void UpdateVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.UpdateVirtualMachine(null, false, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void UpdateVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
         {
             // Arrange
@@ -1311,6 +1359,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, new VirtualMachineState(), true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ChangeStateOfVirtualMachine(null, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithNullThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.ChangeStateOfVirtualMachine(null, null, true);
 
             // Assert
         }
@@ -2305,6 +2377,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate,
+                VirtualMachine virtualMachine)
+            {
+                return new VirtualMachine();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
                 VirtualMachineBase virtualMachine)
             {
@@ -2342,14 +2420,34 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachine virtualMachine, bool force, bool waitForCompletion)
             {
                 return new Task();
             }
 
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
+            {
+                return new Task();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state)
+            {
+                return new Task();
+            }
+
             public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachineState state)
+            {
+                return new Task();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
             {
                 return new Task();
             }
@@ -2694,6 +2792,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate,
+                VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
                 VirtualMachineBase virtualMachine)
             {
@@ -2731,14 +2835,34 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachine virtualMachine, bool force, bool waitForCompletion)
             {
                 throw new NotImplementedException();
             }
 
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachineState state)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
             {
                 throw new NotImplementedException();
             }
