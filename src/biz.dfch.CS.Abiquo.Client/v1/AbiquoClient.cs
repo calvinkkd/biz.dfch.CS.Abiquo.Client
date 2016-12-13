@@ -325,6 +325,17 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId, new VirtualMachineBase());
         }
 
+        public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+        {
+            var virtualApplianceId = virtualAppliance.Id;
+            var virtualMachineTemplateLink = virtualMachineTemplate.GetLinkByRel(AbiquoRelations.EDIT);
+
+            var virtualDataCenterLink = virtualAppliance.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateLink.Href);
+        }
+
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
             return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, new VirtualMachineBase());
@@ -360,9 +371,28 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine);
         }
 
+
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
             return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, force, false);
+        }
+
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            return DeployVirtualMachine(virtualMachine, force, false);
+        }
+
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+
+            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, force, waitForCompletion);
         }
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
@@ -393,6 +423,20 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             }
 
             return task;
+        }
+
+        public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+
+            return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine,
+                force);
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
