@@ -981,6 +981,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void CreateVirtualMachineWithNullValuesThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(null, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void CreateVirtualMachineWithNullVirtualMachineTemplateHref2ThrowsContractException()
         {
             // Arrange
@@ -1053,12 +1065,36 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void DeployVirtualMachineWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.DeployVirtualMachine(null, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void DeployVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
         {
             // Arrange
 
             // Act
             sut.DeployVirtualMachine(42, 42, INVALID_ID, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithNull2ThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.DeployVirtualMachine(null, false, false);
 
             // Assert
         }
@@ -1095,6 +1131,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.DeployVirtualMachine(42, 42, INVALID_ID, false, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void UpdateVirtualMachineWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.UpdateVirtualMachine(null, false);
 
             // Assert
         }
@@ -2241,6 +2289,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+            {
+                return new VirtualMachine();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
             {
                 return new VirtualMachine();
@@ -2258,12 +2311,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
+            {
+                return new Task();
+            }
+
             public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
             {
                 return new Task();
             }
 
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 return new Task();
             }
@@ -2610,6 +2678,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
             {
                 throw new NotImplementedException();
@@ -2627,12 +2700,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
             {
                 throw new NotImplementedException();
             }
 
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 throw new NotImplementedException();
             }
