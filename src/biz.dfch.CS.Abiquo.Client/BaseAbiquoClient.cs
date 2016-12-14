@@ -314,7 +314,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var dictionaryParametersList = new List<DictionaryParameters>();
             foreach (var selectedLink in selectedLinks)
             {
-                var response = Invoke(selectedLink);
+                var response = InvokeLink(selectedLink);
                 var result = new DictionaryParameters(response);
                 dictionaryParametersList.Add(result);
             }
@@ -322,18 +322,7 @@ namespace biz.dfch.CS.Abiquo.Client
             return dictionaryParametersList;
         }
 
-        public DictionaryParameters Invoke(Link link)
-        {
-            Contract.Requires(null != link);
-            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
-
-            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
-
-            var result = new DictionaryParameters(response);
-            return result;
-        }
-
-        public DictionaryParameters Invoke(ICollection<Link> links, string rel)
+        public DictionaryParameters InvokeLinkByRel(ICollection<Link> links, string rel)
         {
             Contract.Requires(null != links);
             Contract.Requires(!string.IsNullOrWhiteSpace(rel));
@@ -342,23 +331,18 @@ namespace biz.dfch.CS.Abiquo.Client
             var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
             Contract.Assert(null != link, string.Format(Messages.BaseAbiquoClientInvokeRel, rel));
 
-            var response = Invoke(link);
+            var response = InvokeLink(link);
 
             var result = new DictionaryParameters(response);
             return result;
         }
 
-        public DictionaryParameters Invoke(ICollection<Link> links, string rel, string title)
+        public DictionaryParameters InvokeLink(Link link)
         {
-            Contract.Requires(null != links);
-            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
-            Contract.Requires(!string.IsNullOrWhiteSpace(title));
+            Contract.Requires(null != link);
             Contract.Ensures(null != Contract.Result<DictionaryParameters>());
 
-            var link = links.FirstOrDefault(e => rel.Equals(e.Rel) && title.Equals(e.Title));
-            Contract.Assert(null != link, string.Format(Messages.BaseAbiquoClientInvokeRelTitle, rel, title));
-
-            var response = Invoke(link);
+            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
 
             var result = new DictionaryParameters(response);
             return result;

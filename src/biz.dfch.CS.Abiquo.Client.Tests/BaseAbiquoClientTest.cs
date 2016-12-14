@@ -285,19 +285,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "links")]
-        public void InvokeOnNullLinksThrowsContractException()
+        public void InvokeLinkByRelOnNullLinksThrowsContractException()
         {
             var rel = "disk0";
             var links = default(ICollection<Link>);
 
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
-            var result = sut.Invoke(links, rel);
+            var result = sut.InvokeLinkByRel(links, rel);
         }
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "rel")]
-        public void InvokeOnNullRelThrowsContractException()
+        public void InvokeLinkByRelOnNullRelThrowsContractException()
         {
             var rel = "   ";
             var links = new List<Link>()
@@ -312,12 +312,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
-            var result = sut.Invoke(links, rel);
+            var result = sut.InvokeLinkByRel(links, rel);
         }
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "null.+link.+rel.+disk1")]
-        public void InvokeOnInexistingRelThrowsContractException()
+        public void InvokeLinkByRelWithInexistingRelThrowsContractException()
         {
             var rel = "disk1";
             var links = new List<Link>()
@@ -332,11 +332,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
-            var result = sut.Invoke(links, rel);
+            var result = sut.InvokeLinkByRel(links, rel);
         }
 
         [TestMethod]
-        public void InvokeOnExistingRelSucceeds()
+        public void InvokeLinkByRelWithValidLinkAndExistingRelSucceeds()
         {
             var rel = "disk1";
             var href = "cloud/virtualdatacenters/1/disks/42";
@@ -364,7 +364,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
-            var result = sut.Invoke(links, rel);
+            var result = sut.InvokeLinkByRel(links, rel);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
