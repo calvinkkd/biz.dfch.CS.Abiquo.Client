@@ -752,12 +752,28 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualMachineTemplates
 
+        public override VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository)
+        {
+            var dataCenterRepositoryLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(dataCenterRepositoryLink.Href);
+
+            return GetVirtualMachineTemplates(TenantId, dataCenterRepositoryId);
+        }
+
         public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATES_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID, enterpriseId, dataCenterRepositoryId);
             return Invoke<VirtualMachineTemplates>(uriSuffix, headers);
+        }
+
+        public override VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id)
+        {
+            var dataCenterRepositoryLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(dataCenterRepositoryLink.Href);
+
+            return GetVirtualMachineTemplate(TenantId, dataCenterRepositoryId, id);
         }
 
         public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
@@ -793,12 +809,22 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualAppliances
 
+        public override VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter)
+        {
+            return GetVirtualAppliances(virtualDataCenter.Id);
+        }
+
         public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCES_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
             return Invoke<VirtualAppliances>(uriSuffix, headers);
+        }
+
+        public override VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id)
+        {
+            return GetVirtualAppliance(virtualDataCenter.Id, id);
         }
 
         public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
@@ -819,6 +845,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetDataCenterRepositories(TenantId);
         }
 
+        public override DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise)
+        {
+            return GetDataCenterRepositories(enterprise.Id);
+        }
+
         public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORIES).GetHeaders();
@@ -830,6 +861,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
         {
             return GetDataCenterRepository(TenantId, id);
+        }
+
+        public override DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id)
+        {
+            return GetDataCenterRepository(enterprise.Id, id);
         }
 
         public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
