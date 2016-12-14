@@ -470,6 +470,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(bool);
         }
 
+        public override VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(VmNetworkConfigurations);
+        }
+
         public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
             int virtualMachineId)
         {
@@ -478,6 +485,14 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
 
             return default(VmNetworkConfigurations);
+        }
+
+        public override VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(0 < id);
+
+            return default(VmNetworkConfiguration);
         }
 
         public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
@@ -491,6 +506,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VmNetworkConfiguration);
         }
 
+        public override Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Nics);
+        }
+
         public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -498,6 +520,13 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
 
             return default(Nics);
+        }
+
+        public override Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Tasks);
         }
 
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
@@ -508,6 +537,14 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<Tasks>());
 
             return default(Tasks);
+        }
+
+        public override Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(!string.IsNullOrEmpty(taskId));
+
+            return default(Task);
         }
 
         public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
