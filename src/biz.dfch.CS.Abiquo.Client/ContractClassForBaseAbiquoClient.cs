@@ -719,11 +719,25 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Networks
 
+        public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            Contract.Requires(null != virtualDataCenter);
+
+            return default(VlanNetworks);
+        }
+
         public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
         {
             Contract.Requires(0 < virtualDataCenterId);
 
             return default(VlanNetworks);
+        }
+
+        public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            Contract.Requires(null != virtualDataCenter);
+
+            return default(VlanNetwork);
         }
 
         public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
@@ -732,6 +746,13 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < id);
 
             return default(VlanNetwork);
+        }
+
+        public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
+        {
+            Contract.Requires(null != vlan);
+
+            return default(PrivateIps);
         }
 
         public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
@@ -774,6 +795,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VlanNetwork);
         }
 
+        public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+        {
+            Contract.Requires(null != vlan);
+
+            return default(ExternalIps);
+        }
+
         public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
         {
             Contract.Requires(0 < dataCenterLimitsId);
@@ -791,11 +819,26 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(ExternalIps);
         }
 
+        public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            Contract.Requires(null != virtualDataCenter);
+
+            return default(VlanNetworks);
+        }
+
         public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
         {
             Contract.Requires(0 < virtualDataCenterId);
 
             return default(VlanNetworks);
+        }
+
+        public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(0 < id);
+
+            return default(VlanNetwork);
         }
 
         public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
@@ -806,6 +849,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VlanNetwork);
         }
 
+        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
+        {
+            Contract.Requires(null != vlan);
+
+            return default(PublicIps);
+        }
+
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -814,10 +864,26 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(PublicIps);
         }
 
+        public override PublicIp PurchasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(null != publicIp);
+
+            return default(PublicIp);
+        }
+
         public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < publicIpid);
+
+            return default(PublicIp);
+        }
+
+        public override PublicIp ReleasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(null != publicIp);
 
             return default(PublicIp);
         }
