@@ -805,6 +805,13 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
+        /// Retrieve a possible virtual machine network configuration by Id of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Virtual machine</param>
+        /// <returns>VmNetworkConfiguration</returns>
+        public abstract VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine);
+            
+        /// <summary>
         /// Retrieve the possible virtual machine network configurations of a specific virtual machine
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
@@ -813,6 +820,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <returns>VmNetworkConfigurations</returns>
         public abstract VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId,
             int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Retrieve a possible virtual machine network configuration by Id of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Virtual machine</param>
+        /// <param name="id">Id of the virtual machine network configuration</param>
+        /// <returns>VmNetworkConfiguration</returns>
+        public abstract VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id);
 
         /// <summary>
         /// Retrieve a possible virtual machine network configuration by Id of a specific virtual machine
@@ -828,11 +843,25 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve NICs attached to a specific virtual machine
         /// </summary>
+        /// <param name="virtualMachine">Virtual machine</param>
+        /// <returns>Collection of Nics</returns>
+        public abstract Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine);
+
+        /// <summary>
+        /// Retrieve NICs attached to a specific virtual machine
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <returns>Collection of Nics</returns>
         public abstract Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        ///Retrieve tasks of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Virtual machine</param>
+        /// <returns>Collection of Tasks</returns>
+        public abstract Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine);
 
         /// <summary>
         /// Retrieve tasks of a specific virtual machine
@@ -842,6 +871,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualMachineId">Id of the virtual mahcine</param>
         /// <returns>Collection of Tasks</returns>
         public abstract Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        ///  Retrieve a task by Id of a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Virtual machine</param>
+        /// <param name="taskId">id of the task</param>
+        /// <returns>Task</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId);
 
         /// <summary>
         /// Retrieve a task by Id of a specific virtual machine
