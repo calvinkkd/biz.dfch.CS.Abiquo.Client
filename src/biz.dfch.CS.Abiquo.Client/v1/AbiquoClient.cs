@@ -537,6 +537,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return ChangeStateOfVirtualMachine(virtualMachine, state, false);
         }
 
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+        {
+            var virtualMachineState = new VirtualMachineState
+            {
+                State = state
+            };
+
+            return ChangeStateOfVirtualMachine(virtualMachine, virtualMachineState, waitForCompletion);
+        }
+
         public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
         {
             var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
@@ -582,6 +592,24 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             }
 
             return task;
+        }
+
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
+        {
+            return DeleteVirtualMachine(virtualMachine, false);
+        }
+
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+
+            return DeleteVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, force);
         }
 
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
@@ -929,5 +957,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion Networks
+
     }
 }
