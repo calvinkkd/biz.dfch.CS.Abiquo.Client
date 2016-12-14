@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.CS.Abiquo.Client</id>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
         <title>biz.dfch.CS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -24,47 +24,16 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>C#/.NET client for Abiquo</summary>
-        <releaseNotes>20161206
-# BREAKING CHANGE
+        <releaseNotes>20161214
+# FEATURES
 
-* Removed GetTenantId method on interface IAuthenticationInformation
-
-
-## BUGFIXES
-
-* Added missing properties to model classes (Synchronized with Abiquo source code)
-
-
-## FEATURES
-
-* Signed assembly with strong name key
-* Added DefaultTraceListener to TraceSource
-* Updated Newtonsoft.Json to version 9.0.1
-* Changed exception handling on login to catch all exceptions (instead of only HttpRequestException)
-* Improved logging
-* Added invoker for retrieving arbitrary links from abq models
-* Added Href generator to for Uri (instead of string) to LinkBuilder
-* Added overload for retrieving entities specified by full (link) uris
-* Added DiskControllerTypeEnum
-* Added VirtualMachineTypeEnum
-* Implemented methods for switching tenant/enterprise
-* Added TenantId property to BaseAbiquoClient, which loads the enterprise Id from the enterprise link of the current user information
-* Splitted versioned and non versioned AbiquoMediaDataTypes
-
-
-# NOTES
-
-* Removed biz.dfch.CS.System.Utilities
-* Removed biz.dfch.CS.Web.Utilities
-* Added biz.dfch.CS.Commons 1.7.1
-* Replaced references to Trace/Debug logging to Commons logger
-* Replaced reference to RestClient with RestClient in Commons
-* Renamed AbiquoBaseDto to AbiquoLinkBaseDto
+* added method to invoke links by type
+* updated biz.dfch.CS.Commons to version 1.8.2
 		</releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>
         <dependencies>
-			<dependency id="biz.dfch.CS.Commons" version="1.7.1" />
+			<dependency id="biz.dfch.CS.Commons" version="1.8.2" />
 			<dependency id="Newtonsoft.Json" version="9.0.1" />
         </dependencies>
     </metadata>

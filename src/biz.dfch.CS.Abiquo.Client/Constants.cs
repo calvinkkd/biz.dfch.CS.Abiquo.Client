@@ -27,7 +27,9 @@ namespace biz.dfch.CS.Abiquo.Client
             LogoutSucceeded,
             ExecuteRequest,
             GetByVersion,
-            WaitForTaskCompletion
+            WaitForTaskCompletion,
+            Invoke,
+            InvokeCompleted,
         }
 
         public static class Authentication

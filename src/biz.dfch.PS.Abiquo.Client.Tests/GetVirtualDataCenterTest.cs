@@ -160,6 +160,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetListAvailableSucceeds()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -180,6 +181,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetIdSucceeds()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -206,6 +208,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetIdWriterErrorRecord()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -240,6 +243,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetNameSucceeds()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -266,6 +270,7 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [TestCategory("SkipOnTeamCity")]
         public void InvokeParameterSetNameSucceedsAndReturnsCollection()
         {
             Mock.Arrange(() => CurrentClient.IsLoggedIn)
@@ -295,6 +300,5 @@ namespace biz.dfch.PS.Abiquo.Client.Tests
 
             Mock.Assert(() => CurrentClient.GetVirtualDataCenters());
         }
-
     }
 }
