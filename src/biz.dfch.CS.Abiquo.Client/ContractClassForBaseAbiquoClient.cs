@@ -736,6 +736,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
         {
             Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(0 < id);
 
             return default(VlanNetwork);
         }
