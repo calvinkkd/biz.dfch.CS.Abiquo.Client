@@ -1041,11 +1041,18 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="taskPollingTimeoutMilliseconds">timeout in milliseconds</param>
         /// <returns>Completed Task</returns>
         public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task WaitForTaskCompletion(biz.dfch.CS.Abiquo.Client.v1.Model.Task task, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds);
-        
+
         #endregion Tasks
 
 
         #region Networks
+
+        /// <summary>
+        /// Retrieve all private networks of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenter">virtual datacenter</param>
+        /// <returns>Collection of VlanNetworks</returns>
+        public abstract VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter);
 
         /// <summary>
         /// Retrieve all private networks of a specific virtual datacenter
@@ -1057,10 +1064,26 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve a private network by Id of a specific virtual datacenter
         /// </summary>
+        /// <param name="virtualDataCenter">virtual datacenter</param>
+        /// <param name="id">Id of the private network</param>
+        /// <returns></returns>
+        public abstract VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id);
+
+        /// <summary>
+        /// Retrieve a private network by Id of a specific virtual datacenter
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
         /// <param name="id">Id of the private network</param>
         /// <returns>VlanNetwork</returns>
         public abstract VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id);
+
+        /// <summary>
+        /// Retrieve IPs of a specific private network
+        /// </summary>
+        /// <param name="vlan">Vlan</param>
+        /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
+        /// <returns></returns>
+        public abstract PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free);
 
         /// <summary>
         /// Retrieve IPs of a specific private network
@@ -1104,6 +1127,14 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract VlanNetwork GetExternalNetwork(int enterpriseId, int dataCenterLimitsId, int id);
 
         /// <summary>
+        ///  Retrieve IPs of a specific external network of the enterprise/tenant specified in the authentication information
+        /// </summary>
+        /// <param name="vlan">Vlan</param>
+        /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
+        /// <returns></returns>
+        public abstract ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free);
+
+        /// <summary>
         /// Retrieve IPs of a specific external network of the enterprise/tenant specified in the authentication information
         /// </summary>
         /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
@@ -1125,9 +1156,24 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all public networks of a specific virtual datacenter
         /// </summary>
+        /// <param name="virtualDataCenter">virtual data center</param>
+        /// <returns>Collection of VlanNetworks</returns>
+        public abstract VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter);
+
+        /// <summary>
+        /// Retrieve all public networks of a specific virtual datacenter
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
         /// <returns>Collection of VlanNetworks</returns>
         public abstract VlanNetworks GetPublicNetworks(int virtualDataCenterId);
+
+        /// <summary>
+        /// Retrieve a public network by Id of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenter">virtual data center</param>
+        /// <param name="id">Id of the public network</param>
+        /// <returns>VlanNetwork</returns>
+        public abstract VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id);
 
         /// <summary>
         /// Retrieve a public network by Id of a specific virtual datacenter
@@ -1140,6 +1186,13 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all public IPs of a specific public network that can be purchased
         /// </summary>
+        /// <param name="vlan">public network</param>
+        /// <returns>ExternalIps</returns>
+        public abstract PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan);
+
+        /// <summary>
+        /// Retrieve all public IPs of a specific public network that can be purchased
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
         /// <param name="vlanId">Id of the public network</param>
         /// <returns>ExternalIps</returns>
@@ -1148,10 +1201,26 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Purchase a public IP to be used in a virtual machine
         /// </summary>
+        /// <param name="vlan">virtual data center</param>
+        /// <param name="publicIp">Id of the public IP to be purchased</param>
+        /// <returns>PublicIp</returns>
+        public abstract PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp);
+
+        /// <summary>
+        /// Purchase a public IP to be used in a virtual machine
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
         /// <param name="publicIpid">Id of the public IP to be purchased</param>
         /// <returns>PublicIp</returns>
         public abstract PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid);
+
+        /// <summary>
+        /// Release a public IP
+        /// </summary>
+        /// <param name="vlan">virtual data center</param>
+        /// <param name="publicIpid">Id of the public IP to be released</param>
+        /// <returns>PublicIp</returns>
+        public abstract PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIpid);
 
         /// <summary>
         /// Release a public IP
