@@ -39,12 +39,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         private const string SAMPLE_VIRTUAL_MACHINE_PASSWORD = "SamplePw";
         private const string SAMPLE_VIRTUAL_MACHINE_NAME = "Abiquo Client TestVM";
 
-        private VirtualMachineState virtualMachineOffState = new VirtualMachineState()
+        private readonly VirtualMachineState _virtualMachineOffState = new VirtualMachineState()
         {
             State = VirtualMachineStateEnum.OFF
         };
 
-        private VirtualMachineState virtualMachineOnState = new VirtualMachineState()
+        private readonly VirtualMachineState _virtualMachineOnState = new VirtualMachineState()
         {
             State = VirtualMachineStateEnum.ON
         };
@@ -54,6 +54,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             ServerCertificateValidationCallback.Ignore();
         }
+
+
+        #region Invoke
+
+        [TestMethod]
+        public void InvokeLinksByTypeWithCollectionOfLinksAndATypeSucceeds()
+        {
+            // Arrange
+            var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+            var user = sut.GetUserInformation();
+            var roleLink = user.GetLinkByRel(AbiquoRelations.ROLE);
+            
+            // Act
+            var result = sut.InvokeLinksByType(user.Links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
+            
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            var dictionaryParameters = result.FirstOrDefault();
+            Assert.IsTrue(dictionaryParameters.ContainsKey("name"));
+            Assert.AreEqual(roleLink.Title, dictionaryParameters["name"]);
+        }
+
+        #endregion Invoke
 
 
         #region Login
@@ -1952,10 +1978,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 virtualMachine.Id.GetValueOrDefault(), false, true);
 
             // Act
-            var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, virtualMachineOffState);
-
-            var completedTask = abiquoClient.WaitForTaskCompletion(changeStateTask,
-                abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
+            var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), _virtualMachineOffState, true);
 
             var switchedOffVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
 
@@ -2016,7 +2040,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), virtualMachineOffState);
+                virtualMachine.Id.GetValueOrDefault(), _virtualMachineOffState);
 
             var completedTask = abiquoClient.WaitForTaskCompletion(changeStateTask,
                 abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
@@ -3837,7 +3861,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Act
             // Power off VM
             var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), virtualMachineOffState, true);
+                virtualMachine.Id.GetValueOrDefault(), _virtualMachineOffState, true);
             Contract.Assert(TaskStateEnum.FINISHED_SUCCESSFULLY == changeStateTask.State);
             virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
 
@@ -3848,7 +3872,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Power on VM
             changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), virtualMachineOnState, true);
+                virtualMachine.Id.GetValueOrDefault(), _virtualMachineOnState, true);
             Contract.Assert(TaskStateEnum.FINISHED_SUCCESSFULLY == changeStateTask.State);
 
             var vmWithAttachedNetwork = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,

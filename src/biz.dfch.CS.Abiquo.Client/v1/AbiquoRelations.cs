@@ -22,6 +22,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         /// Entity specific relations
         /// </summary>
         public const string ENTERPRISE = "enterprise";
+        public const string ROLE = "role";
         public const string USERS = "users";
         public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
         public const string VIRTUALDATACENTER = "virtualdatacenter";
