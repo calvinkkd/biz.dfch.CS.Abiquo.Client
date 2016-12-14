@@ -1581,6 +1581,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetNetworkConfigurationsForVmWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetNetworkConfigurationsForVm(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetNetworkConfigurationForVmNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetNetworkConfigurationForVm(42, 42, 42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetAllTasksOfVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
@@ -1611,6 +1635,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetAllTasksOfVirtualMachine(42, 42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetAllTasksOfVirtualMachineWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetAllTasksOfVirtualMachine(null);
 
             // Assert
         }
@@ -1671,6 +1707,42 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetTaskOfVirtualMachine(42, 42, 42, "");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTaskOfVirtualMachineWithNullAndEmptyTaskIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetTaskOfVirtualMachine(null, "");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetTaskOfVirtualMachineWithObjectAndEmptyTaskIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetTaskOfVirtualMachine(validVirtualMachine, "");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetNicsOfVirtualMachineWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetNicsOfVirtualMachine(null);
 
             // Assert
         }
@@ -2501,7 +2573,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
             {
-                throw new NotImplementedException();
+                return true;
+            }
+
+            public override VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine)
+            {
+                return new VmNetworkConfigurations();
             }
 
             public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId, 
@@ -2510,15 +2587,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VmNetworkConfigurations();
             }
 
+            public override VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id)
+            {
+                return new VmNetworkConfiguration();
+            }
+
             public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
                 int virtualMachineId, int id)
             {
                 return new VmNetworkConfiguration();
             }
 
+            public override Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine)
+            {
+                return new Nics();
+            }
+
             public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
             {
                 return new Nics();
+            }
+
+            public override Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine)
+            {
+                return new Tasks();
             }
 
             public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
@@ -2539,6 +2631,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
             {
                 return new Tasks();
+            }
+
+            public override Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId)
+            {
+                throw new NotImplementedException();
             }
 
             public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
@@ -2949,8 +3046,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
                 int virtualMachineId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2961,12 +3068,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
             {
                 throw new NotImplementedException();
             }
 
+            public override Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId)
             {
                 throw new NotImplementedException();
             }
