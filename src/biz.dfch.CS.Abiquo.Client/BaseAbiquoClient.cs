@@ -742,6 +742,15 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachineState state);
 
         /// <summary>
+        /// VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion
+        /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        /// <param name="state">Target state</param>
+        /// <param name="waitForCompletion">Set to true for waiting until task got completed</param>
+        /// <returns>Task containing information about the status of the state change</returns>
+        public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion);
+
+        /// <summary>
         /// Initiates state change of a specific virtual machine
         /// </summary>
         /// <param name="virtualMachine">Target virtual machine</param>
@@ -762,6 +771,13 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract biz.dfch.CS.Abiquo.Client.v1.Model.Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachineState state, bool waitForCompletion);
 
         /// <summary>
+        /// Delete a virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Virtual machine to delete</param>
+        /// <returns>True, if the virtual machine was deleted successfully</returns>
+        public abstract bool DeleteVirtualMachine(VirtualMachine virtualMachine);
+
+        /// <summary>
         /// Delete a virtual machine by Id
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
@@ -769,6 +785,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualMachineId">Id of the virtual machine</param>
         /// <returns>True, if the virtual machine was deleted successfully</returns>
         public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
+        /// Delete a virtual machine 
+        /// </summary>
+        /// <param name="virtualMachine">Virtual machine to delete</param>
+        /// <param name="force">Indicates if deletion has to be forced</param>
+        /// <returns>True, if the virtual machine was deleted successfully</returns>
+        public abstract bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force);
 
         /// <summary>
         /// Delete a virtual machine by Id
