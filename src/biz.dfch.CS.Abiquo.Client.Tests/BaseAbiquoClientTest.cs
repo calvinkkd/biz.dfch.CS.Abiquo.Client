@@ -2091,12 +2091,48 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetPrivateNetworksWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPrivateNetworks(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetPrivateNetworksWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
 
             // Act
             sut.GetPrivateNetworks(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPrivateNetworkWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPrivateNetwork(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPrivateNetworkWithObjectAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPrivateNetwork(new VirtualDataCenter(), INVALID_ID);
 
             // Assert
         }
@@ -2121,6 +2157,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetPrivateNetwork(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetIpsOfPrivateNetworkWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetIpsOfPrivateNetwork(null, true);
 
             // Assert
         }
@@ -2247,6 +2295,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetIpsOfExternalNetworkOfCurrentEnterprise(null, true);
+
+            // Assert
+        }
+
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithInvalidDataCenterLimitsIdThrowsContractException()
         {
             // Arrange
@@ -2307,12 +2368,48 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetPublicNetworksWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetworks(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void GetPublicNetworksWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
 
             // Act
             sut.GetPublicNetworks(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPublicNetworkWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetwork(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void GetPublicNetworkWithObjectAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetwork(new VirtualDataCenter(), INVALID_ID);
 
             // Assert
         }
@@ -2367,6 +2464,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void GetPublicIpsToPurchaseOfPublicNetworkWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicIpsToPurchaseOfPublicNetwork(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void PurchasePublicIpWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
@@ -2391,6 +2500,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void PurchasePublicIpWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.PurchasePublicIp(null, new PublicIp());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void PurchasePublicIpWithObjectAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.PurchasePublicIp(new VlanNetwork(), null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void ReleasePublicIpWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
@@ -2409,6 +2542,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.ReleasePublicIp(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void ReleasePublicIpWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ReleasePublicIp(null, new PublicIp());
 
             // Assert
         }
@@ -2836,14 +2981,29 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
+            public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                return new VlanNetworks();
+            }
+
             public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
             {
                 return new VlanNetworks();
             }
 
+            public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+            {
+                return new VlanNetwork();
+            }
+
             public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
             {
                 return new VlanNetwork();
+            }
+
+            public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
+            {
+                return new PrivateIps();
             }
 
             public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
@@ -2871,6 +3031,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VlanNetwork();
             }
 
+            public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+            {
+                return new ExternalIps();
+            }
+
             public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
             {
                 return new ExternalIps();
@@ -2881,9 +3046,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new ExternalIps();
             }
 
+            public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                return new VlanNetworks();
+            }
+
             public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
             {
                 return new VlanNetworks();
+            }
+
+            public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
+            {
+                return new VlanNetwork();
+
             }
 
             public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
@@ -2891,12 +3067,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VlanNetwork();
             }
 
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
+            {
+                return new PublicIps();
+            }
+
             public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
             {
                 return new PublicIps();
             }
 
+            public override PublicIp PurchasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+            {
+                return new PublicIp();
+            }
+
             public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+            {
+                return new PublicIp();
+            }
+
+            public override PublicIp ReleasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIpid)
             {
                 return new PublicIp();
             }
@@ -3321,12 +3512,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
             {
                 throw new NotImplementedException();
             }
 
+            public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
             {
                 throw new NotImplementedException();
             }
@@ -3356,6 +3562,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+            {
+                throw new NotImplementedException();
+            }
+
             public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
             {
                 throw new NotImplementedException();
@@ -3366,7 +3577,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
             {
                 throw new NotImplementedException();
             }
@@ -3376,12 +3597,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
+            {
+                throw new NotImplementedException();
+            }
+
             public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
             {
                 throw new NotImplementedException();
             }
 
+            public override PublicIp PurchasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+            {
+                throw new NotImplementedException();
+            }
+
             public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override PublicIp ReleasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIpid)
             {
                 throw new NotImplementedException();
             }
