@@ -562,6 +562,13 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region VirtualMachineTemplates
 
+        public override VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository)
+        {
+            Contract.Requires(null != dataCenterRepository);
+
+            return default(VirtualMachineTemplates);
+        }
+
         public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -569,6 +576,13 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<VirtualMachineTemplates>());
 
             return default(VirtualMachineTemplates);
+        }
+
+        public override VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id)
+        {
+            Contract.Requires(null != dataCenterRepository);
+
+            return default(VirtualMachineTemplate);
         }
 
         public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
@@ -604,12 +618,27 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region VirtualAppliances
 
+        public override VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter)
+        {
+            Contract.Requires(null != virtualDataCenter);
+
+            return default(VirtualAppliances);
+        }
+
         public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Ensures(null != Contract.Result<VirtualAppliances>());
 
             return default(VirtualAppliances);
+        }
+
+        public override VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(0 < id);
+
+            return default(VirtualAppliance);
         }
 
         public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
@@ -632,6 +661,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(DataCenterRepositories);
         }
 
+        public override DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+
+            return default(DataCenterRepositories);
+        }
+
         public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -642,6 +678,14 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
         {
+            Contract.Requires(0 < id);
+
+            return default(DataCenterRepository);
+        }
+
+        public override DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id)
+        {
+            Contract.Requires(null != enterprise);
             Contract.Requires(0 < id);
 
             return default(DataCenterRepository);
