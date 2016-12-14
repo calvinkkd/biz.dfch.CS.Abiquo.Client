@@ -1389,6 +1389,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void ChangeStateOfVirtualMachineWithNullThrowsContractException3()
+        {
+            // Arrange
+
+            // Act
+            sut.ChangeStateOfVirtualMachine(null, 0, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeleteVirtualMachineWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.DeleteVirtualMachine(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void DeleteVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
@@ -1455,6 +1479,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.DeleteVirtualMachine(42, 42, 0, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeleteVirtualMachineWithNull2ThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.DeleteVirtualMachine(null, true);
 
             // Assert
         }
@@ -2447,6 +2483,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
             public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
             {
                 return new Task();
@@ -2456,6 +2497,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 VirtualMachineState state, bool waitForCompletion)
             {
                 return new Task();
+            }
+
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
             }
 
             public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId, 
@@ -2476,6 +2522,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                return true;
+            }
+
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 return true;
             }
@@ -2862,6 +2913,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
             {
                 throw new NotImplementedException();
@@ -2873,7 +2929,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
             public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 throw new NotImplementedException();
             }
