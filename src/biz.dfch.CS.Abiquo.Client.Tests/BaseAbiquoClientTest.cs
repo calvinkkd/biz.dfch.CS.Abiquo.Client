@@ -2035,18 +2035,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void GetDataCenterRepositoryWithObjectAndDataCenterRepositoryIdThrowsContractException()
-        {
-            // Arrange
-
-            // Act
-            sut.GetDataCenterRepository(new Enterprise(), 42);
-
-            // Assert
-        }
-
-        [TestMethod]
-        [ExpectContractFailure]
         public void GetDataCenterRepositoryWithObjectAndInvalidIdThrowsContractException()
         {
             // Arrange

@@ -1753,7 +1753,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), virtualMachineOffState, true);
+                virtualMachine.Id.GetValueOrDefault(), _virtualMachineOffState, true);
 
             var switchedOffVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
 
@@ -1807,7 +1807,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 virtualMachine.Id.GetValueOrDefault(), false, true);
 
             // Act
-            var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, virtualMachineOffState, true);
+            var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, _virtualMachineOffState, true);
 
             var switchedOffVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
 
@@ -1990,12 +1990,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsTrue(0 < changeStateTask.Timestamp);
             Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, changeStateTask.State);
             Assert.AreEqual(TaskTypeEnum.POWER_OFF, changeStateTask.Type);
-
-            Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
-            Assert.AreEqual(changeStateTask.TaskId, completedTask.TaskId);
-            Assert.IsTrue(0 < completedTask.Timestamp);
-            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, completedTask.State);
-            Assert.AreEqual(TaskTypeEnum.POWER_OFF, completedTask.Type);
 
             Assert.AreEqual(VirtualMachineStateEnum.OFF, switchedOffVirtualMachine.State);
 
