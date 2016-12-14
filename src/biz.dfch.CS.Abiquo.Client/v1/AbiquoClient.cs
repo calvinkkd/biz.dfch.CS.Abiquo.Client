@@ -19,14 +19,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
-﻿using System.Net.Http;
+using System.Net.Http;
 using biz.dfch.CS.Abiquo.Client.Authentication;
-﻿using biz.dfch.CS.Abiquo.Client.Communication;
-﻿using biz.dfch.CS.Abiquo.Client.General;
-﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
+using biz.dfch.CS.Abiquo.Client.Communication;
+using biz.dfch.CS.Abiquo.Client.General;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
+using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 using System.Threading;
 using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
+using System.Text.RegularExpressions;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -927,6 +928,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region Networks
 
+        public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            return GetPrivateNetworks(virtualDataCenter.Id);
+        }
+
         public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
@@ -936,6 +942,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VlanNetworks>(uriSuffix, headers);
         }
 
+        public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            return GetPrivateNetwork(virtualDataCenter.Id, id);
+        }
+
         public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
@@ -943,6 +954,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID, virtualDataCenterId, id);
 
             return Invoke<VlanNetwork>(uriSuffix, headers);
+        }
+
+        public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
+        {
+            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);            
+
+            return GetIpsOfPrivateNetwork(virtualDataCenterId, vlan.Id, free);
         }
 
         public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
@@ -989,6 +1008,20 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VlanNetwork>(uriSuffix, headers);
         }
 
+        public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+        {
+            var vlanEditLink = vlan.GetLinkByRel(AbiquoRelations.EDIT);
+
+            var regexPattern = @"^.+limits/(\d+)/.+$";
+            var match = Regex.Match(vlanEditLink.Href, regexPattern);
+            Contract.Assert(match.Success);
+            var limitsIdAsString = match.Groups[1].Value;
+
+            var dataCenterLimitsId = int.Parse(limitsIdAsString);
+
+            return GetIpsOfExternalNetworkOfCurrentEnterprise(dataCenterLimitsId, vlan.Id, free);
+        }
+
         public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
         {
             return GetIpsOfExternalNetwork(TenantId, dataCenterLimitsId,
@@ -1010,6 +1043,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<ExternalIps>(uriSuffix, filter, headers);
         }
 
+        public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            return GetPublicNetworks(virtualDataCenter.Id);
+        }
+
         public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
@@ -1019,6 +1057,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VlanNetworks>(uriSuffix, headers);
         }
 
+        public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            return GetPublicNetwork(virtualDataCenter.Id, id);
+        }
+
         public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
@@ -1026,6 +1069,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PUBLIC_NETWORK_ID, virtualDataCenterId, id);
 
             return Invoke<VlanNetwork>(uriSuffix, headers);
+        }
+
+        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
+        {
+            var DataCenterLink = vlan.GetLinkByRel(AbiquoRelations.DATACENTER);
+            var DataCenterId = UriHelper.ExtractIdAsInt(DataCenterLink.Href);
+
+            return GetPublicIpsToPurchaseOfPublicNetwork(DataCenterId, vlan.Id);
         }
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
@@ -1039,6 +1090,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<PublicIps>(uriSuffix, filter, headers);
         }
 
+        public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
+        {
+            var dataCenterLink = vlan.GetLinkByRel(AbiquoRelations.DATACENTER);
+            var dataCenterId = UriHelper.ExtractIdAsInt(dataCenterLink.Href);
+
+            return PurchasePublicIp(dataCenterId, publicIp.Id);
+        }
+
         public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
@@ -1046,6 +1105,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.PURCHASED_PUBLIC_IP_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
             return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, "");
+        }
+
+        public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIp)
+        {
+            var dataCenterLink = vlan.GetLinkByRel(AbiquoRelations.DATACENTER);
+            var dataCenterId = UriHelper.ExtractIdAsInt(dataCenterLink.Href);
+
+            return ReleasePublicIp(dataCenterId, publicIp.Id);
         }
 
         public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
