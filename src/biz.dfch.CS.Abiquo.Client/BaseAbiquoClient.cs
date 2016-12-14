@@ -896,13 +896,28 @@ namespace biz.dfch.CS.Abiquo.Client
         #region VirtualMachineTemplates
 
         /// <summary>
-        /// Get all virtual machine templaes of a specific specific datacenter repository of a specific enterprise/tenant
+        /// Get all virtual machine templaes of a specific specific datacenter repository
+        /// </summary>
+        /// <param name="dataCenterRepository">datacenter repository</param>
+        /// <returns>Collection of VirtualMachineTemplates</returns>
+        public abstract VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository);
+
+        /// <summary>
+        /// Get all virtual machine templaes of a specific specific datacenter repository of the current enterprise/tenant
         /// </summary>
         /// <param name="enterpriseId">Id of the entperise/tenant</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository</param>
         /// <returns>Collection of VirtualMachineTemplates</returns>
         public abstract VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId);
-        
+
+        /// <summary>
+        /// Get a virtual machine template by id of a specific specific datacenter repository of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="dataCenterRepository">Datacenter repository</param>
+        /// <param name="id">Id of the virtual machine template</param>
+        /// <returns>VirtualMachineTemplate</returns>
+        public abstract VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id);
+
         /// <summary>
         /// Get a virtual machine template by id of a specific specific datacenter repository of a specific enterprise/tenant
         /// </summary>
@@ -938,9 +953,24 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all available virtual applicance of a specific virtual datacenter
         /// </summary>
+        /// <param name="virtualDataCenter">Virtualdatacenter</param>
+        /// <returns>Collection of VirtualApplicances</returns>
+        public abstract VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter);
+
+        /// <summary>
+        /// Retrieve all available virtual applicance of a specific virtual datacenter
+        /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
         /// <returns>Collection of VirtualApplicances</returns>
         public abstract VirtualAppliances GetVirtualAppliances(int virtualDataCenterId);
+
+        /// <summary>
+        /// Retrieve a specific virtual appliance by id of a specific virtual datacenter
+        /// </summary>
+        /// <param name="virtualDataCenter"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public abstract VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id);
 
         /// <summary>
         /// Retrieve a specific virtual appliance by id of a specific virtual datacenter
@@ -964,6 +994,13 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all datacenter repositories of an enterprise/tenant
         /// </summary>
+        /// <param name="enterprise">Enterprise</param>
+        /// <returns>DataCenterRepositories</returns>
+        public abstract DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise);
+
+        /// <summary>
+        /// Retrieve all datacenter repositories of an enterprise/tenant
+        /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
         /// <returns>DataCenterRepositories</returns>
         public abstract DataCenterRepositories GetDataCenterRepositories(int enterpriseId);
@@ -974,6 +1011,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="id">Id of the datacenter repository</param>
         /// <returns>DataCenterRepository</returns>
         public abstract DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id);
+
+        /// <summary>
+        /// Retrieve a specific datacenter repository by id of a specific enterprise/tenant
+        /// </summary>
+        /// <param name="enterprise">Entreprise</param>
+        /// <param name="id">Id of the datacenter repository</param>
+        /// <returns>DataCenterRepository</returns>
+        public abstract DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id);
 
         /// <summary>
         /// Retrieve a specific datacenter repository by id of a specific enterprise/tenant
