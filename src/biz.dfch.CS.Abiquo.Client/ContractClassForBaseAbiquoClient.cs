@@ -406,6 +406,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Task);
         }
 
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
         public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
         {
             Contract.Requires(null != virtualMachine);
@@ -429,6 +436,20 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
 
             return default(Task);
+        }
+
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(bool);
+        }
+
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(bool);
         }
 
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
