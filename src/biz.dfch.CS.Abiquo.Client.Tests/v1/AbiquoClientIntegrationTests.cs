@@ -2557,6 +2557,36 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualMachineTemplates
 
         [TestMethod]
+        public void GetVirtualMachineTemplatesWithObjectReturnsAbiquoVirtualMachineTemplates()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            // Act
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(dataCenterRepository);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualMachineTemplates);
+            Assert.IsNotNull(virtualMachineTemplates.Collection);
+            Assert.IsTrue(0 < virtualMachineTemplates.TotalSize);
+            Assert.IsTrue(0 < virtualMachineTemplates.Links.Count);
+
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualMachineTemplate);
+            Assert.IsTrue(0 < virtualMachineTemplate.Id);
+            Assert.IsNotNull(virtualMachineTemplate.Name);
+            Assert.IsTrue(0 < virtualMachineTemplate.CpuRequired);
+            Assert.IsTrue(0 < virtualMachineTemplate.RamRequired);
+        }
+
+        [TestMethod]
         public void GetVirtualMachineTemplatesReturnsAbiquoVirtualMachineTemplates()
         {
             // Arrange
@@ -2583,6 +2613,38 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsTrue(0 < virtualMachineTemplates.Links.Count);
 
             var virtualMachineTemplate = virtualMachineTemplates.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualMachineTemplate);
+            Assert.IsTrue(0 < virtualMachineTemplate.Id);
+            Assert.IsNotNull(virtualMachineTemplate.Name);
+            Assert.IsTrue(0 < virtualMachineTemplate.CpuRequired);
+            Assert.IsTrue(0 < virtualMachineTemplate.RamRequired);
+        }
+
+        [TestMethod]
+        public void GetVirtualMachineTemplateReturnsWithObjectExpectedAbiquoVirtualMachineTemplate()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var existingVirtualMachine = virtualMachineTemplates.Collection.FirstOrDefault();
+            Contract.Assert(null != existingVirtualMachine);
+
+            // Act
+            var virtualMachineTemplate = abiquoClient.GetVirtualMachineTemplate(dataCenterRepository, existingVirtualMachine.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
             Assert.IsNotNull(virtualMachineTemplate);
             Assert.IsTrue(0 < virtualMachineTemplate.Id);
             Assert.IsNotNull(virtualMachineTemplate.Name);
@@ -2703,6 +2765,35 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualAppliances
 
         [TestMethod]
+        public void GetVirtualAppliancesWithObjectReturnsAbiquoVirtualAppliances()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenterToBeLoaded);
+            var virtualDataCenter = abiquoClient.GetVirtualDataCenter(virtualDataCenterToBeLoaded.Id);
+
+            // Act
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualAppliances);
+            Assert.IsNotNull(virtualAppliances.Collection);
+            Assert.IsTrue(0 < virtualAppliances.TotalSize);
+            Assert.IsTrue(0 < virtualAppliances.Links.Count);
+
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualAppliance);
+            Assert.IsTrue(0 < virtualAppliance.Id);
+            Assert.IsNotNull(virtualAppliance.Name);
+        }
+
+        [TestMethod]
         public void GetVirtualAppliancesReturnsAbiquoVirtualAppliances()
         {
             // Arrange
@@ -2729,6 +2820,39 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(virtualAppliance);
             Assert.IsTrue(0 < virtualAppliance.Id);
             Assert.IsNotNull(virtualAppliance.Name);
+        }
+
+        [TestMethod]
+        public void GetVirtualApplianceWithObjectReturnsExpectedAbiquoVirtualAppliance()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
+            Contract.Assert(null != virtualDataCenterToBeLoaded);
+
+            var virtualDataCenter = abiquoClient.GetVirtualDataCenter(virtualDataCenterToBeLoaded.Id);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var expectedVirtualApplicance = virtualAppliances.Collection.FirstOrDefault();
+            Contract.Assert(null != expectedVirtualApplicance);
+
+            // Act
+            var virtualAppliance = abiquoClient.GetVirtualAppliance(virtualDataCenter, expectedVirtualApplicance.Id);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(virtualAppliance);
+            Assert.AreEqual(expectedVirtualApplicance.Id, virtualAppliance.Id);
+            Assert.AreEqual(expectedVirtualApplicance.Error, virtualAppliance.Error);
+            Assert.AreEqual(expectedVirtualApplicance.HighDisponibility, virtualAppliance.HighDisponibility);
+            Assert.AreEqual(expectedVirtualApplicance.NodeConnections, virtualAppliance.NodeConnections);
+            Assert.AreEqual(expectedVirtualApplicance.State, virtualAppliance.State);
+            Assert.AreEqual(expectedVirtualApplicance.SubState, virtualAppliance.SubState);
+            Assert.AreEqual(expectedVirtualApplicance.PublicApp, virtualAppliance.PublicApp);
         }
 
         [TestMethod]
@@ -2768,6 +2892,33 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
 
         #region DataCenterRepositories
+
+        [TestMethod]
+        public void GetDataCenterRepositoriesWithObjectReturnsAbiquoDataCenterRepositories()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            // Act
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositories(abiquoClient.GetCurrentEnterprise());
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCenterRepositories);
+            Assert.IsNotNull(dataCenterRepositories.Collection);
+            Assert.IsNotNull(dataCenterRepositories.Links);
+            //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
+            //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
+
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Assert.IsNotNull(dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository.Links);
+            Assert.IsTrue(0 < dataCenterRepository.Links.Count);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
+        }
 
         [TestMethod]
         public void GetDataCenterRepositoriesReturnsAbiquoDataCenterRepositories()
@@ -2839,6 +2990,39 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Act
             var dataCenterRepository = abiquoClient.GetDataCenterRepositoryOfCurrentEnterprise(dataCenterRepositoryId);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+
+            Assert.IsNotNull(dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository.Links);
+            Assert.IsTrue(0 < dataCenterRepository.Links.Count);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.Name));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(dataCenterRepository.RepositoryLocation));
+
+            Assert.AreEqual(expectedDataCenterRepository.Error, dataCenterRepository.Error);
+            Assert.AreEqual(expectedDataCenterRepository.Name, dataCenterRepository.Name);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryCapacityMb, dataCenterRepository.RepositoryCapacityMb);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryLocation, dataCenterRepository.RepositoryLocation);
+            Assert.AreEqual(expectedDataCenterRepository.RepositoryRemainingMb, dataCenterRepository.RepositoryRemainingMb);
+        }
+
+        [TestMethod]
+        public void GetDataCenterRepositoryWithObjectReturnsExpectedAbiquoDataCenterRepository()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Contract.Assert(null != expectedDataCenterRepository);
+
+            var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            // Act
+            var dataCenterRepository = abiquoClient.GetDataCenterRepository(abiquoClient.GetCurrentEnterprise(), dataCenterRepositoryId);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
