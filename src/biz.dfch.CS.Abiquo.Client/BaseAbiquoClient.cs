@@ -188,7 +188,7 @@ namespace biz.dfch.CS.Abiquo.Client
         #endregion ExecuteRequest
 
 
-        #region Generic Invoke
+        #region Invoke
 
         public T Invoke<T>(string uriSuffix, IDictionary<string, string> headers) where T : AbiquoBaseDto
         {
@@ -221,63 +221,12 @@ namespace biz.dfch.CS.Abiquo.Client
             return AbiquoBaseDto.DeserializeObject<T>(stringResponse);
         }
 
-        #endregion Generic Invoke
-
-
-        #region Invoke
-
-        public List<DictionaryParameters> InvokeLinksByType(ICollection<Link> links, string type)
-        {
-            Contract.Requires(null != links);
-            Contract.Requires(!string.IsNullOrWhiteSpace(type));
-            Contract.Ensures(null != Contract.Result<ICollection<DictionaryParameters>>());
-
-            var selectedLinks = links.Where(e => type.Equals(e.Type));
-            Contract.Assert(null != selectedLinks, string.Format(Messages.BaseAbiquoClientInvokeLinksByType, type));
-
-            var dictionaryParametersList = new List<DictionaryParameters>();
-            foreach (var selectedLink in selectedLinks)
-            {
-                var response = GetDictionaryParametersFromLink(selectedLink);
-                var result = new DictionaryParameters(response);
-                dictionaryParametersList.Add(result);
-            }
-
-            return dictionaryParametersList;
-        }
-
-        public DictionaryParameters InvokeLinkByRel(ICollection<Link> links, string rel)
-        {
-            Contract.Requires(null != links);
-            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
-            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
-
-            var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
-            Contract.Assert(null != link, string.Format(Messages.BaseAbiquoClientInvokeRel, rel));
-
-            var response = GetDictionaryParametersFromLink(link);
-
-            var result = new DictionaryParameters(response);
-            return result;
-        }
-
-        public DictionaryParameters GetDictionaryParametersFromLink(Link link)
-        {
-            Contract.Requires(null != link);
-            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
-
-            var response = ExecuteRequest(new Uri(link.Href).AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
-
-            var result = new DictionaryParameters(response);
-            return result;
-        }
-
         public DictionaryParameters Invoke(Uri absoluteUri)
         {
             Contract.Requires(null != absoluteUri);
             Contract.Requires(absoluteUri.IsAbsoluteUri);
 
-            var response = Invoke(absoluteUri.AbsoluteUri.Substring(AbiquoApiBaseUri.Length));
+            var response = Invoke(UriHelper.ExtractRelativeUri(AbiquoApiBaseUri, absoluteUri.AbsoluteUri));
 
             var result = new DictionaryParameters(response);
             return result;
@@ -346,6 +295,72 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         #endregion Invoke
+
+
+        #region Invoke Link(s)
+
+        /// <summary>
+        /// Retrieve an entity of the specified type by invoking a GET request on the href of the provided link
+        /// </summary>
+        /// <typeparam name="T">Type of the entity to be returned</typeparam>
+        /// <param name="link">Abiquo link entity</param>
+        /// <returns>Abiquo entity of specified type</returns>
+        public abstract T InvokeLink<T>(Link link) where T : AbiquoBaseDto;
+
+        /// <summary>
+        /// Retrieve an entity of type specified in link by invoking a GET request on the href of the provided link
+        /// </summary>
+        /// <param name="link">Abiquo link entity</param>
+        /// <returns>Abiquo entity</returns>
+        public abstract AbiquoBaseDto InvokeLink(Link link);
+
+        public List<DictionaryParameters> InvokeLinksByType(ICollection<Link> links, string type)
+        {
+            Contract.Requires(null != links);
+            Contract.Requires(!string.IsNullOrWhiteSpace(type));
+            Contract.Ensures(null != Contract.Result<ICollection<DictionaryParameters>>());
+
+            var selectedLinks = links.Where(e => type.Equals(e.Type));
+            Contract.Assert(null != selectedLinks, string.Format(Messages.BaseAbiquoClientInvokeLinksByType, type));
+
+            var dictionaryParametersList = new List<DictionaryParameters>();
+            foreach (var selectedLink in selectedLinks)
+            {
+                var response = GetDictionaryParametersFromLink(selectedLink);
+                var result = new DictionaryParameters(response);
+                dictionaryParametersList.Add(result);
+            }
+
+            return dictionaryParametersList;
+        }
+
+        public DictionaryParameters InvokeLinkByRel(ICollection<Link> links, string rel)
+        {
+            Contract.Requires(null != links);
+            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
+
+            var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
+            Contract.Assert(null != link, string.Format(Messages.BaseAbiquoClientInvokeRel, rel));
+
+            var response = GetDictionaryParametersFromLink(link);
+
+            var result = new DictionaryParameters(response);
+            return result;
+        }
+
+        public DictionaryParameters GetDictionaryParametersFromLink(Link link)
+        {
+            Contract.Requires(null != link);
+            Contract.Ensures(null != Contract.Result<DictionaryParameters>());
+
+            var response = Invoke(UriHelper.ExtractRelativeUri(AbiquoApiBaseUri, link.Href));
+
+            var result = new DictionaryParameters(response);
+            return result;
+        }
+
+        #endregion Invoke Link(s)
 
 
         #region Enterprises

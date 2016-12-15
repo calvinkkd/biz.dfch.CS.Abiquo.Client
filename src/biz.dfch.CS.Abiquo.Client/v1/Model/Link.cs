@@ -21,7 +21,7 @@ using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    public class Link : AbiquoBaseDto
+    public class Link : AbiquoV1BaseDto
     {
         [Required]
         public string Rel { get; set; }

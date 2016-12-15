@@ -19,20 +19,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
-﻿using System.Net.Http;
+using System.Net.Http;
 using biz.dfch.CS.Abiquo.Client.Authentication;
-﻿using biz.dfch.CS.Abiquo.Client.Communication;
-﻿using biz.dfch.CS.Abiquo.Client.General;
-﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
-﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
+using biz.dfch.CS.Abiquo.Client.Communication;
+using biz.dfch.CS.Abiquo.Client.General;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
+using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 using System.Threading;
 using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
+using System.Text.RegularExpressions;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public class AbiquoClient : BaseAbiquoClient
     {
         public const string ABIQUO_API_VERSION = "3.10";
+
+        private static readonly string _linkTypePattern = @"^application/vnd\.abiquo\.(\w+)\+.+$";
+        private const string FQCN_SEPARATOR = ".";
 
         public override int TenantId
         {
@@ -89,6 +93,35 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion Login
+
+
+        #region Invoke Link(s)
+
+        public override T InvokeLink<T>(Link link)
+        {
+            var result = InvokeLink(link);
+
+            Contract.Assert(result.GetType() == typeof(T));
+
+            return result as T;
+        }
+
+        public override AbiquoBaseDto InvokeLink(Link link)
+        {
+            var match = Regex.Match(link.Type, _linkTypePattern);
+            Contract.Assert(match.Success);
+            Contract.Assert(2 == match.Groups.Count);
+
+            var headers = new HeaderBuilder().BuildAccept(link.Type).GetHeaders();
+            var result = Invoke(UriHelper.ExtractRelativeUri(AbiquoApiBaseUri, link.Href), headers);
+
+            var type = Type.GetType(string.Concat(typeof(AbiquoV1BaseDto).Namespace, FQCN_SEPARATOR, match.Groups[1].Value), 
+                throwOnError: true, 
+                ignoreCase: true);
+            return (AbiquoBaseDto) AbiquoBaseDto.DeserializeObject(result, type);
+        }
+
+        #endregion Invoke Link(s)
 
 
         #region Enterprises

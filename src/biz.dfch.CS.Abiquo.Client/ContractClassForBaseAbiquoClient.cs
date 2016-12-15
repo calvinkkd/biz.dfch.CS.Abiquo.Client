@@ -17,7 +17,8 @@
  using System;
  using System.Diagnostics.Contracts;
  using biz.dfch.CS.Abiquo.Client.Authentication;
-﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+ using biz.dfch.CS.Abiquo.Client.General;
+ using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client
@@ -50,6 +51,29 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         #endregion Login
+
+
+        #region Invoke Link(s)
+
+        public override T InvokeLink<T>(Link link)
+        {
+            Contract.Requires(null != link);
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Type));
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Href));
+
+            return default(T);
+        }
+
+        public override AbiquoBaseDto InvokeLink(Link link)
+        {
+            Contract.Requires(null != link);
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Type));
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Href));
+
+            return default(AbiquoBaseDto);
+        }
+
+        #endregion Invoke Link(s)
 
 
         #region Enterprises

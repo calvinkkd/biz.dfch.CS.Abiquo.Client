@@ -178,7 +178,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #endregion ExecuteRequest
 
 
-        #region Generic Invoke
+        #region Invoke
 
         [TestMethod]
         [ExpectContractFailure]
@@ -204,11 +204,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
         }
-
-        #endregion Generic Invoke
-
-
-        #region Invoke
 
         [TestMethod]
         [ExpectContractFailure]
@@ -281,6 +276,97 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Assert.AreEqual("Arbitrary-Result", result);
 
             Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        public void InvokeWithAbsoluteUriSucceeds()
+        {
+            var rel = "disk1";
+            var href = "cloud/virtualdatacenters/1/disks/42";
+            var link = new LinkBuilder()
+                .BuildRel(rel)
+                .BuildHref(ABIQUO_API_BASE_URI + href)
+                .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
+                .BuildType("application/vnd.abiquo.harddisk+json")
+                .GetLink();
+
+            var dicionaryParameers = new DictionaryParameters()
+            {
+                { "expected-key", "expected-value" }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
+                .IgnoreInstance()
+                .Returns(dicionaryParameers.SerializeObject())
+                .OccursOnce();
+
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var result = sut.Invoke(new Uri(link.Href));
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result.ContainsKey("expected-key"));
+            Assert.IsTrue(result.ContainsValue("expected-value"));
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        #endregion Invoke
+
+
+        #region Invoke Link(s)
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "link")]
+        public void GenericInvokeLinkWithNullLinkThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.InvokeLink<AbiquoBaseDto>(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "href")]
+        public void GenericInvokeLinkWithLinkContainingInvalidHrefThrowsContractException()
+        {
+            // Arrange
+            var link = new LinkBuilder().BuildHref("").BuildType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetLink();
+
+            // Act
+            sut.InvokeLink<VirtualMachineTemplate>(link);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "link")]
+        public void NonGenericInvokeLinkWithNullLinkThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.InvokeLink(null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "href")]
+        public void NonGenericInvokeLinkWithLinkContainingInvalidHrefThrowsContractException()
+        {
+            // Arrange
+            var link = new LinkBuilder().BuildHref("").BuildType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetLink();
+
+            // Act
+            sut.InvokeLink(link);
+
+            // Assert
         }
 
         [TestMethod]
@@ -376,42 +462,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        public void InvokeWithAbsoluteUriSucceeds()
-        {
-            var rel = "disk1";
-            var href = "cloud/virtualdatacenters/1/disks/42";
-            var link = new LinkBuilder()
-                .BuildRel(rel)
-                .BuildHref(ABIQUO_API_BASE_URI + href)
-                .BuildTitle("/a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
-                .BuildType("application/vnd.abiquo.harddisk+json")
-                .GetLink();
-
-            var dicionaryParameers = new DictionaryParameters()
-            {
-                { "expected-key", "expected-value" }
-            };
-
-            var restCallExecutor = Mock.Create<RestCallExecutor>();
-            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
-                .IgnoreInstance()
-                .Returns(dicionaryParameers.SerializeObject())
-                .OccursOnce();
-            
-            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
-
-            var result = sut.Invoke(new Uri(link.Href));
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(DictionaryParameters));
-            Assert.AreEqual(1, result.Count);
-            Assert.IsTrue(result.ContainsKey("expected-key"));
-            Assert.IsTrue(result.ContainsValue("expected-value"));
-
-            Mock.Assert(restCallExecutor);
-        }
-
-        [TestMethod]
         public void InvokeLinksByTypeWithLinksAndLinkTypeSucceeds()
         {
             var roleId = 42;
@@ -461,7 +511,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Mock.Assert(restCallExecutor);
         }
 
-        #endregion Invoke
+        #endregion Invoke Link(s)
 
 
         #region Enterprises
@@ -2058,6 +2108,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return true;
             }
 
+            public override T InvokeLink<T>(Link link)
+            {
+                return default(T);
+            }
+
+            public override AbiquoBaseDto InvokeLink(Link link)
+            {
+                return new Enterprise();
+            }
+
             public override Enterprises GetEnterprises()
             {
                 return new Enterprises();
@@ -2400,6 +2460,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
             {
                 return true;
+            }
+
+            public override T InvokeLink<T>(Link link)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override AbiquoBaseDto InvokeLink(Link link)
+            {
+                throw new NotImplementedException();
             }
 
             public override Enterprises GetEnterprises()

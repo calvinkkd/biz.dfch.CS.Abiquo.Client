@@ -21,6 +21,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public const string ENTERPRISE = "enterprise";
         public const string ROLE = "role";
         public const string USERS = "users";
+        public const string VIRTUALMACHINES = "virtualmachines";
         public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
 
         public const string EDIT = "edit";
