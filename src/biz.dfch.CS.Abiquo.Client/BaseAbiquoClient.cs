@@ -238,7 +238,7 @@ namespace biz.dfch.CS.Abiquo.Client
             var dictionaryParametersList = new List<DictionaryParameters>();
             foreach (var selectedLink in selectedLinks)
             {
-                var response = InvokeLink(selectedLink);
+                var response = GetDictionaryParametersFromLink(selectedLink);
                 var result = new DictionaryParameters(response);
                 dictionaryParametersList.Add(result);
             }
@@ -255,13 +255,13 @@ namespace biz.dfch.CS.Abiquo.Client
             var link = links.FirstOrDefault(e => rel.Equals(e.Rel));
             Contract.Assert(null != link, string.Format(Messages.BaseAbiquoClientInvokeRel, rel));
 
-            var response = InvokeLink(link);
+            var response = GetDictionaryParametersFromLink(link);
 
             var result = new DictionaryParameters(response);
             return result;
         }
 
-        public DictionaryParameters InvokeLink(Link link)
+        public DictionaryParameters GetDictionaryParametersFromLink(Link link)
         {
             Contract.Requires(null != link);
             Contract.Ensures(null != Contract.Result<DictionaryParameters>());
