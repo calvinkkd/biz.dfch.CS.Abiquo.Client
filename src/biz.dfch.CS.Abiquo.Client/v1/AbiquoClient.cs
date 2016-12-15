@@ -38,9 +38,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         {
             get
             {
-                Contract.Requires(IsLoggedIn);
-                Contract.Requires(null != CurrentUserInformation);
-
                 var enterpriseLink = CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
                 Contract.Assert(null != enterpriseLink);
 

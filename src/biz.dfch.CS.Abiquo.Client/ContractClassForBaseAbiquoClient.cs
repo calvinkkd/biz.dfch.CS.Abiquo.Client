@@ -25,6 +25,17 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
+        public override int TenantId
+        {
+            get
+            {
+                Contract.Requires(IsLoggedIn);
+                Contract.Requires(null != CurrentUserInformation);
+
+                return default(int);
+            }
+        }
+
         #region Login
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
