@@ -2035,6 +2035,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         private class DummyAbiquoClient : BaseAbiquoClient
         {
+            public override int TenantId
+            {
+                get { return 42; }
+            }
+
             public DummyAbiquoClient()
             {
                 AbiquoApiVersion = "Arbitrary-Version";
@@ -2380,6 +2385,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         private class InvalidAbiquoClient : BaseAbiquoClient
         {
+            public override int TenantId
+            {
+                get { return default(int); }
+            }
+
             public InvalidAbiquoClient(string abiquoApiVersion, int taskPollingWaitTimeMilliseconds, int taskPollingTimeoutMilliseconds)
             {
                 AbiquoApiVersion = abiquoApiVersion;

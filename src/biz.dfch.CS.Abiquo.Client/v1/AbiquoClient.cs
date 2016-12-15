@@ -34,6 +34,20 @@ namespace biz.dfch.CS.Abiquo.Client.v1
     {
         public const string ABIQUO_API_VERSION = "3.10";
 
+        public override int TenantId
+        {
+            get
+            {
+                Contract.Requires(IsLoggedIn);
+                Contract.Requires(null != CurrentUserInformation);
+
+                var enterpriseLink = CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
+                Contract.Assert(null != enterpriseLink);
+
+                return UriHelper.ExtractIdAsInt(enterpriseLink.Href);
+            }
+        }
+
         internal AbiquoClient()
         {
             AbiquoApiVersion = ABIQUO_API_VERSION;

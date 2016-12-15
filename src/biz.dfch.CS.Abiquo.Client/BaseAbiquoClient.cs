@@ -22,7 +22,6 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using biz.dfch.CS.Abiquo.Client.General;
-using biz.dfch.CS.Abiquo.Client.v1;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Commons;
 using biz.dfch.CS.Commons.Diagnostics;
@@ -80,22 +79,9 @@ namespace biz.dfch.CS.Abiquo.Client
         public User CurrentUserInformation { get; protected set; }
 
         /// <summary>
-        /// Returns the Id of the enterprise/tenant based on the current user information,
-        /// which gets injected through the login method.
+        /// Returns the Id of the enterprise/tenant the current user is acting for
         /// </summary>
-        public int TenantId
-        {
-            get
-            {
-                Contract.Requires(IsLoggedIn);
-                Contract.Requires(null != CurrentUserInformation);
-
-                var enterpriseLink = CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
-                Contract.Assert(null != enterpriseLink);
-
-                return UriHelper.ExtractIdAsInt(enterpriseLink.Href);
-            }
-        }
+        public abstract int TenantId { get; }
 
         /// <summary>
         /// Polling wait time for task handling
