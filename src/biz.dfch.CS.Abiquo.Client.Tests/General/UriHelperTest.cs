@@ -297,8 +297,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
         }
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "StartsWith")]
-        public void ExtractRelativeUriWithAbsoluteUriNotStartingWithBaseUriThrowsContractException()
+        [ExpectContractFailure(MessagePattern = "IsBaseOf")]
+        public void ExtractRelativeUriWithBaseUriIsBaseOfAbsoluteUriThrowsContractException()
         {
             // Arrange
 
