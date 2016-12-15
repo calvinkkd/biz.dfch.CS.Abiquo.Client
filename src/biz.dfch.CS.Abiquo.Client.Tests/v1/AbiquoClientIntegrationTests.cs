@@ -30,6 +30,7 @@ using biz.dfch.CS.Abiquo.Client.Tests.General;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
 using System.Threading;
+using biz.dfch.CS.Testing.Attributes;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 {
@@ -54,32 +55,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             ServerCertificateValidationCallback.Ignore();
         }
-
-
-        #region Invoke
-
-        [TestMethod]
-        public void InvokeLinksByTypeWithCollectionOfLinksAndATypeSucceeds()
-        {
-            // Arrange
-            var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
-            var user = sut.GetUserInformation();
-            var roleLink = user.GetLinkByRel(AbiquoRelations.ROLE);
-            
-            // Act
-            var result = sut.InvokeLinksByType(user.Links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
-            
-            // Assert
-            Assert.IsTrue(loginSucceeded);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count);
-            var dictionaryParameters = result.FirstOrDefault();
-            Assert.IsTrue(dictionaryParameters.ContainsKey("name"));
-            Assert.AreEqual(roleLink.Title, dictionaryParameters["name"]);
-        }
-
-        #endregion Invoke
 
 
         #region Login
@@ -112,6 +87,83 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         #endregion Login
+
+
+        #region Invoke Link(s)
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "GetType\\(\\)")]
+        public void InvokeLinkForVirtualMachineWithEnterprisesLinkThrowsContractException()
+        {
+            // Arrange
+            var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            Contract.Assert(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
+
+            var enterpriseLink = sut.CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
+
+            // Act
+            sut.InvokeLink<VirtualMachine>(enterpriseLink);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void InvokeLinkForVirtualmachinesWithVirtualMachinesLinkReturnsVirtualMachines()
+        {
+            // Arrange
+            var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            Contract.Assert(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
+
+            var virtualMachinesLink = sut.CurrentUserInformation.GetLinkByRel(AbiquoRelations.VIRTUALMACHINES);
+
+            // Act
+            var result = sut.InvokeLink<VirtualMachines>(virtualMachinesLink);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Collection);
+            Assert.IsTrue(result.Collection.Count > 0);
+        }
+
+        [TestMethod]
+        public void InvokeLinkForEnterpriseWithEnterpriseLinkReturnsEnterprise()
+        {
+            // Arrange
+            var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            Contract.Assert(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
+
+            var enterpriseLink = sut.CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
+
+            // Act
+            var result = sut.InvokeLink<Enterprise>(enterpriseLink);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(IntegrationTestEnvironment.TenantId, result.Id);
+        }
+
+        [TestMethod]
+        public void InvokeLinksByTypeWithCollectionOfLinksAndATypeSucceeds()
+        {
+            // Arrange
+            var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+            var user = sut.GetUserInformation();
+            var roleLink = user.GetLinkByRel(AbiquoRelations.ROLE);
+
+            // Act
+            var result = sut.InvokeLinksByType(user.Links, AbiquoMediaDataTypes.VND_ABIQUO_ROLE);
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            var dictionaryParameters = result.FirstOrDefault();
+            Assert.IsTrue(dictionaryParameters.ContainsKey("name"));
+            Assert.AreEqual(roleLink.Title, dictionaryParameters["name"]);
+        }
+
+        #endregion Invoke Link(s)
 
 
         #region Enterprises

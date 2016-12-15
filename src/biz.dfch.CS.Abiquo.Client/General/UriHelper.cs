@@ -72,5 +72,20 @@ namespace biz.dfch.CS.Abiquo.Client.General
 
             return resultingUri.Segments.Last();
         }
+
+        public static string ExtractRelativeUri(string baseUri, string absoluteUri)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(baseUri));
+            Contract.Requires(!string.IsNullOrWhiteSpace(absoluteUri));
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            Uri resultingBaseUri;
+            Uri resultingAbsoluteUri;
+            Contract.Assert(Uri.TryCreate(baseUri, UriKind.Absolute, out resultingBaseUri), "Invalid absolute URI");
+            Contract.Assert(Uri.TryCreate(absoluteUri, UriKind.Absolute, out resultingAbsoluteUri), "Invalid absolute URI");
+            Contract.Assert(resultingBaseUri.IsBaseOf(resultingAbsoluteUri));
+
+            return resultingAbsoluteUri.AbsoluteUri.Substring(baseUri.Length -1);
+        }
     }
 }

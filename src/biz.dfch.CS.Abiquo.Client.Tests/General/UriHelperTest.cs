@@ -26,6 +26,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
     public class UriHelperTest
     {
         private const string ABIQUO_API_BASE_URI = "https://abiquo.example.com/api/";
+        private const string ENTERPRISE_HREF = "https://abiquo.example.com/api/admin/enterprises/1";
 
         [TestMethod]
         [ExpectContractFailure]
@@ -79,19 +80,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
         public void ConcatUriReturnsValidUri()
         {
             // Arrange
-            var expectedUri = "http://example.com/api/login";
+            var expectedUri = "http://abiquo.example.com/api/login";
 
             // Act
 
             // Assert
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "login"));
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "/login"));
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "login/"));
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api/", "/login/"));
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "login"));
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "/login"));
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "login/"));
-            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://example.com/api", "/login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api/", "login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api/", "/login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api/", "login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api/", "/login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api", "login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api", "/login"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api", "login/"));
+            Assert.AreEqual(expectedUri, UriHelper.ConcatUri("http://abiquo.example.com/api", "/login/"));
         }
 
         [TestMethod]
@@ -181,7 +182,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            var id = UriHelper.ExtractIdAsInt("https://example/api/users/155");
+            var id = UriHelper.ExtractIdAsInt("https://abiquo.example.com/api/users/155");
 
             // Assert
             Assert.AreEqual(155, id);
@@ -217,10 +218,118 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             // Arrange
 
             // Act
-            var lastSegment = UriHelper.ExtractLastSegmentAsString("https://example/api/users/fe5ddc9e-7745-4a4a-99d6-d7598682f8fd");
+            var lastSegment = UriHelper.ExtractLastSegmentAsString("https://abiquo.example.com/api/users/fe5ddc9e-7745-4a4a-99d6-d7598682f8fd");
 
             // Assert
             Assert.AreEqual("fe5ddc9e-7745-4a4a-99d6-d7598682f8fd", lastSegment);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "baseUri")]
+        public void ExtractRelativeUriWithNullBaseUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractRelativeUri(null, ENTERPRISE_HREF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "baseUri")]
+        public void ExtractRelativeUriWithEmptyBaseUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractRelativeUri("", ENTERPRISE_HREF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "Invalid")]
+        public void ExtractRelativeUriWithInvalidBaseUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractRelativeUri("Arbitrary", ENTERPRISE_HREF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "absoluteUri")]
+        public void ExtractRelativeUriWithNullAbsoluteUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "absoluteUri")]
+        public void ExtractRelativeUriWithEmptyAbsoluteUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, "");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "Invalid")]
+        public void ExtractRelativeUriWithInvalidAbsoluteUriStringThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, "Arbitrary");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "IsBaseOf")]
+        public void ExtractRelativeUriWithBaseUriIsBaseOfAbsoluteUriThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, "http://arbitrary.example.com/api/admin/enterprises/1");
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void ExtractRelativeUriSucceeds()
+        {
+            // Arrange
+
+            // Act
+            var result = UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, ENTERPRISE_HREF);
+
+            // Assert
+            Assert.AreEqual("/admin/enterprises/1", result);
+        }
+
+        [TestMethod]
+        public void ExtractRelativeUriFromAbsoluteUriWithPortSucceeds()
+        {
+            // Arrange
+
+            // Act
+            var result = UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, "https://abiquo.example.com:443/api/admin/enterprises/1");
+
+            // Assert
+            Assert.AreEqual("/admin/enterprises/1", result);
         }
     }
 }
