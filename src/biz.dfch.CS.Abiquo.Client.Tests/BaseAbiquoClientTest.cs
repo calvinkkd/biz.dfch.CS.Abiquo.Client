@@ -3252,7 +3252,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new PublicIps();
             }
 
-            public override PublicIp PurchasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+            public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
             {
                 return new PublicIp();
             }
@@ -3262,7 +3262,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new PublicIp();
             }
 
-            public override PublicIp ReleasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIpid)
+            public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIpid)
             {
                 return new PublicIp();
             }
@@ -3797,7 +3797,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override PublicIp PurchasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+            public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
             {
                 throw new NotImplementedException();
             }
@@ -3807,7 +3807,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override PublicIp ReleasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIpid)
+            public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIpid)
             {
                 throw new NotImplementedException();
             }
