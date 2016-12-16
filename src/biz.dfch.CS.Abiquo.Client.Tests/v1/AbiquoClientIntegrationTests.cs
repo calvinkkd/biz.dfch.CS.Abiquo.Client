@@ -907,7 +907,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsTrue(loginSucceeded);
 
             Assert.IsNotNull(virtualMachine);
-            Assert.IsTrue(expectedVirtualMachine.Id < virtualMachine.Id);
+            Assert.AreEqual(expectedVirtualMachine.Id, virtualMachine.Id);
             Assert.AreEqual(expectedVirtualMachine.Name, virtualMachine.Name);
             Assert.AreEqual(expectedVirtualMachine.Cpu, virtualMachine.Cpu);
             Assert.AreEqual(expectedVirtualMachine.Ram, virtualMachine.Ram);
