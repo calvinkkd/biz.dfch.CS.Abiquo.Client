@@ -134,6 +134,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public override User GetUser(Enterprise enterprise, int id)
         {
             Contract.Requires(null != enterprise);
+            Contract.Requires(0 < id);
 
             return default(User);
         }
@@ -231,6 +232,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
         {
             Contract.Requires(null != enterprise);
+            Contract.Requires(0 < id);
 
             return default(DataCenterLimits);
         }
@@ -262,11 +264,12 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachines);
         }
 
-        public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance, int id)
+        public override VirtualMachine GetVirtualMachine(VirtualAppliance virtualAppliance, int id)
         {
             Contract.Requires(null != virtualAppliance);
+            Contract.Requires(0 < id);
 
-            return default(VirtualMachines);
+            return default(VirtualMachine);
         }
 
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
@@ -322,6 +325,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(null != virtualAppliance);
             Contract.Requires(null != virtualMachineTemplate);
             Contract.Requires(null != virtualMachine);
+            Contract.Requires(virtualMachine.IsValid());
 
             return default(VirtualMachine);
         }
@@ -429,6 +433,7 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
+            Contract.Requires(null != state);
 
             return default(Task);
         }
@@ -436,7 +441,6 @@ namespace biz.dfch.CS.Abiquo.Client
         public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
         {
             Contract.Requires(null != virtualMachine);
-            Contract.Requires(0 != state);
 
             return default(Task);
         }
@@ -451,6 +455,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
         {
             Contract.Requires(null != virtualMachine);
+            Contract.Requires(null != state);
 
             return default(Task);
         }
@@ -616,6 +621,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public override VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id)
         {
             Contract.Requires(null != dataCenterRepository);
+            Contract.Requires(0 < id);
 
             return default(VirtualMachineTemplate);
         }
