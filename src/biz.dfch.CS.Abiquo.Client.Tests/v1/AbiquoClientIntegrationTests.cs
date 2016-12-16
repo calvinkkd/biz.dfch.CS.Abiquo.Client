@@ -1769,7 +1769,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void ChangeVirtualMachineStateWithWaitForCompletionChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
+        public void ChangeStateOfVirtualMachineWithWaitForCompletionChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1824,7 +1824,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void ChangeVirtualMachineStateWithWaitForCompletionChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask2()
+        public void ChangeStateOfVirtualMachineWithWaitForCompletionChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1878,7 +1878,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void ChangeVirtualMachineStateWithWaitForCompletionChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask3()
+        public void ChangeStateOfVirtualMachineWithWaitForCompletionChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask3()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1932,7 +1932,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void ChangeVirtualMachineStateWithEnumChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
+        public void ChangeStateOfVirtualMachineWithEnumChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1995,7 +1995,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void ChangeVirtualMachineStateChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask2()
+        public void ChangeStateOfVirtualMachineChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2050,7 +2050,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void ChangeVirtualMachineStateChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
+        public void ChangeStateOfVirtualMachineChangesStateOfAbiquoVirtualMachineAndReturnsSuccessfullyCompletedTask()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
