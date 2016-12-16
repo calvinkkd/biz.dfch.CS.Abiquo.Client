@@ -85,7 +85,7 @@ namespace biz.dfch.CS.Abiquo.Client.General
             Contract.Assert(Uri.TryCreate(absoluteUri, UriKind.Absolute, out resultingAbsoluteUri), "Invalid absolute URI");
             Contract.Assert(resultingBaseUri.IsBaseOf(resultingAbsoluteUri));
 
-            return resultingAbsoluteUri.AbsoluteUri.Substring(baseUri.Length -1);
+            return resultingAbsoluteUri.AbsoluteUri.Substring(resultingBaseUri.AbsoluteUri.Length);
         }
     }
 }

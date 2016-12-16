@@ -317,6 +317,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             var result = UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, ENTERPRISE_HREF);
 
             // Assert
+            Assert.AreEqual("admin/enterprises/1", result);
+        }
+
+        [TestMethod]
+        public void ExtractRelativeUriSucceeds2()
+        {
+            // Arrange
+
+            // Act
+            var result = UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI.TrimEnd('/'), ENTERPRISE_HREF);
+
+            // Assert
             Assert.AreEqual("/admin/enterprises/1", result);
         }
 
@@ -329,7 +341,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.General
             var result = UriHelper.ExtractRelativeUri(ABIQUO_API_BASE_URI, "https://abiquo.example.com:443/api/admin/enterprises/1");
 
             // Assert
-            Assert.AreEqual("/admin/enterprises/1", result);
+            Assert.AreEqual("admin/enterprises/1", result);
         }
     }
 }
