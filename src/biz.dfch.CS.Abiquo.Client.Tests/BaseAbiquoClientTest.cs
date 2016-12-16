@@ -583,7 +583,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure(MessagePattern = "id")]
-        public void GetUserWitEnterpriseAndInvalidUserIdThrowsContractException()
+        public void GetUserWithEnterpriseAndInvalidUserIdThrowsContractException()
         {
             // Arrange
 
