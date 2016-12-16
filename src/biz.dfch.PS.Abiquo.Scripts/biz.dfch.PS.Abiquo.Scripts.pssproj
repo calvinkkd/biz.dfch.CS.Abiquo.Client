@@ -32,7 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="it\ModuleTests.ps1" />
-    <Compile Include="src\Get-MachineByVirtualMachine.ps1" />
+    <Compile Include="src\Get-AbqMachineByVirtualMachine.ps1" />
     <Compile Include="src\LoginViaAppclusive.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
