@@ -534,30 +534,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #region Users
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "enterprise")]
-        public void GetUserWithNullEnterpriseAndValidUserIdThrowsContractException()
-        {
-            // Arrange
-
-            // Act
-            sut.GetUser(null, 42);
-
-            // Assert
-        }
-
-        [TestMethod]
-        [ExpectContractFailure(MessagePattern = "enterprise")]
-        public void GetUserWitEnterpriseAndInvalidUserIdThrowsContractException()
-        {
-            // Arrange
-
-            // Act
-            sut.GetUser(new Enterprise(), INVALID_ID);
-
-            // Assert
-        }
-
-        [TestMethod]
         [ExpectContractFailure(MessagePattern = "id")]
         public void GetUsersWithRolesWithInvalidEnterpriseIdThrowsContractException()
         {
@@ -589,6 +565,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetUserOfCurrentEnterprise(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetUserWithNullEnterpriseAndValidUserIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUser(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetUserWitEnterpriseAndInvalidUserIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUser(new Enterprise(), INVALID_ID);
 
             // Assert
         }
