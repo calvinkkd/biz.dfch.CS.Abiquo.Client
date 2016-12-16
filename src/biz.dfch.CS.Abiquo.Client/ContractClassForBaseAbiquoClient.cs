@@ -906,9 +906,9 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(PublicIps);
         }
 
-        public override PublicIp PurchasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+        public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
         {
-            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(null != vlan);
             Contract.Requires(null != publicIp);
 
             return default(PublicIp);
@@ -922,9 +922,9 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(PublicIp);
         }
 
-        public override PublicIp ReleasePublicIp(VlanNetwork virtualDataCenter, PublicIp publicIp)
+        public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIp)
         {
-            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(null != vlan);
             Contract.Requires(null != publicIp);
 
             return default(PublicIp);
