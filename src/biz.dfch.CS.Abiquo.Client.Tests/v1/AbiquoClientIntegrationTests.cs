@@ -159,6 +159,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count);
             var dictionaryParameters = result.FirstOrDefault();
+            Assert.IsNotNull(dictionaryParameters);
             Assert.IsTrue(dictionaryParameters.ContainsKey("name"));
             Assert.AreEqual(roleLink.Title, dictionaryParameters["name"]);
         }
@@ -362,7 +363,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetUsersWithRolesWithEnterpriseReturnsAbiquoUsersWithRoles()
+        public void GetUsersWithRolesReturnsAbiquoUsersWithRoles()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -385,7 +386,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetUsersWithRolesReturnsAbiquoUsersWithRoles()
+        public void GetUsersWithRolesReturnsAbiquoUsersWithRoles2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -439,7 +440,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetUserWithEnterpriseReturnsExpectedAbiquoUser()
+        public void GetUserReturnsExpectedAbiquoUser()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -473,7 +474,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetUserReturnsExpectedAbiquoUser()
+        public void GetUserReturnsExpectedAbiquoUser2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -663,7 +664,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region DataCentersLimits
 
         [TestMethod]
-        public void GetDataCentersLimitsOfEnterpriseReturnsAbiquoLimitsOfEnterprise()
+        public void GetDataCentersLimitsReturnsAbiquoLimitsOfEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -709,7 +710,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetDataCenterLimitsWithEnterpriseReturnsExpectedAbiquoDataCenterLimitsOfEnterprise()
+        public void GetDataCenterLimitsByIdReturnsExpectedAbiquoDataCenterLimitsOfEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -814,7 +815,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachinesWithVirtualApplianceReturnsAbiquoVirtualMachines()
+        public void GetVirtualMachinesReturnsAbiquoVirtualMachines()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -848,7 +849,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachinesReturnsAbiquoVirtualMachines()
+        public void GetVirtualMachinesReturnsAbiquoVirtualMachines2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -882,7 +883,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachineWithVirtualApplianceAndIdReturnsExpectedAbiquoVirtualMachine()
+        public void GetVirtualMachineReturnsExpectedAbiquoVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -914,7 +915,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachineReturnsExpectedAbiquoVirtualMachine()
+        public void GetVirtualMachineReturnsExpectedAbiquoVirtualMachine2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -1008,7 +1009,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void CreateVirtualMachineWithVirtualApplianceCreatesAbiquoVirtualMachineBasedOnTemplate()
+        public void CreateVirtualMachineWithVirtualMachineTemplateCreatesAbiquoVirtualMachineBasedOnTemplate()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2114,7 +2115,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void DeleteVirtualMachineWithObjectDeletesAbiquoVirtualMachine()
+        public void DeleteVirtualMachineDeletesAbiquoVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2152,7 +2153,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void DeleteVirtualMachineWithObjectAndForcedDeletesAbiquoVirtualMachine()
+        public void DeleteVirtualMachineAndForcedDeletesAbiquoVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2191,7 +2192,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
 
         [TestMethod]
-        public void DeleteVirtualMachineDeletesAbiquoVirtualMachine()
+        public void DeleteVirtualMachineDeletesAbiquoVirtualMachine2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2230,7 +2231,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetNetworkConfigurationsForVmWithObjectReturnsAbiquoNetworkConfigurationsForVm()
+        public void GetNetworkConfigurationsForVmReturnsAbiquoNetworkConfigurationsForVm()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2264,7 +2265,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetNetworkConfigurationsForVmReturnsAbiquoNetworkConfigurationsForVm()
+        public void GetNetworkConfigurationsForVmReturnsAbiquoNetworkConfigurationsForVm2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2299,7 +2300,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetNetworkConfigurationForVmWithObjectReturnsExpectedAbiquoNetworkConfiguration()
+        public void GetNetworkConfigurationForVmReturnsExpectedAbiquoNetworkConfiguration()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2338,7 +2339,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetNetworkConfigurationForVmReturnsExpectedAbiquoNetworkConfiguration()
+        public void GetNetworkConfigurationForVmReturnsExpectedAbiquoNetworkConfiguration2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2379,7 +2380,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetNicsOfVirtualMachineWithObjectReturnsAbiquoNicsOfSpecifiedVirtualMachine()
+        public void GetNicsOfVirtualMachineReturnsAbiquoNicsOfSpecifiedVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2413,7 +2414,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetNicsOfVirtualMachineReturnsAbiquoNicsOfSpecifiedVirtualMachine()
+        public void GetNicsOfVirtualMachineReturnsAbiquoNicsOfSpecifiedVirtualMachine2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2448,7 +2449,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetAllTasksOfVirtualMachineWithObjectReturnsAbiquoTasksOfVirtualMachine()
+        public void GetAllTasksOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2489,7 +2490,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetAllTasksOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
+        public void GetAllTasksOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2531,7 +2532,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetTaskOfVirtualMachineWithObjectReturnsAbiquoTasksOfVirtualMachine()
+        public void GetTaskOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2575,7 +2576,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetTaskOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine()
+        public void GetTaskOfVirtualMachineReturnsAbiquoTasksOfVirtualMachine2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2625,7 +2626,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualMachineTemplates
 
         [TestMethod]
-        public void GetVirtualMachineTemplatesWithObjectReturnsAbiquoVirtualMachineTemplates()
+        public void GetVirtualMachineTemplatesReturnsAbiquoVirtualMachineTemplates()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2655,7 +2656,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachineTemplatesReturnsAbiquoVirtualMachineTemplates()
+        public void GetVirtualMachineTemplatesReturnsAbiquoVirtualMachineTemplates2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2689,7 +2690,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachineTemplateReturnsWithObjectExpectedAbiquoVirtualMachineTemplate()
+        public void GetVirtualMachineTemplateReturnsExpectedAbiquoVirtualMachineTemplate()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2721,7 +2722,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachineTemplateReturnsExpectedAbiquoVirtualMachineTemplate()
+        public void GetVirtualMachineTemplateReturnsExpectedAbiquoVirtualMachineTemplate2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2833,7 +2834,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region VirtualAppliances
 
         [TestMethod]
-        public void GetVirtualAppliancesWithObjectReturnsAbiquoVirtualAppliances()
+        public void GetVirtualAppliancesReturnsAbiquoVirtualAppliances()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2862,7 +2863,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualAppliancesReturnsAbiquoVirtualAppliances()
+        public void GetVirtualAppliancesReturnsAbiquoVirtualAppliances2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2891,7 +2892,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualApplianceWithObjectReturnsExpectedAbiquoVirtualAppliance()
+        public void GetVirtualApplianceReturnsExpectedAbiquoVirtualAppliance()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2924,7 +2925,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualApplianceReturnsExpectedAbiquoVirtualAppliance()
+        public void GetVirtualApplianceReturnsExpectedAbiquoVirtualAppliance2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2962,7 +2963,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region DataCenterRepositories
 
         [TestMethod]
-        public void GetDataCenterRepositoriesWithObjectReturnsAbiquoDataCenterRepositories()
+        public void GetDataCenterRepositoriesReturnsAbiquoDataCenterRepositories()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -2977,8 +2978,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.IsNotNull(dataCenterRepositories);
             Assert.IsNotNull(dataCenterRepositories.Collection);
             Assert.IsNotNull(dataCenterRepositories.Links);
-            //Assert.IsTrue(0 < dataCenterRepositories.TotalSize);
-            //Assert.IsTrue(0 < dataCenterRepositories.Links.Count);
 
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
             Assert.IsNotNull(dataCenterRepository);
@@ -2989,7 +2988,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetDataCenterRepositoriesReturnsAbiquoDataCenterRepositories()
+        public void GetDataCenterRepositoriesReturnsAbiquoDataCenterRepositories2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3076,7 +3075,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetDataCenterRepositoryWithObjectReturnsExpectedAbiquoDataCenterRepository()
+        public void GetDataCenterRepositoryReturnsExpectedAbiquoDataCenterRepository()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3109,7 +3108,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetDataCenterRepositoryReturnsExpectedAbiquoDataCenterRepository()
+        public void GetDataCenterRepositoryReturnsExpectedAbiquoDataCenterRepository2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3154,7 +3153,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         #region Networks
 
         [TestMethod]
-        public void GetPrivateNetworksWithObjectReturnsAbiquoPrivateNetworks()
+        public void GetPrivateNetworksReturnsAbiquoPrivateNetworks()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3181,7 +3180,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPrivateNetworksReturnsAbiquoPrivateNetworks()
+        public void GetPrivateNetworksReturnsAbiquoPrivateNetworks2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3208,7 +3207,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPrivateNetworkWithObjectReturnsExpectedAbiquoPrivateNetwork()
+        public void GetPrivateNetworkReturnsExpectedAbiquoPrivateNetwork()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3245,7 +3244,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPrivateNetworkReturnsExpectedAbiquoPrivateNetwork()
+        public void GetPrivateNetworkReturnsExpectedAbiquoPrivateNetwork2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3282,7 +3281,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetIpsOfPrivateNetworkWithObjectAndFreeReturnsFreeIPsOfPrivateNetwork()
+        public void GetIpsOfPrivateNetworkAndFreeReturnsFreeIPsOfPrivateNetwork()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3410,7 +3409,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithObjectAndFreeReturnsFreeIPsOfExternalNetworkOfCurrentEnterprise()
+        public void GetIpsOfExternalNetworkOfCurrentEnterpriseAndFreeReturnsFreeIPsOfExternalNetworkOfCurrentEnterprise()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3472,7 +3471,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPublicNetworksWithObjectReturnsAbiquoPublicNetworks()
+        public void GetPublicNetworksReturnsAbiquoPublicNetworks()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3495,7 +3494,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPublicNetworksReturnsAbiquoPublicNetworks()
+        public void GetPublicNetworksReturnsAbiquoPublicNetworks2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3518,7 +3517,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPublicNetworkWithObjectReturnsExpectedAbiquoPublicNetwork()
+        public void GetPublicNetworkReturnsExpectedAbiquoPublicNetwork()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3556,7 +3555,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPublicNetworkReturnsExpectedAbiquoPublicNetwork()
+        public void GetPublicNetworkReturnsExpectedAbiquoPublicNetwork2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3594,7 +3593,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPublicIpsToPurchaseOfPublicNetworkWithObjectReturnsAbiquoPublicIpsToPurchase()
+        public void GetPublicIpsToPurchaseOfPublicNetworkReturnsAbiquoPublicIpsToPurchase()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3625,7 +3624,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetPublicIpsToPurchaseOfPublicNetworkReturnsAbiquoPublicIpsToPurchase()
+        public void GetPublicIpsToPurchaseOfPublicNetworkReturnsAbiquoPublicIpsToPurchase2()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -3657,7 +3656,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void PurchaseAndReleasePublicIpWithObjectsSucceeds()
+        public void PurchaseAndReleasePublicIpsSucceeds()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
