@@ -1179,6 +1179,5 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         }
 
         #endregion Networks
-
     }
 }

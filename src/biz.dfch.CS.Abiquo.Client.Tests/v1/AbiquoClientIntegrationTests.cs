@@ -814,7 +814,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        public void GetVirtualMachinesWithVirtualApplianceAndIdReturnsAbiquoVirtualMachines()
+        public void GetVirtualMachineWithVirtualApplianceAndIdReturnsAbiquoVirtualMachine()
         {
             // Arrange
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
@@ -829,17 +829,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Contract.Assert(null != virtualAppliance);
 
             // Act
-            var virtualMachines = abiquoClient.GetVirtualMachines(virtualAppliance, virtualDataCenter.Id);
+            var virtualMachine = abiquoClient.GetVirtualMachine(virtualAppliance, virtualDataCenter.Id);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
 
-            Assert.IsNotNull(virtualMachines);
-            Assert.IsNotNull(virtualMachines.Collection);
-            Assert.IsTrue(0 < virtualMachines.TotalSize);
-            Assert.IsTrue(0 < virtualMachines.Links.Count);
-
-            var virtualMachine = virtualMachines.Collection.FirstOrDefault();
             Assert.IsNotNull(virtualMachine);
             Assert.IsTrue(0 < virtualMachine.Id);
             Assert.IsNotNull(virtualMachine.Name);
