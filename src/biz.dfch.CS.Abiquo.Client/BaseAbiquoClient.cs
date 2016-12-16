@@ -368,7 +368,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve the list of enterprises/tenants
         /// </summary>
-        /// <returns>Collection of Enterprises/tenants</returns>
+        /// <returns>Enterprises/tenants</returns>
         public abstract Enterprises GetEnterprises();
         
         /// <summary>
@@ -392,21 +392,21 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve users with roles of the enterprise/tenant specified in the authentication information
         /// </summary>
-        /// <returns>Collection of UsersWithRoles</returns>
+        /// <returns>UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRolesOfCurrentEnterprise();
 
         /// <summary>
         /// Retrieve users with roles of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterprise">Enterprise/Tenant</param>
-        /// <returns>Collection of UsersWithRoles</returns>
+        /// <returns>UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRoles(Enterprise enterprise);
 
         /// <summary>
         /// Retrieve users with roles of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
-        /// <returns>Collection of UsersWithRoles</returns>
+        /// <returns>UsersWithRoles</returns>
         public abstract UsersWithRoles GetUsersWithRoles(int enterpriseId);
 
         /// <summary>
@@ -500,21 +500,21 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve datacenters limits of the enterprise/tenant specified in the authentication information
         /// </summary>
-        /// <returns>Collection of DataCentersLimits</returns>
+        /// <returns>DataCentersLimits</returns>
         public abstract DataCentersLimits GetDataCentersLimitsOfCurrentEnterprise();
 
         /// <summary>
         /// Retrieve datacenters limits of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterprise">Enterprise/Tenant</param>
-        /// <returns>Collection of DataCentersLimits</returns>
+        /// <returns>DataCentersLimits</returns>
         public abstract DataCentersLimits GetDataCentersLimits(Enterprise enterprise);
 
         /// <summary>
         /// Retrieve datacenters limits of a specific enterprise/tenant
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
-        /// <returns>Collection of DataCentersLimits</returns>
+        /// <returns>DataCentersLimits</returns>
         public abstract DataCentersLimits GetDataCentersLimits(int enterpriseId);
 
         /// <summary>
@@ -548,14 +548,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all virtual machines across all virtual datacenters the current user has access to
         /// </summary>
-        /// <returns>Collection of VirtualMachines</returns>
+        /// <returns>VirtualMachines</returns>
         public abstract VirtualMachines GetAllVirtualMachines();
 
         /// <summary>
         /// Retrieve all virtual machines of a specific virtual appliance
         /// </summary>
         /// <param name="virtualAppliance">Virtual appliance</param>
-        /// <returns>Collection of VirtualMachines</returns>
+        /// <returns>VirtualMachines</returns>
         public abstract VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance);
 
         /// <summary>
@@ -563,7 +563,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance</param>
-        /// <returns>Collection of VirtualMachines</returns>
+        /// <returns>VirtualMachines</returns>
         public abstract VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId);
 
         /// <summary>
@@ -810,10 +810,10 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force);
 
         /// <summary>
-        /// Retrieve a possible virtual machine network configuration by Id of a specific virtual machine
+        /// Retrieve the possible virtual machine network configurations of a specific virtual machine
         /// </summary>
         /// <param name="virtualMachine">Virtual machine</param>
-        /// <returns>VmNetworkConfiguration</returns>
+        /// <returns>VmNetworkConfigurations</returns>
         public abstract VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine);
             
         /// <summary>
@@ -849,7 +849,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// Retrieve NICs attached to a specific virtual machine
         /// </summary>
         /// <param name="virtualMachine">Virtual machine</param>
-        /// <returns>Collection of Nics</returns>
+        /// <returns>Nics</returns>
         public abstract Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine);
 
         /// <summary>
@@ -858,14 +858,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
-        /// <returns>Collection of Nics</returns>
+        /// <returns>Nics</returns>
         public abstract Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
 
         /// <summary>
         ///Retrieve tasks of a specific virtual machine
         /// </summary>
         /// <param name="virtualMachine">Virtual machine</param>
-        /// <returns>Collection of Tasks</returns>
+        /// <returns>Tasks</returns>
         public abstract Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine);
 
         /// <summary>
@@ -874,14 +874,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual mahcine</param>
-        /// <returns>Collection of Tasks</returns>
+        /// <returns>Tasks</returns>
         public abstract Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
 
         /// <summary>
         ///  Retrieve a task by Id of a specific virtual machine
         /// </summary>
         /// <param name="virtualMachine">Virtual machine</param>
-        /// <param name="taskId">id of the task</param>
+        /// <param name="taskId">Id of the task</param>
         /// <returns>Task</returns>
         public abstract Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId);
 
@@ -903,8 +903,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Get all virtual machine templaes of a specific specific datacenter repository
         /// </summary>
-        /// <param name="dataCenterRepository">datacenter repository</param>
-        /// <returns>Collection of VirtualMachineTemplates</returns>
+        /// <param name="dataCenterRepository">Datacenter repository</param>
+        /// <returns>VirtualMachineTemplates</returns>
         public abstract VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository);
 
         /// <summary>
@@ -912,11 +912,11 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="enterpriseId">Id of the entperise/tenant</param>
         /// <param name="dataCenterRepositoryId">Id of the datacenter repository</param>
-        /// <returns>Collection of VirtualMachineTemplates</returns>
+        /// <returns>VirtualMachineTemplates</returns>
         public abstract VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId);
 
         /// <summary>
-        /// Get a virtual machine template by id of a specific specific datacenter repository of a specific enterprise/tenant
+        /// Get a virtual machine template by id of a specific specific datacenter repository
         /// </summary>
         /// <param name="dataCenterRepository">Datacenter repository</param>
         /// <param name="id">Id of the virtual machine template</param>
@@ -940,7 +940,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all available virtual datacenters
         /// </summary>
-        /// <returns>Collection of VirtualDataCenters</returns>
+        /// <returns>VirtualDataCenters</returns>
         public abstract VirtualDataCenters GetVirtualDataCenters();
 
         /// <summary>
@@ -958,23 +958,23 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all available virtual applicance of a specific virtual datacenter
         /// </summary>
-        /// <param name="virtualDataCenter">Virtualdatacenter</param>
-        /// <returns>Collection of VirtualApplicances</returns>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
+        /// <returns>VirtualApplicances</returns>
         public abstract VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter);
 
         /// <summary>
         /// Retrieve all available virtual applicance of a specific virtual datacenter
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter</param>
-        /// <returns>Collection of VirtualApplicances</returns>
+        /// <returns>VirtualApplicances</returns>
         public abstract VirtualAppliances GetVirtualAppliances(int virtualDataCenterId);
 
         /// <summary>
         /// Retrieve a specific virtual appliance by id of a specific virtual datacenter
         /// </summary>
-        /// <param name="virtualDataCenter"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
+        /// <param name="id">Id of the virtual appliance</param>
+        /// <returns>VirtualAppliance</returns>
         public abstract VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id);
 
         /// <summary>
@@ -999,7 +999,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all datacenter repositories of an enterprise/tenant
         /// </summary>
-        /// <param name="enterprise">Enterprise</param>
+        /// <param name="enterprise">Entreprise/Tenant</param>
         /// <returns>DataCenterRepositories</returns>
         public abstract DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise);
 
@@ -1020,7 +1020,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve a specific datacenter repository by id of a specific enterprise/tenant
         /// </summary>
-        /// <param name="enterprise">Entreprise</param>
+        /// <param name="enterprise">Entreprise/Tenant</param>
         /// <param name="id">Id of the datacenter repository</param>
         /// <returns>DataCenterRepository</returns>
         public abstract DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id);
@@ -1055,23 +1055,23 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all private networks of a specific virtual datacenter
         /// </summary>
-        /// <param name="virtualDataCenter">virtual datacenter</param>
-        /// <returns>Collection of VlanNetworks</returns>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
+        /// <returns>VlanNetworks</returns>
         public abstract VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter);
 
         /// <summary>
         /// Retrieve all private networks of a specific virtual datacenter
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
-        /// <returns>Collection of VlanNetworks</returns>
+        /// <returns>VlanNetworks</returns>
         public abstract VlanNetworks GetPrivateNetworks(int virtualDataCenterId);
 
         /// <summary>
         /// Retrieve a private network by Id of a specific virtual datacenter
         /// </summary>
-        /// <param name="virtualDataCenter">virtual datacenter</param>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
         /// <param name="id">Id of the private network</param>
-        /// <returns></returns>
+        /// <returns>VlanNetwork</returns>
         public abstract VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id);
 
         /// <summary>
@@ -1087,7 +1087,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="vlan">Vlan</param>
         /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
-        /// <returns></returns>
+        /// <returns>PrivateIps</returns>
         public abstract PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free);
 
         /// <summary>
@@ -1096,14 +1096,14 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
         /// <param name="privateNetworkId">Id of the private network</param>
         /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
-        /// <returns>Collection of PrivateIps</returns>
+        /// <returns>PrivateIps</returns>
         public abstract PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free);
 
         /// <summary>
         /// Retrieve all external networks available for a specific limit of the enterprise/tenant specified in the authentication information
         /// </summary>
         /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
-        /// <returns>Collection of VlanNetworks</returns>
+        /// <returns>VlanNetworks</returns>
         public abstract VlanNetworks GetExternalNetworksOfCurrentEnterprise(int dataCenterLimitsId);
 
         /// <summary>
@@ -1111,7 +1111,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="enterpriseId">Id of the enterprise/tenant</param>
         /// <param name="dataCenterLimitsId">Id of the datacenter limits</param>
-        /// <returns>Collection of VlanNetworks</returns>
+        /// <returns>VlanNetworks</returns>
         public abstract VlanNetworks GetExternalNetworks(int enterpriseId, int dataCenterLimitsId);
 
         /// <summary>
@@ -1136,7 +1136,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="vlan">Vlan</param>
         /// <param name="free">If true, return only the available IPs not used by any virtual machine; if false, return all IPs</param>
-        /// <returns></returns>
+        /// <returns>ExternalIps</returns>
         public abstract ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free);
 
         /// <summary>
@@ -1161,21 +1161,21 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all public networks of a specific virtual datacenter
         /// </summary>
-        /// <param name="virtualDataCenter">virtual data center</param>
-        /// <returns>Collection of VlanNetworks</returns>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
+        /// <returns>VlanNetworks</returns>
         public abstract VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter);
 
         /// <summary>
         /// Retrieve all public networks of a specific virtual datacenter
         /// </summary>
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the network belongs to</param>
-        /// <returns>Collection of VlanNetworks</returns>
+        /// <returns>VlanNetworks</returns>
         public abstract VlanNetworks GetPublicNetworks(int virtualDataCenterId);
 
         /// <summary>
         /// Retrieve a public network by Id of a specific virtual datacenter
         /// </summary>
-        /// <param name="virtualDataCenter">virtual data center</param>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
         /// <param name="id">Id of the public network</param>
         /// <returns>VlanNetwork</returns>
         public abstract VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id);
@@ -1191,7 +1191,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all public IPs of a specific public network that can be purchased
         /// </summary>
-        /// <param name="vlan">public network</param>
+        /// <param name="vlan">Public network</param>
         /// <returns>ExternalIps</returns>
         public abstract PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan);
 
@@ -1206,7 +1206,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Purchase a public IP to be used in a virtual machine
         /// </summary>
-        /// <param name="vlan">virtual data center</param>
+        /// <param name="vlan">Virtual datacenter</param>
         /// <param name="publicIp">Id of the public IP to be purchased</param>
         /// <returns>PublicIp</returns>
         public abstract PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp);
@@ -1222,7 +1222,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Release a public IP
         /// </summary>
-        /// <param name="vlan">virtual data center</param>
+        /// <param name="vlan">Virtual datacenter</param>
         /// <param name="publicIpid">Id of the public IP to be released</param>
         /// <returns>PublicIp</returns>
         public abstract PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIpid);
