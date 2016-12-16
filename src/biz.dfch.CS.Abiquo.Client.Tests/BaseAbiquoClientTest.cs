@@ -534,7 +534,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #region Users
 
         [TestMethod]
-        [ExpectContractFailure]
+        [ExpectContractFailure(MessagePattern = "enterpriseId")]
         public void GetUsersWithRolesWithInvalidEnterpriseIdThrowsContractException()
         {
             // Arrange
@@ -543,8 +543,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             sut.GetUsersWithRoles(INVALID_ID);
 
             // Assert
-        }        
+        } 
         
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetUsersWithRolesWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUsersWithRoles(null);
+
+            // Assert
+        }
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetUserOfCurrentEnterpriseWithInvalidIdThrowsContractException()
@@ -553,6 +565,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetUserOfCurrentEnterprise(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetUserWithNullEnterpriseAndValidUserIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUser(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetUserWithEnterpriseAndInvalidUserIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetUser(new Enterprise(), INVALID_ID);
 
             // Assert
         }
@@ -713,6 +749,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         #region DataCentersLimits
 
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetDataCentersLimitsWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCentersLimits(null);
+
+            // Assert
+        }
+
         [TestMethod]
         [ExpectContractFailure]
         public void GetDataCentersLimitsWithInvalidEnterpriseIdThrowsContractException()
@@ -733,6 +782,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetDataCenterLimitsOfCurrentEnterprise(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetDataCenterLimitsWithNullEnterpriseAndValidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterLimits(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetDataCenterLimitsWithEnterpriseAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterLimits(new Enterprise(), INVALID_ID);
 
             // Assert
         }
@@ -779,6 +852,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualAppliance")]
+        public void GetVirtualMachinesWithNullVirtualApplianceThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachines(null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void GetVirtualMachinesWithInvalidVirtualApplianceIdThrowsContractException()
         {
@@ -786,6 +871,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetVirtualMachines(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualAppliance")]
+        public void GetVirtualMachineWithNullVirtualApplianceAndValidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachine(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetVirtualMachineWithVirtualApplianceAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachine(new VirtualAppliance(), INVALID_ID);
 
             // Assert
         }
@@ -888,7 +997,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void CreateVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        public void CreateVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException2()
         {
             // Arrange
 
@@ -900,7 +1009,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void CreateVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        public void CreateVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException2()
         {
             // Arrange
 
@@ -930,6 +1039,42 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.CreateVirtualMachine(42, 42, 42, INVALID_ID, 42, validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualAppliance")]
+        public void CreateVirtualMachineWithNullVirtualApplianceThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(null, new VirtualMachineTemplate(), validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachineTemplate")]
+        public void CreateVirtualMachineWithNullVirtualMachineTemplateThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(new VirtualAppliance(), null, validVirtualMachine);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void CreateVirtualMachineWithNullVirtualMachineThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(new VirtualAppliance(), new VirtualMachineTemplate(), null);
 
             // Assert
         }
@@ -983,8 +1128,32 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualAppliance")]
+        public void CreateVirtualMachineWithNullVirtualApplianceThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(null, new VirtualMachineTemplate());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachineTemplate")]
+        public void CreateVirtualMachineWithNullVirtualMachineTemplateThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.CreateVirtualMachine(new VirtualAppliance(), null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
-        public void CreateVirtualMachineWithNullVirtualMachineTemplateHref2ThrowsContractException()
+        public void CreateVirtualMachineWithNullVirtualMachineTemplateHrefThrowsContractException2()
         {
             // Arrange
 
@@ -996,7 +1165,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void CreateVirtualMachineWithEmptyVirtualMachineTemplateHref2ThrowsContractException()
+        public void CreateVirtualMachineWithEmptyVirtualMachineTemplateHrefThrowsContractException2()
         {
             // Arrange
 
@@ -1020,7 +1189,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void CreateVirtualMachineWithInvalidVirtualMachineTemplateHref2ThrowsContractException()
+        public void CreateVirtualMachineWithInvalidVirtualMachineTemplateHrefThrowsContractException2()
         {
             // Arrange
 
@@ -1056,6 +1225,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
+        public void DeployVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.DeployVirtualMachine(null, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
         public void DeployVirtualMachineWithInvalidVirtualMachineIdThrowsContractException()
         {
             // Arrange
@@ -1068,7 +1249,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void DeployVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        public void DeployVirtualMachineWithNullVirtualMachineThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.DeployVirtualMachine(null, false, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure]
+        public void DeployVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException2()
         {
             // Arrange
 
@@ -1080,7 +1273,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void DeployVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        public void DeployVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException2()
         {
             // Arrange
 
@@ -1092,12 +1285,24 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void DeployVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        public void DeployVirtualMachineWithInvalidVirtualMachineIdThrowsContractException2()
         {
             // Arrange
 
             // Act
             sut.DeployVirtualMachine(42, 42, INVALID_ID, false, false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void UpdateVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.UpdateVirtualMachine(null, false);
 
             // Assert
         }
@@ -1152,7 +1357,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void UpdateVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        public void UpdateVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException2()
         {
             // Arrange
 
@@ -1164,7 +1369,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void UpdateVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        public void UpdateVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException2()
         {
             // Arrange
 
@@ -1175,8 +1380,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void UpdateVirtualMachineWithNullVirtualMachineThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.UpdateVirtualMachine(null, false, false);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
-        public void UpdateVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        public void UpdateVirtualMachineWithInvalidVirtualMachineIdThrowsContractException2()
         {
             // Arrange
 
@@ -1224,7 +1441,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ChangeStateOfVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException2()
         {
             // Arrange
 
@@ -1236,7 +1453,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ChangeStateOfVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException2()
         {
             // Arrange
 
@@ -1248,7 +1465,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ChangeStateOfVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualMachineIdThrowsContractException2()
         {
             // Arrange
 
@@ -1260,12 +1477,60 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void ChangeStateOfVirtualMachineWithInvalidVirtualMachineState2ThrowsContractException()
+        public void ChangeStateOfVirtualMachineWithInvalidVirtualMachineStateThrowsContractException2()
         {
             // Arrange
 
             // Act
             sut.ChangeStateOfVirtualMachine(42, 42, INVALID_ID, new VirtualMachineState(), true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void ChangeStateOfVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ChangeStateOfVirtualMachine(null, VirtualMachineStateEnum.OFF);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "state")]
+        public void ChangeStateOfVirtualMachineWithNullVirtualMachineStateThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.ChangeStateOfVirtualMachine(new VirtualMachine(), null, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void ChangeStateOfVirtualMachineWithNullVirtualMachineThrowsContractException3()
+        {
+            // Arrange
+
+            // Act
+            sut.ChangeStateOfVirtualMachine(null, VirtualMachineStateEnum.OFF, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void DeleteVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.DeleteVirtualMachine(null);
 
             // Assert
         }
@@ -1308,7 +1573,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void DeleteVirtualMachineWithInvalidVirtualDataCenterId2ThrowsContractException()
+        public void DeleteVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException2()
         {
             // Arrange
 
@@ -1320,7 +1585,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void DeleteVirtualMachineWithInvalidVirtualApplianceId2ThrowsContractException()
+        public void DeleteVirtualMachineWithInvalidVirtualApplianceIdThrowsContractException2()
         {
             // Arrange
 
@@ -1332,12 +1597,36 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
         [TestMethod]
         [ExpectContractFailure]
-        public void DeleteVirtualMachineWithInvalidVirtualMachineId2ThrowsContractException()
+        public void DeleteVirtualMachineWithInvalidVirtualMachineIdThrowsContractException2()
         {
             // Arrange
 
             // Act
             sut.DeleteVirtualMachine(42, 42, 0, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void DeleteVirtualMachineWithNullVirtualMachineThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.DeleteVirtualMachine(null, true);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void GetNetworkConfigurationsForVmWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetNetworkConfigurationsForVm(null);
 
             // Assert
         }
@@ -1427,6 +1716,42 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void GetNetworkConfigurationForVmWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetNetworkConfigurationForVm(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetNetworkConfigurationForVmWithInvalidIdThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.GetNetworkConfigurationForVm(new VirtualMachine(), INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void GetNicsOfVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetNicsOfVirtualMachine(null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void GetAllTasksOfVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
         {
@@ -1458,6 +1783,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetAllTasksOfVirtualMachine(42, 42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void GetAllTasksOfVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetAllTasksOfVirtualMachine(null);
 
             // Assert
         }
@@ -1505,7 +1842,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.GetTaskOfVirtualMachine(42, 42, 42, "");
+            sut.GetTaskOfVirtualMachine(42, 42, 42, null);
 
             // Assert
         }
@@ -1522,10 +1859,58 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Assert
         }
 
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void GetTaskOfVirtualMachineWithNullVirtualMachineThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetTaskOfVirtualMachine(null, Guid.NewGuid().ToString());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "taskId")]
+        public void GetTaskOfVirtualMachineWithNullTaskIdThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.GetTaskOfVirtualMachine(validVirtualMachine, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "taskId")]
+        public void GetTaskOfVirtualMachineWithEmptyTaskIdThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.GetTaskOfVirtualMachine(validVirtualMachine, "");
+
+            // Assert
+        }
+
         #endregion VirtualMachines
 
 
         #region VirtualMachineTemplates
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "dataCenterRepository")]
+        public void GetVirtualMachineTemplatesWithNullThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachineTemplates(null);
+
+            // Assert
+        }
 
         [TestMethod]
         [ExpectContractFailure]
@@ -1547,6 +1932,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetVirtualMachineTemplates(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "dataCenterRepository")]
+        public void GetVirtualMachineTemplateWithNullDataCenterRepositoryThrowsAndIdContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachineTemplate(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetVirtualMachineTemplateWithInvalidIdThrowsAndIdContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualMachineTemplate(new DataCenterRepository(), INVALID_ID);
 
             // Assert
         }
@@ -1610,6 +2019,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #region VirtualAppliances
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetVirtualAppliancesWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualAppliances(null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void GetVirtualAppliancesWithInvalidIdThrowsContractException()
         {
@@ -1617,6 +2038,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetVirtualAppliances(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetVirtualAppliancesWithNullVirtualDataCenterAndIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualAppliance(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetVirtualAppliancesWithDataCenterAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetVirtualAppliance(new VirtualDataCenter(), INVALID_ID);
 
             // Assert
         }
@@ -1651,6 +2096,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #region DataCenterRepositories
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetDataCenterRepositoriesWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterRepositories(null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void GetDataCenterRepositoriesWithInvalidEnterpriseIdThrowsContractException()
         {
@@ -1670,6 +2127,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetDataCenterRepositoryOfCurrentEnterprise(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetDataCenterRepositoryWithNullEnterpriseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterRepository(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetDataCenterRepositoryWithInvalidIdThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterRepository(new Enterprise(), INVALID_ID);
 
             // Assert
         }
@@ -1757,6 +2238,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #region Networks
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetPrivateNetworksWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPrivateNetworks(null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void GetPrivateNetworksWithInvalidVirtualDataCenterIdThrowsContractException()
         {
@@ -1764,6 +2257,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetPrivateNetworks(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetPrivateNetworkWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPrivateNetwork(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetPrivateNetworkWithObjectAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPrivateNetwork(new VirtualDataCenter(), INVALID_ID);
 
             // Assert
         }
@@ -1788,6 +2305,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetPrivateNetwork(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "vlan")]
+        public void GetIpsOfPrivateNetworkWithNullVlanThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetIpsOfPrivateNetwork(null, true);
 
             // Assert
         }
@@ -1913,6 +2442,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "vlan")]
+        public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithNullVlanThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetIpsOfExternalNetworkOfCurrentEnterprise(null, true);
+
+            // Assert
+        }
+
+
+        [TestMethod]
         [ExpectContractFailure]
         public void GetIpsOfExternalNetworkOfCurrentEnterpriseWithInvalidDataCenterLimitsIdThrowsContractException()
         {
@@ -1973,6 +2515,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetPublicNetworksWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetworks(null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void GetPublicNetworksWithInvalidVirtualDataCenterIdThrowsContractException()
         {
@@ -1980,6 +2534,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetPublicNetworks(INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetPublicNetworkWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetwork(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetPublicNetworkWithInvalidIdThrowsContractException2()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicNetwork(new VirtualDataCenter(), INVALID_ID);
 
             // Assert
         }
@@ -2033,6 +2611,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetPublicIpsToPurchaseOfPublicNetworkWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicIpsToPurchaseOfPublicNetwork(null, new VlanNetwork());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "vlan")]
+        public void GetPublicIpsToPurchaseOfPublicNetworkWithNullVlanThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicIpsToPurchaseOfPublicNetwork(new VirtualDataCenter(), null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void PurchasePublicIpWithInvalidVirtualDataCenterIdThrowsContractException()
         {
@@ -2057,6 +2659,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void PurchasePublicIpWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.PurchasePublicIp(null, new PublicIp());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "publicIp")]
+        public void PurchasePublicIpWithNullPublicIpThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.PurchasePublicIp(new VirtualDataCenter(), null);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure]
         public void ReleasePublicIpWithInvalidVirtualDataCenterIdThrowsContractException()
         {
@@ -2076,6 +2702,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.ReleasePublicIp(42, INVALID_ID);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void ReleasePublicIpWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ReleasePublicIp(null, new PublicIp());
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "publicIp")]
+        public void ReleasePublicIpWithNullPublicIpThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ReleasePublicIp(new VirtualDataCenter(), null);
 
             // Assert
         }
@@ -2138,12 +2788,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new UsersWithRoles();
             }
 
+            public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+            {
+                return new UsersWithRoles();
+            }
+
             public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
             {
                 return new UsersWithRoles();
             }
 
             public override User GetUserOfCurrentEnterprise(int id)
+            {
+                return new User();
+            }
+
+            public override User GetUser(Enterprise enterprise, int id)
             {
                 return new User();
             }
@@ -2193,12 +2853,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new DataCentersLimits();
             }
 
+            public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+            {
+                return new DataCentersLimits();
+            }
+
             public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
             {
                 return new DataCentersLimits();
             }
 
             public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
+            {
+                return new DataCenterLimits();
+            }
+
+            public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
             {
                 return new DataCenterLimits();
             }
@@ -2211,6 +2881,16 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             public override VirtualMachines GetAllVirtualMachines()
             {
                 return new VirtualMachines();
+            }
+
+            public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
+            {
+                return new VirtualMachines();
+            }
+
+            public override VirtualMachine GetVirtualMachine(VirtualAppliance virtualAppliance, int id)
+            {
+                return new VirtualMachine();
             }
 
             public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
@@ -2229,6 +2909,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+            {
+                return new VirtualMachine();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
             {
                 return new VirtualMachine();
@@ -2240,10 +2925,21 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualMachine();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate,
+                VirtualMachine virtualMachine)
+            {
+                return new VirtualMachine();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
                 VirtualMachineBase virtualMachine)
             {
                 return new VirtualMachine();
+            }
+
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
+            {
+                return new Task();
             }
 
             public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
@@ -2251,7 +2947,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
             public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 return new Task();
             }
@@ -2262,8 +2968,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
+            {
+                return new Task();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state)
             {
                 return new Task();
             }
@@ -2274,10 +2995,30 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
+            {
+                return new Task();
+            }
+
             public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachineState state, bool waitForCompletion)
             {
                 return new Task();
+            }
+
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
+            {
+                return true;
+            }
+
+            public override VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine)
+            {
+                return new VmNetworkConfigurations();
             }
 
             public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId, 
@@ -2286,10 +3027,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VmNetworkConfigurations();
             }
 
+            public override VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id)
+            {
+                return new VmNetworkConfiguration();
+            }
+
             public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
                 int virtualMachineId, int id)
             {
                 return new VmNetworkConfiguration();
+            }
+
+            public override Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine)
+            {
+                return new Nics();
             }
 
             public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
@@ -2297,7 +3048,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Nics();
             }
 
+            public override Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine)
+            {
+                return new Tasks();
+            }
+
             public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                return true;
+            }
+
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 return true;
             }
@@ -2312,14 +3073,29 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Tasks();
             }
 
+            public override Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId)
+            {
+                return new Task();
+            }
+
             public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
             {
                 return new Task();
             }
 
+            public override VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository)
+            {
+                return new VirtualMachineTemplates();
+            }
+
             public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
             {
                 return new VirtualMachineTemplates();
+            }
+
+            public override VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id)
+            {
+                return new VirtualMachineTemplate();
             }
 
             public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
@@ -2337,9 +3113,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VirtualDataCenter();
             }
 
+            public override VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter)
+            {
+                return new VirtualAppliances();
+            }
+
             public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
             {
                 return new VirtualAppliances();
+            }
+
+            public override VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id)
+            {
+                return new VirtualAppliance();
             }
 
             public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
@@ -2348,6 +3134,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             }
 
             public override DataCenterRepositories GetDataCenterRepositoriesOfCurrentEnterprise()
+            {
+                return new DataCenterRepositories();
+            }
+
+            public override DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise)
             {
                 return new DataCenterRepositories();
             }
@@ -2362,6 +3153,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new DataCenterRepository();
             }
 
+            public override DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id)
+            {
+                return new DataCenterRepository();
+            }
+
             public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
             {
                 return new DataCenterRepository();
@@ -2372,14 +3168,29 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new Task();
             }
 
+            public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                return new VlanNetworks();
+            }
+
             public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
             {
                 return new VlanNetworks();
             }
 
+            public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+            {
+                return new VlanNetwork();
+            }
+
             public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
             {
                 return new VlanNetwork();
+            }
+
+            public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
+            {
+                return new PrivateIps();
             }
 
             public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
@@ -2407,6 +3218,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VlanNetwork();
             }
 
+            public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+            {
+                return new ExternalIps();
+            }
+
             public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
             {
                 return new ExternalIps();
@@ -2417,9 +3233,20 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new ExternalIps();
             }
 
+            public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                return new VlanNetworks();
+            }
+
             public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
             {
                 return new VlanNetworks();
+            }
+
+            public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
+            {
+                return new VlanNetwork();
+
             }
 
             public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
@@ -2427,12 +3254,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VlanNetwork();
             }
 
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan)
+            {
+                return new PublicIps();
+            }
+
             public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
             {
                 return new PublicIps();
             }
 
+            public override PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
+            {
+                return new PublicIp();
+            }
+
             public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+            {
+                return new PublicIp();
+            }
+
+            public override PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIpid)
             {
                 return new PublicIp();
             }
@@ -2492,12 +3334,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
             public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
             {
                 throw new NotImplementedException();
             }
 
             public override User GetUserOfCurrentEnterprise(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override User GetUser(Enterprise enterprise, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2547,6 +3399,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
             public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
             {
                 throw new NotImplementedException();
@@ -2557,12 +3414,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
+            {
+                throw new NotImplementedException();
+            }
+
             public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
             {
                 throw new NotImplementedException();
             }
 
             public override VirtualMachines GetAllVirtualMachines()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachine GetVirtualMachine(VirtualAppliance virtualAppliance, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2583,6 +3455,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
             {
                 throw new NotImplementedException();
@@ -2594,8 +3471,19 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate,
+                VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
                 VirtualMachineBase virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 throw new NotImplementedException();
             }
@@ -2605,7 +3493,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
             {
                 throw new NotImplementedException();
             }
@@ -2616,8 +3514,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state)
             {
                 throw new NotImplementedException();
             }
@@ -2628,8 +3541,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
                 VirtualMachineState state, bool waitForCompletion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
             {
                 throw new NotImplementedException();
             }
@@ -2639,7 +3567,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
+            {
+                throw new NotImplementedException();
+            }
+
             public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine)
             {
                 throw new NotImplementedException();
             }
@@ -2650,8 +3588,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
                 int virtualMachineId, int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine)
             {
                 throw new NotImplementedException();
             }
@@ -2661,7 +3609,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId)
             {
                 throw new NotImplementedException();
             }
@@ -2671,7 +3629,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2691,7 +3659,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2706,12 +3684,22 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise)
+            {
+                throw new NotImplementedException();
+            }
+
             public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
             {
                 throw new NotImplementedException();
             }
 
             public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2726,12 +3714,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
             {
                 throw new NotImplementedException();
             }
 
+            public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
             {
                 throw new NotImplementedException();
             }
@@ -2761,6 +3764,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+            {
+                throw new NotImplementedException();
+            }
+
             public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
             {
                 throw new NotImplementedException();
@@ -2771,7 +3779,17 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+            {
+                throw new NotImplementedException();
+            }
+
             public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
             {
                 throw new NotImplementedException();
             }
@@ -2781,12 +3799,27 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan)
+            {
+                throw new NotImplementedException();
+            }
+
             public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
             {
                 throw new NotImplementedException();
             }
 
+            public override PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
+            {
+                throw new NotImplementedException();
+            }
+
             public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIpid)
             {
                 throw new NotImplementedException();
             }

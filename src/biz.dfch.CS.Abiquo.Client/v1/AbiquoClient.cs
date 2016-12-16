@@ -35,7 +35,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1
     {
         public const string ABIQUO_API_VERSION = "3.10";
 
-        private static readonly string _linkTypePattern = @"^application/vnd\.abiquo\.(\w+)\+.+$";
+        private const string FAKE_TASK_NAME = "FakeTask";
+
+        private const string FILTER_KEY_FORCE = "force";
+        private const string FILTER_VALUE_FORCE = "true";
+        private const string FILTER_KEY_FREE = "free";
+        private const string FILTER_VALUE_FREE = "true";
+        private const string FILTER_KEY_VLANID = "vlanId";
+
+        private const string LINK_TYPE_PATTERN = @"^application/vnd\.abiquo\.(\w+)\+.+$";
+        private const string DATACENTERLIMITS_ID_PATTERN = @"^.+limits/(\d+)/.+$";
         private const string FQCN_SEPARATOR = ".";
 
         public override int TenantId
@@ -108,7 +117,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override AbiquoBaseDto InvokeLink(Link link)
         {
-            var match = Regex.Match(link.Type, _linkTypePattern);
+            var match = Regex.Match(link.Type, LINK_TYPE_PATTERN);
             Contract.Assert(match.Success);
             Contract.Assert(2 == match.Groups.Count);
 
@@ -157,6 +166,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetUsersWithRoles(TenantId);
         }
 
+        public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+        {
+            return GetUsersWithRoles(enterprise.Id);
+        }
+
         public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_USERSWITHROLES).GetHeaders();
@@ -168,6 +182,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override User GetUserOfCurrentEnterprise(int id)
         {
             return GetUser(TenantId, id);
+        }
+
+        public override User GetUser(Enterprise enterprise, int id)
+        {
+            return GetUser(enterprise.Id, id);
         }
 
         public override User GetUser(int enterpriseId, int id)
@@ -277,6 +296,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetDataCentersLimits(TenantId);
         }
 
+        public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+        {
+            return GetDataCentersLimits(enterprise.Id);
+        }
+
         public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_LIMITS).GetHeaders();
@@ -289,6 +313,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
         {
             return GetDataCenterLimits(TenantId, id);
+        }
+
+        public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
+        {
+            return GetDataCenterLimits(enterprise.Id, id);
         }
 
         public override DataCenterLimits GetDataCenterLimits(int enterpriseId, int id)
@@ -305,15 +334,19 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualMachines
 
-        private const string FILTER_KEY_FORCE = "force";
-        private const string FILTER_VALUE_FORCE = "true";
-        private const string FAKE_TASK_NAME = "FakeTask";
-
         public override VirtualMachines GetAllVirtualMachines()
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINES).GetHeaders();
 
             return Invoke<VirtualMachines>(AbiquoUriSuffixes.VIRTUALMACHINES, headers);
+        }
+
+        public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
+        {
+            var virtualDataCenterLink = virtualAppliance.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDatacenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            return GetVirtualMachines(virtualDatacenterId, virtualAppliance.Id);
         }
 
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
@@ -322,6 +355,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID, virtualDataCenterId, virtualApplianceId);
             return Invoke<VirtualMachines>(uriSuffix, headers);
+        }
+
+        public override VirtualMachine GetVirtualMachine(VirtualAppliance virtualAppliance, int id)
+        {
+            var virtualDataCenterLink = virtualAppliance.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDatacenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            return GetVirtualMachine(virtualDatacenterId, virtualAppliance.Id, id);
         }
 
         public override VirtualMachine GetVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int id)
@@ -339,6 +380,16 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, enterpriseId, dataCenterRepositoryId, virtualMachineTemplateId, new VirtualMachineBase());
         }
 
+        public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+        {
+            var virtualMachineTemplateLink = virtualMachineTemplate.GetLinkByRel(AbiquoRelations.EDIT);
+
+            var virtualDataCenterLink = virtualAppliance.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            return CreateVirtualMachine(virtualDataCenterId, virtualAppliance.Id, virtualMachineTemplateLink.Href);
+        }
+
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
             return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, new VirtualMachineBase());
@@ -352,6 +403,17 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var virtualMachineTemplateHref = UriHelper.ConcatUri(AbiquoApiBaseUri, virtualMachineTemplateHrefSuffix);
 
             return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref, virtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate, VirtualMachine virtualMachine)
+        {
+            var virtualDataCenterLink = virtualAppliance.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+            var virtualApplianceId = virtualAppliance.Id;
+            var virtualMachineTemplateHref = virtualMachineTemplate.GetLinkByRel(AbiquoRelations.EDIT).Href;
+
+            return CreateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineTemplateHref,
+                virtualMachine);
         }
 
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref,
@@ -374,9 +436,29 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VirtualMachine>(HttpMethod.Post, uriSuffix, null, headers, virtualMachine);
         }
 
+
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
             return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, force, false);
+        }
+
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            return DeployVirtualMachine(virtualMachine, force, false);
+        }
+
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return DeployVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, force, waitForCompletion);
         }
 
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force, bool waitForCompletion)
@@ -409,10 +491,30 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return task;
         }
 
+        public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            return UpdateVirtualMachine(virtualMachine, force, false);
+        }
+
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachine virtualMachine, bool force)
         {
             return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine, force, false);
+        }
+
+        public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return UpdateVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, virtualMachine, force,
+                waitForCompletion);
         }
 
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
@@ -467,6 +569,45 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return task;
         }
 
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
+        {
+            var virtualMachineState = new VirtualMachineState
+            {
+                State = state
+            };
+
+            return ChangeStateOfVirtualMachine(virtualMachine, virtualMachineState);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state)
+        {
+            return ChangeStateOfVirtualMachine(virtualMachine, state, false);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+        {
+            var virtualMachineState = new VirtualMachineState
+            {
+                State = state
+            };
+
+            return ChangeStateOfVirtualMachine(virtualMachine, virtualMachineState, waitForCompletion);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return ChangeStateOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, state, waitForCompletion);
+        }
+
         public override Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachineState state)
         {
@@ -501,6 +642,25 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return task;
         }
 
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
+        {
+            return DeleteVirtualMachine(virtualMachine, false);
+        }
+
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return DeleteVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, force);
+        }
+
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             return DeleteVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, false);
@@ -523,6 +683,20 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return true;
         }
 
+        public override VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return GetNetworkConfigurationsForVm(virtualDataCenterId, virtualApplianceId, virtualMachineId);
+        }
+
         public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
             int virtualMachineId)
         {
@@ -532,6 +706,20 @@ namespace biz.dfch.CS.Abiquo.Client.v1
                 virtualDataCenterId, virtualApplianceId, virtualMachineId);
 
             return Invoke<VmNetworkConfigurations>(uriSuffix, headers);
+        }
+
+        public override VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return GetNetworkConfigurationForVm(virtualDataCenterId, virtualApplianceId, virtualMachineId, id);
         }
 
         public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
@@ -545,6 +733,20 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VmNetworkConfiguration>(uriSuffix, headers);
         }
 
+        public override Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return GetNicsOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId);
+        }
+
         public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_NICS).GetHeaders();
@@ -555,12 +757,40 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<Nics>(uriSuffix, headers);
         }
 
+        public override Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return GetAllTasksOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId);
+        }
+
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_TASKS).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETASKS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID, virtualDataCenterId, virtualApplianceId, virtualMachineId);
             return Invoke<Tasks>(uriSuffix, headers);
+        }
+
+        public override Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            return GetTaskOfVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, taskId);
         }
 
         public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
@@ -576,12 +806,28 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualMachineTemplates
 
+        public override VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository)
+        {
+            var dataCenterRepositoryLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(dataCenterRepositoryLink.Href);
+
+            return GetVirtualMachineTemplates(TenantId, dataCenterRepositoryId);
+        }
+
         public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALMACHINETEMPLATES_BY_ENTERPISE_ID_AND_DATACENTERREPOSITORY_ID, enterpriseId, dataCenterRepositoryId);
             return Invoke<VirtualMachineTemplates>(uriSuffix, headers);
+        }
+
+        public override VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id)
+        {
+            var dataCenterRepositoryLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(dataCenterRepositoryLink.Href);
+
+            return GetVirtualMachineTemplate(TenantId, dataCenterRepositoryId, id);
         }
 
         public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
@@ -617,12 +863,22 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region VirtualAppliances
 
+        public override VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter)
+        {
+            return GetVirtualAppliances(virtualDataCenter.Id);
+        }
+
         public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VIRTUALAPPLIANCES).GetHeaders();
 
             var uriSuffix = string.Format(AbiquoUriSuffixes.VIRTUALAPPLIANCES_BY_VIRTUALDATACENTER_ID, virtualDataCenterId);
             return Invoke<VirtualAppliances>(uriSuffix, headers);
+        }
+
+        public override VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id)
+        {
+            return GetVirtualAppliance(virtualDataCenter.Id, id);
         }
 
         public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
@@ -643,6 +899,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return GetDataCenterRepositories(TenantId);
         }
 
+        public override DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise)
+        {
+            return GetDataCenterRepositories(enterprise.Id);
+        }
+
         public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_DATACENTERREPOSITORIES).GetHeaders();
@@ -654,6 +915,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
         {
             return GetDataCenterRepository(TenantId, id);
+        }
+
+        public override DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id)
+        {
+            return GetDataCenterRepository(enterprise.Id, id);
         }
 
         public override DataCenterRepository GetDataCenterRepository(int enterpriseId, int id)
@@ -715,9 +981,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         #region Networks
 
-        private const string FILTER_KEY_FREE = "free";
-        private const string FILTER_VALUE_FREE = "true";
-        private const string FILTER_KEY_VLANID = "vlanId";
+        public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            return GetPrivateNetworks(virtualDataCenter.Id);
+        }
 
         public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
         {
@@ -728,6 +995,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VlanNetworks>(uriSuffix, headers);
         }
 
+        public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            return GetPrivateNetwork(virtualDataCenter.Id, id);
+        }
+
         public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
@@ -735,6 +1007,14 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.PRIVATE_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PRIVATE_NETWORK_ID, virtualDataCenterId, id);
 
             return Invoke<VlanNetwork>(uriSuffix, headers);
+        }
+
+        public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
+        {
+            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);            
+
+            return GetIpsOfPrivateNetwork(virtualDataCenterId, vlan.Id, free);
         }
 
         public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
@@ -781,6 +1061,21 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VlanNetwork>(uriSuffix, headers);
         }
 
+        public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+        {
+            var vlanEditLink = vlan.GetLinkByRel(AbiquoRelations.EDIT);
+
+            var match = Regex.Match(vlanEditLink.Href, DATACENTERLIMITS_ID_PATTERN);
+            Contract.Assert(match.Success);
+            Contract.Assert(2 == match.Groups.Count);
+
+            var limitsIdAsString = match.Groups[1].Value;
+
+            var dataCenterLimitsId = int.Parse(limitsIdAsString);
+
+            return GetIpsOfExternalNetworkOfCurrentEnterprise(dataCenterLimitsId, vlan.Id, free);
+        }
+
         public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
         {
             return GetIpsOfExternalNetwork(TenantId, dataCenterLimitsId,
@@ -802,6 +1097,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<ExternalIps>(uriSuffix, filter, headers);
         }
 
+        public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            return GetPublicNetworks(virtualDataCenter.Id);
+        }
+
         public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLANS).GetHeaders();
@@ -811,6 +1111,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VlanNetworks>(uriSuffix, headers);
         }
 
+        public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            return GetPublicNetwork(virtualDataCenter.Id, id);
+        }
+
         public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_VLAN).GetHeaders();
@@ -818,6 +1123,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.PUBLIC_NETWORK_BY_VIRTUALDATACENTER_ID_AND_PUBLIC_NETWORK_ID, virtualDataCenterId, id);
 
             return Invoke<VlanNetwork>(uriSuffix, headers);
+        }
+
+        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan)
+        {
+            return GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenter.Id, vlan.Id);
         }
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
@@ -831,6 +1141,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<PublicIps>(uriSuffix, filter, headers);
         }
 
+        public override PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
+        {
+            return PurchasePublicIp(virtualDataCenter.Id, publicIp.Id);
+        }
+
         public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
         {
             var headers = new HeaderBuilder().BuildAccept(VersionedAbiquoMediaDataTypes.VND_ABIQUO_PUBLICIP).GetHeaders();
@@ -838,6 +1153,11 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             var uriSuffix = string.Format(AbiquoUriSuffixes.PURCHASED_PUBLIC_IP_BY_VIRTUALDATACENTER_ID_AND_PUBLICIP_ID, virtualDataCenterId, publicIpid);
 
             return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, string.Empty);
+        }
+
+        public override PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
+        {
+            return ReleasePublicIp(virtualDataCenter.Id, publicIp.Id);
         }
 
         public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
