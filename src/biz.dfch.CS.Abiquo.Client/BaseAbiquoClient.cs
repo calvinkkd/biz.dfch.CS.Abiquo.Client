@@ -1191,9 +1191,10 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Retrieve all public IPs of a specific public network that can be purchased
         /// </summary>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
         /// <param name="vlan">Public network</param>
         /// <returns>ExternalIps</returns>
-        public abstract PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan);
+        public abstract PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan);
 
         /// <summary>
         /// Retrieve all public IPs of a specific public network that can be purchased
@@ -1206,10 +1207,10 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Purchase a public IP to be used in a virtual machine
         /// </summary>
-        /// <param name="vlan">Virtual datacenter</param>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
         /// <param name="publicIp">Id of the public IP to be purchased</param>
         /// <returns>PublicIp</returns>
-        public abstract PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp);
+        public abstract PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp);
 
         /// <summary>
         /// Purchase a public IP to be used in a virtual machine
@@ -1222,10 +1223,10 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <summary>
         /// Release a public IP
         /// </summary>
-        /// <param name="vlan">Virtual datacenter</param>
+        /// <param name="virtualDataCenter">Virtual datacenter</param>
         /// <param name="publicIpid">Id of the public IP to be released</param>
         /// <returns>PublicIp</returns>
-        public abstract PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIpid);
+        public abstract PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIpid);
 
         /// <summary>
         /// Release a public IP

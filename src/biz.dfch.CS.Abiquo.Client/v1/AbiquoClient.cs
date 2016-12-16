@@ -1125,12 +1125,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<VlanNetwork>(uriSuffix, headers);
         }
 
-        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
+        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan)
         {
-            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
-            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
-
-            return GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenterId, vlan.Id);
+            return GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenter.Id, vlan.Id);
         }
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
@@ -1144,12 +1141,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<PublicIps>(uriSuffix, filter, headers);
         }
 
-        public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
+        public override PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
         {
-            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
-            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
-
-            return PurchasePublicIp(virtualDataCenterId, publicIp.Id);
+            return PurchasePublicIp(virtualDataCenter.Id, publicIp.Id);
         }
 
         public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
@@ -1161,12 +1155,9 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             return Invoke<PublicIp>(HttpMethod.Put, uriSuffix, null, headers, string.Empty);
         }
 
-        public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIp)
+        public override PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
         {
-            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
-            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
-
-            return ReleasePublicIp(virtualDataCenterId, publicIp.Id);
+            return ReleasePublicIp(virtualDataCenter.Id, publicIp.Id);
         }
 
         public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)

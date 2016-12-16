@@ -2611,13 +2611,25 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void GetPublicIpsToPurchaseOfPublicNetworkWithNullVirtualDataCenterThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetPublicIpsToPurchaseOfPublicNetwork(null, new VlanNetwork());
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure(MessagePattern = "vlan")]
         public void GetPublicIpsToPurchaseOfPublicNetworkWithNullVlanThrowsContractException()
         {
             // Arrange
 
             // Act
-            sut.GetPublicIpsToPurchaseOfPublicNetwork(null);
+            sut.GetPublicIpsToPurchaseOfPublicNetwork(new VirtualDataCenter(), null);
 
             // Assert
         }
@@ -2647,8 +2659,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "vlan")]
-        public void PurchasePublicIpWithNullVlanThrowsContractException()
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void PurchasePublicIpWithNullVirtualDataCenterThrowsContractException()
         {
             // Arrange
 
@@ -2665,7 +2677,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.PurchasePublicIp(new VlanNetwork(), null);
+            sut.PurchasePublicIp(new VirtualDataCenter(), null);
 
             // Assert
         }
@@ -2695,8 +2707,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "vlan")]
-        public void ReleasePublicIpWithNullVlanThrowsContractException()
+        [ExpectContractFailure(MessagePattern = "virtualDataCenter")]
+        public void ReleasePublicIpWithNullVirtualDataCenterThrowsContractException()
         {
             // Arrange
 
@@ -2713,7 +2725,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ReleasePublicIp(new VlanNetwork(), null);
+            sut.ReleasePublicIp(new VirtualDataCenter(), null);
 
             // Assert
         }
@@ -3242,7 +3254,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new VlanNetwork();
             }
 
-            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan)
             {
                 return new PublicIps();
             }
@@ -3252,7 +3264,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new PublicIps();
             }
 
-            public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
+            public override PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
             {
                 return new PublicIp();
             }
@@ -3262,7 +3274,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 return new PublicIp();
             }
 
-            public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIpid)
+            public override PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIpid)
             {
                 return new PublicIp();
             }
@@ -3787,7 +3799,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
+            public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan)
             {
                 throw new NotImplementedException();
             }
@@ -3797,7 +3809,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
+            public override PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
             {
                 throw new NotImplementedException();
             }
@@ -3807,7 +3819,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIpid)
+            public override PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIpid)
             {
                 throw new NotImplementedException();
             }

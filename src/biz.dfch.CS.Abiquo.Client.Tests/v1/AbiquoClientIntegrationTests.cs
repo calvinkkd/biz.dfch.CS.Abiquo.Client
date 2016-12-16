@@ -3608,7 +3608,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var publicNetwork = publicNetworks.Collection.First();
 
             // Act
-            var publicIpsToPurchase = abiquoClient.GetPublicIpsToPurchaseOfPublicNetwork(publicNetwork);
+            var publicIpsToPurchase = abiquoClient.GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenter, publicNetwork);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -3675,7 +3675,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var publicIpToBePurchased = publicIpsToPurchase.Collection.First();
 
             // Act
-            var purchasedPublicIp = abiquoClient.PurchasePublicIp(publicNetwork, publicIpToBePurchased);
+            var purchasedPublicIp = abiquoClient.PurchasePublicIp(virtualDataCenter, publicIpToBePurchased);
 
             // Assert
             Assert.IsTrue(loginSucceeded);
@@ -3693,7 +3693,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             Assert.AreEqual(publicIpToBePurchased.Quarantine, purchasedPublicIp.Quarantine);
 
             // Cleanup
-            var releasedPublicIp = abiquoClient.ReleasePublicIp(publicNetwork, publicIpToBePurchased);
+            var releasedPublicIp = abiquoClient.ReleasePublicIp(virtualDataCenter, publicIpToBePurchased);
 
             Assert.AreEqual(publicIpToBePurchased.Available, releasedPublicIp.Available);
             Assert.AreEqual(publicIpToBePurchased.Id, releasedPublicIp.Id);
