@@ -28,7 +28,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public const string VIRTUALMACHINETEMPLATE = "virtualmachinetemplate";
         public const string VIRTUALDATACENTER = "virtualdatacenter";
         public const string VIRTUALAPPLIANCE = "virtualappliance";
-        public const string DATACENTER = "datacenter";
 
         /// <summary>
         /// General relations

@@ -1127,10 +1127,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VlanNetwork vlan)
         {
-            var dataCenterLink = vlan.GetLinkByRel(AbiquoRelations.DATACENTER);
-            var dataCenterId = UriHelper.ExtractIdAsInt(dataCenterLink.Href);
+            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
 
-            return GetPublicIpsToPurchaseOfPublicNetwork(dataCenterId, vlan.Id);
+            return GetPublicIpsToPurchaseOfPublicNetwork(virtualDataCenterId, vlan.Id);
         }
 
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
@@ -1146,10 +1146,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIp PurchasePublicIp(VlanNetwork vlan, PublicIp publicIp)
         {
-            var dataCenterLink = vlan.GetLinkByRel(AbiquoRelations.DATACENTER);
-            var dataCenterId = UriHelper.ExtractIdAsInt(dataCenterLink.Href);
+            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
 
-            return PurchasePublicIp(dataCenterId, publicIp.Id);
+            return PurchasePublicIp(virtualDataCenterId, publicIp.Id);
         }
 
         public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
@@ -1163,10 +1163,10 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 
         public override PublicIp ReleasePublicIp(VlanNetwork vlan, PublicIp publicIp)
         {
-            var dataCenterLink = vlan.GetLinkByRel(AbiquoRelations.DATACENTER);
-            var dataCenterId = UriHelper.ExtractIdAsInt(dataCenterLink.Href);
+            var virtualDataCenterLink = vlan.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
 
-            return ReleasePublicIp(dataCenterId, publicIp.Id);
+            return ReleasePublicIp(virtualDataCenterId, publicIp.Id);
         }
 
         public override PublicIp ReleasePublicIp(int virtualDataCenterId, int publicIpid)
