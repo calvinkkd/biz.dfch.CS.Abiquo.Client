@@ -751,7 +751,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
 
         [TestMethod]
-        [ExpectContractFailure]
+        [ExpectContractFailure(MessagePattern = "enterprise")]
         public void GetDataCentersLimitsWithNullEnterpriseThrowsContractException()
         {
             // Arrange
@@ -787,13 +787,25 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectContractFailure]
-        public void GetDataCenterLimitsWithNullEnterpriseAndIdThrowsContractException()
+        [ExpectContractFailure(MessagePattern = "enterprise")]
+        public void GetDataCenterLimitsWithNullEnterpriseAndValidIdThrowsContractException()
         {
             // Arrange
 
             // Act
             sut.GetDataCenterLimits(null, 42);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "id")]
+        public void GetDataCenterLimitsWithEnterpriseAndInvalidIdThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.GetDataCenterLimits(new Enterprise(), INVALID_ID);
 
             // Assert
         }
@@ -806,18 +818,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             sut.GetDataCenterLimits(INVALID_ID, 42);
-
-            // Assert
-        }
-
-        [TestMethod]
-        [ExpectContractFailure]
-        public void GetDataCenterLimitsWithNullDataCenterLimitsAndIdThrowsContractException()
-        {
-            // Arrange
-
-            // Act
-            sut.GetDataCenterLimits(null, 42);
 
             // Assert
         }
