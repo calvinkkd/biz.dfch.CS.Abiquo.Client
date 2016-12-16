@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.CS.Abiquo.Client</id>
-        <version>3.1.0</version>
+        <version>3.2.0</version>
         <title>biz.dfch.CS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -24,11 +24,18 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>C#/.NET client for Abiquo</summary>
-        <releaseNotes>20161214
+        <releaseNotes>20161216
 # FEATURES
 
-* added method to invoke links by type
-* updated biz.dfch.CS.Commons to version 1.8.2
+* Overloads implemented in AbiquoClient to support working with objects instead of Ids
+* InvokeLink method implemented that converts response to type of the Link
+* Relative URI extraction method added to UriHelper
+* AbiquoV1Base Dto added as common base dto for all v1 model objects
+
+# NOTES
+
+* Renamed Invoke methods for Links to InvokeLinkBy...
+* Changed TenantId property in BaseAbiquoClient to abstract
 		</releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
         <tags>dfch Abiquo Client C#</tags>
