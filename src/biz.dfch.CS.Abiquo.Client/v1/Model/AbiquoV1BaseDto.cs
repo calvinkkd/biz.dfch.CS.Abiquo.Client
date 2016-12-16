@@ -14,31 +14,16 @@
  * limitations under the License.
  */
 
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using biz.dfch.CS.Abiquo.Client.General;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
 {
-    /// <summary>
-    /// Base DTO for abiquo collections
-    /// </summary>
-    /// <typeparam name="T">Type of collection elements</typeparam>
-    public abstract class AbiquoBaseCollectionDto<T> : AbiquoV1BaseDto
-        where T : AbiquoV1BaseDto
+    public abstract class AbiquoV1BaseDto : AbiquoBaseDto
     {
-        public List<Link> Links { get; set; }
-
-        public List<T> Collection { get; set; }
-
-        public int TotalSize { get; set; }
-
-        public Link GetLinkByRel(string rel)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(rel));
-            Contract.Ensures(null != Contract.Result<Link>());
-
-            return Links.Find(l => l.Rel == rel);
-        }
     }
 }

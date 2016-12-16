@@ -17,7 +17,8 @@
  using System;
  using System.Diagnostics.Contracts;
  using biz.dfch.CS.Abiquo.Client.Authentication;
-﻿using biz.dfch.CS.Abiquo.Client.v1.Model;
+ using biz.dfch.CS.Abiquo.Client.General;
+ using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client
@@ -25,6 +26,17 @@ namespace biz.dfch.CS.Abiquo.Client
     [ContractClassFor(typeof(BaseAbiquoClient))]
     abstract class ContractClassForBaseAbiquoClient : BaseAbiquoClient
     {
+        public override int TenantId
+        {
+            get
+            {
+                Contract.Requires(IsLoggedIn);
+                Contract.Requires(null != CurrentUserInformation);
+
+                return default(int);
+            }
+        }
+
         #region Login
 
         public override bool Login(string abiquoApiBaseUri, IAuthenticationInformation authenticationInformation)
@@ -39,6 +51,29 @@ namespace biz.dfch.CS.Abiquo.Client
         }
 
         #endregion Login
+
+
+        #region Invoke Link(s)
+
+        public override T InvokeLink<T>(Link link)
+        {
+            Contract.Requires(null != link);
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Type));
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Href));
+
+            return default(T);
+        }
+
+        public override AbiquoBaseDto InvokeLink(Link link)
+        {
+            Contract.Requires(null != link);
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Type));
+            Contract.Requires(!string.IsNullOrWhiteSpace(link.Href));
+
+            return default(AbiquoBaseDto);
+        }
+
+        #endregion Invoke Link(s)
 
 
         #region Enterprises
@@ -74,6 +109,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(UsersWithRoles);
         }
 
+        public override UsersWithRoles GetUsersWithRoles(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+
+            return default(UsersWithRoles);
+        }
+
         public override UsersWithRoles GetUsersWithRoles(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -84,6 +126,14 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public override User GetUserOfCurrentEnterprise(int id)
         {
+            Contract.Requires(0 < id);
+
+            return default(User);
+        }
+
+        public override User GetUser(Enterprise enterprise, int id)
+        {
+            Contract.Requires(null != enterprise);
             Contract.Requires(0 < id);
 
             return default(User);
@@ -158,6 +208,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(DataCentersLimits);
         }
 
+        public override DataCentersLimits GetDataCentersLimits(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+
+            return default(DataCentersLimits);
+        }
+
         public override DataCentersLimits GetDataCentersLimits(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -167,6 +224,14 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public override DataCenterLimits GetDataCenterLimitsOfCurrentEnterprise(int id)
         {
+            Contract.Requires(0 < id);
+
+            return default(DataCenterLimits);
+        }
+
+        public override DataCenterLimits GetDataCenterLimits(Enterprise enterprise, int id)
+        {
+            Contract.Requires(null != enterprise);
             Contract.Requires(0 < id);
 
             return default(DataCenterLimits);
@@ -190,6 +255,21 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<VirtualMachines>());
 
             return default(VirtualMachines);
+        }
+
+        public override VirtualMachines GetVirtualMachines(VirtualAppliance virtualAppliance)
+        {
+            Contract.Requires(null != virtualAppliance);
+
+            return default(VirtualMachines);
+        }
+
+        public override VirtualMachine GetVirtualMachine(VirtualAppliance virtualAppliance, int id)
+        {
+            Contract.Requires(null != virtualAppliance);
+            Contract.Requires(0 < id);
+
+            return default(VirtualMachine);
         }
 
         public override VirtualMachines GetVirtualMachines(int virtualDataCenterId, int virtualApplianceId)
@@ -222,12 +302,30 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate)
+        {
+            Contract.Requires(null != virtualAppliance);
+            Contract.Requires(null != virtualMachineTemplate);
+
+            return default(VirtualMachine);
+        }
+
         public override VirtualMachine CreateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, string virtualMachineTemplateHref)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(!string.IsNullOrWhiteSpace(virtualMachineTemplateHref));
             Contract.Requires(Uri.IsWellFormedUriString(virtualMachineTemplateHref, UriKind.Absolute));
+
+            return default(VirtualMachine);
+        }
+
+        public override VirtualMachine CreateVirtualMachine(VirtualAppliance virtualAppliance, VirtualMachineTemplate virtualMachineTemplate, VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualAppliance);
+            Contract.Requires(null != virtualMachineTemplate);
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(virtualMachine.IsValid());
 
             return default(VirtualMachine);
         }
@@ -259,11 +357,25 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VirtualMachine);
         }
 
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
         public override Task DeployVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, bool force)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
+
+            return default(Task);
+        }
+
+        public override Task DeployVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
 
             return default(Task);
         }
@@ -277,6 +389,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(Task);
         }
 
+        public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
         public override Task UpdateVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId,
             VirtualMachine virtualMachine, bool force)
         {
@@ -285,6 +404,13 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
             Contract.Requires(null != virtualMachine);
             Contract.Requires(virtualMachine.IsValid());
+
+            return default(Task);
+        }
+
+        public override Task UpdateVirtualMachine(VirtualMachine virtualMachine, bool force, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
 
             return default(Task);
         }
@@ -307,6 +433,37 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
+            Contract.Requires(null != state);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineStateEnum state, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state, bool waitForCompletion)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(null != state);
+
+            return default(Task);
+        }
+
+        public override Task ChangeStateOfVirtualMachine(VirtualMachine virtualMachine, VirtualMachineState state)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(null != state);
 
             return default(Task);
         }
@@ -319,6 +476,20 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
 
             return default(Task);
+        }
+
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(bool);
+        }
+
+        public override bool DeleteVirtualMachine(VirtualMachine virtualMachine, bool force)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(bool);
         }
 
         public override bool DeleteVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
@@ -339,6 +510,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(bool);
         }
 
+        public override VmNetworkConfigurations GetNetworkConfigurationsForVm(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(VmNetworkConfigurations);
+        }
+
         public override VmNetworkConfigurations GetNetworkConfigurationsForVm(int virtualDataCenterId, int virtualApplianceId,
             int virtualMachineId)
         {
@@ -347,6 +525,14 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
 
             return default(VmNetworkConfigurations);
+        }
+
+        public override VmNetworkConfiguration GetNetworkConfigurationForVm(VirtualMachine virtualMachine, int id)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(0 < id);
+
+            return default(VmNetworkConfiguration);
         }
 
         public override VmNetworkConfiguration GetNetworkConfigurationForVm(int virtualDataCenterId, int virtualApplianceId,
@@ -360,6 +546,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VmNetworkConfiguration);
         }
 
+        public override Nics GetNicsOfVirtualMachine(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Nics);
+        }
+
         public override Nics GetNicsOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -367,6 +560,13 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < virtualMachineId);
 
             return default(Nics);
+        }
+
+        public override Tasks GetAllTasksOfVirtualMachine(VirtualMachine virtualMachine)
+        {
+            Contract.Requires(null != virtualMachine);
+
+            return default(Tasks);
         }
 
         public override Tasks GetAllTasksOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
@@ -377,6 +577,14 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<Tasks>());
 
             return default(Tasks);
+        }
+
+        public override Task GetTaskOfVirtualMachine(VirtualMachine virtualMachine, string taskId)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(!string.IsNullOrEmpty(taskId));
+
+            return default(Task);
         }
 
         public override Task GetTaskOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string taskId)
@@ -394,6 +602,13 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region VirtualMachineTemplates
 
+        public override VirtualMachineTemplates GetVirtualMachineTemplates(DataCenterRepository dataCenterRepository)
+        {
+            Contract.Requires(null != dataCenterRepository);
+
+            return default(VirtualMachineTemplates);
+        }
+
         public override VirtualMachineTemplates GetVirtualMachineTemplates(int enterpriseId, int dataCenterRepositoryId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -401,6 +616,14 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Ensures(null != Contract.Result<VirtualMachineTemplates>());
 
             return default(VirtualMachineTemplates);
+        }
+
+        public override VirtualMachineTemplate GetVirtualMachineTemplate(DataCenterRepository dataCenterRepository, int id)
+        {
+            Contract.Requires(null != dataCenterRepository);
+            Contract.Requires(0 < id);
+
+            return default(VirtualMachineTemplate);
         }
 
         public override VirtualMachineTemplate GetVirtualMachineTemplate(int enterpriseId, int dataCenterRepositoryId, int id)
@@ -436,12 +659,27 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region VirtualAppliances
 
+        public override VirtualAppliances GetVirtualAppliances(VirtualDataCenter virtualDataCenter)
+        {
+            Contract.Requires(null != virtualDataCenter);
+
+            return default(VirtualAppliances);
+        }
+
         public override VirtualAppliances GetVirtualAppliances(int virtualDataCenterId)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Ensures(null != Contract.Result<VirtualAppliances>());
 
             return default(VirtualAppliances);
+        }
+
+        public override VirtualAppliance GetVirtualAppliance(VirtualDataCenter virtualDataCenter, int id)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(0 < id);
+
+            return default(VirtualAppliance);
         }
 
         public override VirtualAppliance GetVirtualAppliance(int virtualDataCenterId, int id)
@@ -464,6 +702,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(DataCenterRepositories);
         }
 
+        public override DataCenterRepositories GetDataCenterRepositories(Enterprise enterprise)
+        {
+            Contract.Requires(null != enterprise);
+
+            return default(DataCenterRepositories);
+        }
+
         public override DataCenterRepositories GetDataCenterRepositories(int enterpriseId)
         {
             Contract.Requires(0 < enterpriseId);
@@ -474,6 +719,14 @@ namespace biz.dfch.CS.Abiquo.Client
 
         public override DataCenterRepository GetDataCenterRepositoryOfCurrentEnterprise(int id)
         {
+            Contract.Requires(0 < id);
+
+            return default(DataCenterRepository);
+        }
+
+        public override DataCenterRepository GetDataCenterRepository(Enterprise enterprise, int id)
+        {
+            Contract.Requires(null != enterprise);
             Contract.Requires(0 < id);
 
             return default(DataCenterRepository);
@@ -507,11 +760,26 @@ namespace biz.dfch.CS.Abiquo.Client
 
         #region Networks
 
+        public override VlanNetworks GetPrivateNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            Contract.Requires(null != virtualDataCenter);
+
+            return default(VlanNetworks);
+        }
+
         public override VlanNetworks GetPrivateNetworks(int virtualDataCenterId)
         {
             Contract.Requires(0 < virtualDataCenterId);
 
             return default(VlanNetworks);
+        }
+
+        public override VlanNetwork GetPrivateNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(0 < id);
+
+            return default(VlanNetwork);
         }
 
         public override VlanNetwork GetPrivateNetwork(int virtualDataCenterId, int id)
@@ -520,6 +788,13 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(0 < id);
 
             return default(VlanNetwork);
+        }
+
+        public override PrivateIps GetIpsOfPrivateNetwork(VlanNetwork vlan, bool free)
+        {
+            Contract.Requires(null != vlan);
+
+            return default(PrivateIps);
         }
 
         public override PrivateIps GetIpsOfPrivateNetwork(int virtualDataCenterId, int privateNetworkId, bool free)
@@ -562,6 +837,13 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VlanNetwork);
         }
 
+        public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(VlanNetwork vlan, bool free)
+        {
+            Contract.Requires(null != vlan);
+
+            return default(ExternalIps);
+        }
+
         public override ExternalIps GetIpsOfExternalNetworkOfCurrentEnterprise(int dataCenterLimitsId, int externalNetworkId, bool free)
         {
             Contract.Requires(0 < dataCenterLimitsId);
@@ -579,11 +861,26 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(ExternalIps);
         }
 
+        public override VlanNetworks GetPublicNetworks(VirtualDataCenter virtualDataCenter)
+        {
+            Contract.Requires(null != virtualDataCenter);
+
+            return default(VlanNetworks);
+        }
+
         public override VlanNetworks GetPublicNetworks(int virtualDataCenterId)
         {
             Contract.Requires(0 < virtualDataCenterId);
 
             return default(VlanNetworks);
+        }
+
+        public override VlanNetwork GetPublicNetwork(VirtualDataCenter virtualDataCenter, int id)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(0 < id);
+
+            return default(VlanNetwork);
         }
 
         public override VlanNetwork GetPublicNetwork(int virtualDataCenterId, int id)
@@ -594,6 +891,14 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(VlanNetwork);
         }
 
+        public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(VirtualDataCenter virtualDataCenter, VlanNetwork vlan)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(null != vlan);
+
+            return default(PublicIps);
+        }
+
         public override PublicIps GetPublicIpsToPurchaseOfPublicNetwork(int virtualDataCenterId, int vlanId)
         {
             Contract.Requires(0 < virtualDataCenterId);
@@ -602,10 +907,26 @@ namespace biz.dfch.CS.Abiquo.Client
             return default(PublicIps);
         }
 
+        public override PublicIp PurchasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(null != publicIp);
+
+            return default(PublicIp);
+        }
+
         public override PublicIp PurchasePublicIp(int virtualDataCenterId, int publicIpid)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < publicIpid);
+
+            return default(PublicIp);
+        }
+
+        public override PublicIp ReleasePublicIp(VirtualDataCenter virtualDataCenter, PublicIp publicIp)
+        {
+            Contract.Requires(null != virtualDataCenter);
+            Contract.Requires(null != publicIp);
 
             return default(PublicIp);
         }

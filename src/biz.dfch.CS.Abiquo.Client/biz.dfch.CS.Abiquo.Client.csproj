@@ -151,6 +151,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="v1\Model\AbiquoV1BaseDto.cs" />
     <Compile Include="VersionedAbiquoMediaDataTypes.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
