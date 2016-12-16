@@ -534,7 +534,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         #region Users
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "id")]
+        [ExpectContractFailure(MessagePattern = "enterpriseId")]
         public void GetUsersWithRolesWithInvalidEnterpriseIdThrowsContractException()
         {
             // Arrange
