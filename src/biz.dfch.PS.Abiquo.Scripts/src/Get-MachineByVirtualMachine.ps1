@@ -11,11 +11,16 @@ PARAM
 	[Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'id')]
 	[ValidateNotNullOrEmpty()]
 	[int] $Id
+	,
+	[Parameter(Mandatory = $true)]
+	[ValidateNotNullOrEmpty()]
+	[biz.dfch.CS.Abiquo.Client.BaseAbiquoClient] $Client
+
 )
 
 $datacenterSuffix = '/admin/datacenters'
 
-$datacenters = $client.Invoke([uri] ('{0}/{1}' -f $client.AbiquoApiBaseUri, $datacenterSuffix.TrimStart('/')))
+$datacenters = $Client.Invoke([uri] ('{0}/{1}' -f $Client.AbiquoApiBaseUri, $datacenterSuffix.TrimStart('/')))
 Contract-Assert (!!$datacenters)
 
 foreach($datacenter in $datacenters.collection.links) 
@@ -26,7 +31,7 @@ foreach($datacenter in $datacenters.collection.links)
 	}
 	$href = $datacenter.GetOrDefault('href', $null);
 
-	$racks = $client.Invoke([uri] $href);
+	$racks = $Client.Invoke([uri] $href);
 	Contract-Assert (!!$racks)
 	foreach($rack in $racks.collection.links) 
 	{
@@ -36,7 +41,7 @@ foreach($datacenter in $datacenters.collection.links)
 		}
 		$href = $rack.GetOrDefault('href', $null);
 		
-		$machines = $client.Invoke([uri] $href);
+		$machines = $Client.Invoke([uri] $href);
 		Contract-Assert (!!$machines)
 		foreach($machine in $machines.collection) 
 		{
@@ -48,7 +53,7 @@ foreach($datacenter in $datacenters.collection.links)
 				}
 				$href = $machineLink.GetOrDefault('href', $null);
 				
-				$virtualmachines = $client.Invoke([uri] $href);
+				$virtualmachines = $Client.Invoke([uri] $href);
 				Contract-Assert (!!$virtualmachines)
 				
 				foreach($virtualmachine in $virtualmachines.collection)
