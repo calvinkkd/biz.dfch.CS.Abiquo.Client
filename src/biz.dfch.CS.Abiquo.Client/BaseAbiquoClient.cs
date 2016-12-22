@@ -93,6 +93,12 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         public int TaskPollingTimeoutMilliseconds { get; set; }
 
+        /// <summary>
+        /// Session token from Set-Cookie header
+        /// Gets refreshed by Set-Cookie header of every response
+        /// </summary>
+        private string SessionToken { get; set; }
+
         #endregion Properties
 
 
