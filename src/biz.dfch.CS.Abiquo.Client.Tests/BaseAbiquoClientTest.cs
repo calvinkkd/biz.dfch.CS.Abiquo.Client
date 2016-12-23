@@ -404,7 +404,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
             Assert.AreEqual("Arbitrary-Result", result);
-            Assert.IsNull(SESSION_TOKEN, sut.SessionToken);
+            Assert.AreEqual(SESSION_TOKEN, sut.SessionToken);
 
             Mock.Assert(responseHeaders);
             Mock.Assert(restCallExecutor);
