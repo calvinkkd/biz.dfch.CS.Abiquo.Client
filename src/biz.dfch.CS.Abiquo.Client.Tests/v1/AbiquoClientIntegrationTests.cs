@@ -1774,7 +1774,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             }
             catch (HttpRequestException e)
             {
-                throw new HttpRequestException(e.Message);
+                var msg = e.Message;
+
+                if (null != e.InnerException)
+                {
+                    msg += e.InnerException.Message;
+                }
+                if (null != e.InnerException.InnerException && null != e.InnerException)
+                {
+                    msg += e.InnerException.Message;
+                }
+
+                throw new HttpRequestException(msg);
             }
         }
 
