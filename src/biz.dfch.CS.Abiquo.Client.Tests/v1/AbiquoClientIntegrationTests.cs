@@ -1780,7 +1780,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 {
                     msg += e.InnerException.Message;
                 }
-                if (null != e.InnerException.InnerException && null != e.InnerException)
+                if (null != e.InnerException && null != e.InnerException.InnerException)
                 {
                     msg += e.InnerException.Message;
                 }
