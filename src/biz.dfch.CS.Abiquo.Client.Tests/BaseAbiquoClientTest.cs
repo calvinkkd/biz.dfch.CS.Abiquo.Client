@@ -40,7 +40,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const string PASSWORD = "ArbitraryPassword";
         private const string SESSION_TOKEN = "auth=ARBITRARY";
         private const string AUTH_COOKIE_VALUE = "auth=ABC123";
-        private const string BEARER_TOKEN = "Bearer ARBITRARY_TOKEN";
         private const int INVALID_ID = 0;
 
         private static readonly string SET_COOKIE_HEADER_VALUE_1 = string.Format("{0}; Expires=Fri, 30-Dec-2016 23:59:59 GMT; Path=/; Secure; HttpOnly", AUTH_COOKIE_VALUE);
@@ -364,8 +363,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "authCookie")]
-        public void ExecuteRequestResultingInResponseWithSetCookieHeaderNotContainingSessionTokenThrowsContractException()
+        public void ExecuteRequestResultingInResponseWithSetCookieHeaderNotContainingSessionTokenSetsSessionTokenToNull()
         {
             // Arrange
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
@@ -403,6 +401,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Act
             var result = sut.ExecuteRequest(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, headers, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+            Assert.IsNull(sut.SessionToken);
+
+            Mock.Assert(responseHeaders);
+            Mock.Assert(restCallExecutor);
         }
 
         #endregion ExecuteRequest

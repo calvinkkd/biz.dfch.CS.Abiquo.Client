@@ -217,9 +217,11 @@ namespace biz.dfch.CS.Abiquo.Client
             if (responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out setCookieHeaderValues))
             {
                 var authCookie = setCookieHeaderValues.FirstOrDefault(cookie => cookie.StartsWith("auth="));
-                Contract.Assert(null != authCookie);
 
-                sessionToken = authCookie.Substring(0, authCookie.IndexOf(';'));
+                if (null != authCookie)
+                {
+                    sessionToken = authCookie.Substring(0, authCookie.IndexOf(';'));
+                }
             }
 
             return sessionToken;
