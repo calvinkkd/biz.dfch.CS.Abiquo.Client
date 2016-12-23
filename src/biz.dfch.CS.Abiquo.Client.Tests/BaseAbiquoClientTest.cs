@@ -37,14 +37,14 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const string VIRTUALMACHINETEMPLATE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
+        private const string BEARER_TOKEN = "Bearer ARBITRARY_TOKEN";
         private const int INVALID_ID = 0;
 
         private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD);
-        private const string BEARER_TOKEN = "Bearer ARBITRARY_TOKEN";
 
         private BaseAbiquoClient sut = new DummyAbiquoClient();
 
-        private readonly VirtualMachine validVirtualMachine = new VirtualMachine()
+        private readonly VirtualMachine _validVirtualMachine = new VirtualMachine()
         {
             Cpu = 2
             ,
@@ -53,7 +53,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Name = "Arbitrary"
         };
 
-        private readonly Task validTask = new Task()
+        private readonly Task _validTask = new Task()
         {
             OwnerId = "ArbitraryOwnerId"
             ,
@@ -1002,7 +1002,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(INVALID_ID, 42, 42, 42, 42, validVirtualMachine);
+            sut.CreateVirtualMachine(INVALID_ID, 42, 42, 42, 42, _validVirtualMachine);
 
             // Assert
         }
@@ -1014,7 +1014,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(42, INVALID_ID, 42, 42, 42, validVirtualMachine);
+            sut.CreateVirtualMachine(42, INVALID_ID, 42, 42, 42, _validVirtualMachine);
 
             // Assert
         }
@@ -1026,7 +1026,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(42, 42, INVALID_ID, 42, 42, validVirtualMachine);
+            sut.CreateVirtualMachine(42, 42, INVALID_ID, 42, 42, _validVirtualMachine);
 
             // Assert
         }
@@ -1038,7 +1038,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(42, 42, 42, INVALID_ID, 42, validVirtualMachine);
+            sut.CreateVirtualMachine(42, 42, 42, INVALID_ID, 42, _validVirtualMachine);
 
             // Assert
         }
@@ -1050,7 +1050,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(null, new VirtualMachineTemplate(), validVirtualMachine);
+            sut.CreateVirtualMachine(null, new VirtualMachineTemplate(), _validVirtualMachine);
 
             // Assert
         }
@@ -1062,7 +1062,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(new VirtualAppliance(), null, validVirtualMachine);
+            sut.CreateVirtualMachine(new VirtualAppliance(), null, _validVirtualMachine);
 
             // Assert
         }
@@ -1086,7 +1086,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(42, 42, 42, 42, INVALID_ID, validVirtualMachine);
+            sut.CreateVirtualMachine(42, 42, 42, 42, INVALID_ID, _validVirtualMachine);
 
             // Assert
         }
@@ -1110,7 +1110,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(INVALID_ID, 42, VIRTUALMACHINETEMPLATE_HREF, validVirtualMachine);
+            sut.CreateVirtualMachine(INVALID_ID, 42, VIRTUALMACHINETEMPLATE_HREF, _validVirtualMachine);
 
             // Assert
         }
@@ -1122,7 +1122,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(42, INVALID_ID, VIRTUALMACHINETEMPLATE_HREF, validVirtualMachine);
+            sut.CreateVirtualMachine(42, INVALID_ID, VIRTUALMACHINETEMPLATE_HREF, _validVirtualMachine);
 
             // Assert
         }
@@ -1158,7 +1158,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(42, 42, null, validVirtualMachine);
+            sut.CreateVirtualMachine(42, 42, null, _validVirtualMachine);
 
             // Assert
         }
@@ -1170,7 +1170,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.CreateVirtualMachine(42, 42, " ", validVirtualMachine);
+            sut.CreateVirtualMachine(42, 42, " ", _validVirtualMachine);
 
             // Assert
         }
@@ -1314,7 +1314,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.UpdateVirtualMachine(INVALID_ID, 42, 42, validVirtualMachine, false);
+            sut.UpdateVirtualMachine(INVALID_ID, 42, 42, _validVirtualMachine, false);
 
             // Assert
         }
@@ -1326,7 +1326,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.UpdateVirtualMachine(42, INVALID_ID, 42, validVirtualMachine, false);
+            sut.UpdateVirtualMachine(42, INVALID_ID, 42, _validVirtualMachine, false);
 
             // Assert
         }
@@ -1338,7 +1338,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.UpdateVirtualMachine(42, 42, INVALID_ID, validVirtualMachine, false);
+            sut.UpdateVirtualMachine(42, 42, INVALID_ID, _validVirtualMachine, false);
 
             // Assert
         }
@@ -1362,7 +1362,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.UpdateVirtualMachine(INVALID_ID, 42, 42, validVirtualMachine, true);
+            sut.UpdateVirtualMachine(INVALID_ID, 42, 42, _validVirtualMachine, true);
 
             // Assert
         }
@@ -1374,7 +1374,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.UpdateVirtualMachine(42, INVALID_ID, 42, validVirtualMachine, true);
+            sut.UpdateVirtualMachine(42, INVALID_ID, 42, _validVirtualMachine, true);
 
             // Assert
         }
@@ -1398,7 +1398,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.UpdateVirtualMachine(42, 42, INVALID_ID, validVirtualMachine, true);
+            sut.UpdateVirtualMachine(42, 42, INVALID_ID, _validVirtualMachine, true);
 
             // Assert
         }
@@ -1878,7 +1878,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.GetTaskOfVirtualMachine(validVirtualMachine, null);
+            sut.GetTaskOfVirtualMachine(_validVirtualMachine, null);
 
             // Assert
         }
@@ -1890,7 +1890,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.GetTaskOfVirtualMachine(validVirtualMachine, "");
+            sut.GetTaskOfVirtualMachine(_validVirtualMachine, "");
 
             // Assert
         }
@@ -2215,7 +2215,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.WaitForTaskCompletion(validTask, INVALID_ID, 1);
+            sut.WaitForTaskCompletion(_validTask, INVALID_ID, 1);
 
             // Assert
         }
@@ -2227,7 +2227,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.WaitForTaskCompletion(validTask, 1, INVALID_ID);
+            sut.WaitForTaskCompletion(_validTask, 1, INVALID_ID);
 
             // Assert
         }
