@@ -14,9 +14,9 @@
  * limitations under the License.
  */
  
- using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
- using System.Collections.Generic;
+using System.Collections.Generic;
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model

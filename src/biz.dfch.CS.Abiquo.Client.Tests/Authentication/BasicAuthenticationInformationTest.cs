@@ -16,7 +16,7 @@
 
 using biz.dfch.CS.Abiquo.Client.Authentication;
 using biz.dfch.CS.Testing.Attributes;
- using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace biz.dfch.CS.Abiquo.Client.Tests.Authentication
 {

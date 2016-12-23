@@ -14,11 +14,11 @@
  * limitations under the License.
  */
  
- using System;
- using System.Diagnostics.Contracts;
- using biz.dfch.CS.Abiquo.Client.Authentication;
- using biz.dfch.CS.Abiquo.Client.General;
- using biz.dfch.CS.Abiquo.Client.v1.Model;
+using System;
+using System.Diagnostics.Contracts;
+using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Abiquo.Client.General;
+using biz.dfch.CS.Abiquo.Client.v1.Model;
 ﻿using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 
 namespace biz.dfch.CS.Abiquo.Client

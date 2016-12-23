@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
- using biz.dfch.CS.Commons;
+using biz.dfch.CS.Commons;
 
 namespace biz.dfch.CS.Abiquo.Client.General
 {
