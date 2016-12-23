@@ -35,6 +35,7 @@ namespace biz.dfch.CS.Abiquo.Client
         public static class Authentication
         {
             public const string AUTHORIZATION_HEADER_KEY = "Authorization";
+            public const string COOKIE_HEADER_KEY = "Cookie";
 
             public const string BASIC_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Basic {0}";
             public const string BEARER_AUTHORIZATION_HEADER_VALUE_TEMPLATE = "Bearer {0}";

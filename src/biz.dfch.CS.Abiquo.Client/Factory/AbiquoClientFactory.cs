@@ -14,11 +14,11 @@
  * limitations under the License.
  */
  
- using System;
- using System.Diagnostics;
- using System.Diagnostics.Contracts;
- using biz.dfch.CS.Abiquo.Client.General;
- using biz.dfch.CS.Abiquo.Client.v1;
+using System;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using biz.dfch.CS.Abiquo.Client.General;
+using biz.dfch.CS.Abiquo.Client.v1;
 
 namespace biz.dfch.CS.Abiquo.Client.Factory
 {

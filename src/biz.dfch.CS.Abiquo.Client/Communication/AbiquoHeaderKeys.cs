@@ -20,5 +20,6 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
     {
         public const string ACCEPT_HEADER_KEY = "Accept";
         public const string CONTENT_TYPE_HEADER_KEY = "Content-Type";
+        public const string SET_COOKIE_HEADER_KEY = "Set-Cookie";
     }
 }

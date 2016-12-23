@@ -51,5 +51,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1.Model
         public bool Workflow { get; set; }
 
         public bool TwoFactorAuthenticationMandatory { get; set; }
+
+        public string Theme { get; set; }
     }
 }
