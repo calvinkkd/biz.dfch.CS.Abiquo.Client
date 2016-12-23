@@ -1694,79 +1694,88 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         [TestMethod]
         public void UpdateVirtualMachineWithWaitForCompletionForDeployedVmUpdatesAbiquoVirtualMachineAndReturnsSuccessfullyCompletedUpdateTask()
         {
-            // Arrange
-            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
-
-            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
-            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
-
-            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
-            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
-
-            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
-            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
-
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
-            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
-
-            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
-                dataCenterRepositoryId);
-            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
-
-            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
-
-            var deployTask = abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), false, true);
-
-            virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault());
-
-            var variableKey = "arbitraryKey";
-            var variableValue = "ArbitraryValue";
-            var updatedVariables = new Dictionary<string, string>()
+            try
             {
-                {variableKey, variableValue}
-            };
-            var updatedDescription = "Arbitrary Description";
-            virtualMachine.Variables = updatedVariables;
-            virtualMachine.Description = updatedDescription;
+                // Arrange
+                var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+                var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri,
+                    IntegrationTestEnvironment.AuthenticationInformation);
 
-            // Act
-            var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, true);
+                var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+                var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+                Contract.Assert(null != virtualDataCenter);
 
-            var updatedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault());
+                var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+                var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+                Contract.Assert(null != virtualAppliance);
 
-            // Assert
-            Assert.IsTrue(loginSucceeded);
+                var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+                var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+                Contract.Assert(null != dataCenterRepository);
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
-            Assert.IsTrue(0 < deployTask.Timestamp);
-            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, deployTask.State);
-            Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
+                var editLink = dataCenterRepository.GetLinkByRel("edit");
+                var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
-            Assert.IsTrue(0 < updateTask.Timestamp);
-            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, updateTask.State);
-            Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
+                var virtualMachineTemplates =
+                    abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                        dataCenterRepositoryId);
+                var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
+                Contract.Assert(null != virtualMachineTemplate);
 
-            Assert.IsNotNull(updatedVirtualMachine);
-            Assert.IsTrue(0 < updatedVirtualMachine.Id);
-            Assert.AreEqual(updatedDescription, updatedVirtualMachine.Description);
-            Assert.IsTrue(updatedVirtualMachine.Variables.ContainsKey(variableKey));
-            Assert.AreEqual(variableValue, updatedVirtualMachine.Variables[variableKey]);
+                var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                    IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
 
-            // Cleanup
-            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
-                virtualMachine.Id.GetValueOrDefault(), true);
-            Assert.IsTrue(deletionResult);
+                var deployTask = abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                    virtualMachine.Id.GetValueOrDefault(), false, true);
+
+                virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                    virtualMachine.Id.GetValueOrDefault());
+
+                var variableKey = "arbitraryKey";
+                var variableValue = "ArbitraryValue";
+                var updatedVariables = new Dictionary<string, string>()
+                {
+                    {variableKey, variableValue}
+                };
+                var updatedDescription = "Arbitrary Description";
+                virtualMachine.Variables = updatedVariables;
+                virtualMachine.Description = updatedDescription;
+
+                // Act
+                var updateTask = abiquoClient.UpdateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                    virtualMachine.Id.GetValueOrDefault(), virtualMachine, false, true);
+
+                var updatedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                    virtualMachine.Id.GetValueOrDefault());
+
+                // Assert
+                Assert.IsTrue(loginSucceeded);
+
+                Assert.IsFalse(string.IsNullOrWhiteSpace(deployTask.TaskId));
+                Assert.IsTrue(0 < deployTask.Timestamp);
+                Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, deployTask.State);
+                Assert.AreEqual(TaskTypeEnum.DEPLOY, deployTask.Type);
+
+                Assert.IsFalse(string.IsNullOrWhiteSpace(updateTask.TaskId));
+                Assert.IsTrue(0 < updateTask.Timestamp);
+                Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, updateTask.State);
+                Assert.AreEqual(TaskTypeEnum.RECONFIGURE, updateTask.Type);
+
+                Assert.IsNotNull(updatedVirtualMachine);
+                Assert.IsTrue(0 < updatedVirtualMachine.Id);
+                Assert.AreEqual(updatedDescription, updatedVirtualMachine.Description);
+                Assert.IsTrue(updatedVirtualMachine.Variables.ContainsKey(variableKey));
+                Assert.AreEqual(variableValue, updatedVirtualMachine.Variables[variableKey]);
+
+                // Cleanup
+                var deletionResult = abiquoClient.DeleteVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                    virtualMachine.Id.GetValueOrDefault(), true);
+                Assert.IsTrue(deletionResult);
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HttpRequestException(e.Message);
+            }
         }
 
         [TestMethod]
