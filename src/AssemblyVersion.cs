@@ -14,4 +14,4 @@
 // NOTE
 // also update the corresponding nuspec file when changing the version
 //
-[assembly: AssemblyVersion("3.2.1.*")]
+[assembly: AssemblyVersion("3.3.0.*")]

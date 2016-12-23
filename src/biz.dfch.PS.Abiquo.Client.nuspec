@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>biz.dfch.PS.Abiquo.Client</id>
-        <version>3.2.1</version>
+        <version>3.3.0</version>
         <title>biz.dfch.PS.Abiquo.Client</title>
         <authors>d-fens GmbH</authors>
         <owners>d-fens GmbH</owners>
@@ -24,7 +24,7 @@ d-fens GmbH, General-Guisan-Strasse 6, CH-6300 Zug, Switzerland
 * See [Releases](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/releases) and [Tags](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client/tags) on [GitHub](https://github.com/dfensgmbh/biz.dfch.CS.Abiquo.Client)
 		</description>
         <summary>PowerShell Client for Abiquo</summary>
-        <releaseNotes>20161216
+        <releaseNotes>20161223
 none
 		</releaseNotes>
         <copyright>Copyright © 2016 d-fens GmbH</copyright>
