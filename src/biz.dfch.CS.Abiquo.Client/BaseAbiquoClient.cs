@@ -222,6 +222,10 @@ namespace biz.dfch.CS.Abiquo.Client
                 {
                     sessionToken = authCookie.Substring(0, authCookie.IndexOf(';'));
                 }
+                else
+                {
+                    sessionToken = SessionToken;
+                }
             }
 
             return sessionToken;

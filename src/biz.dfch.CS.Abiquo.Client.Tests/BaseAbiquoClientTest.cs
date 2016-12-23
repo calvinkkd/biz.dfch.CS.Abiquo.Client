@@ -363,7 +363,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        public void ExecuteRequestResultingInResponseWithSetCookieHeaderNotContainingSessionTokenSetsSessionTokenToNull()
+        public void ExecuteRequestResultingInResponseWithSetCookieHeaderNotContainingSessionTokenNotModifyingSessionToken()
         {
             // Arrange
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
