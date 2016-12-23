@@ -14,8 +14,8 @@
  * limitations under the License.
  */
  
- using System;
- using biz.dfch.CS.Abiquo.Client.v1;
+using System;
+using biz.dfch.CS.Abiquo.Client.v1;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using biz.dfch.CS.Abiquo.Client.Factory;
 using biz.dfch.CS.Testing.Attributes;

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
  
- using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
- using System.Text;
+using System.Text;
 
 namespace biz.dfch.CS.Abiquo.Client.Authentication
 {

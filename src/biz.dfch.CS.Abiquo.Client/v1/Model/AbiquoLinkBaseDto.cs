@@ -14,8 +14,7 @@
  * limitations under the License.
  */
  
- using biz.dfch.CS.Abiquo.Client.General;
- using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 namespace biz.dfch.CS.Abiquo.Client.v1.Model
