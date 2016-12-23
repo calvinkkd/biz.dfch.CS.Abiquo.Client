@@ -258,7 +258,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var headers = new Dictionary<string, string>()
             {
-                { Client.Constants.Authentication.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                { Constants.Authentication.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
                 ,
                 { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
