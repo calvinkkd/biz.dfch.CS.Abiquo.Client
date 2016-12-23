@@ -356,7 +356,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
             Assert.AreEqual("Arbitrary-Result", result);
-            Assert.AreEqual(SESSION_TOKEN, sut.SessionToken);
+            Assert.IsNull(sut.SessionToken);
 
             Mock.Assert(responseHeaders);
             Mock.Assert(restCallExecutor);
@@ -404,7 +404,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             // Assert
             Assert.AreEqual("Arbitrary-Result", result);
-            Assert.IsNull(sut.SessionToken);
+            Assert.IsNull(SESSION_TOKEN, sut.SessionToken);
 
             Mock.Assert(responseHeaders);
             Mock.Assert(restCallExecutor);
