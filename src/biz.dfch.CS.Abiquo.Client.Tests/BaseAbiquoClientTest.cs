@@ -149,8 +149,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 }))
                 .OccursOnce();
 
+            var expectedHeaders = new Dictionary<string, string>()
+            {
+                {Client.Constants.Authentication.COOKIE_HEADER_KEY, SESSION_TOKEN}
+            };
+
             var restCallExecutor = Mock.Create<RestCallExecutor>();
-            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, _authenticationInformation.GetAuthorizationHeaders(), null))
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, expectedHeaders, null))
                 .IgnoreInstance()
                 .Returns("Arbitrary-Result")
                 .OccursOnce();
@@ -179,7 +184,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var headers = new Dictionary<string, string>()
             {
-                { Client.Constants.Authentication.AUTHORIZATION_HEADER_KEY, BEARER_TOKEN }
+                { Client.Constants.Authentication.COOKIE_HEADER_KEY, SESSION_TOKEN }
                 ,
                 { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
@@ -481,23 +486,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
             var expectedRequestUri = string.Format("{0}?{1}", UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES), "currentPage=1&limit=25");
 
-            var responseHeaders = Mock.Create<HttpResponseHeaders>();
-            IEnumerable<string> cookieHeaderValues;
-            Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
-                .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
-                {
-                    values = new List<string>() { "ArbitraryCookieValue" };
-
-                    return true;
-                }))
-                .OccursOnce();
-
             var headers = new Dictionary<string, string>()
             {
                 { Constants.Authentication.COOKIE_HEADER_KEY, SESSION_TOKEN }
                 ,
                 { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
             };
+
+            var responseHeaders = Mock.Create<HttpResponseHeaders>();
+            IEnumerable<string> cookieHeaderValues;
+            Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
+                .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
+                {
+                    values = new List<string>() { SET_COOKIE_HEADER_VALUE_1, SET_COOKIE_HEADER_VALUE_2 };
+
+                    return true;
+                }))
+                .OccursOnce();
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, headers, null))
@@ -537,10 +542,26 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 { "expected-key", "expected-value" }
             };
 
+            var responseHeaders = Mock.Create<HttpResponseHeaders>();
+            IEnumerable<string> cookieHeaderValues;
+            Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
+                .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
+                {
+                    values = new List<string>() { SET_COOKIE_HEADER_VALUE_1, SET_COOKIE_HEADER_VALUE_2 };
+
+                    return true;
+                }))
+                .OccursOnce();
+
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
                 .IgnoreInstance()
                 .Returns(dicionaryParameers.SerializeObject())
+                .OccursOnce();
+
+            Mock.Arrange(() => restCallExecutor.GetResponseHeaders())
+                .IgnoreInstance()
+                .Returns(responseHeaders)
                 .OccursOnce();
 
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
@@ -553,6 +574,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Assert.IsTrue(result.ContainsKey("expected-key"));
             Assert.IsTrue(result.ContainsValue("expected-value"));
 
+            Mock.Assert(responseHeaders);
             Mock.Assert(restCallExecutor);
         }
 
@@ -689,7 +711,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
                 .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
                 {
-                    values = new List<string>() { "ArbitraryCookieValue" };
+                    values = new List<string>() { SET_COOKIE_HEADER_VALUE_1, SET_COOKIE_HEADER_VALUE_2 };
 
                     return true;
                 }))
@@ -746,10 +768,26 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 Id = roleId
             };
 
+            var responseHeaders = Mock.Create<HttpResponseHeaders>();
+            IEnumerable<string> cookieHeaderValues;
+            Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
+                .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
+                {
+                    values = new List<string>() { SET_COOKIE_HEADER_VALUE_1, SET_COOKIE_HEADER_VALUE_2 };
+
+                    return true;
+                }))
+                .OccursOnce();
+
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
                 .IgnoreInstance()
                 .Returns(role.SerializeObject());
+
+            Mock.Arrange(() => restCallExecutor.GetResponseHeaders())
+                .IgnoreInstance()
+                .Returns(responseHeaders)
+                .OccursOnce();
 
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
@@ -767,6 +805,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 Assert.AreEqual(42L, dictionaryParameters["id"]);
             }
 
+            Mock.Assert(responseHeaders);
             Mock.Assert(restCallExecutor);
         }
 
