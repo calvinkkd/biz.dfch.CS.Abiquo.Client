@@ -16,6 +16,7 @@
  
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using biz.dfch.CS.Abiquo.Client.Authentication;
 ﻿using biz.dfch.CS.Abiquo.Client.Communication;
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -37,10 +38,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         private const string VIRTUALMACHINETEMPLATE_HREF = "http://abiquo/api/admin/enterprises/42/datacenterrepositories/42/virtualmachinetemplates/42";
         private const string USERNAME = "ArbitraryUsername";
         private const string PASSWORD = "ArbitraryPassword";
+        private const string SESSION_TOKEN = "auth=ARBITRARY";
+        private const string AUTH_COOKIE_VALUE = "auth=ABC123";
         private const string BEARER_TOKEN = "Bearer ARBITRARY_TOKEN";
         private const int INVALID_ID = 0;
 
         private readonly IAuthenticationInformation _authenticationInformation = new BasicAuthenticationInformation(USERNAME, PASSWORD);
+        private static readonly string SET_COOKIE_HEADER_VALUE = string.Format("{0}; Expires=Fri, 31-Dec-2016 23:59:59 GMT; Path=/; Secure; HttpOnly", AUTH_COOKIE_VALUE);
 
         private BaseAbiquoClient sut = new DummyAbiquoClient();
 
@@ -173,6 +177,162 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             Assert.AreEqual("Arbitrary-Result", result);
 
             Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        public void ExecuteRequestSetsCookieRequestHeaderIfSessionTokenNotNull()
+        {
+            // Arrange
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var expectedRequestUri = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.Authentication.COOKIE_HEADER_KEY, SESSION_TOKEN }
+                ,
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, headers, null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
+
+            // Act
+            var result = sut.ExecuteRequest(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, headers, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        public void ExecuteRequestSetsSessionTokenBasedOnSetCookieResponseHeader()
+        {
+            // Arrange
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var expectedRequestUri = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.Authentication.COOKIE_HEADER_KEY, SESSION_TOKEN }
+                ,
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var responseHeaders = Mock.Create<HttpResponseHeaders>();
+            IEnumerable<string> cookieHeaderValues;
+            Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
+                .DoInstead(() => cookieHeaderValues = new List<string>() { SET_COOKIE_HEADER_VALUE })
+                .Returns(true)
+                .OccursOnce();
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, headers, null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
+
+            Mock.Arrange(() => restCallExecutor.GetResponseHeaders())
+                .IgnoreInstance()
+                .Returns(responseHeaders)
+                .OccursOnce();
+
+            // Act
+            var result = sut.ExecuteRequest(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, headers, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+            Assert.AreEqual(AUTH_COOKIE_VALUE, sut.SessionToken);
+
+            Mock.Assert(responseHeaders);
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        public void ExecuteRequestResultingInResponseWithoutSetCookieHeaderSetsSessionTokenToNull()
+        {
+            // Arrange
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var expectedRequestUri = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.Authentication.COOKIE_HEADER_KEY, SESSION_TOKEN }
+                ,
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var responseHeaders = Mock.Create<HttpResponseHeaders>();
+            IEnumerable<string> cookieHeaderValues;
+            Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
+                .DoInstead(() => cookieHeaderValues = null)
+                .Returns(false)
+                .OccursOnce();
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, headers, null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
+
+            Mock.Arrange(() => restCallExecutor.GetResponseHeaders())
+                .IgnoreInstance()
+                .Returns(responseHeaders)
+                .OccursOnce();
+
+            // Act
+            var result = sut.ExecuteRequest(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, headers, null);
+
+            // Assert
+            Assert.AreEqual("Arbitrary-Result", result);
+            Assert.IsNull(sut.SessionToken);
+
+            Mock.Assert(responseHeaders);
+            Mock.Assert(restCallExecutor);
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "authCookie")]
+        public void ExecuteRequestResultingInResponseWithSetCookieHeaderNotContainingSessionTokenThrowsContractException()
+        {
+            // Arrange
+            sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
+
+            var expectedRequestUri = UriHelper.ConcatUri(ABIQUO_API_BASE_URI, AbiquoUriSuffixes.ENTERPRISES);
+
+            var headers = new Dictionary<string, string>()
+            {
+                { Constants.Authentication.COOKIE_HEADER_KEY, SESSION_TOKEN }
+                ,
+                { AbiquoHeaderKeys.ACCEPT_HEADER_KEY, VersionedAbiquoMediaDataTypes.VND_ABIQUO_ENTERPRISES }
+            };
+
+            var responseHeaders = Mock.Create<HttpResponseHeaders>();
+            IEnumerable<string> cookieHeaderValues;
+            Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
+                .DoInstead(() => cookieHeaderValues = new List<string>() { "ArbitrarySetCookieValue" })
+                .Returns(true)
+                .OccursOnce();
+
+            var restCallExecutor = Mock.Create<RestCallExecutor>();
+            Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, expectedRequestUri, headers, null))
+                .IgnoreInstance()
+                .Returns("Arbitrary-Result")
+                .OccursOnce();
+
+            Mock.Arrange(() => restCallExecutor.GetResponseHeaders())
+                .IgnoreInstance()
+                .Returns(responseHeaders)
+                .OccursOnce();
+
+            // Act
+            var result = sut.ExecuteRequest(HttpMethod.Get, AbiquoUriSuffixes.ENTERPRISES, headers, null);
         }
 
         #endregion ExecuteRequest
@@ -2752,6 +2912,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 AbiquoApiBaseUri = new Uri(abiquoApiBaseUri).AbsoluteUri;
                 AuthenticationInformation = authenticationInformation;
                 CurrentUserInformation = new User();
+
+                SessionToken = SESSION_TOKEN;
 
                 IsLoggedIn = true;
 

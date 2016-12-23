@@ -19,8 +19,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using biz.dfch.CS.Abiquo.Client.Authentication;
+using biz.dfch.CS.Abiquo.Client.Communication;
 using biz.dfch.CS.Abiquo.Client.General;
 using biz.dfch.CS.Abiquo.Client.v1.Model;
 using biz.dfch.CS.Commons;
@@ -97,7 +99,7 @@ namespace biz.dfch.CS.Abiquo.Client
         /// Session token from Set-Cookie header
         /// Gets refreshed by Set-Cookie header of every response
         /// </summary>
-        private string SessionToken { get; set; }
+        public string SessionToken { get; protected set; }
 
         #endregion Properties
 
@@ -137,6 +139,7 @@ namespace biz.dfch.CS.Abiquo.Client
             AbiquoApiBaseUri = null;
             AuthenticationInformation = null;
             CurrentUserInformation = null;
+            SessionToken = null;
 
             Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.LogoutSucceeded, "{0} SUCCEEDED", Method.GetName());
         }
@@ -177,8 +180,18 @@ namespace biz.dfch.CS.Abiquo.Client
                 var bodyLength = null != body ? body.Length : 0;
                 Logger.Current.TraceEvent(TraceEventType.Start, (int) Constants.EventId.ExecuteRequest, "Executing {0} {1} ...\r\nHeaders [{2}]:{3}Body [{4}]: {5}", httpMethod, requestUri, headersKeyCount, headersString, bodyLength, body);
             }
-            
-            var requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
+
+            // add session cookie to request headers if present, otherwise add authorization header
+            var requestHeaders = new Dictionary<string, string>();
+            if (string.IsNullOrWhiteSpace(SessionToken))
+            {
+                requestHeaders = new Dictionary<string, string>(AuthenticationInformation.GetAuthorizationHeaders());
+            }
+            else
+            {
+                requestHeaders.Add(Constants.Authentication.COOKIE_HEADER_KEY, SessionToken);
+            }
+
             if (null != headers)
             {
                 headers.ToList().ForEach(header => requestHeaders[header.Key] = header.Value);
@@ -187,9 +200,29 @@ namespace biz.dfch.CS.Abiquo.Client
             var restCallExecutor = new RestCallExecutor();
             var result = restCallExecutor.Invoke(httpMethod, requestUri, requestHeaders, body);
 
+            // refresh session token with value from Set-Cookie response header
+            SessionToken = GetSessionTokenFromSetCookieHeader(restCallExecutor.GetResponseHeaders());
+
             Logger.Current.TraceEvent(TraceEventType.Stop, (int) Constants.EventId.ExecuteRequest, "Executing {0} {1} COMPLETED.", httpMethod, requestUri);
 
             return result;
+        }
+
+        private string GetSessionTokenFromSetCookieHeader(HttpResponseHeaders responseHeaders)
+        {
+            Contract.Requires(null != responseHeaders);
+
+            string sessionToken = null;
+            IEnumerable<string> setCookieHeaderValues;
+            if (responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out setCookieHeaderValues))
+            {
+                var authCookie = setCookieHeaderValues.FirstOrDefault(cookie => cookie.StartsWith("auth="));
+                Contract.Assert(null != authCookie);
+
+                sessionToken = authCookie.Substring(0, authCookie.IndexOf(';'));
+            }
+
+            return sessionToken;
         }
 
         #endregion ExecuteRequest
