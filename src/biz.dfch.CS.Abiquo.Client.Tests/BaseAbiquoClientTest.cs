@@ -777,17 +777,18 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
 
                     return true;
                 }))
-                .OccursOnce();
+                .Occurs(2);
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
             Mock.Arrange(() => restCallExecutor.Invoke(HttpMethod.Get, link.Href, Arg.IsAny<Dictionary<string, string>>(), null))
                 .IgnoreInstance()
-                .Returns(role.SerializeObject());
+                .Returns(role.SerializeObject())
+                .Occurs(2);
 
             Mock.Arrange(() => restCallExecutor.GetResponseHeaders())
                 .IgnoreInstance()
                 .Returns(responseHeaders)
-                .OccursOnce();
+                .Occurs(2);
 
             sut.Login(ABIQUO_API_BASE_URI, _authenticationInformation);
 
