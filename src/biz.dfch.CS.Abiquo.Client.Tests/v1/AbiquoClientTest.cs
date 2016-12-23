@@ -38,7 +38,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         private const string PASSWORD = "ArbitraryPassword";
         private const string AUTH_COOKIE_VALUE = "auth=ABC123";
 
-        private static readonly string SET_COOKIE_HEADER_VALUE = string.Format("{0}; Expires=Fri, 31-Dec-2016 23:59:59 GMT; Path=/; Secure; HttpOnly", AUTH_COOKIE_VALUE);
+        private static readonly string SET_COOKIE_HEADER_VALUE_1 = string.Format("{0}; Expires=Fri, 31-Dec-2016 23:59:59 GMT; Path=/; Secure; HttpOnly", AUTH_COOKIE_VALUE);
+        private const string SET_COOKIE_HEADER_VALUE_2 = "ABQSESSIONID=1234567891234567891; Expires=Fri, 30-Dec-2016 23:59:59 GMT; Path=/; Secure; HttpOnly";
 
         [TestMethod]
         public void AbiquoClientVersionMatchesSpecifiedVersion()
@@ -163,7 +164,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             IEnumerable<string> cookieHeaderValues;
             Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
-                .DoInstead(() => cookieHeaderValues = new List<string>() { SET_COOKIE_HEADER_VALUE })
+                .DoInstead(() => cookieHeaderValues = new List<string>() { SET_COOKIE_HEADER_VALUE_1, SET_COOKIE_HEADER_VALUE_2 })
                 .Returns(true)
                 .OccursOnce();
 
