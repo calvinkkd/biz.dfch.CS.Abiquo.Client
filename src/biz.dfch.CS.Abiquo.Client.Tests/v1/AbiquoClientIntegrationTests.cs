@@ -1966,7 +1966,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 virtualMachine.Id.GetValueOrDefault(), false, true);
 
             // Act
-            var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, VirtualMachineStateEnum.OFF);
+            var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, VirtualMachineStateEnum.OFF, true);
 
             var completedTask = abiquoClient.WaitForTaskCompletion(changeStateTask,
                 abiquoClient.TaskPollingWaitTimeMilliseconds, abiquoClient.TaskPollingTimeoutMilliseconds);
@@ -1978,7 +1978,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(changeStateTask.TaskId));
             Assert.IsTrue(0 < changeStateTask.Timestamp);
-            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, changeStateTask.State);
             Assert.AreEqual(TaskTypeEnum.POWER_OFF, changeStateTask.Type);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
@@ -2097,7 +2096,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(changeStateTask.TaskId));
             Assert.IsTrue(0 < changeStateTask.Timestamp);
-            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, changeStateTask.State);
             Assert.AreEqual(TaskTypeEnum.POWER_OFF, changeStateTask.Type);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(completedTask.TaskId));
