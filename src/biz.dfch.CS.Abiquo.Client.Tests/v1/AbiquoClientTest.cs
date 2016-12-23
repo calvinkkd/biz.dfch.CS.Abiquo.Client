@@ -121,8 +121,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         public void LoginWithInvalidAuthenticationInformationReturnsFalse()
         {
             // Arrange
-            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
             var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+
+            var expectedRequestUri = string.Format("{0}{1}", ABIQUO_API_BASE_URI.TrimEnd('/'), AbiquoUriSuffixes.LOGIN);
             var basicAuthInfo = new BasicAuthenticationInformation(USERNAME, PASSWORD);
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
