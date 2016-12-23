@@ -328,8 +328,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var responseHeaders = Mock.Create<HttpResponseHeaders>();
             IEnumerable<string> cookieHeaderValues;
             Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
-                .DoInstead(() => cookieHeaderValues = null)
-                .Returns(false)
+                .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
+                {
+                    values = null;
+
+                    return false;
+                }))
                 .OccursOnce();
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
@@ -480,8 +484,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var responseHeaders = Mock.Create<HttpResponseHeaders>();
             IEnumerable<string> cookieHeaderValues;
             Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
-                .DoInstead(() => cookieHeaderValues = new List<string>() { SET_COOKIE_HEADER_VALUE_1, SET_COOKIE_HEADER_VALUE_2 })
-                .Returns(true)
+                .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
+                {
+                    values = new List<string>() { "ArbitraryCookieValue" };
+
+                    return true;
+                }))
                 .OccursOnce();
 
             var headers = new Dictionary<string, string>()
@@ -679,8 +687,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             var responseHeaders = Mock.Create<HttpResponseHeaders>();
             IEnumerable<string> cookieHeaderValues;
             Mock.Arrange(() => responseHeaders.TryGetValues(AbiquoHeaderKeys.SET_COOKIE_HEADER_KEY, out cookieHeaderValues))
-                .DoInstead(() => cookieHeaderValues = new List<string>() { SET_COOKIE_HEADER_VALUE_1, SET_COOKIE_HEADER_VALUE_2 })
-                .Returns(true)
+                .Returns(new TryGetValuesDelegate((string name, out IEnumerable<string> values) =>
+                {
+                    values = new List<string>() { "ArbitraryCookieValue" };
+
+                    return true;
+                }))
                 .OccursOnce();
 
             var restCallExecutor = Mock.Create<RestCallExecutor>();
