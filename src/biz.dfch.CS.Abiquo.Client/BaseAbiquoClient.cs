@@ -159,6 +159,7 @@ namespace biz.dfch.CS.Abiquo.Client
 
             var requestUri = UriHelper.ConcatUri(AbiquoApiBaseUri, uriSuffix);
 
+            // log headers
             if (Logger.Current.Switch.ShouldTrace(TraceEventType.Start))
             {
                 var headersString = new StringBuilder();
