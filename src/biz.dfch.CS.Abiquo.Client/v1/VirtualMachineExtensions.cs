@@ -24,7 +24,6 @@ namespace biz.dfch.CS.Abiquo.Client.v1
 {
     public static class VirtualMachineExtensions
     {
-        private const string EDIT_LINK_REL = "edit";
         private const int MATCH_COUNT = 4;
         private static readonly string _pattern = string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, @"(\d+)", @"(\d+)", @"(\d+)");
 
@@ -35,7 +34,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             Contract.Ensures(null != Contract.Result<Tuple<int, int, int>>());
             Contract.Ensures(virtualMachine.Id.Value == Contract.Result<Tuple<int, int, int>>().Item3);
 
-            var link = virtualMachine.GetLinkByRel(EDIT_LINK_REL);
+            var link = virtualMachine.GetLinkByRel(AbiquoRelations.EDIT);
 
             return ExtractIds(link);
         }
@@ -43,7 +42,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public static Tuple<int, int, int> ExtractIds(Link link)
         {
             Contract.Requires(null != link);
-            Contract.Requires(EDIT_LINK_REL == link.Rel);
+            Contract.Requires(AbiquoRelations.EDIT == link.Rel);
             Contract.Ensures(null != Contract.Result<Tuple<int, int, int>>());
 
             var match = Regex.Match(link.Href, _pattern);

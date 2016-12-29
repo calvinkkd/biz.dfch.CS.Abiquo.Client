@@ -822,6 +822,42 @@ namespace biz.dfch.CS.Abiquo.Client
         public abstract Task ChangeStateOfVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, VirtualMachineState state, bool waitForCompletion);
 
         /// <summary>
+        /// Protects a specific virtual machine from any operation
+        /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        public abstract void ProtectVirtualMachine(VirtualMachine virtualMachine);
+        
+        /// <summary>
+        /// Protects a specific virtual machine from any operation
+        /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        /// <param name="protectionCause">Cause for protection</param>
+        public abstract void ProtectVirtualMachine(VirtualMachine virtualMachine, string protectionCause);
+
+        /// <summary>
+        /// Protects a specific virtual machine from any operation
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        /// <param name="protectionCause">Cause for protection</param>
+        public abstract void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string protectionCause);
+
+        /// <summary>
+        /// Unprotects a specific virtual machine
+        /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        public abstract void UnprotectVirtualMachine(VirtualMachine virtualMachine);
+
+        /// <summary>
+        /// Unprotects a specific virtual machine
+        /// </summary>
+        /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
+        /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
+        /// <param name="virtualMachineId">Id of the virtual machine</param>
+        public abstract void UnprotectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+
+        /// <summary>
         /// Delete a virtual machine
         /// </summary>
         /// <param name="virtualMachine">Virtual machine to delete</param>

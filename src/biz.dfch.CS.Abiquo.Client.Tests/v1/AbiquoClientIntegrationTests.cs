@@ -97,7 +97,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            Contract.Assert(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
+            Assert.IsTrue(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
 
             var enterpriseLink = sut.CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
 
@@ -112,7 +112,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            Contract.Assert(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
+            Assert.IsTrue(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
 
             var virtualMachinesLink = sut.CurrentUserInformation.GetLinkByRel(AbiquoRelations.VIRTUALMACHINES);
 
@@ -130,7 +130,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         {
             // Arrange
             var sut = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
-            Contract.Assert(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
+            Assert.IsTrue(sut.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation));
 
             var enterpriseLink = sut.CurrentUserInformation.GetLinkByRel(AbiquoRelations.ENTERPRISE);
 
@@ -416,7 +416,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var usersWithRoles = abiquoClient.GetUsersWithRoles(IntegrationTestEnvironment.TenantId);
             var expectedUserWithRoles = usersWithRoles.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedUserWithRoles);
+            Assert.IsNotNull(expectedUserWithRoles);
 
             // Act
             var userWithRoles = abiquoClient.GetUserOfCurrentEnterprise(expectedUserWithRoles.Id);
@@ -448,7 +448,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var usersWithRoles = abiquoClient.GetUsersWithRoles(IntegrationTestEnvironment.TenantId);
             var expectedUserWithRoles = usersWithRoles.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedUserWithRoles);
+            Assert.IsNotNull(expectedUserWithRoles);
 
             var enterprise = abiquoClient.GetEnterprise(IntegrationTestEnvironment.TenantId);
 
@@ -482,7 +482,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var usersWithRoles = abiquoClient.GetUsersWithRoles(IntegrationTestEnvironment.TenantId);
             var expectedUserWithRoles = usersWithRoles.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedUserWithRoles);
+            Assert.IsNotNull(expectedUserWithRoles);
 
             // Act
             var userWithRoles = abiquoClient.GetUser(IntegrationTestEnvironment.TenantId, expectedUserWithRoles.Id);
@@ -570,12 +570,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var enterprises = abiquoClient.GetEnterprises();
-            Contract.Assert(null != enterprises);
-            Contract.Assert(1 < enterprises.Collection.Count);
+            Assert.IsNotNull(enterprises);
+            Assert.IsTrue(1 < enterprises.Collection.Count);
 
             var enterpriseToSwitchTo =
                 enterprises.Collection.FirstOrDefault(e => e.Id != IntegrationTestEnvironment.TenantId);
-            Contract.Assert(null != enterpriseToSwitchTo);
+            Assert.IsNotNull(enterpriseToSwitchTo);
 
             // Act
             abiquoClient.SwitchEnterprise(enterpriseToSwitchTo);
@@ -643,7 +643,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var roles = abiquoClient.GetRoles();
             var expectedRole = roles.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedRole);
+            Assert.IsNotNull(expectedRole);
 
             // Act
             var role = abiquoClient.GetRole(expectedRole.Id);
@@ -717,7 +717,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
-            Contract.Assert(null != dataCentersLimits);
+            Assert.IsNotNull(dataCentersLimits);
             var expectedDataCenterLimits = dataCentersLimits.Collection.First();
 
             var enterprise = abiquoClient.GetCurrentEnterprise();
@@ -755,7 +755,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
 
             var dataCentersLimits = abiquoClient.GetDataCentersLimitsOfCurrentEnterprise();
-            Contract.Assert(null != dataCentersLimits);
+            Assert.IsNotNull(dataCentersLimits);
             var expectedDataCenterLimits = dataCentersLimits.Collection.First();
 
             // Act
@@ -823,11 +823,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             // Act
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualAppliance);
@@ -857,11 +857,11 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             // Act
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
@@ -891,15 +891,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var expectedVirtualMachine = virtualMachines.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedVirtualMachine);
+            Assert.IsNotNull(expectedVirtualMachine);
 
             // Act
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualAppliance, expectedVirtualMachine.Id.GetValueOrDefault());
@@ -923,15 +923,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
             
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var expectedVirtualMachine = virtualMachines.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedVirtualMachine);
+            Assert.IsNotNull(expectedVirtualMachine);
 
             // Act
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
@@ -970,23 +970,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             // Act
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
@@ -1017,23 +1017,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             // Act
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualAppliance, virtualMachineTemplate);
@@ -1063,23 +1063,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachineToBeCreated = new VirtualMachine()
             {
@@ -1120,23 +1120,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachineToBeCreated = new VirtualMachine()
             {
@@ -1177,23 +1177,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1225,23 +1225,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1272,23 +1272,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1328,23 +1328,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1376,23 +1376,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1433,23 +1433,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1495,23 +1495,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1559,23 +1559,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1623,23 +1623,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1701,24 +1701,24 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates =
                 abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                     dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1780,23 +1780,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1835,23 +1835,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1889,23 +1889,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -1943,23 +1943,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -2005,23 +2005,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -2060,23 +2060,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -2115,6 +2115,62 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
+        public void ProtectAndUnprotectVirtualMachineSucceeds()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualAppliance);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Assert.IsNotNull(dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
+            Assert.IsNotNull(virtualMachineTemplate);
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), false, true);
+
+            var protectionCause = "Arbitrary cause";
+
+            // Act
+            abiquoClient.ProtectVirtualMachine(virtualMachine, protectionCause);
+
+            var protectedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.IsTrue(protectedVirtualMachine.Protected);
+            Assert.AreEqual(protectionCause, protectedVirtualMachine.ProtectedCause);
+
+            abiquoClient.UnprotectVirtualMachine(virtualMachine);
+
+            var unprotectedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
+            Assert.IsFalse(unprotectedVirtualMachine.Protected);
+            Assert.IsNull(unprotectedVirtualMachine.ProtectedCause);
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualMachine, true);
+            Assert.IsTrue(deletionResult);
+        }
+
+        [TestMethod]
         public void DeleteVirtualMachineDeletesAbiquoVirtualMachine()
         {
             // Arrange
@@ -2123,23 +2179,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -2161,23 +2217,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -2200,23 +2256,23 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachineTemplate);
+            Assert.IsNotNull(virtualMachineTemplate);
 
             var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
@@ -2239,15 +2295,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var virtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachine);
+            Assert.IsNotNull(virtualMachine);
 
             // Act
             var networkConfigurations = abiquoClient.GetNetworkConfigurationsForVm(virtualMachine);
@@ -2273,15 +2329,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var virtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachine);
+            Assert.IsNotNull(virtualMachine);
 
             // Act
             var networkConfigurations = abiquoClient.GetNetworkConfigurationsForVm(virtualDataCenter.Id,
@@ -2308,15 +2364,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var virtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachine);
+            Assert.IsNotNull(virtualMachine);
 
             var networkConfigurations = abiquoClient.GetNetworkConfigurationsForVm(virtualDataCenter.Id,
                 virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
@@ -2347,15 +2403,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var virtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachine);
+            Assert.IsNotNull(virtualMachine);
 
             var networkConfigurations = abiquoClient.GetNetworkConfigurationsForVm(virtualDataCenter.Id,
                 virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
@@ -2388,15 +2444,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var virtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachine);
+            Assert.IsNotNull(virtualMachine);
 
             // Act
             var nics = abiquoClient.GetNicsOfVirtualMachine(virtualMachine);
@@ -2422,15 +2478,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var virtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != virtualMachine);
+            Assert.IsNotNull(virtualMachine);
 
             // Act
             var nics = abiquoClient.GetNicsOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
@@ -2457,15 +2513,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var expectedVirtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != expectedVirtualMachine);
+            Assert.IsNotNull(expectedVirtualMachine);
 
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 expectedVirtualMachine.Id.GetValueOrDefault());
@@ -2498,15 +2554,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var expectedVirtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != expectedVirtualMachine);
+            Assert.IsNotNull(expectedVirtualMachine);
 
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 expectedVirtualMachine.Id.GetValueOrDefault());
@@ -2540,15 +2596,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var existingVirtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != existingVirtualMachine);
+            Assert.IsNotNull(existingVirtualMachine);
 
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 existingVirtualMachine.Id.GetValueOrDefault());
@@ -2557,7 +2613,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 virtualMachine.Id.GetValueOrDefault());
 
             var expectedTaskOfVirtualMachine = tasksOfVirtualMachine.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedTaskOfVirtualMachine);
+            Assert.IsNotNull(expectedTaskOfVirtualMachine);
 
             // Act
             var taskOfVirtualMachine = abiquoClient.GetTaskOfVirtualMachine(virtualMachine, expectedTaskOfVirtualMachine.TaskId);
@@ -2584,15 +2640,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualAppliance);
+            Assert.IsNotNull(virtualAppliance);
 
             var virtualMachines = abiquoClient.GetVirtualMachines(virtualDataCenter.Id, virtualAppliance.Id);
             var existingVirtualMachine = virtualMachines.Collection.LastOrDefault();
-            Contract.Assert(null != existingVirtualMachine);
+            Assert.IsNotNull(existingVirtualMachine);
 
             var virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 existingVirtualMachine.Id.GetValueOrDefault());
@@ -2601,7 +2657,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
                 virtualMachine.Id.GetValueOrDefault());
 
             var expectedTaskOfVirtualMachine = tasksOfVirtualMachine.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedTaskOfVirtualMachine);
+            Assert.IsNotNull(expectedTaskOfVirtualMachine);
             
             // Act
             var taskOfVirtualMachine = abiquoClient.GetTaskOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
@@ -2634,7 +2690,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
             // Act
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(dataCenterRepository);
@@ -2664,9 +2720,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             // Act
@@ -2698,15 +2754,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var existingVirtualMachine = virtualMachineTemplates.Collection.FirstOrDefault();
-            Contract.Assert(null != existingVirtualMachine);
+            Assert.IsNotNull(existingVirtualMachine);
 
             // Act
             var virtualMachineTemplate = abiquoClient.GetVirtualMachineTemplate(dataCenterRepository, existingVirtualMachine.Id);
@@ -2730,15 +2786,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != dataCenterRepository);
+            Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
                 dataCenterRepositoryId);
             var existingVirtualMachine = virtualMachineTemplates.Collection.FirstOrDefault();
-            Contract.Assert(null != existingVirtualMachine);
+            Assert.IsNotNull(existingVirtualMachine);
 
             // Act
             var virtualMachineTemplate = abiquoClient.GetVirtualMachineTemplate(IntegrationTestEnvironment.TenantId,
@@ -2801,7 +2857,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var expectedVirtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedVirtualDataCenter);
+            Assert.IsNotNull(expectedVirtualDataCenter);
 
             // Act
             var virtualDataCenter = abiquoClient.GetVirtualDataCenter(expectedVirtualDataCenter.Id);
@@ -2842,7 +2898,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenterToBeLoaded);
+            Assert.IsNotNull(virtualDataCenterToBeLoaded);
             var virtualDataCenter = abiquoClient.GetVirtualDataCenter(virtualDataCenterToBeLoaded.Id);
 
             // Act
@@ -2871,7 +2927,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenterToBeLoaded);
+            Assert.IsNotNull(virtualDataCenterToBeLoaded);
             var virtualDataCenter = abiquoClient.GetVirtualDataCenter(virtualDataCenterToBeLoaded.Id);
 
             // Act
@@ -2900,13 +2956,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenterToBeLoaded);
+            Assert.IsNotNull(virtualDataCenterToBeLoaded);
 
             var virtualDataCenter = abiquoClient.GetVirtualDataCenter(virtualDataCenterToBeLoaded.Id);
 
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var expectedVirtualApplicance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedVirtualApplicance);
+            Assert.IsNotNull(expectedVirtualApplicance);
 
             // Act
             var virtualAppliance = abiquoClient.GetVirtualAppliance(virtualDataCenter, expectedVirtualApplicance.Id);
@@ -2933,13 +2989,13 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenterToBeLoaded = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenterToBeLoaded);
+            Assert.IsNotNull(virtualDataCenterToBeLoaded);
 
             var virtualDataCenter = abiquoClient.GetVirtualDataCenter(virtualDataCenterToBeLoaded.Id);
             
             var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
             var expectedVirtualApplicance = virtualAppliances.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedVirtualApplicance);
+            Assert.IsNotNull(expectedVirtualApplicance);
 
             // Act
             var virtualAppliance = abiquoClient.GetVirtualAppliance(virtualDataCenter.Id, expectedVirtualApplicance.Id);
@@ -3050,9 +3106,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedDataCenterRepository);
+            Assert.IsNotNull(expectedDataCenterRepository);
 
-            var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
+            var editLink = expectedDataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             // Act
@@ -3083,9 +3139,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedDataCenterRepository);
+            Assert.IsNotNull(expectedDataCenterRepository);
 
-            var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
+            var editLink = expectedDataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             // Act
@@ -3116,9 +3172,9 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var expectedDataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
-            Contract.Assert(null != expectedDataCenterRepository);
+            Assert.IsNotNull(expectedDataCenterRepository);
 
-            var editLink = expectedDataCenterRepository.GetLinkByRel("edit");
+            var editLink = expectedDataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             // Act
@@ -3161,7 +3217,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             // Act
             var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter);
@@ -3188,7 +3244,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             // Act
             var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
@@ -3215,7 +3271,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
             var expectedPrivateNetwork = privateNetworks.Collection.First();
@@ -3252,7 +3308,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
             var expectedPrivateNetwork = privateNetworks.Collection.First();
@@ -3289,7 +3345,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
             var privateNetwork = privateNetworks.Collection.First();
@@ -3321,7 +3377,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var privateNetworks = abiquoClient.GetPrivateNetworks(virtualDataCenter.Id);
             var privateNetwork = privateNetworks.Collection.First();
@@ -3479,7 +3535,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             // Act
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter);
@@ -3502,7 +3558,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             // Act
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
@@ -3525,7 +3581,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
             var expectedPublicNetwork = publicNetworks.Collection.First();
@@ -3563,7 +3619,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
             var expectedPublicNetwork = publicNetworks.Collection.First();
@@ -3601,7 +3657,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
             var publicNetwork = publicNetworks.Collection.First();
@@ -3632,7 +3688,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
             var publicNetwork = publicNetworks.Collection.First();
@@ -3664,7 +3720,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
             var publicNetwork = publicNetworks.Collection.First();
@@ -3712,7 +3768,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
             var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
-            Contract.Assert(null != virtualDataCenter);
+            Assert.IsNotNull(virtualDataCenter);
 
             var publicNetworks = abiquoClient.GetPublicNetworks(virtualDataCenter.Id);
             var publicNetwork = publicNetworks.Collection.First();
@@ -3772,7 +3828,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.First();
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
@@ -3793,7 +3849,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Purchase IP
             var purchasedPublicIp = abiquoClient.PurchasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
-            Contract.Assert(null != purchasedPublicIp);
+            Assert.IsNotNull(purchasedPublicIp);
 
             var nics = abiquoClient.GetNicsOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault());
@@ -3860,7 +3916,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
             var dataCenterRepository = dataCenterRepositories.Collection.First();
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
@@ -3887,7 +3943,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Purchase IP
             var purchasedPublicIp = abiquoClient.PurchasePublicIp(virtualDataCenter.Id, publicIpToBePurchased.Id);
-            Contract.Assert(null != purchasedPublicIp);
+            Assert.IsNotNull(purchasedPublicIp);
 
             var nics = abiquoClient.GetNicsOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault());
@@ -3905,7 +3961,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Power off VM
             var changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault(), _virtualMachineOffState, true);
-            Contract.Assert(TaskStateEnum.FINISHED_SUCCESSFULLY == changeStateTask.State);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, changeStateTask.State);
             virtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
 
             virtualMachine.Links.Add(ipLink);
@@ -3916,7 +3972,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             // Power on VM
             changeStateTask = abiquoClient.ChangeStateOfVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault(), _virtualMachineOnState, true);
-            Contract.Assert(TaskStateEnum.FINISHED_SUCCESSFULLY == changeStateTask.State);
+            Assert.AreEqual(TaskStateEnum.FINISHED_SUCCESSFULLY, changeStateTask.State);
 
             var vmWithAttachedNetwork = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault());
