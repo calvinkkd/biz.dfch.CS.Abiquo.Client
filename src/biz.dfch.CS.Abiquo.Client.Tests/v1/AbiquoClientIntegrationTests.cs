@@ -2163,7 +2163,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var unprotectedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
             Assert.IsFalse(unprotectedVirtualMachine.Protected);
-            Assert.AreEqual("", unprotectedVirtualMachine.ProtectedCause);
+            Assert.IsNull(unprotectedVirtualMachine.ProtectedCause);
 
             // Cleanup
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualMachine, true);
