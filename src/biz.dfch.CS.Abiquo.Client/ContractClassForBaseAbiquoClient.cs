@@ -483,11 +483,18 @@ namespace biz.dfch.CS.Abiquo.Client
             Contract.Requires(null != virtualMachine);
         }
 
-        public override void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        public override void ProtectVirtualMachine(VirtualMachine virtualMachine, string protectionCause)
+        {
+            Contract.Requires(null != virtualMachine);
+            Contract.Requires(!string.IsNullOrWhiteSpace(protectionCause));
+        }
+
+        public override void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string protectionCause)
         {
             Contract.Requires(0 < virtualDataCenterId);
             Contract.Requires(0 < virtualApplianceId);
             Contract.Requires(0 < virtualMachineId);
+            Contract.Requires(!string.IsNullOrWhiteSpace(protectionCause));
         }
 
         public override void UnprotectVirtualMachine(VirtualMachine virtualMachine)

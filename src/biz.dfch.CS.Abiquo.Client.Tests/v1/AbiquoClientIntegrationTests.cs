@@ -2147,8 +2147,10 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
                 virtualMachine.Id.GetValueOrDefault(), false, true);
 
+            var protectionCause = "Arbitrary cause";
+
             // Act
-            abiquoClient.ProtectVirtualMachine(virtualMachine);
+            abiquoClient.ProtectVirtualMachine(virtualMachine, protectionCause);
 
             var protectedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
 
@@ -2166,10 +2168,15 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             // Assert
             Assert.IsTrue(loginSucceeded);
-            Assert.AreEqual(VirtualMachineStateEnum.LOCKED, protectedVirtualMachine.State);
+            Assert.IsTrue(protectedVirtualMachine.Protected);
+            Assert.AreEqual(protectionCause, protectedVirtualMachine.ProtectedCause);
             Assert.IsTrue(isProtected);
 
             abiquoClient.UnprotectVirtualMachine(virtualMachine);
+
+            var unprotectedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
+            Assert.IsFalse(unprotectedVirtualMachine.Protected);
+            Assert.AreEqual("", unprotectedVirtualMachine.ProtectedCause);
 
             // Cleanup
             var deletionResult = abiquoClient.DeleteVirtualMachine(virtualMachine, true);

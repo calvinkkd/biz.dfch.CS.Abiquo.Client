@@ -826,6 +826,13 @@ namespace biz.dfch.CS.Abiquo.Client
         /// </summary>
         /// <param name="virtualMachine">Target virtual machine</param>
         public abstract void ProtectVirtualMachine(VirtualMachine virtualMachine);
+        
+        /// <summary>
+        /// Protects a specific virtual machine from any operation
+        /// </summary>
+        /// <param name="virtualMachine">Target virtual machine</param>
+        /// <param name="protectionCause">Cause for protection</param>
+        public abstract void ProtectVirtualMachine(VirtualMachine virtualMachine, string protectionCause);
 
         /// <summary>
         /// Protects a specific virtual machine from any operation
@@ -833,7 +840,8 @@ namespace biz.dfch.CS.Abiquo.Client
         /// <param name="virtualDataCenterId">Id of the virtual datacenter the virtual appliance belongs to</param>
         /// <param name="virtualApplianceId">Id of the virtual appliance the virtual machine belongs to</param>
         /// <param name="virtualMachineId">Id of the virtual machine</param>
-        public abstract void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId);
+        /// <param name="protectionCause">Cause for protection</param>
+        public abstract void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string protectionCause);
 
         /// <summary>
         /// Unprotects a specific virtual machine

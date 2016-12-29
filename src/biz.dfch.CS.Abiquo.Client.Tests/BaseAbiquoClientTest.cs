@@ -1852,13 +1852,49 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void ProtectVirtualMachineWithNullVirtualMachineAndValidProtectionCauseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ProtectVirtualMachine(null, "Arbitrary Protection Cause");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        public void ProtectVirtualMachineWithVirtualMachineAndNullProtectionCauseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ProtectVirtualMachine(new VirtualMachine(), null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "protectionCause")]
+        public void ProtectVirtualMachineWithVirtualMachineAndEmptyProtectionCauseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ProtectVirtualMachine(new VirtualMachine(), string.Empty);
+
+            // Assert
+        }
+
+        [TestMethod]
         [ExpectContractFailure(MessagePattern = "virtualDataCenterId")]
         public void ProtectVirtualMachineWithInvalidVirtualDataCenterIdThrowsContractException()
         {
             // Arrange
 
             // Act
-            sut.ProtectVirtualMachine(INVALID_ID, 42, 42);
+            sut.ProtectVirtualMachine(INVALID_ID, 42, 42, "Arbitrary Protection Cause");
 
             // Assert
         }
@@ -1870,7 +1906,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ProtectVirtualMachine(42, INVALID_ID, 42);
+            sut.ProtectVirtualMachine(42, INVALID_ID, 42, "Arbitrary Protection Cause");
 
             // Assert
         }
@@ -1882,7 +1918,31 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ProtectVirtualMachine(42, 42, INVALID_ID);
+            sut.ProtectVirtualMachine(42, 42, INVALID_ID, "Arbitrary Protection Cause");
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "protectionCause")]
+        public void ProtectVirtualMachineWithNullProtectionCauseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ProtectVirtualMachine(42, 42, 42, null);
+
+            // Assert
+        }
+
+        [TestMethod]
+        [ExpectContractFailure(MessagePattern = "protectionCause")]
+        public void ProtectVirtualMachineWithEmptyProtectionCauseThrowsContractException()
+        {
+            // Arrange
+
+            // Act
+            sut.ProtectVirtualMachine(42, 42, 42, "");
 
             // Assert
         }
@@ -1894,7 +1954,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ProtectVirtualMachine(null);
+            sut.UnprotectVirtualMachine(null);
 
             // Assert
         }
@@ -1906,7 +1966,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ProtectVirtualMachine(INVALID_ID, 42, 42);
+            sut.UnprotectVirtualMachine(INVALID_ID, 42, 42);
 
             // Assert
         }
@@ -1918,7 +1978,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ProtectVirtualMachine(42, INVALID_ID, 42);
+            sut.UnprotectVirtualMachine(42, INVALID_ID, 42);
 
             // Assert
         }
@@ -1930,7 +1990,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.ProtectVirtualMachine(42, 42, INVALID_ID);
+            sut.UnprotectVirtualMachine(42, 42, INVALID_ID);
 
             // Assert
         }
@@ -3418,7 +3478,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 // Intentionally do nothing
             }
 
-            public override void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            public override void ProtectVirtualMachine(VirtualMachine virtualMachine, string protectionCause)
+            {
+                // Intentionally do nothing
+            }
+
+            public override void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string protectionCause)
             {
                 // Intentionally do nothing
             }
@@ -3984,7 +4049,12 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
                 throw new NotImplementedException();
             }
 
-            public override void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+            public override void ProtectVirtualMachine(VirtualMachine virtualMachine, string protectionCause)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string protectionCause)
             {
                 throw new NotImplementedException();
             }
