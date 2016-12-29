@@ -2154,6 +2154,8 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
 
             var protectedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
 
+            Thread.Sleep(2 * 1000);
+
             var isProtected = false;
             try
             {
