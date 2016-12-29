@@ -31,8 +31,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         [TestMethod]
         public void ExtractIdsFromVirtualMachineLinksSucceed()
         {
-            var rel = "edit";
-            
             var vdcId = 42;
             var vappId = 8;
             var vmId = 15;
@@ -41,7 +39,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var links = new List<Link>()
             {
                 new LinkBuilder()
-                    .BuildRel(rel)
+                    .BuildRel(AbiquoRelations.EDIT)
                     .BuildHref(ABIQUO_API_BASE_URI + href)
                     .BuildTitle("ABQ_a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
                     .BuildType("application/vnd.abiquo.virtualmachine+json")
@@ -105,8 +103,6 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         [TestMethod]
         public void ExtractIdsFromEditLinksSucceed()
         {
-            var rel = "edit";
-            
             var vdcId = 42;
             var vappId = 8;
             var vmId = 15;
@@ -114,7 +110,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var href = string.Format(AbiquoUriSuffixes.VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID, vdcId, vappId, vmId);
 
             var link = new LinkBuilder()
-                .BuildRel(rel)
+                .BuildRel(AbiquoRelations.EDIT)
                 .BuildHref(ABIQUO_API_BASE_URI + href)
                 .BuildTitle("ABQ_a81a8033-eb56-4cf1-8d7d-6355bb3b5157")
                 .BuildType("application/vnd.abiquo.virtualmachine+json")
