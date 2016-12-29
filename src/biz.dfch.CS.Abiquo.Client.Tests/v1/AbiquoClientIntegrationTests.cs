@@ -2070,7 +2070,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
             Assert.IsNotNull(dataCenterRepository);
 
-            var editLink = dataCenterRepository.GetLinkByRel("edit");
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
             var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
 
             var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
