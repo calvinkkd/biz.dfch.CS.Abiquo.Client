@@ -1864,7 +1864,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         }
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "virtualMachine")]
+        [ExpectContractFailure(MessagePattern = "protectionCause")]
         public void ProtectVirtualMachineWithVirtualMachineAndNullProtectionCauseThrowsContractException()
         {
             // Arrange
