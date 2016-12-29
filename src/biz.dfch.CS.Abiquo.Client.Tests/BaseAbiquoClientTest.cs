@@ -605,7 +605,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void GenericInvokeLinkWithLinkContainingInvalidHrefThrowsContractException()
         {
             // Arrange
-            var link = new LinkBuilder().BuildHref("").BuildType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetLink();
+            var link = new LinkBuilder().BuildHref(string.Empty).BuildType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetLink();
 
             // Act
             sut.InvokeLink<VirtualMachineTemplate>(link);
@@ -630,7 +630,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
         public void NonGenericInvokeLinkWithLinkContainingInvalidHrefThrowsContractException()
         {
             // Arrange
-            var link = new LinkBuilder().BuildHref("").BuildType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetLink();
+            var link = new LinkBuilder().BuildHref(string.Empty).BuildType(AbiquoMediaDataTypes.VND_ABIQUO_VIRTUALMACHINETEMPLATE).GetLink();
 
             // Act
             sut.InvokeLink(link);
@@ -2254,7 +2254,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.GetTaskOfVirtualMachine(42, 42, 42, "");
+            sut.GetTaskOfVirtualMachine(42, 42, 42, string.Empty);
 
             // Assert
         }
@@ -2290,7 +2290,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests
             // Arrange
 
             // Act
-            sut.GetTaskOfVirtualMachine(_validVirtualMachine, "");
+            sut.GetTaskOfVirtualMachine(_validVirtualMachine, string.Empty);
 
             // Assert
         }
