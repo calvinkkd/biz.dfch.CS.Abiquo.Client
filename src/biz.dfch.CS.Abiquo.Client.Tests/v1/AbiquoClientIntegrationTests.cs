@@ -2115,6 +2115,68 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
+        public void ProtectAndUnprotectVirtualMachineSucceeds()
+        {
+            // Arrange
+            var abiquoClient = AbiquoClientFactory.GetByVersion(AbiquoClientFactory.ABIQUO_CLIENT_VERSION_V1);
+            var loginSucceeded = abiquoClient.Login(IntegrationTestEnvironment.AbiquoApiBaseUri, IntegrationTestEnvironment.AuthenticationInformation);
+
+            var virtualDataCenters = abiquoClient.GetVirtualDataCenters();
+            var virtualDataCenter = virtualDataCenters.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualDataCenter);
+
+            var virtualAppliances = abiquoClient.GetVirtualAppliances(virtualDataCenter.Id);
+            var virtualAppliance = virtualAppliances.Collection.FirstOrDefault();
+            Assert.IsNotNull(virtualAppliance);
+
+            var dataCenterRepositories = abiquoClient.GetDataCenterRepositoriesOfCurrentEnterprise();
+            var dataCenterRepository = dataCenterRepositories.Collection.FirstOrDefault();
+            Assert.IsNotNull(dataCenterRepository);
+
+            var editLink = dataCenterRepository.GetLinkByRel(AbiquoRelations.EDIT);
+            var dataCenterRepositoryId = UriHelper.ExtractIdAsInt(editLink.Href);
+
+            var virtualMachineTemplates = abiquoClient.GetVirtualMachineTemplates(IntegrationTestEnvironment.TenantId,
+                dataCenterRepositoryId);
+            var virtualMachineTemplate = virtualMachineTemplates.Collection.LastOrDefault();
+            Assert.IsNotNull(virtualMachineTemplate);
+
+            var virtualMachine = abiquoClient.CreateVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                IntegrationTestEnvironment.TenantId, dataCenterRepositoryId, virtualMachineTemplate.Id);
+
+            abiquoClient.DeployVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id,
+                virtualMachine.Id.GetValueOrDefault(), false, true);
+
+            // Act
+            abiquoClient.ProtectVirtualMachine(virtualMachine);
+
+            var protectedVirtualMachine = abiquoClient.GetVirtualMachine(virtualDataCenter.Id, virtualAppliance.Id, virtualMachine.Id.GetValueOrDefault());
+
+            var isProtected = false;
+            try
+            {
+                abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, VirtualMachineStateEnum.PAUSED);
+
+            }
+            catch (HttpRequestException)
+            {
+                isProtected = true;
+            }
+            
+
+            // Assert
+            Assert.IsTrue(loginSucceeded);
+            Assert.AreEqual(VirtualMachineStateEnum.LOCKED, protectedVirtualMachine.State);
+            Assert.IsTrue(isProtected);
+
+            abiquoClient.UnprotectVirtualMachine(virtualMachine);
+
+            // Cleanup
+            var deletionResult = abiquoClient.DeleteVirtualMachine(virtualMachine, true);
+            Assert.IsTrue(deletionResult);
+        }
+
+        [TestMethod]
         public void DeleteVirtualMachineDeletesAbiquoVirtualMachine()
         {
             // Arrange
