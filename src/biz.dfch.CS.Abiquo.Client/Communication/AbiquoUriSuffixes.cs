@@ -58,8 +58,10 @@ namespace biz.dfch.CS.Abiquo.Client.Communication
         public const string VIRTUALMACHINES = "/cloud/virtualmachines";
         public const string VIRTUALMACHINES_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines";
         public const string VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}";
-        public const string CHANGE_VIRTUALMACHINE_STATE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/state";
         public const string DEPLOY_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/action/deploy";
+        public const string CHANGE_VIRTUALMACHINE_STATE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/state";
+        public const string PROTECT_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/action/protect";
+        public const string UNPROTECT_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/action/unprotect";
         public const string NETWORK_CONFIGURATIONS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/network/configurations";
         public const string NETWORK_CONFIGURATION_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID_AND_NETWORK_CONFIGURATION_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/network/configurations/{3}";
         public const string NICS_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPPLIANCE_ID_AND_VIRTUALMACHINE_ID = "/cloud/virtualdatacenters/{0}/virtualappliances/{1}/virtualmachines/{2}/network/nics";

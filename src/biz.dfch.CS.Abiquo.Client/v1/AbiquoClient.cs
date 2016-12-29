@@ -28,6 +28,8 @@ using Task = biz.dfch.CS.Abiquo.Client.v1.Model.Task;
 using System.Threading;
 using HttpMethod = biz.dfch.CS.Commons.Rest.HttpMethod;
 using System.Text.RegularExpressions;
+using biz.dfch.CS.Commons.Converters;
+using biz.dfch.CS.Commons.Rest;
 
 namespace biz.dfch.CS.Abiquo.Client.v1
 {
@@ -36,6 +38,7 @@ namespace biz.dfch.CS.Abiquo.Client.v1
         public const string ABIQUO_API_VERSION = "3.10";
 
         private const string FAKE_TASK_NAME = "FakeTask";
+        private const string DEFAULT_PROTECTION_CAUSE = "Protected by AbiquoClient v1 without a special cause";
 
         private const string FILTER_KEY_FORCE = "force";
         private const string FILTER_VALUE_FORCE = "true";
@@ -640,6 +643,67 @@ namespace biz.dfch.CS.Abiquo.Client.v1
             }
 
             return task;
+        }
+
+        public override void ProtectVirtualMachine(VirtualMachine virtualMachine)
+        {
+            ProtectVirtualMachine(virtualMachine, DEFAULT_PROTECTION_CAUSE);
+        }
+
+        public override void ProtectVirtualMachine(VirtualMachine virtualMachine, string protectionCause)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            ProtectVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId, protectionCause);
+        }
+
+        public override void ProtectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId, string protectionCause)
+        {
+            var headers = new HeaderBuilder()
+                .BuildAccept(ContentType.TextPlain.GetStringValue())
+                .BuildContentType(ContentType.TextPlain.GetStringValue())
+                .GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.PROTECT_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            Invoke(HttpMethod.Post, uriSuffix, null, headers, protectionCause);
+        }
+
+        public override void UnprotectVirtualMachine(VirtualMachine virtualMachine)
+        {
+            var virtualDataCenterLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALDATACENTER);
+            var virtualDataCenterId = UriHelper.ExtractIdAsInt(virtualDataCenterLink.Href);
+
+            var virtualApplianceLink = virtualMachine.GetLinkByRel(AbiquoRelations.VIRTUALAPPLIANCE);
+            var virtualApplianceId = UriHelper.ExtractIdAsInt(virtualApplianceLink.Href);
+
+            var virtualMachineId = virtualMachine.Id.GetValueOrDefault();
+            Contract.Assert(0 < virtualMachineId);
+
+            UnprotectVirtualMachine(virtualDataCenterId, virtualApplianceId, virtualMachineId);
+        }
+
+        public override void UnprotectVirtualMachine(int virtualDataCenterId, int virtualApplianceId, int virtualMachineId)
+        {
+            var headers = new HeaderBuilder()
+                .BuildAccept(ContentType.TextPlain.GetStringValue())
+                .BuildContentType(ContentType.TextPlain.GetStringValue())
+                .GetHeaders();
+
+            var uriSuffix =
+                string.Format(AbiquoUriSuffixes.UNPROTECT_VIRTUALMACHINE_BY_VIRTUALDATACENTER_ID_AND_VIRTUALAPLLIANCE_ID_AND_VIRTUALMACHINE_ID,
+                    virtualDataCenterId, virtualApplianceId, virtualMachineId);
+
+            Invoke(HttpMethod.Post, uriSuffix, null, headers, "");
         }
 
         public override bool DeleteVirtualMachine(VirtualMachine virtualMachine)
