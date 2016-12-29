@@ -79,7 +79,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
         }
 
         [TestMethod]
-        [ExpectContractFailure(MessagePattern = "EDIT_LINK_REL.+link.Rel")]
+        [ExpectContractFailure(MessagePattern = @"AbiquoRelations\.EDIT.+link.Rel")]
         public void ExtractIdsFromInvalidLinkThrowsContractException()
         {
             var rel = "invalid-rel";
