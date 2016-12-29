@@ -2157,7 +2157,7 @@ namespace biz.dfch.CS.Abiquo.Client.Tests.v1
             var isProtected = false;
             try
             {
-                abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, VirtualMachineStateEnum.PAUSED);
+                abiquoClient.ChangeStateOfVirtualMachine(virtualMachine, VirtualMachineStateEnum.OFF);
 
             }
             catch (HttpRequestException)
